@@ -841,7 +841,7 @@ namespace Sedulous
         /// <summary>
         /// Saves the application's settings.
         /// </summary>
-        private void SaveSettings()
+        protected virtual void SaveSettings()
         {
             lock (stateSyncObject)
             {
