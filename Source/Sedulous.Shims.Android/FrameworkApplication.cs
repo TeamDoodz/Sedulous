@@ -50,6 +50,11 @@ namespace Sedulous
             }
         }
 
+        /// <summary>
+        /// The settings for the application.
+        /// </summary>
+        public FrameworkApplicationSettings Settings => settings;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FrameworkApplication"/> class.
 		/// </summary>
@@ -859,7 +864,7 @@ namespace Sedulous
         /// <summary>
         /// Applies the application's settings.
         /// </summary>
-        private void ApplySettings()
+        public virtual void ApplySettings()
         {
             lock (stateSyncObject)
             {
