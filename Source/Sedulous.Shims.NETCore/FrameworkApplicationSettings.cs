@@ -7,12 +7,12 @@ namespace Sedulous
     /// <summary>
     /// Represents an Sedulous application's internal settings.
     /// </summary>
-    internal class FrameworkApplicationSettings
+    public class FrameworkApplicationSettings
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FrameworkApplicationSettings"/> class.
         /// </summary>
-        private FrameworkApplicationSettings()
+        public FrameworkApplicationSettings()
         {
             Window = new FrameworkApplicationWindowSettings();
         }

@@ -11,7 +11,7 @@ namespace Sedulous
     /// <summary>
     /// Represents an Sedulous application's internal window settings.
     /// </summary>
-    internal class FrameworkApplicationWindowSettings
+    public class FrameworkApplicationWindowSettings
     {
         /// <summary>
         /// Saves the specified window settings to XML.

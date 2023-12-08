@@ -9,7 +9,7 @@ namespace Sedulous
     /// <summary>
     /// Represents an Sedulous application's internal audio settings.
     /// </summary>
-    internal class FrameworkApplicationAudioSettings
+    public class FrameworkApplicationAudioSettings
     {
         /// <summary>
         /// Saves the specified audio settings to XML.

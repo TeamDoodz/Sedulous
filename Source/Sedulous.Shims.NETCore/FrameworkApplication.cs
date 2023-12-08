@@ -35,17 +35,20 @@ namespace Sedulous
                 Directory.SetCurrentDirectory(baseDir);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FrameworkApplication"/> class.
-        /// </summary>
-        /// <param name="developerName">The name of the company or developer that built this application.</param>
-        /// <param name="applicationName">The name of the application </param>
-        protected FrameworkApplication(String developerName, String applicationName)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FrameworkApplication"/> class.
+		/// </summary>
+		/// <param name="developerName">The name of the company or developer that built this application.</param>
+		/// <param name="applicationName">The name of the application </param>
+		/// <param name="settings">The settings for this application, or null if this application should load settings on its own.</param>
+		protected FrameworkApplication(string developerName, string applicationName, FrameworkApplicationSettings settings = null)
         {
-            Contract.RequireNotEmpty(developerName, nameof(developerName));
-            Contract.RequireNotEmpty(applicationName, nameof(applicationName));
+			Contract.RequireNotEmpty(developerName, nameof(developerName));
+			Contract.RequireNotEmpty(applicationName, nameof(applicationName));
 
-            PreserveApplicationSettings = true;
+			PreserveApplicationSettings = true;
+
+            this.settings = settings;
 
             this.DeveloperName = developerName;
             this.ApplicationName = applicationName;
@@ -81,7 +84,9 @@ namespace Sedulous
 
             OnInitialized();
 
-            LoadSettings();
+            if(settings is null) {
+                LoadSettings();
+            }
 
             OnLoadingContent();
 
