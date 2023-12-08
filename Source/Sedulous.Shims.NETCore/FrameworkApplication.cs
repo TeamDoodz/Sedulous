@@ -603,7 +603,9 @@ namespace Sedulous
         /// </summary>
         private void CreateFrameworkContext()
         {
-            LoadSettings();
+            if(settings is null) {
+                LoadSettings();
+            }
 
             context = FrameworkContext.EnsureSuccessfulCreation(OnCreatingFrameworkContext);
             if (context == null)
