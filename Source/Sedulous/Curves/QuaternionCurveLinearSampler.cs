@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Sedulous
 {
@@ -24,7 +25,7 @@ namespace Sedulous
             var key1Value = key1.Value;
             var key2Value = key2.Value;
 
-            Quaternion.Slerp(ref key1Value, ref key2Value, t, out var result);
+            Quaternion result = Quaternion.Slerp(key1Value, key2Value, t);
             return offset + result;
         }
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Numerics;
 
 namespace Sedulous.Graphics.Graphics2D
 {

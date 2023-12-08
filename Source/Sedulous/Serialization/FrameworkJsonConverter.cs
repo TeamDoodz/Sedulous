@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using Newtonsoft.Json;
 using Sedulous.Content;
 using Sedulous.Core;
@@ -22,8 +23,8 @@ namespace Sedulous
             readers[typeof(Radians?)] = ReadJson_NullableRadians;
             readers[typeof(Color)] = ReadJson_Color;
             readers[typeof(Color?)] = ReadJson_NullableColor;
-            readers[typeof(Matrix)] = ReadJson_Matrix;
-            readers[typeof(Matrix?)] = ReadJson_NullableMatrix;
+            readers[typeof(Matrix4x4)] = ReadJson_Matrix;
+            readers[typeof(Matrix4x4?)] = ReadJson_NullableMatrix;
             readers[typeof(AssetId)] = ReadJson_AssetID;
             readers[typeof(AssetId?)] = ReadJson_NullableAssetID;
             readers[typeof(SpriteAnimationId)] = ReadJson_SpriteAnimationID;
@@ -34,8 +35,8 @@ namespace Sedulous
             writers[typeof(Radians?)] = WriteJson_NullableRadians;
             writers[typeof(Color)] = WriteJson_Color;
             writers[typeof(Color?)] = WriteJson_NullableColor;
-            writers[typeof(Matrix)] = WriteJson_Matrix;
-            writers[typeof(Matrix?)] = WriteJson_NullableMatrix;
+            writers[typeof(Matrix4x4)] = WriteJson_Matrix;
+            writers[typeof(Matrix4x4?)] = WriteJson_NullableMatrix;
             writers[typeof(AssetId)] = WriteJson_AssetID;
             writers[typeof(AssetId?)] = WriteJson_NullableAssetID;
             writers[typeof(SpriteAnimationId)] = WriteJson_SpriteAnimationID;
@@ -108,7 +109,7 @@ namespace Sedulous
         }
 
         /// <summary>
-        /// Reads a <see cref="Matrix"/> value.
+        /// Reads a <see cref="Matrix4x4"/> value.
         /// </summary>
         private static Object ReadJson_Matrix(JsonReader reader, Type objectType, Object existingValue, JsonSerializer serializer)
         {
@@ -116,7 +117,7 @@ namespace Sedulous
             if (values.Length != 16)
                 throw new JsonReaderException(CoreStrings.JsonIncorrectArrayLengthForType.Format(objectType.Name));
 
-            return new Matrix(
+            return new Matrix4x4(
                 values[00], values[01], values[02], values[03],
                 values[04], values[05], values[06], values[07],
                 values[08], values[09], values[10], values[11],
@@ -124,7 +125,7 @@ namespace Sedulous
         }
 
         /// <summary>
-        /// Reads a <see cref="Matrix"/> value.
+        /// Reads a <see cref="Matrix4x4"/> value.
         /// </summary>
         private static Object ReadJson_NullableMatrix(JsonReader reader, Type objectType, Object existingValue, JsonSerializer serializer)
         {
@@ -230,11 +231,11 @@ namespace Sedulous
         }
 
         /// <summary>
-        /// Writes a <see cref="Matrix"/> value.
+        /// Writes a <see cref="Matrix4x4"/> value.
         /// </summary>
         private static void WriteJson_Matrix(JsonWriter writer, Object value, JsonSerializer serializer)
         {
-            var m = (Matrix)value;
+            var m = (Matrix4x4)value;
             serializer.Serialize(writer, new Single[] 
             {
                 m.M11, m.M12, m.M13, m.M14,
@@ -249,7 +250,7 @@ namespace Sedulous
         /// </summary>
         private static void WriteJson_NullableMatrix(JsonWriter writer, Object value, JsonSerializer serializer)
         {
-            if (value == null || !((Matrix?)value).HasValue)
+            if (value == null || !((Matrix4x4?)value).HasValue)
                 serializer.Serialize(writer, null);
             else
                 WriteJson_Matrix(writer, value, serializer);

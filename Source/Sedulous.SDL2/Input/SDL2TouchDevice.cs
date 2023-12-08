@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using Sedulous.Core;
@@ -174,7 +175,7 @@ namespace Sedulous.Sdl2.Input
         }
 
         /// <inheritdoc/>
-        public override Point2F NormalizeCoordinates(Point2 coordinates)
+        public override PointF NormalizeCoordinates(Point coordinates)
         {
             Contract.EnsureNotDisposed(this, Disposed);
 
@@ -182,13 +183,13 @@ namespace Sedulous.Sdl2.Input
             if (window == null)
                 throw new InvalidOperationException(FrameworkStrings.TouchDeviceNotBoundToWindow);
 
-            return new Point2F(
+            return new PointF(
                 coordinates.X / (Single)window.ClientSize.Width,
                 coordinates.Y / (Single)window.ClientSize.Height);
         }
 
         /// <inheritdoc/>
-        public override Point2F NormalizeCoordinates(Int32 x, Int32 y)
+        public override PointF NormalizeCoordinates(Int32 x, Int32 y)
         {
             Contract.EnsureNotDisposed(this, Disposed);
 
@@ -196,13 +197,13 @@ namespace Sedulous.Sdl2.Input
             if (window == null)
                 throw new InvalidOperationException(FrameworkStrings.TouchDeviceNotBoundToWindow);
 
-            return new Point2F(
+            return new PointF(
                 x / (Single)window.ClientSize.Width,
                 y / (Single)window.ClientSize.Height);
         }
 
         /// <inheritdoc/>
-        public override Point2 DenormalizeCoordinates(Point2F coordinates)
+        public override Point DenormalizeCoordinates(PointF coordinates)
         {
             Contract.EnsureNotDisposed(this, Disposed);
 
@@ -210,13 +211,13 @@ namespace Sedulous.Sdl2.Input
             if (window == null)
                 throw new InvalidOperationException(FrameworkStrings.TouchDeviceNotBoundToWindow);
 
-            return new Point2(
+            return new Point(
                 (Int32)(coordinates.X * window.ClientSize.Width),
                 (Int32)(coordinates.Y * window.ClientSize.Height));
         }
 
         /// <inheritdoc/>
-        public override Point2 DenormalizeCoordinates(Single x, Single y)
+        public override Point DenormalizeCoordinates(Single x, Single y)
         {
             Contract.EnsureNotDisposed(this, Disposed);
 
@@ -224,7 +225,7 @@ namespace Sedulous.Sdl2.Input
             if (window == null)
                 throw new InvalidOperationException(FrameworkStrings.TouchDeviceNotBoundToWindow);
 
-            return new Point2(
+            return new Point(
                 (Int32)(x * window.ClientSize.Width),
                 (Int32)(y * window.ClientSize.Height));
         }

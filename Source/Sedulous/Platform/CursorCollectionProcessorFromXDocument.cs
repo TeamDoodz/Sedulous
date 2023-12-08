@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Xml.Linq;
 using Sedulous.Content;
 using Sedulous.Core.Xml;
@@ -31,9 +32,9 @@ namespace Sedulous
                 if (String.IsNullOrEmpty(name))
                     throw new InvalidOperationException(FrameworkStrings.InvalidCursorName);
 
-                var position = cursorElement.AttributeValue<Point2>("Position");
-                var size = cursorElement.AttributeValue<Size2>("Size");
-                var hotspot = cursorElement.AttributeValue<Point2>("Hotspot");
+                var position = cursorElement.AttributeValue<Point>("Position");
+                var size = cursorElement.AttributeValue<Size>("Size");
+                var hotspot = cursorElement.AttributeValue<Point>("Hotspot");
 
                 var cursorDesc = new CursorDescription();
                 cursorDesc.Name = name;

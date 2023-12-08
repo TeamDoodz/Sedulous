@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Sedulous.Core;
 using Sedulous.Graphics;
 using Sedulous.Graphics.Graphics2D;
@@ -49,21 +50,21 @@ namespace Sedulous.Tests.Graphics
         }
 
         /// <inheritdoc/>
-        public override Point2 PointToWindow(Point2 pt)
+        public override Point PointToWindow(Point pt)
         {
             var xFactor = Window.DrawableSize.Width / (Double)BufferWidth;
             var yFactor = Window.DrawableSize.Height / (Double)BufferHeight;
 
-            return new Point2((Int32)(pt.X * xFactor), (Int32)(pt.Y * yFactor));
+            return new Point((Int32)(pt.X * xFactor), (Int32)(pt.Y * yFactor));
         }
 
         /// <inheritdoc/>
-        public override Point2 WindowToPoint(Point2 pt)
+        public override Point WindowToPoint(Point pt)
         {
             var xFactor = BufferWidth / (Double)Window.DrawableSize.Width;
             var yFactor = BufferHeight / (Double)Window.DrawableSize.Height;
 
-            return new Point2((Int32)(pt.X * xFactor), (Int32)(pt.Y * yFactor));
+            return new Point((Int32)(pt.X * xFactor), (Int32)(pt.Y * yFactor));
         }
 
         /// <inheritdoc/>
@@ -176,9 +177,9 @@ namespace Sedulous.Tests.Graphics
         }
 
         /// <inheritdoc/>
-        public override Size2 Size
+        public override Size Size
         {
-            get { return new Size2(BufferWidth, BufferHeight); }
+            get { return new Size(BufferWidth, BufferHeight); }
         }
 
         /// <inheritdoc/>

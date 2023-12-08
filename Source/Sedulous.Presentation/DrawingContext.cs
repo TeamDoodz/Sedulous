@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Numerics;
 using System.Text;
 using Sedulous.Abstractions;
 using Sedulous.Core;
@@ -38,9 +40,9 @@ namespace Sedulous.Presentation
             this.currentStencil = null;
             this.transforms = 0;
             this.outOfBand = 0;
-            this.localTransform = Matrix.Identity;
-            this.globalTransform = Matrix.Identity;
-            this.combinedTransform = Matrix.Identity;
+            this.localTransform = Matrix4x4.Identity;
+            this.globalTransform = Matrix4x4.Identity;
+            this.combinedTransform = Matrix4x4.Identity;
             this.IsOutOfBandRenderingSuppressed = false;
         }
 
@@ -49,7 +51,7 @@ namespace Sedulous.Presentation
         /// </summary>
         public void Begin()
         {
-            Begin(SpriteSortMode.Deferred, null, null, null, Matrix.Identity);
+            Begin(SpriteSortMode.Deferred, null, null, null, Matrix4x4.Identity);
         }
 
         /// <summary>
@@ -58,7 +60,7 @@ namespace Sedulous.Presentation
         /// <param name="sortMode">The sorting mode to use when rendering interface elements.</param>
         public void Begin(SpriteSortMode sortMode)
         {
-            Begin(sortMode, null, null, null, Matrix.Identity);
+            Begin(sortMode, null, null, null, Matrix4x4.Identity);
         }
 
         /// <summary>
@@ -67,7 +69,7 @@ namespace Sedulous.Presentation
         /// <param name="sortMode">The sorting mode to use when rendering interface elements.</param>
         /// <param name="effect">The custom effect to apply to the rendered interface elements.</param>
         /// <param name="localTransform">The transform matrix to apply to the rendered interface elements.</param>
-        public void Begin(SpriteSortMode sortMode, Effect effect, Matrix localTransform)
+        public void Begin(SpriteSortMode sortMode, Effect effect, Matrix4x4 localTransform)
         {
             Begin(sortMode, null, null, effect, localTransform);
         }
@@ -80,14 +82,14 @@ namespace Sedulous.Presentation
         /// <param name="samplerState">The sampler state to apply to the rendered interface elements.</param>
         /// <param name="effect">The custom effect to apply to the rendered interface elements.</param>
         /// <param name="localTransform">The transform matrix to apply to the rendered interface elements.</param>
-        public void Begin(SpriteSortMode sortMode, BlendState blendState, SamplerState samplerState, Effect effect, Matrix localTransform)
+        public void Begin(SpriteSortMode sortMode, BlendState blendState, SamplerState samplerState, Effect effect, Matrix4x4 localTransform)
         {
             if (SpriteBatch == null)
                 throw new InvalidOperationException(PresentationStrings.DrawingContextDoesNotHaveSpriteBatch);
 
             this.localTransform = localTransform;
-            this.combinedTransform = Matrix.Identity;
-            Matrix.Multiply(ref localTransform, ref globalTransform, out combinedTransform);
+            this.combinedTransform = Matrix4x4.Identity;
+            combinedTransform = localTransform * globalTransform;
 
             SpriteBatch.Begin(sortMode, 
                 blendState ?? BlendState.AlphaBlend,
@@ -722,7 +724,7 @@ namespace Sedulous.Presentation
             if (SpriteBatch == null)
                 throw new InvalidOperationException(PresentationStrings.DrawingContextDoesNotHaveSpriteBatch);
 
-            var rawDestinationRectangle = (Rectangle)display.DipsToPixels(destinationRectangle);
+            var rawDestinationRectangle = (Rectangle)display.DipsToPixels(new RectangleD(destinationRectangle.X, destinationRectangle.Y, destinationRectangle.Width, destinationRectangle.Height));
             SpriteBatch.DrawFrame(frame, rawDestinationRectangle, color * Opacity, rotation, effects, layerDepth);
         }
 
@@ -1317,7 +1319,7 @@ namespace Sedulous.Presentation
         /// <summary>
         /// Gets the local transform which has been applied to this drawing context.
         /// </summary>
-        public Matrix LocalTransform
+        public Matrix4x4 LocalTransform
         {
             get { return localTransform; }
         }
@@ -1325,7 +1327,7 @@ namespace Sedulous.Presentation
         /// <summary>
         /// Gets the global transform which has been applied to this drawing context.
         /// </summary>
-        public Matrix GlobalTransform
+        public Matrix4x4 GlobalTransform
         {
             get { return globalTransform; }
             internal set { globalTransform = value; }
@@ -1334,7 +1336,7 @@ namespace Sedulous.Presentation
         /// <summary>
         /// Gets the combined transform which has been applied to this drawing context.
         /// </summary>
-        public Matrix CombinedTransform
+        public Matrix4x4 CombinedTransform
         {
             get { return combinedTransform; }
         }
@@ -1401,8 +1403,8 @@ namespace Sedulous.Presentation
         private Rectangle? currentStencil;
         private Int32 transforms;
         private Int32 outOfBand;
-        private Matrix localTransform = Matrix.Identity;
-        private Matrix globalTransform = Matrix.Identity;
-        private Matrix combinedTransform = Matrix.Identity;
+        private Matrix4x4 localTransform = Matrix4x4.Identity;
+        private Matrix4x4 globalTransform = Matrix4x4.Identity;
+        private Matrix4x4 combinedTransform = Matrix4x4.Identity;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -90,7 +91,7 @@ namespace Sedulous.Graphics.Graphics2D
 
             var textureRegionElement = input.Element("TextureRegion");
             spriteFontFaceDesc.TextureRegion = (textureRegionElement == null) ? (Rectangle?)null :
-                Rectangle.Parse((String)textureRegionElement);
+                ParseRectangle((String)textureRegionElement);
 
             var glyphsElement = input.Element("Glyphs");
             if (glyphsElement != null)
@@ -126,6 +127,14 @@ namespace Sedulous.Graphics.Graphics2D
 
         // The internal processor which converts SpriteFontDescription -> SpriteFont.
         private readonly SpriteFontProcessor implProcessor = new SpriteFontProcessor();
+
+        private static Rectangle ParseRectangle(string s) {
+            string[] strings = s.Split((char[])null, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            if(strings.Length != 4) {
+                throw new FormatException();
+            }
+            return new Rectangle(int.Parse(strings[0]), int.Parse(strings[1]), int.Parse(strings[2]), int.Parse(strings[3]));
+        }
     }
 }
         

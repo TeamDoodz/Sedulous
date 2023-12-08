@@ -78,46 +78,6 @@ namespace Sedulous.Tests
             TheResultingValue(rectangle1.Equals(rectangle5)).ShouldBe(false);
             TheResultingValue(rectangle1.Equals(rectangle6)).ShouldBe(false);
         }
-
-        [Test]
-        public void RectangleD_TryParse_SucceedsForValidStrings()
-        {
-            var str    = "123.45 456.78 789.99 999.99";
-            var result = default(RectangleD);
-            if (!RectangleD.TryParse(str, out result))
-                throw new InvalidOperationException("Unable to parse string to RectangleD.");
-
-            TheResultingValue(result)
-                .ShouldHavePosition(123.45, 456.78)
-                .ShouldHaveDimensions(789.99, 999.99);
-        }
-
-        [Test]
-        public void RectangleD_TryParse_FailsForInvalidStrings()
-        {
-            var result    = default(RectangleD);
-            var succeeded = RectangleD.TryParse("foo", out result);
-
-            TheResultingValue(succeeded).ShouldBe(false);
-        }
-
-        [Test]
-        public void RectangleD_Parse_SucceedsForValidStrings()
-        {
-            var str    = "123.45 456.78 789.99 999.99";
-            var result = RectangleD.Parse(str);
-
-            TheResultingValue(result)
-                .ShouldHavePosition(123.45, 456.78)
-                .ShouldHaveDimensions(789.99, 999.99);
-        }
-
-        [Test]
-        public void RectangleD_Parse_FailsForInvalidStrings()
-        {
-            Assert.That(() => RectangleD.Parse("foo"),
-                Throws.TypeOf<FormatException>());
-        }
         
         [Test]
         public void RectangleD_SerializesToJson()

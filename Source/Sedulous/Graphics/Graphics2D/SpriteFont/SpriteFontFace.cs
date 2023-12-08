@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 using Sedulous.Core;
 using Sedulous.Core.Text;
@@ -101,58 +102,58 @@ namespace Sedulous.Graphics.Graphics2D
             throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public override Size2 MeasureString(String text)
+        public override Size MeasureString(String text)
         {
             var source = new StringSource(text);
             return MeasureString(ref source, 0, text.Length);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureString(String text, Int32 start, Int32 count)
+        public override Size MeasureString(String text, Int32 start, Int32 count)
         {
             var source = new StringSource(text);
             return MeasureString(ref source, start, count);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureString(StringBuilder text)
+        public override Size MeasureString(StringBuilder text)
         {
             var source = new StringBuilderSource(text);
             return MeasureString(ref source, 0, text.Length);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureString(StringBuilder text, Int32 start, Int32 count)
+        public override Size MeasureString(StringBuilder text, Int32 start, Int32 count)
         {
             var source = new StringBuilderSource(text);
             return MeasureString(ref source, start, count);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureString(ref StringSegment text)
+        public override Size MeasureString(ref StringSegment text)
         {
             var source = new StringSegmentSource(text);
             return MeasureString(ref source, 0, text.Length);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureString(ref StringSegment text, Int32 start, Int32 count)
+        public override Size MeasureString(ref StringSegment text, Int32 start, Int32 count)
         {
             var source = new StringSegmentSource(text);
             return MeasureString(ref source, start, count);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureString<TSource>(ref TSource source)
+        public override Size MeasureString<TSource>(ref TSource source)
         {
             return MeasureString(ref source, 0, source.Length);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureString<TSource>(ref TSource source, Int32 start, Int32 count)
+        public override Size MeasureString<TSource>(ref TSource source, Int32 start, Int32 count)
         {
             if (count == 0)
-                return Size2.Zero;
+                return Size.Empty;
 
             Contract.EnsureRange(start >= 0 && start < source.Length, nameof(start));
             Contract.EnsureRange(count >= 0 && start + count <= source.Length, nameof(count));
@@ -186,35 +187,35 @@ namespace Sedulous.Graphics.Graphics2D
                 cx += MeasureGlyph(ref source, ix).Width;
             }
 
-            return new Size2(cx, cy + LineSpacing);
+            return new Size(cx, cy + LineSpacing);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedString(ShapedString text, Boolean rtl = false) =>
+        public override Size MeasureShapedString(ShapedString text, Boolean rtl = false) =>
             throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedString(ShapedString text, Int32 start, Int32 count, Boolean rtl = false) =>
+        public override Size MeasureShapedString(ShapedString text, Int32 start, Int32 count, Boolean rtl = false) =>
             throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedString(ShapedStringBuilder text, Boolean rtl = false) =>
+        public override Size MeasureShapedString(ShapedStringBuilder text, Boolean rtl = false) =>
             throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedString(ShapedStringBuilder text, Int32 start, Int32 count, Boolean rtl = false) =>
+        public override Size MeasureShapedString(ShapedStringBuilder text, Int32 start, Int32 count, Boolean rtl = false) =>
             throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedString<TSource>(ref TSource text, Boolean rtl = false) =>
+        public override Size MeasureShapedString<TSource>(ref TSource text, Boolean rtl = false) =>
             throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedString<TSource>(ref TSource text, Int32 start, Int32 count, Boolean rtl = false) =>
+        public override Size MeasureShapedString<TSource>(ref TSource text, Int32 start, Int32 count, Boolean rtl = false) =>
             throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public override Size2 MeasureGlyph(Int32 c1, Int32? c2 = null)
+        public override Size MeasureGlyph(Int32 c1, Int32? c2 = null)
         {
             if (c1 < 0 || c1 > Char.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(c1));
@@ -230,36 +231,36 @@ namespace Sedulous.Graphics.Graphics2D
 
             var glyph = glyphs[char1];
             var offset = c2.HasValue ? kerning.Get(char1, char2) : 0;
-            return new Size2(glyph.Width + offset, glyph.Height);
+            return new Size(glyph.Width + offset, glyph.Height);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureGlyphByGlyphIndex(Int32 glyphIndex1, Int32? glyphIndex2 = null) =>
+        public override Size MeasureGlyphByGlyphIndex(Int32 glyphIndex1, Int32? glyphIndex2 = null) =>
             throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public override Size2 MeasureGlyph(String text, Int32 ix)
+        public override Size MeasureGlyph(String text, Int32 ix)
         {
             var source = new StringSource(text);
             return MeasureGlyph(ref source, ix);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureGlyph(StringBuilder text, Int32 ix)
+        public override Size MeasureGlyph(StringBuilder text, Int32 ix)
         {
             var source = new StringBuilderSource(text);
             return MeasureGlyph(ref source, ix);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureGlyph(ref StringSegment text, Int32 ix)
+        public override Size MeasureGlyph(ref StringSegment text, Int32 ix)
         {
             var source = new StringSegmentSource(text);
             return MeasureGlyph(ref source, ix);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureGlyph<TSource>(ref TSource text, Int32 ix)
+        public override Size MeasureGlyph<TSource>(ref TSource text, Int32 ix)
         {
             var c1 = text[ix];
 
@@ -277,10 +278,10 @@ namespace Sedulous.Graphics.Graphics2D
             switch (c1)
             {
                 case '\n':
-                    return new Size2(0, LineSpacing);
+                    return new Size(0, LineSpacing);
 
                 case '\t':
-                    return new Size2(TabWidth, LineSpacing);
+                    return new Size(TabWidth, LineSpacing);
 
                 default:
                     var c2 = (ixNext < text.Length) ? text[ixNext++] : (Char?)null;
@@ -292,31 +293,31 @@ namespace Sedulous.Graphics.Graphics2D
                     }
                     var glyph = glyphs[c1];
                     var offset = c2.HasValue ? kerning.Get(c1, c2.GetValueOrDefault()) : 0;
-                    return new Size2(glyph.Width + offset, glyph.Height);
+                    return new Size(glyph.Width + offset, glyph.Height);
             }
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedGlyph(ShapedString text, Int32 ix, Boolean rtl = false) =>
+        public override Size MeasureShapedGlyph(ShapedString text, Int32 ix, Boolean rtl = false) =>
             throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedGlyph(ShapedStringBuilder text, Int32 ix, Boolean rtl = false) =>
+        public override Size MeasureShapedGlyph(ShapedStringBuilder text, Int32 ix, Boolean rtl = false) =>
             throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedGlyph<TSource>(ref TSource source, Int32 ix, Boolean rtl = false) =>
+        public override Size MeasureShapedGlyph<TSource>(ref TSource source, Int32 ix, Boolean rtl = false) =>
             throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public override Size2 MeasureGlyphWithHypotheticalKerning(ref StringSegment text, Int32 ix, Int32 c2)
+        public override Size MeasureGlyphWithHypotheticalKerning(ref StringSegment text, Int32 ix, Int32 c2)
         {
             var source = new StringSegmentSource(text);
             return MeasureGlyphWithHypotheticalKerning(ref source, ix, c2);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureGlyphWithHypotheticalKerning<TSource>(ref TSource text, Int32 ix, Int32 c2)
+        public override Size MeasureGlyphWithHypotheticalKerning<TSource>(ref TSource text, Int32 ix, Int32 c2)
         {
             if (c2 < 0 || c2 > Char.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(c2));
@@ -328,31 +329,31 @@ namespace Sedulous.Graphics.Graphics2D
             switch (c1)
             {
                 case '\n':
-                    return new Size2(0, LineSpacing);
+                    return new Size(0, LineSpacing);
 
                 case '\t':
-                    return new Size2(TabWidth, LineSpacing);
+                    return new Size(TabWidth, LineSpacing);
 
                 default:
                     var glyph = glyphs[c1];
                     var offset = kerning.Get(c1, (Char)c2);
-                    return new Size2(glyph.Width + offset, glyph.Height);
+                    return new Size(glyph.Width + offset, glyph.Height);
             }
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedGlyphWithHypotheticalKerning<TSource>(ref TSource text, Int32 ix, Int32 glyphIndex2, Boolean rtl = false) =>
+        public override Size MeasureShapedGlyphWithHypotheticalKerning<TSource>(ref TSource text, Int32 ix, Int32 glyphIndex2, Boolean rtl = false) =>
             throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public override Size2 MeasureGlyphWithoutKerning(ref StringSegment text, Int32 ix)
+        public override Size MeasureGlyphWithoutKerning(ref StringSegment text, Int32 ix)
         {
             var source = new StringSegmentSource(text);
             return MeasureGlyphWithoutKerning(ref source, ix);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureGlyphWithoutKerning<TSource>(ref TSource text, Int32 ix)
+        public override Size MeasureGlyphWithoutKerning<TSource>(ref TSource text, Int32 ix)
         {
             var c1 = text[ix];
             if (Char.IsSurrogate(c1))
@@ -361,10 +362,10 @@ namespace Sedulous.Graphics.Graphics2D
             switch (c1)
             {
                 case '\n':
-                    return new Size2(0, LineSpacing);
+                    return new Size(0, LineSpacing);
 
                 case '\t':
-                    return new Size2(TabWidth, LineSpacing);
+                    return new Size(TabWidth, LineSpacing);
 
                 default:
                     return glyphs[c1].Size;
@@ -372,15 +373,15 @@ namespace Sedulous.Graphics.Graphics2D
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedGlyphWithoutKerning<TSource>(ref TSource text, Int32 ix, Boolean rtl = false) =>
+        public override Size MeasureShapedGlyphWithoutKerning<TSource>(ref TSource text, Int32 ix, Boolean rtl = false) =>
             throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public override Size2 GetKerningInfoByGlyphIndex(Int32 glyphIndex1, Int32 glyphIndex2) =>
+        public override Size GetKerningInfoByGlyphIndex(Int32 glyphIndex1, Int32 glyphIndex2) =>
             throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public override Size2 GetKerningInfo(Int32 c1, Int32 c2)
+        public override Size GetKerningInfo(Int32 c1, Int32 c2)
         {
             if (c1 < 0 || c1 > Char.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(c1));
@@ -390,18 +391,18 @@ namespace Sedulous.Graphics.Graphics2D
             var char1 = (Char)c1;
             var char2 = (Char)c2;
 
-            return new Size2(kerning.Get(char1, char2), 0);
+            return new Size(kerning.Get(char1, char2), 0);
         }
 
         /// <inheritdoc/>
-        public override Size2 GetKerningInfo(ref StringSegment text, Int32 ix)
+        public override Size GetKerningInfo(ref StringSegment text, Int32 ix)
         {
             var source = new StringSegmentSource(text);
             return GetKerningInfo(ref source, ix);
         }
 
         /// <inheritdoc/>
-        public override Size2 GetKerningInfo(ref StringSegment text1, Int32 ix1, ref StringSegment text2, Int32 ix2)
+        public override Size GetKerningInfo(ref StringSegment text1, Int32 ix1, ref StringSegment text2, Int32 ix2)
         {
             var source1 = new StringSegmentSource(text1);
             var source2 = new StringSegmentSource(text2);
@@ -409,7 +410,7 @@ namespace Sedulous.Graphics.Graphics2D
         }
 
         /// <inheritdoc/>
-        public override Size2 GetKerningInfo<TSource>(ref TSource text, Int32 ix)
+        public override Size GetKerningInfo<TSource>(ref TSource text, Int32 ix)
         {
             var c1 = text[ix];
 
@@ -425,7 +426,7 @@ namespace Sedulous.Graphics.Graphics2D
             }
 
             if (ixNext >= text.Length)
-                return Size2.Zero;
+                return Size.Empty;
 
             var c2 = text[ixNext];
             if (Char.IsSurrogate(c2))
@@ -435,7 +436,7 @@ namespace Sedulous.Graphics.Graphics2D
         }
 
         /// <inheritdoc/>
-        public override Size2 GetKerningInfo<TSource1, TSource2>(ref TSource1 text1, Int32 ix1, ref TSource2 text2, Int32 ix2)
+        public override Size GetKerningInfo<TSource1, TSource2>(ref TSource1 text1, Int32 ix1, ref TSource2 text2, Int32 ix2)
         {
             var c1 = text1[ix1];
             if (Char.IsSurrogate(c1))
@@ -449,22 +450,22 @@ namespace Sedulous.Graphics.Graphics2D
         }
 
         /// <inheritdoc/>
-        public override Size2 GetShapedKerningInfo<TSource>(ref TSource text, Int32 ix) =>
+        public override Size GetShapedKerningInfo<TSource>(ref TSource text, Int32 ix) =>
             throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public override Size2 GetShapedKerningInfo<TSource1, TSource2>(ref TSource1 text1, Int32 ix1, ref TSource2 text2, Int32 ix2, Boolean rtl = false) =>
+        public override Size GetShapedKerningInfo<TSource1, TSource2>(ref TSource1 text1, Int32 ix1, ref TSource2 text2, Int32 ix2, Boolean rtl = false) =>
             throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public override Size2 GetHypotheticalKerningInfo(ref StringSegment text, Int32 ix, Int32 c2)
+        public override Size GetHypotheticalKerningInfo(ref StringSegment text, Int32 ix, Int32 c2)
         {
             var source = new StringSegmentSource(text);
             return GetHypotheticalKerningInfo(ref source, ix, c2);
         }
 
         /// <inheritdoc/>
-        public override Size2 GetHypotheticalKerningInfo<TSource>(ref TSource text, Int32 ix, Int32 c2)
+        public override Size GetHypotheticalKerningInfo<TSource>(ref TSource text, Int32 ix, Int32 c2)
         {
             if (c2 < 0 || c2 > Char.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(c2));
@@ -477,7 +478,7 @@ namespace Sedulous.Graphics.Graphics2D
         }
 
         /// <inheritdoc/>
-        public override Size2 GetHypotheticalShapedKerningInfo<TSource>(ref TSource text, Int32 ix, Int32 glyphIndex2, Boolean rtl = false) =>
+        public override Size GetHypotheticalShapedKerningInfo<TSource>(ref TSource text, Int32 ix, Int32 glyphIndex2, Boolean rtl = false) =>
             throw new NotSupportedException();
 
         /// <inheritdoc/>

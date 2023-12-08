@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Content;
 using Sedulous.Core;
 using Sedulous.Graphics.Graphics2D;
@@ -30,7 +31,7 @@ namespace Sedulous.Presentation.Media.Effects
             var state = dc.GetCurrentState();
 
             dc.End();
-            dc.Begin(SpriteSortMode.Immediate, effect, Matrix.Identity);
+            dc.Begin(SpriteSortMode.Immediate, effect, Matrix4x4.Identity);
 
             var position = (Vector2)element.View.Display.DipsToPixels(target.VisualBounds.Location);
             var positionRounded = new Vector2((Int32)position.X, (Int32)position.Y);

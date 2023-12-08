@@ -108,63 +108,6 @@ namespace Sedulous.Tests
         }
 
         [Test]
-        public void Color_ParsesHexString_AARRGGBB()
-        {
-            var color = Color.Parse("#12345678");
-
-            TheResultingValue(color.A).ShouldBe(0x12);
-            TheResultingValue(color.R).ShouldBe(0x34);
-            TheResultingValue(color.G).ShouldBe(0x56);
-            TheResultingValue(color.B).ShouldBe(0x78);
-        }
-
-        [Test]
-        public void Color_ParsesHexString_RRGGBB()
-        {
-            var color = Color.Parse("#123456");
-
-            TheResultingValue(color.A).ShouldBe(0xFF);
-            TheResultingValue(color.R).ShouldBe(0x12);
-            TheResultingValue(color.G).ShouldBe(0x34);
-            TheResultingValue(color.B).ShouldBe(0x56);
-        }
-
-        [Test]
-        public void Color_ParsesHexString_ARGB()
-        {
-            var color = Color.Parse("#1234");
-
-            TheResultingValue(color.A).ShouldBe(0x11);
-            TheResultingValue(color.R).ShouldBe(0x22);
-            TheResultingValue(color.G).ShouldBe(0x33);
-            TheResultingValue(color.B).ShouldBe(0x44);
-        }
-
-        [Test]
-        public void Color_ParsesHexString_RGB()
-        {
-            var color = Color.Parse("#123");
-
-            TheResultingValue(color.A).ShouldBe(0xFF);
-            TheResultingValue(color.R).ShouldBe(0x11);
-            TheResultingValue(color.G).ShouldBe(0x22);
-            TheResultingValue(color.B).ShouldBe(0x33);
-        }
-
-        [Test]
-        public void Color_ParsesNamedColor()
-        {
-            var color1 = Color.Parse("CornflowerBlue");
-            TheResultingValue(color1.PackedValue).ShouldBe(Color.CornflowerBlue.PackedValue);
-
-            var color2 = Color.Parse("DarkSlateGray");
-            TheResultingValue(color2.PackedValue).ShouldBe(Color.DarkSlateGray.PackedValue);
-
-            var color3 = Color.Parse("BlanchedAlmond");
-            TheResultingValue(color3.PackedValue).ShouldBe(Color.BlanchedAlmond.PackedValue);
-        }
-
-        [Test]
         public void Color_SerializesToJson()
         {
             var color = Color.CornflowerBlue;

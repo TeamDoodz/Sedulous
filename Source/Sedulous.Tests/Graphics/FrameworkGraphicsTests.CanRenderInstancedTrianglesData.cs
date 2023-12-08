@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Graphics;
 
 namespace Sedulous.Tests.Graphics
@@ -15,7 +16,7 @@ namespace Sedulous.Tests.Graphics
             /// </summary>
             /// <param name="transform"></param>
             /// <param name="color"></param>
-            public CanRenderInstancedTrianglesData(Matrix transform, Color color)
+            public CanRenderInstancedTrianglesData(Matrix4x4 transform, Color color)
             {
                 this.Transform = transform;
                 this.Color = color;
@@ -38,7 +39,7 @@ namespace Sedulous.Tests.Graphics
             /// <summary>
             /// The instance's transformation matrix.
             /// </summary>
-            public Matrix Transform;
+            public Matrix4x4 Transform;
 
             /// <summary>
             /// The instance's color.

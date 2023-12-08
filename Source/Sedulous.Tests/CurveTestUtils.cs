@@ -8,6 +8,7 @@ using System.Reflection;
 using CsvHelper;
 using SharpGLTF.Animations;
 using Sedulous.Core;
+using System.Numerics;
 
 namespace Sedulous.Tests
 {

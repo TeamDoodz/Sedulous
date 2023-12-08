@@ -25,7 +25,7 @@ namespace Sedulous.Presentation
             protected override Point2D? UpdatePosition()
             {
                 var posWin = device.GetPositionInWindow(View.Window);
-                return posWin.HasValue ? View.Display.PixelsToDips(posWin.Value) : (Point2D?)null;
+                return posWin.HasValue ? View.Display.PixelsToDips(new Point2D(posWin.Value.X, posWin.Value.Y)) : (Point2D?)null;
             }
 
             /// <inheritdoc/>

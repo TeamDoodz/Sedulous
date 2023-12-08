@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Numerics;
 using Sedulous.Content;
 using Sedulous.Core;
 
@@ -330,7 +332,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// </summary>
         private void UpdateMinimumRecommendedSize()
         {
-            MinimumRecommendedSize = new Size2(left + right, top + bottom);
+            MinimumRecommendedSize = new Size(left + right, top + bottom);
         }
 
         // Property values.

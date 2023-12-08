@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Numerics;
 using Sedulous.Core;
 
 namespace Sedulous.Graphics.Graphics3D
@@ -68,14 +69,14 @@ namespace Sedulous.Graphics.Graphics3D
         /// Gets the node's world matrix.
         /// </summary>
         /// <param name="worldMatrix">The node's world matrix.</param>
-        public void GetWorldMatrix(out Matrix worldMatrix)
+        public void GetWorldMatrix(out Matrix4x4 worldMatrix)
         {
             LocalTransform.AsMatrix(out var transform);
 
             if (ParentModelNodeInstance != null)
             {
                 ParentModelNodeInstance.GetWorldMatrix(out var parentTransform);
-                Matrix.Multiply(ref transform, ref parentTransform, out transform);
+                transform *= parentTransform;
             }
 
             worldMatrix = transform;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Numerics;
 using Sedulous.Core;
 using Sedulous.Input;
 using Sedulous.Presentation.Animations;
@@ -702,7 +703,7 @@ namespace Sedulous.Presentation
         }
 
         /// <inheritdoc/>
-        protected override Matrix GetTransformMatrix(Boolean inDevicePixels = false)
+        protected override Matrix4x4 GetTransformMatrix(Boolean inDevicePixels = false)
         {
             if (isLayoutTransformed)
             {
@@ -1203,7 +1204,7 @@ namespace Sedulous.Presentation
         /// <param name="ymax">The available height.</param>
         /// <param name="transform">The transformation matrix to apply.</param>
         /// <returns>The size of the largest rectangle that will still fit within the available space after the specified transform is applied.</returns>
-        private static Size2D CalculateMaximumAvailableSizeBeforeLayoutTransform(Double xmax, Double ymax, Matrix transform)
+        private static Size2D CalculateMaximumAvailableSizeBeforeLayoutTransform(Double xmax, Double ymax, Matrix4x4 transform)
         {
             /* When using layout transforms, it's possible for an element to produce a desired size which, after the transform
              * is applied, will cause the element to lie outside of its maximum available layout area. To address this problem,
@@ -1241,7 +1242,7 @@ namespace Sedulous.Presentation
             xmax = Double.IsInfinity(xmax) ? ymax : xmax;
             ymax = Double.IsInfinity(ymax) ? xmax : ymax;
 
-            if (MathUtility.IsApproximatelyZero(xmax) || MathUtility.IsApproximatelyZero(ymax) || MathUtility.IsApproximatelyZero(transform.Determinant()))
+            if (MathUtility.IsApproximatelyZero(xmax) || MathUtility.IsApproximatelyZero(ymax) || MathUtility.IsApproximatelyZero(transform.GetDeterminant()))
                 return Size2D.Zero;
             
             var m11 = transform.M11;
@@ -1458,7 +1459,7 @@ namespace Sedulous.Presentation
 
         // State values.
         private FrameworkElementInitializationState initializationState;
-        private Matrix layoutTransformUsedDuringLayout;
+        private Matrix4x4 layoutTransformUsedDuringLayout;
         private Size2D layoutTransformSizeDesiredBeforeTransform;
         private Boolean isLayoutTransformed;
         private Namescope templatedNamescope;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Sedulous.Core;
 
 namespace Sedulous.Graphics
@@ -125,7 +126,7 @@ namespace Sedulous.Graphics
         /// <summary>
         /// Gets the render target's size in pixels.
         /// </summary>
-        public abstract Size2 Size
+        public abstract Size Size
         {
             get;
         }

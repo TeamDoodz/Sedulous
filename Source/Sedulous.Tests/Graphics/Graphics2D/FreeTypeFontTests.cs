@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Drawing;
+using NUnit.Framework;
 using Sedulous.FreeType2;
 using Sedulous.Graphics.Graphics2D.Text;
 using Sedulous.TestApplication;
@@ -14,7 +15,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D
         public void FreeTypeFont_MeasuresShapedStringsCorrectly()
         {
             var freetypeFont = default(FreeTypeFont);
-            var size = Size2.Zero;
+            var size = Size.Empty;
 
             GivenAFrameworkApplication()
                 .WithPlugin(new FreeTypeFontPlugin())
@@ -43,7 +44,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D
         public void FreeTypeFont_MeasuresShapedStringBuildersCorrectly()
         {
             var freetypeFont = default(FreeTypeFont);
-            var size = Size2.Zero;
+            var size = Size.Empty;
 
             GivenAFrameworkApplication()
                 .WithPlugin(new FreeTypeFontPlugin())

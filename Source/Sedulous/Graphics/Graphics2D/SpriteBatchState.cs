@@ -1,4 +1,6 @@
 ﻿
+using System.Numerics;
+
 namespace Sedulous.Graphics.Graphics2D
 {
     /// <summary>
@@ -16,7 +18,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="depthStencilState">The sprite batch's depth/stencil state.</param>
         /// <param name="effect">The sprite batch's custom effect.</param>
         /// <param name="transformMatrix">The sprite batch's transformation matrix.</param>
-        public SpriteBatchState(SpriteSortMode sortMode, BlendState blendState, SamplerState samplerState, RasterizerState rasterizerState, DepthStencilState depthStencilState, Effect effect, Matrix transformMatrix)
+        public SpriteBatchState(SpriteSortMode sortMode, BlendState blendState, SamplerState samplerState, RasterizerState rasterizerState, DepthStencilState depthStencilState, Effect effect, Matrix4x4 transformMatrix)
         {
             this.sortMode          = sortMode;
             this.blendState        = blendState;
@@ -78,7 +80,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <summary>
         /// Gets the transformation matrix which is in effect for the batch.
         /// </summary>
-        public Matrix TransformMatrix
+        public Matrix4x4 TransformMatrix
         {
             get { return transformMatrix; }
         }
@@ -90,6 +92,6 @@ namespace Sedulous.Graphics.Graphics2D
         private readonly DepthStencilState depthStencilState;
         private readonly RasterizerState rasterizerState;
         private readonly Effect customEffect;
-        private readonly Matrix transformMatrix;
+        private readonly Matrix4x4 transformMatrix;
     }
 }

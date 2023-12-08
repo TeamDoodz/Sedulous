@@ -1,4 +1,5 @@
-﻿using Sedulous.Core;
+﻿using System.Numerics;
+using Sedulous.Core;
 
 namespace Sedulous.Graphics.Graphics3D
 {
@@ -12,7 +13,7 @@ namespace Sedulous.Graphics.Graphics3D
         /// </summary>
         /// <param name="node">The joint's node.</param>
         /// <param name="inverseBindMatrix">The joint's inverse bind matrix.</param>
-        public SkinJoint(ModelNode node, Matrix inverseBindMatrix)
+        public SkinJoint(ModelNode node, Matrix4x4 inverseBindMatrix)
         {
             Contract.Require(node, nameof(node));
 
@@ -28,6 +29,6 @@ namespace Sedulous.Graphics.Graphics3D
         /// <summary>
         /// Gets the joint's inverse bind matrix.
         /// </summary>
-        public Matrix InverseBindMatrix { get; }
+        public Matrix4x4 InverseBindMatrix { get; }
     }
 }

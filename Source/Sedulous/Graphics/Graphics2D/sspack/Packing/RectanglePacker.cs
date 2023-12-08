@@ -24,6 +24,7 @@
 
 #endregion
 
+using System.Numerics;
 using Sedulous;
 
 namespace sspack

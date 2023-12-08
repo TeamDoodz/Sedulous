@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Newtonsoft.Json;
 
 namespace Sedulous
@@ -28,19 +29,19 @@ namespace Sedulous
         /// </summary>
         /// <param name="position">The position of the circle's center.</param>
         /// <param name="radius">The circle's radius.</param>
-        public CircleF(Point2F position, Single radius)
+        public CircleF(PointF position, Single radius)
             : this(position.X, position.Y, radius)
         {
 
         }
         
         /// <summary>
-        /// Offsets the specified <see cref="CircleF"/> by adding the specified <see cref="Point2F"/> to its location.
+        /// Offsets the specified <see cref="CircleF"/> by adding the specified <see cref="PointF"/> to its location.
         /// </summary>
         /// <param name="circle">The <see cref="CircleF"/> to offset.</param>
-        /// <param name="point">The <see cref="Point2"/> by which to offset the rectangle.</param>
+        /// <param name="point">The <see cref="Point"/> by which to offset the rectangle.</param>
         /// <returns>A <see cref="CircleF"/> that has been offset by the specified amount.</returns>
-        public static CircleF operator +(CircleF circle, Point2 point)
+        public static CircleF operator +(CircleF circle, Point point)
         {
             CircleF result;
 
@@ -52,12 +53,12 @@ namespace Sedulous
         }
 
         /// <summary>
-        /// Offsets the specified <see cref="CircleF"/> by subtracting the specified <see cref="Point2F"/> from its location.
+        /// Offsets the specified <see cref="CircleF"/> by subtracting the specified <see cref="PointF"/> from its location.
         /// </summary>
         /// <param name="circle">The <see cref="CircleF"/> to offset.</param>
-        /// <param name="point">The <see cref="Point2"/> by which to offset the rectangle.</param>
+        /// <param name="point">The <see cref="Point"/> by which to offset the rectangle.</param>
         /// <returns>A <see cref="CircleF"/> that has been offset by the specified amount.</returns>
-        public static CircleF operator -(CircleF circle, Point2 point)
+        public static CircleF operator -(CircleF circle, Point point)
         {
             CircleF result;
 
@@ -69,12 +70,12 @@ namespace Sedulous
         }
 
         /// <summary>
-        /// Offsets the specified <see cref="CircleF"/> by adding the specified <see cref="Point2F"/> to its location.
+        /// Offsets the specified <see cref="CircleF"/> by adding the specified <see cref="PointF"/> to its location.
         /// </summary>
         /// <param name="circle">The <see cref="CircleF"/> to offset.</param>
-        /// <param name="point">The <see cref="Point2F"/> by which to offset the rectangle.</param>
+        /// <param name="point">The <see cref="PointF"/> by which to offset the rectangle.</param>
         /// <returns>A <see cref="CircleF"/> that has been offset by the specified amount.</returns>
-        public static CircleF operator +(CircleF circle, Point2F point)
+        public static CircleF operator +(CircleF circle, PointF point)
         {
             CircleF result;
 
@@ -86,12 +87,12 @@ namespace Sedulous
         }
 
         /// <summary>
-        /// Offsets the specified <see cref="CircleF"/> by subtracting the specified <see cref="Point2F"/> from its location.
+        /// Offsets the specified <see cref="CircleF"/> by subtracting the specified <see cref="PointF"/> from its location.
         /// </summary>
         /// <param name="circle">The <see cref="CircleF"/> to offset.</param>
-        /// <param name="point">The <see cref="Point2F"/> by which to offset the rectangle.</param>
+        /// <param name="point">The <see cref="PointF"/> by which to offset the rectangle.</param>
         /// <returns>A <see cref="CircleF"/> that has been offset by the specified amount.</returns>
-        public static CircleF operator -(CircleF circle, Point2F point)
+        public static CircleF operator -(CircleF circle, PointF point)
         {
             CircleF result;
 
@@ -200,9 +201,9 @@ namespace Sedulous
         /// Gets the circle's position.
         /// </summary>
         [JsonIgnore]
-        public Point2F Position
+        public PointF Position
         {
-            get { return new Point2F(X, Y); }
+            get { return new PointF(X, Y); }
         }
 
         /// <summary>

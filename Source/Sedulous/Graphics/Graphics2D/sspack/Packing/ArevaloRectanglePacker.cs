@@ -26,6 +26,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Numerics;
 using Sedulous;
 
 namespace sspack
@@ -339,7 +341,7 @@ namespace sspack
             // rectangles already in the packing area
             for (int index = 0; index < packedRectangles.Count; ++index)
             {
-                if (packedRectangles[index].Intersects(rectangle))
+                if (packedRectangles[index].IntersectsWith(rectangle))
                     return false;
             }
 

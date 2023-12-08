@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -89,7 +90,7 @@ namespace Sedulous.Graphics.Graphics2D
                     frameDescription.Y = (Int32?)GetFrameAttribute(frameElement, "Y") ?? 0;
                     frameDescription.Width = (Int32?)GetFrameAttribute(frameElement, "Width") ?? 0;
                     frameDescription.Height = (Int32?)GetFrameAttribute(frameElement, "Height") ?? 0;
-                    frameDescription.Origin = new Point2(
+                    frameDescription.Origin = new Point(
                         (Int32?)GetFrameAttribute(frameElement, "OriginX") ?? 0,
                         (Int32?)GetFrameAttribute(frameElement, "OriginY") ?? 0);                        
                     frameDescription.Duration = (Int32?)GetFrameAttribute(frameElement, "Duration") ?? 0;
@@ -128,7 +129,7 @@ namespace Sedulous.Graphics.Graphics2D
                     frameGroupDescription.FrameWidth = (Int32?)GetFrameAttribute(frameGroupElement, "FrameWidth") ?? 0;
                     frameGroupDescription.FrameHeight = (Int32?)GetFrameAttribute(frameGroupElement, "FrameHeight") ?? 0;
                     frameGroupDescription.FrameCount = (Int32?)GetFrameAttribute(frameGroupElement, "FrameCount") ?? 0;
-                    frameGroupDescription.Origin = new Point2(
+                    frameGroupDescription.Origin = new Point(
                         (Int32?)GetFrameAttribute(frameGroupElement, "OriginX") ?? 0,
                         (Int32?)GetFrameAttribute(frameGroupElement, "OriginX") ?? 0);
                     frameGroupDescription.Duration = (Int32?)GetFrameAttribute(frameGroupElement, "Duration") ?? 0;

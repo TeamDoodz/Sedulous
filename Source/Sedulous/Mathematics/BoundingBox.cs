@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using Newtonsoft.Json;
 using Sedulous.Core;
 
@@ -393,8 +394,8 @@ namespace Sedulous
         /// <param name="result">A <see cref="ContainmentType"/> value representing the relationship between this box and the evaluated sphere.</param>
         public void Contains(ref BoundingSphere sphere, out ContainmentType result)
         {
-            Vector3.Clamp(ref sphere.Center, ref Min, ref Max, out var clampedCenter);
-            Vector3.DistanceSquared(ref sphere.Center, ref clampedCenter, out var clampedCenterOffset);
+            Vector3 clampedCenter = Vector3.Clamp(sphere.Center, Min, Max);
+            float clampedCenterOffset = Vector3.DistanceSquared(sphere.Center, clampedCenter);
 
             var radiusSquared = sphere.Radius * sphere.Radius;
             if (radiusSquared <= clampedCenterOffset)
@@ -505,8 +506,8 @@ namespace Sedulous
         /// <param name="result"><see langword="true"/> if this box intersects the evaluated sphere; otherwise, <see langword="false"/>.</param>
         public void Intersects(ref BoundingSphere sphere, out Boolean result)
         {
-            Vector3.Clamp(ref sphere.Center, ref Min, ref Max, out var clampedCenter);
-            Vector3.DistanceSquared(ref sphere.Center, ref clampedCenter, out var clampedCenterOffset);
+            Vector3 clampedCenter = Vector3.Clamp(sphere.Center, Min, Max);
+            float clampedCenterOffset = Vector3.DistanceSquared(sphere.Center, clampedCenter);
             result = (clampedCenterOffset <= sphere.Radius * sphere.Radius);
         }
 
@@ -542,7 +543,7 @@ namespace Sedulous
         /// <returns><see langword="true"/> if this box intersects the evaluated plane; otherwise, <see langword="false"/>.</returns>
         public PlaneIntersectionType Intersects(Plane plane)
         {
-            plane.Intersects(ref this, out var result);
+            Intersects(ref plane, out var result);
             return result;
         }
 

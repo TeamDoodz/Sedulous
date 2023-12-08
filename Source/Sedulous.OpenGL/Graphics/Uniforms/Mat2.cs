@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Sedulous.OpenGL.Graphics.Uniforms
 {
@@ -10,8 +11,8 @@ namespace Sedulous.OpenGL.Graphics.Uniforms
         /// <summary>
         /// Initializes a new instance of the <see cref="Mat2"/> structure.
         /// </summary>
-        /// <param name="value">The <see cref="Matrix"/> from which to initialize this structure.</param>
-        public Mat2(Matrix value)
+        /// <param name="value">The <see cref="Matrix4x4"/> from which to initialize this structure.</param>
+        public Mat2(Matrix4x4 value)
         {
             this.M11 = value.M11;
             this.M12 = value.M12;
@@ -20,12 +21,12 @@ namespace Sedulous.OpenGL.Graphics.Uniforms
         }
 
         /// <summary>
-        /// Explcitly converts a <see cref="Mat2"/> to a <see cref="Matrix"/>.
+        /// Explcitly converts a <see cref="Mat2"/> to a <see cref="Matrix4x4"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static explicit operator Matrix(Mat2 value)
+        public static explicit operator Matrix4x4(Mat2 value)
         {
-            return new Matrix(
+            return new Matrix4x4(
                 value.M11, value.M12, 0, 0,
                 value.M21, value.M22, 0, 0,
                 0, 0, 1, 0,

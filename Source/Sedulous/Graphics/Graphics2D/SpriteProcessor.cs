@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using Sedulous.Content;
@@ -116,7 +117,7 @@ namespace Sedulous.Graphics.Graphics2D
                         group.FrameWidth = reader.ReadInt32();
                         group.FrameHeight = reader.ReadInt32();
                         group.FrameCount = reader.ReadInt32();
-                        group.Origin = new Point2(
+                        group.Origin = new Point(
                             reader.ReadInt32(),
                             reader.ReadInt32());
                         group.Duration = reader.ReadInt32();
@@ -140,7 +141,7 @@ namespace Sedulous.Graphics.Graphics2D
                         frame.Y = reader.ReadInt32();
                         frame.Width = reader.ReadInt32();
                         frame.Height = reader.ReadInt32();
-                        frame.Origin = new Point2(
+                        frame.Origin = new Point(
                             reader.ReadInt32(),
                             reader.ReadInt32());
                         frame.Duration = reader.ReadInt32();
@@ -195,7 +196,7 @@ namespace Sedulous.Graphics.Graphics2D
                             var groupAreaWidth = groupDesc.Width ?? 0;
                             var groupAreaHeight = groupDesc.Height ?? 0;
 
-                            var groupOrigin = groupDesc?.Origin ?? Point2.Zero;
+                            var groupOrigin = groupDesc?.Origin ?? Point.Empty;
                             var groupDuration = groupDesc?.Duration ?? 0;
 
                             var groupX = groupAreaX;
@@ -232,7 +233,7 @@ namespace Sedulous.Graphics.Graphics2D
                         foreach (var frameDesc in frameBatch.Items ?? Enumerable.Empty<SpriteFrameDescription>())
                         {
                             var frame = new SpriteFrameDescription();
-                            frame.Origin = frameDesc.Origin ?? Point2.Zero;
+                            frame.Origin = frameDesc.Origin ?? Point.Empty;
                             frame.Duration = frameDesc.Duration ?? 0;
 
                             if (!String.IsNullOrWhiteSpace(frameDesc.Atlas))

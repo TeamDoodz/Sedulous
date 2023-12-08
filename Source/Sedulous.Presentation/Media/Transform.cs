@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Sedulous.Presentation.Media
 {
@@ -42,10 +43,10 @@ namespace Sedulous.Presentation.Media
         }
 
         /// <summary>
-        /// Gets the <see cref="Matrix"/> that represents this transformation.
+        /// Gets the <see cref="Matrix4x4"/> that represents this transformation.
         /// </summary>
-        /// <value>A <see cref="Matrix"/> that represents the transformation applied by this instance.</value>
-        public abstract Matrix Value
+        /// <value>A <see cref="Matrix4x4"/> that represents the transformation applied by this instance.</value>
+        public abstract Matrix4x4 Value
         {
             get;
         }
@@ -53,9 +54,9 @@ namespace Sedulous.Presentation.Media
         /// <summary>
         /// Gets the inverse of this transform, if it exists.
         /// </summary>
-        /// <value>A <see cref="Matrix"/> that represents the inverse of the transformation applied by
+        /// <value>A <see cref="Matrix4x4"/> that represents the inverse of the transformation applied by
         /// this instance, or <see langword="null"/> if the transform has no inverse.</value>
-        public abstract Matrix? Inverse
+        public abstract Matrix4x4? Inverse
         {
             get;
         }

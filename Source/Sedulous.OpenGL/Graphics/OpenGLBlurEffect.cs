@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Numerics;
 using Sedulous.Core;
 using Sedulous.Graphics;
 using Sedulous.OpenGL.Bindings;

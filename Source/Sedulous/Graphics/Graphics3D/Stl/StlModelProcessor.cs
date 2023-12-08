@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Numerics;
 using Sedulous.Content;
 
 namespace Sedulous.Graphics.Graphics3D
@@ -49,18 +50,18 @@ namespace Sedulous.Graphics.Graphics3D
             var geometryStream = GeometryStream.Create();
             geometryStream.Attach(vertexBuffer);
 
-            var globalTransform = Matrix.Identity;
+            var globalTransform = Matrix4x4.Identity;
             if (stlMetadata.RotationX != 0.0f || stlMetadata.RotationY != 0.0f || stlMetadata.RotationZ != 0.0f || stlMetadata.Scale != 1.0f)
             {
-                Matrix.CreateRotationX(stlMetadata.RotationX, out var rotX);
-                Matrix.CreateRotationY(stlMetadata.RotationY, out var rotY);
-                Matrix.CreateRotationZ(stlMetadata.RotationZ, out var rotZ);
-                Matrix.CreateScale(stlMetadata.Scale, out var scale);
+                Matrix4x4 rotX = Matrix4x4.CreateRotationX(stlMetadata.RotationX);
+                Matrix4x4 rotY = Matrix4x4.CreateRotationX(stlMetadata.RotationY);
+                Matrix4x4 rotZ = Matrix4x4.CreateRotationX(stlMetadata.RotationZ);
+                Matrix4x4 scale = Matrix4x4.CreateScale(stlMetadata.Scale);
 
-                Matrix.Multiply(ref globalTransform, ref rotZ, out globalTransform);
-                Matrix.Multiply(ref globalTransform, ref rotX, out globalTransform);
-                Matrix.Multiply(ref globalTransform, ref rotY, out globalTransform);
-                Matrix.Multiply(ref globalTransform, ref scale, out globalTransform);
+                globalTransform *= rotZ;
+                globalTransform *= rotX;
+                globalTransform *= rotY;
+                globalTransform *= scale;
             }
 
             var modelMeshMaterial = stlMetadata.DefaultMaterial ?? new BasicMaterial() { DiffuseColor = Color.White };

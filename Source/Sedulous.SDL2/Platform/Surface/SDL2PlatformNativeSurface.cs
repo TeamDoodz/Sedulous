@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Runtime.CompilerServices;
 using Sedulous.Core;
 using Sedulous.Platform;

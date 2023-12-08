@@ -1,4 +1,6 @@
-﻿namespace Sedulous.Graphics
+﻿using System.Drawing;
+
+namespace Sedulous.Graphics
 {
     /// <summary>
     /// Represents an effect which exposes a texture size parameter.
@@ -8,7 +10,7 @@
         /// <summary>
         /// Gets or sets the dimensions of the texture being rendered.
         /// </summary>
-        Size2 TextureSize
+        Size TextureSize
         {
             get;
             set;

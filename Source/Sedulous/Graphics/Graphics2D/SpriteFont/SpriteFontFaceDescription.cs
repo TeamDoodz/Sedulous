@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Newtonsoft.Json;
 
 namespace Sedulous.Graphics.Graphics2D

@@ -1,4 +1,6 @@
 ﻿
+using System.Numerics;
+
 namespace Sedulous.Graphics
 {
     /// <summary>
@@ -9,7 +11,7 @@ namespace Sedulous.Graphics
         /// <summary>
         /// Gets or sets the effect's combined world-view-projection matrix.
         /// </summary>
-        Matrix WorldViewProj
+		Matrix4x4 WorldViewProj
         {
             get;
             set;

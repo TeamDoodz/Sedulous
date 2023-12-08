@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using Sedulous.Core;
 using Sedulous.Messages;
 using Sedulous.Platform;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Core;
 using Sedulous.Graphics;
 
@@ -31,7 +32,7 @@ namespace Sedulous.OpenGL.Graphics
         }
 
         /// <inheritdoc/>
-        public override void SetBoneTransforms(Matrix[] boneTransforms)
+        public override void SetBoneTransforms(Matrix4x4[] boneTransforms)
         {
             Contract.Require(boneTransforms, nameof(boneTransforms));
 
@@ -42,7 +43,7 @@ namespace Sedulous.OpenGL.Graphics
         }
 
         /// <inheritdoc/>
-        public override void GetBoneTransforms(Matrix[] boneTransforms)
+        public override void GetBoneTransforms(Matrix4x4[] boneTransforms)
         {
             Contract.Require(boneTransforms, nameof(boneTransforms));
 
@@ -50,7 +51,7 @@ namespace Sedulous.OpenGL.Graphics
         }
 
         /// <inheritdoc/>
-        public override void GetBoneTransforms(Matrix[] boneTransforms, Int32 count)
+        public override void GetBoneTransforms(Matrix4x4[] boneTransforms, Int32 count)
         {
             Contract.Require(boneTransforms, nameof(boneTransforms));
             Contract.EnsureRange(count >= 0 && count < MaxBoneCount, nameof(count));
@@ -182,7 +183,7 @@ namespace Sedulous.OpenGL.Graphics
         }
 
         // Calculated parameter values.
-        private Matrix worldView;
+        private Matrix4x4 worldView;
         private Boolean oneLight;
 
         // Effect parameters.

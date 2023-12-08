@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Numerics;
 using Newtonsoft.Json;
 using Sedulous.Core;
+using Sedulous.Mathematics;
 
 namespace Sedulous
 {
@@ -131,7 +133,7 @@ namespace Sedulous
                 return;
             }
 
-            Vector3.Dot(ref Direction, ref offset, out Single distanceToCenter);
+            float distanceToCenter = Vector3.Dot(Direction, offset);
             if (distanceToCenter < 0)
             {
                 result = null;
@@ -263,10 +265,10 @@ namespace Sedulous
         {
             Ray result;
 
-            result.Position = this.Position.Interpolate(target.Position, t);
-            result.Direction = this.Direction.Interpolate(target.Direction, t);
+            result.Position = Vector3Interpolatable.Interpolate(this.Position, target.Position, t);
+            result.Direction = Vector3Interpolatable.Interpolate(this.Direction, target.Direction, t);
 
-            return result;
+			return result;
         }
 
         /// <summary>

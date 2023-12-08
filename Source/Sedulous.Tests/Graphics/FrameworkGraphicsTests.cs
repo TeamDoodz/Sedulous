@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Numerics;
 using NUnit.Framework;
 using Sedulous.Graphics;
 using Sedulous.Graphics.Graphics2D;
@@ -54,9 +56,9 @@ namespace Sedulous.Tests.Graphics
 
                     gfx.SetViewport(viewport);
 
-                    effect.World = Matrix.Identity;
-                    effect.View = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-                    effect.Projection = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, aspectRatio, 1f, 1000f);
+                    effect.World = Matrix4x4.Identity;
+                    effect.View = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+                    effect.Projection = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, aspectRatio, 1f, 1000f);
                     effect.VertexColorEnabled = true;
 
                     foreach (var pass in effect.CurrentTechnique.Passes)
@@ -118,9 +120,9 @@ namespace Sedulous.Tests.Graphics
 
                     gfx.SetViewport(viewport);
 
-                    effect.World = Matrix.Identity;
-                    effect.View = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-                    effect.Projection = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, aspectRatio, 1f, 1000f);
+                    effect.World = Matrix4x4.Identity;
+                    effect.View = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+                    effect.Projection = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, aspectRatio, 1f, 1000f);
                     effect.VertexColorEnabled = false;
                     effect.TextureEnabled = true;
                     effect.Texture = texture;
@@ -175,7 +177,7 @@ namespace Sedulous.Tests.Graphics
                         for (int x = 0; x < InstancesX; x++)
                         {
                             var transform =
-                                Matrix.CreateTranslation(x * TriangleWidth, y * TriangleHeight, 0);
+                                Matrix4x4.CreateTranslation(x * TriangleWidth, y * TriangleHeight, 0);
 
                             var color = new Color(
                                 Math.Max(0, 255 - 5 * x),
@@ -205,7 +207,7 @@ namespace Sedulous.Tests.Graphics
                     var viewport = new Viewport(0, 0, rtarget.Width, rtarget.Height);
                     gfx.SetViewport(viewport);
 
-                    var matrixTransform = Matrix.CreateOrthographicOffCenter(0, viewport.Width, viewport.Height, 0, 0, 1);
+                    var matrixTransform = Matrix4x4.CreateOrthographicOffCenter(0, viewport.Width, viewport.Height, 0, 0, 1);
                     effect.Parameters["MatrixTransform"].SetValue(matrixTransform);
 
                     foreach (var pass in effect.CurrentTechnique.Passes)
@@ -439,9 +441,9 @@ namespace Sedulous.Tests.Graphics
 
                     gfx.SetViewport(viewport);
 
-                    effect.Parameters["World"].SetValue(Matrix.Identity);
-                    effect.Parameters["View"].SetValue(Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up));
-                    effect.Parameters["Projection"].SetValue(Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, aspectRatio, 1f, 1000f));
+                    effect.Parameters["World"].SetValue(Matrix4x4.Identity);
+                    effect.Parameters["View"].SetValue(Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY));
+                    effect.Parameters["Projection"].SetValue(Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, aspectRatio, 1f, 1000f));
                     effect.Parameters["DiffuseColor"].SetValue(Color.White);
 
                     foreach (var pass in effect.CurrentTechnique.Passes)

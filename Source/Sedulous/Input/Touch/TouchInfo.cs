@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Sedulous
 {
@@ -75,7 +76,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the normalized coordinates of the position at which the touch originated.
         /// </summary>
-        public Point2F OriginPosition => new Point2F(originX, originY);
+        public PointF OriginPosition => new PointF(originX, originY);
 
         /// <summary>
         /// Gets the normalized x-coordinate at which the touch originated.
@@ -98,7 +99,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the normalized coordinates of the touch's current position.
         /// </summary>
-        public Point2F CurrentPosition => new Point2F(currentX, currentY);
+        public PointF CurrentPosition => new PointF(currentX, currentY);
 
         /// <summary>
         /// Gets the normalized x-coordinate of the touch.

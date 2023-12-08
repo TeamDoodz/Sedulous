@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Core;
 using Sedulous.Graphics;
 using Sedulous.OpenGL.Bindings;
@@ -308,35 +309,35 @@ namespace Sedulous.OpenGL.Graphics
         }
 
         /// <inheritdoc/>
-        public override Matrix GetValueMatrix()
+        public override Matrix4x4 GetValueMatrix()
         {
             switch (type)
             {
                 case GL.GL_FLOAT_MAT2:
-                    return (Matrix)data.GetMat2();
+                    return (Matrix4x4)data.GetMat2();
                 case GL.GL_FLOAT_MAT2x3:
-                    return (Matrix)data.GetMat2x3();
+                    return (Matrix4x4)data.GetMat2x3();
                 case GL.GL_FLOAT_MAT2x4:
-                    return (Matrix)data.GetMat2x4();
+                    return (Matrix4x4)data.GetMat2x4();
                 case GL.GL_FLOAT_MAT3:
-                    return (Matrix)data.GetMat3();
+                    return (Matrix4x4)data.GetMat3();
                 case GL.GL_FLOAT_MAT3x2:
-                    return (Matrix)data.GetMat3x2();
+                    return (Matrix4x4)data.GetMat3x2();
                 case GL.GL_FLOAT_MAT3x4:
-                    return (Matrix)data.GetMat3x4();
+                    return (Matrix4x4)data.GetMat3x4();
                 case GL.GL_FLOAT_MAT4:
                     return data.GetMat4();
                 case GL.GL_FLOAT_MAT4x2:
-                    return (Matrix)data.GetMat4x2();
+                    return (Matrix4x4)data.GetMat4x2();
                 case GL.GL_FLOAT_MAT4x3:
-                    return (Matrix)data.GetMat4x3();
+                    return (Matrix4x4)data.GetMat4x3();
             }
 
             throw new InvalidCastException();
         }
 
         /// <inheritdoc/>
-        public override void SetValue(Matrix value)
+        public override void SetValue(Matrix4x4 value)
         {
             switch (type)
             {
@@ -373,7 +374,7 @@ namespace Sedulous.OpenGL.Graphics
         }
 
         /// <inheritdoc/>
-        public override void SetValueRef(ref Matrix value)
+        public override void SetValueRef(ref Matrix4x4 value)
         {
             switch (type)
             {
@@ -410,7 +411,7 @@ namespace Sedulous.OpenGL.Graphics
         }
 
         /// <inheritdoc/>
-        public override void GetValueMatrixArray(Matrix[] value, Int32 count)
+        public override void GetValueMatrixArray(Matrix4x4[] value, Int32 count)
         {
             switch (type)
             {
@@ -447,7 +448,7 @@ namespace Sedulous.OpenGL.Graphics
         }
 
         /// <inheritdoc/>
-        public override void SetValue(Matrix[] value)
+        public override void SetValue(Matrix4x4[] value)
         {
             switch (type)
             {

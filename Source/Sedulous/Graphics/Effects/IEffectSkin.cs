@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Sedulous.Graphics
 {
@@ -11,20 +12,20 @@ namespace Sedulous.Graphics
         /// Sets the array of bone transform matrices for this effect.
         /// </summary>
         /// <param name="boneTransforms">An array of bone transformation matrices.</param>
-        void SetBoneTransforms(Matrix[] boneTransforms);
+        void SetBoneTransforms(Matrix4x4[] boneTransforms);
 
         /// <summary>
         /// Gets the array of bone transforms matrices for this effect.
         /// </summary>
         /// <param name="boneTransforms">The destination array to populate with bone transforms.</param>
-        void GetBoneTransforms(Matrix[] boneTransforms);
+        void GetBoneTransforms(Matrix4x4[] boneTransforms);
 
         /// <summary>
         /// Gets the array of bone transforms matrices for this effect.
         /// </summary>
         /// <param name="boneTransforms">The destination array to populate with bone transforms.</param>
         /// <param name="count">The maximum number of bone transforms to copy into <paramref name="boneTransforms"/>.</param>
-        void GetBoneTransforms(Matrix[] boneTransforms, Int32 count);
+        void GetBoneTransforms(Matrix4x4[] boneTransforms, Int32 count);
 
         /// <summary>
         /// Gets or sets the number of bone weights which are applied to each vertex.

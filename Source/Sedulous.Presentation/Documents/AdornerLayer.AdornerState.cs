@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Sedulous.Presentation.Documents
 {
@@ -65,7 +66,7 @@ namespace Sedulous.Presentation.Documents
             /// <summary>
             /// Gets or sets the last transform matrix that was applied to the adorner.
             /// </summary>
-            public Matrix LastTransform
+            public Matrix4x4 LastTransform
             {
                 get;
                 set;

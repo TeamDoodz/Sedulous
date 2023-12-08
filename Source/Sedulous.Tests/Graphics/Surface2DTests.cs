@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Drawing;
+using NUnit.Framework;
 using Sedulous.Graphics;
 using Sedulous.Graphics.Graphics2D;
 using Sedulous.Platform;
@@ -89,9 +90,9 @@ namespace Sedulous.Tests.Graphics
 
                     surfaceInput = content.Load<Surface2D>("Surfaces/Test");
                     surfaceInput.ProcessAlpha(true, null);
-                    surfaceInput.Blit(surfaceOutput, new Point2(0, 0), SurfaceFlipDirection.None);
-                    surfaceInput.Blit(surfaceOutput, new Point2(64, 0), SurfaceFlipDirection.Horizontal);
-                    surfaceInput.Blit(surfaceOutput, new Point2(0, 64), SurfaceFlipDirection.Vertical);
+                    surfaceInput.Blit(surfaceOutput, new Point(0, 0), SurfaceFlipDirection.None);
+                    surfaceInput.Blit(surfaceOutput, new Point(64, 0), SurfaceFlipDirection.Horizontal);
+                    surfaceInput.Blit(surfaceOutput, new Point(0, 64), SurfaceFlipDirection.Vertical);
 
                     //texture = surfaceOutput.CreateTexture();
                     texture = Texture2D.CreateFromSurface2D(surfaceOutput);

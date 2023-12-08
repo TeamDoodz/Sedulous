@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Core;
 using Sedulous.Platform;
 
@@ -124,19 +125,19 @@ namespace Sedulous.Presentation
         }
 
         /// <summary>
-        /// Converts a <see cref="Matrix"/> representing a 2D transformation in display independent pixels to an
-        /// equivalent <see cref="Matrix"/> in display pixels.
+        /// Converts a <see cref="Matrix4x4"/> representing a 2D transformation in display independent pixels to an
+        /// equivalent <see cref="Matrix4x4"/> in display pixels.
         /// </summary>
         /// <param name="this">The <see cref="IFrameworkDisplay"/> with which to perform the conversion.</param>
-        /// <param name="matrix">The <see cref="Matrix"/> in display independent pixels to convert.</param>
-        /// <returns>The converted <see cref="Matrix"/> in display pixels.</returns>
-        public static Matrix DipsToPixels(this IFrameworkDisplay @this, Matrix matrix)
+        /// <param name="matrix">The <see cref="Matrix4x4"/> in display independent pixels to convert.</param>
+        /// <returns>The converted <see cref="Matrix4x4"/> in display pixels.</returns>
+        public static Matrix4x4 DipsToPixels(this IFrameworkDisplay @this, Matrix4x4 matrix)
         {
             var x = (Single)@this.DipsToPixels(matrix.M14);
             var y = (Single)@this.DipsToPixels(matrix.M24);
             var z = (Single)@this.DipsToPixels(matrix.M34);
 
-            return new Matrix(
+            return new Matrix4x4(
                 matrix.M11, matrix.M12, matrix.M13, matrix.M14,
                 matrix.M21, matrix.M22, matrix.M23, matrix.M24,
                 matrix.M31, matrix.M32, matrix.M33, matrix.M34,
@@ -144,19 +145,19 @@ namespace Sedulous.Presentation
         }
 
         /// <summary>
-        /// Converts a <see cref="Matrix"/> representing a 2D transformation in display independent pixels to an
-        /// equivalent <see cref="Matrix"/> in display pixels.
+        /// Converts a <see cref="Matrix4x4"/> representing a 2D transformation in display independent pixels to an
+        /// equivalent <see cref="Matrix4x4"/> in display pixels.
         /// </summary>
         /// <param name="this">The <see cref="IFrameworkDisplay"/> with which to perform the conversion.</param>
-        /// <param name="matrix">The <see cref="Matrix"/> in display independent pixels to convert.</param>
-        /// <param name="result">The converted <see cref="Matrix"/> in display pixels.</param>
-        public static void DipsToPixels(this IFrameworkDisplay @this, ref Matrix matrix, out Matrix result)
+        /// <param name="matrix">The <see cref="Matrix4x4"/> in display independent pixels to convert.</param>
+        /// <param name="result">The converted <see cref="Matrix4x4"/> in display pixels.</param>
+        public static void DipsToPixels(this IFrameworkDisplay @this, ref Matrix4x4 matrix, out Matrix4x4 result)
         {
             var x = (Single)@this.DipsToPixels(matrix.M14);
             var y = (Single)@this.DipsToPixels(matrix.M24);
             var z = (Single)@this.DipsToPixels(matrix.M34);
 
-            result = new Matrix(
+            result = new Matrix4x4(
                 matrix.M11, matrix.M12, matrix.M13, matrix.M14,
                 matrix.M21, matrix.M22, matrix.M23, matrix.M24,
                 matrix.M31, matrix.M32, matrix.M33, matrix.M34,

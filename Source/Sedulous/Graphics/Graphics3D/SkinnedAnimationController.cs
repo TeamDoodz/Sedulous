@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using Sedulous.Core;
 
 namespace Sedulous.Graphics.Graphics3D
@@ -282,9 +283,9 @@ namespace Sedulous.Graphics.Graphics3D
                     var animatedScale = animation.Scale?.Evaluate(t, default) ?? templatedTransform.Scale;
 
                     var weight = nodeAnimation.Value.Weight;
-                    Vector3.Lerp(ref currentTranslation, ref animatedTranslation, weight, out currentTranslation);
-                    Quaternion.Slerp(ref currentRotation, ref animatedRotation, weight, out currentRotation);
-                    Vector3.Lerp(ref currentScale, ref animatedScale, weight, out currentScale);
+					currentTranslation = Vector3.Lerp(currentTranslation, animatedTranslation, weight);
+					currentRotation = Quaternion.Slerp(currentRotation, animatedRotation, weight);
+                    currentScale = Vector3.Lerp(currentScale, animatedScale, weight);
 
                     update = true;
                 }

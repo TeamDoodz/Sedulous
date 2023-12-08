@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using NUnit.Framework;
 
 namespace Sedulous.TestFramework
@@ -12,7 +13,7 @@ namespace Sedulous.TestFramework
         /// Initializes a new instance of the <see cref="Size2Result"/> class.
         /// </summary>
         /// <param name="value">The value being examined.</param>
-        internal Size2Result(Size2 value)
+        internal Size2Result(Size value)
         {
             this.value = value;
         }
@@ -33,12 +34,12 @@ namespace Sedulous.TestFramework
         /// <summary>
         /// Gets the underlying value.
         /// </summary>
-        public Size2 Value
+        public Size Value
         {
             get { return value; }
         }
 
         // State values.
-        private readonly Size2 value;
+        private readonly Size value;
     }
 }

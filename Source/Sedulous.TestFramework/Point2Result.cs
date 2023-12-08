@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using NUnit.Framework;
 
 namespace Sedulous.TestFramework
@@ -12,7 +13,7 @@ namespace Sedulous.TestFramework
         /// Initializes a new instance of the <see cref="Point2Result"/> class.
         /// </summary>
         /// <param name="value">The value being examined.</param>
-        internal Point2Result(Point2 value)
+        internal Point2Result(Point value)
         {
             this.value = value;
         }
@@ -33,12 +34,12 @@ namespace Sedulous.TestFramework
         /// <summary>
         /// Gets the underlying value.
         /// </summary>
-        public Point2 Value
+        public Point Value
         {
             get { return value; }
         }
 
         // State values.
-        private readonly Point2 value;
+        private readonly Point value;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Sedulous.Presentation.Media
 {
@@ -9,15 +10,15 @@ namespace Sedulous.Presentation.Media
     public sealed class IdentityTransform : Transform
     {
         /// <inheritdoc/>
-        public override Matrix Value
+        public override Matrix4x4 Value
         {
-            get { return Matrix.Identity; }
+            get { return Matrix4x4.Identity; }
         }
 
         /// <inheritdoc/>
-        public override Matrix? Inverse
+        public override Matrix4x4? Inverse
         {
-            get { return Matrix.Identity; }
+            get { return Matrix4x4.Identity; }
         }
 
         /// <inheritdoc/>

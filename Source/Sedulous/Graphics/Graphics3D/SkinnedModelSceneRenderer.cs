@@ -1,4 +1,5 @@
-﻿using Sedulous.Core;
+﻿using System.Numerics;
+using Sedulous.Core;
 
 namespace Sedulous.Graphics.Graphics3D
 {
@@ -8,7 +9,7 @@ namespace Sedulous.Graphics.Graphics3D
     public class SkinnedModelSceneRenderer : ModelSceneRendererBase<SkinnedModelSceneInstance, SkinnedModelNodeInstance>
     {
         /// <inheritdoc/>
-        protected override void OnDrawingModelScene(SkinnedModelSceneInstance scene, Camera camera, ref Matrix transform)
+        protected override void OnDrawingModelScene(SkinnedModelSceneInstance scene, Camera camera, ref Matrix4x4 transform)
         {
             currentSkinInstance = null;
             base.OnDrawingModelScene(scene, camera, ref transform);
@@ -22,7 +23,7 @@ namespace Sedulous.Graphics.Graphics3D
         }
 
         /// <inheritdoc/>
-        protected override void OnDrawingModelNode(SkinnedModelNodeInstance node, Camera camera, Effect effect, ref Matrix transform)
+        protected override void OnDrawingModelNode(SkinnedModelNodeInstance node, Camera camera, Effect effect, ref Matrix4x4 transform)
         {
             if (node.Skin != null && currentSkinInstance != node.Skin)
             {
@@ -51,7 +52,7 @@ namespace Sedulous.Graphics.Graphics3D
         }
 
         // Bone transforms for the current skin.
-        private readonly Matrix[] skinBoneTransforms = new Matrix[SkinnedEffect.MaxBoneCount];
+        private readonly Matrix4x4[] skinBoneTransforms = new Matrix4x4[SkinnedEffect.MaxBoneCount];
         private SkinInstance currentSkinInstance;
     }
 }

@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Numerics;
+using NUnit.Framework;
 using Sedulous.FreeType2;
 using Sedulous.Graphics;
 using Sedulous.Graphics.Graphics2D;

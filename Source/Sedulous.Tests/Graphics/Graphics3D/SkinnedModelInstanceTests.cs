@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using CsvHelper;
 using NUnit.Framework;
 using Sedulous.Graphics.Graphics3D;
@@ -13,7 +14,7 @@ namespace Sedulous.Tests.Graphics.Graphics3D
     [TestFixture]
     public class SkinnedModelInstanceTests : FrameworkApplicationTestFramework
     {
-        private Dictionary<Double, Matrix[]> LoadBoneData(String name)
+        private Dictionary<Double, Matrix4x4[]> LoadBoneData(String name)
         {
             using (var stream = File.OpenRead(Path.Combine("Resources", "Expected", "Graphics", "Graphics3D", name)))
             using (var reader = new StreamReader(stream))
@@ -25,11 +26,11 @@ namespace Sedulous.Tests.Graphics.Graphics3D
                 var records = csv.GetRecords<SkinnedModelBoneData>().ToArray();
                 var result = records.GroupBy(x => x.Time).ToDictionary(k => k.Key, v =>
                 {
-                    var bones = new Matrix[v.Count()];
+                    var bones = new Matrix4x4[v.Count()];
 
                     foreach (var record in v)
                     {
-                        bones[record.Bone] = new Matrix(
+                        bones[record.Bone] = new Matrix4x4(
                             record.M11, record.M12, record.M13, record.M14,
                             record.M21, record.M22, record.M23, record.M24,
                             record.M31, record.M32, record.M33, record.M34,

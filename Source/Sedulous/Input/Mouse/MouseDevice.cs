@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Sedulous.Platform;
 
 namespace Sedulous.Input
@@ -80,7 +81,7 @@ namespace Sedulous.Input
         /// <param name="window">The window to evaluate.</param>
         /// <returns>The cursor's compositor-space position within the specified 
         /// window, or <see langword="null"/> if the cursor is outside of the window.</returns>
-        public abstract Point2? GetPositionInWindow(IFrameworkWindow window);
+        public abstract Point? GetPositionInWindow(IFrameworkWindow window);
 
         /// <summary>
         /// Gets a value indicating whether the specified button was clicked this frame.
@@ -122,7 +123,7 @@ namespace Sedulous.Input
         /// <summary>
         /// Gets the mouse's current position.
         /// </summary>
-        public abstract Point2 Position
+        public abstract Point Position
         {
             get;
         }

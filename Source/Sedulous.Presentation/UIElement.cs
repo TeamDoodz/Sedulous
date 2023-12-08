@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Numerics;
 using Sedulous.Content;
 using Sedulous.Core;
 using Sedulous.Graphics.Graphics2D;
@@ -218,7 +220,7 @@ namespace Sedulous.Presentation
                     if (parentPopup != null)
                     {
                         var transformMatrix = parentPopup.PopupTransformToViewInDevicePixels;
-                        var transformIsNotIdentity = !transformMatrix.Equals(Matrix.Identity);
+                        var transformIsNotIdentity = !transformMatrix.Equals(Matrix4x4.Identity);
                         if (transformIsNotIdentity)
                         {
                             dc.End();
@@ -281,7 +283,7 @@ namespace Sedulous.Presentation
         /// <param name="dc">The drawing context that describes the render state of the layout.</param>
         /// <param name="target">The render target to which to draw the element.</param>
         /// <param name="transform">The transformation matrix to apply to the element, or <see langword="null"/> to use the cumulative sprite batch transformation.</param>
-        public void DrawToRenderTarget(FrameworkTime time, DrawingContext dc, Graphics.RenderTarget2D target, Matrix? transform = null)
+        public void DrawToRenderTarget(FrameworkTime time, DrawingContext dc, Graphics.RenderTarget2D target, Matrix4x4? transform = null)
         {
             Contract.Require(dc, nameof(dc));
             Contract.Require(target, nameof(target));
@@ -294,13 +296,13 @@ namespace Sedulous.Presentation
             var y = Math.Floor(bounds.Y + (bounds.Height - target.Height) / 2.0);
 
             var visualBounds = (Vector2)new Point2D(x, y);
-            dc.GlobalTransform = Matrix.CreateTranslation(-visualBounds.X, -visualBounds.Y, 0);
+            dc.GlobalTransform = Matrix4x4.CreateTranslation(-visualBounds.X, -visualBounds.Y, 0);
             dc.Begin(SpriteSortMode.Deferred, null, transform ?? GetVisualTransformMatrix());
 
             Draw(time, dc);
 
             dc.End();
-            dc.GlobalTransform = Matrix.Identity;
+            dc.GlobalTransform = Matrix4x4.Identity;
 
             graphics.SetRenderTarget(null);
         }
@@ -491,7 +493,7 @@ namespace Sedulous.Presentation
 
             if (Visibility == Visibility.Collapsed)
             {
-                this.renderSize = Size2.Zero;
+                this.renderSize = Size2D.Zero;
             }
             else
             {
@@ -1375,7 +1377,7 @@ namespace Sedulous.Presentation
         /// <param name="absoluteVisualBounds">The visual bounds to extend and clip.</param>
         /// <param name="clipTransformMatrix">The transformation matrix to apply to the clip rectangle.</param>
         /// <returns>The extended and clipped visual bounds.</returns>
-        internal RectangleD UnionAbsoluteVisualBoundsWithChildrenAndApplyClipping(RectangleD absoluteVisualBounds, ref Matrix clipTransformMatrix)
+        internal RectangleD UnionAbsoluteVisualBoundsWithChildrenAndApplyClipping(RectangleD absoluteVisualBounds, ref Matrix4x4 clipTransformMatrix)
         {
             var childCount = VisualTreeHelper.GetChildrenCount(this);
             for (int i = 0; i < childCount; i++)
@@ -1588,18 +1590,15 @@ namespace Sedulous.Presentation
         /// </summary>
         /// <param name="mtxParentTransform">The visual transform of the element's parent.</param>
         /// <returns>The transformation matrix which is passed into the element's sprite batch prior to rendering the element.</returns>
-        internal Matrix GetVisualTransformMatrix(ref Matrix mtxParentTransform)
+        internal Matrix4x4 GetVisualTransformMatrix(ref Matrix4x4 mtxParentTransform)
         {
             var pixPosition = (Vector2)Display.DipsToPixels(UntransformedAbsolutePosition);
 
-            var mtxTranslateToClientSpace = Matrix.CreateTranslation(-pixPosition.X, -pixPosition.Y, 0f);
+            var mtxTranslateToClientSpace = Matrix4x4.CreateTranslation(-pixPosition.X, -pixPosition.Y, 0f);
             var mtxTransform = GetTransformMatrix(true);
-            var mtxTranslateToScreenSpace = Matrix.CreateTranslation(+pixPosition.X, +pixPosition.Y, 0f);
+            var mtxTranslateToScreenSpace = Matrix4x4.CreateTranslation(+pixPosition.X, +pixPosition.Y, 0f);
 
-            Matrix mtxFinal;
-            Matrix.Multiply(ref mtxTranslateToClientSpace, ref mtxTransform, out mtxFinal);
-            Matrix.Multiply(ref mtxFinal, ref mtxTranslateToScreenSpace, out mtxFinal);
-            Matrix.Multiply(ref mtxFinal, ref mtxParentTransform, out mtxFinal);
+            Matrix4x4 mtxFinal = mtxTranslateToClientSpace * mtxTransform * mtxTranslateToScreenSpace * mtxParentTransform;
 
             return mtxFinal;
         }
@@ -1608,15 +1607,15 @@ namespace Sedulous.Presentation
         /// Gets the transformation matrix which is passed into the element's sprite batch prior to rendering the element.
         /// </summary>
         /// <returns>The transformation matrix which is passed into the element's sprite batch prior to rendering the element.</returns>
-        internal Matrix GetVisualTransformMatrix()
+        internal Matrix4x4 GetVisualTransformMatrix()
         {
-            var mtxParentTransform = Matrix.Identity;
+            var mtxParentTransform = Matrix4x4.Identity;
 
             if (this is PopupRoot)
             {
                 var popup = this.Parent as Popup;
                 if (popup == null)
-                    return Matrix.Identity;
+                    return Matrix4x4.Identity;
 
                 return popup.PopupTransformToViewInDevicePixels;
             }
@@ -2006,10 +2005,10 @@ namespace Sedulous.Presentation
         }
 
         /// <inheritdoc/>
-        protected override Matrix GetTransformMatrix(Boolean inDevicePixels = false)
+        protected override Matrix4x4 GetTransformMatrix(Boolean inDevicePixels = false)
         {
             if (RenderTransform == null || RenderTransform.IsIdentity)
-                return Matrix.Identity;
+                return Matrix4x4.Identity;
 
             var scaledRenderSize = inDevicePixels ? Display.DipsToPixels(RenderSize) : RenderSize;
 
@@ -2017,13 +2016,11 @@ namespace Sedulous.Presentation
                 (Single)(scaledRenderSize.Width * RenderTransformOrigin.X),
                 (Single)(scaledRenderSize.Height * RenderTransformOrigin.Y));
 
-            var mtxTranslateToOrigin = Matrix.CreateTranslation(-rtoInClientSpace.X, -rtoInClientSpace.Y, 0);
+            var mtxTranslateToOrigin = Matrix4x4.CreateTranslation(-rtoInClientSpace.X, -rtoInClientSpace.Y, 0);
             var mtxRenderTransform = RenderTransform.Value;
-            var mtxTranslateToClient = Matrix.CreateTranslation(+rtoInClientSpace.X, +rtoInClientSpace.Y, 0);
+            var mtxTranslateToClient = Matrix4x4.CreateTranslation(+rtoInClientSpace.X, +rtoInClientSpace.Y, 0);
 
-            Matrix mtxFinal;
-            Matrix.Multiply(ref mtxTranslateToOrigin, ref mtxRenderTransform, out mtxFinal);
-            Matrix.Multiply(ref mtxFinal, ref mtxTranslateToClient, out mtxFinal);
+            Matrix4x4 mtxFinal = mtxTranslateToOrigin * mtxRenderTransform * mtxTranslateToClient;
 
             return mtxFinal;
         }

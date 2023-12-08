@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using Sedulous.Platform;
@@ -120,7 +121,7 @@ namespace Sedulous.Input
         /// </summary>
         /// <param name="coordinates">The window-space coordinates to convert to normalized touch coordinates.</param>
         /// <returns>The normalized touch coordinates which correspond to the specified window-space coordinates.</returns>
-        public abstract Point2F NormalizeCoordinates(Point2 coordinates);
+        public abstract PointF NormalizeCoordinates(Point coordinates);
 
         /// <summary>
         /// Converts the specified window coordinates into normalized touch coordinates.
@@ -128,14 +129,14 @@ namespace Sedulous.Input
         /// <param name="x">The window-space x-coordinate to convert to a normalized touch coordinate.</param>
         /// <param name="y">The window-space y-coordinate to convert to a normalized touch coordinate.</param>
         /// <returns>The normalized touch coordinates which correspond to the specified window-space coordinates.</returns>
-        public abstract Point2F NormalizeCoordinates(Int32 x, Int32 y);
+        public abstract PointF NormalizeCoordinates(Int32 x, Int32 y);
 
         /// <summary>
         /// Converts the specified normalized touch coordinates into window-space coordinates.
         /// </summary>
         /// <param name="coordinates">The normalized touch coordinates to convert to window-space coordinates.</param>
         /// <returns>The window-space coordinates which correspond to the specified normalized touch coordinates.</returns>
-        public abstract Point2 DenormalizeCoordinates(Point2F coordinates);
+        public abstract Point DenormalizeCoordinates(PointF coordinates);
 
         /// <summary>
         /// Converts the specified normalized touch coordinates into window-space coordinates.
@@ -143,7 +144,7 @@ namespace Sedulous.Input
         /// <param name="x">The normalized touch x-coordinate to convert to a window-space coordinate.</param>
         /// <param name="y">The normalized touch y-coordinate to convert to a window-space coordinate.</param>
         /// <returns>The window-space coordinates which correspond to the specified normalized touch coordinates.</returns>
-        public abstract Point2 DenormalizeCoordinates(Single x, Single y);
+        public abstract Point DenormalizeCoordinates(Single x, Single y);
 
         /// <summary>
         /// Gets a value indicating whether the specified touch is currently active.

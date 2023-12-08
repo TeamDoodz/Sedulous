@@ -62,34 +62,34 @@ namespace Sedulous.OpenGL.Graphics
         DoubleArray,
 
         /// <summary>
-        /// A <see cref="Sedulous.Vector2"/> value is set on the effect.
+        /// A <see cref="System.Numerics.Vector2"/> value is set on the effect.
         /// </summary>
         Vector2,
 
-        /// <summary>
-        /// An array of <see cref="Sedulous.Vector2"/> values is set on the effect.
-        /// </summary>
-        Vector2Array,
+		/// <summary>
+		/// An array of <see cref="System.Numerics.Vector2"/> values is set on the effect.
+		/// </summary>
+		Vector2Array,
 
-        /// <summary>
-        /// A <see cref="Sedulous.Vector3"/> value is set on the effect.
-        /// </summary>
-        Vector3,
+		/// <summary>
+		/// A <see cref="System.Numerics.Vector3"/> value is set on the effect.
+		/// </summary>
+		Vector3,
 
-        /// <summary>
-        /// An array of <see cref="Sedulous.Vector3"/> values is set on the effect.
-        /// </summary>
-        Vector3Array,
+		/// <summary>
+		/// An array of <see cref="System.Numerics.Vector3"/> values is set on the effect.
+		/// </summary>
+		Vector3Array,
 
-        /// <summary>
-        /// A <see cref="Sedulous.Vector4"/> value is set on the effect.
-        /// </summary>
-        Vector4,
+		/// <summary>
+		/// A <see cref="System.Numerics.Vector4"/> value is set on the effect.
+		/// </summary>
+		Vector4,
 
-        /// <summary>
-        /// An array of <see cref="Sedulous.Vector4"/> values is set on the effect.
-        /// </summary>
-        Vector4Array,
+		/// <summary>
+		/// An array of <see cref="System.Numerics.Vector4"/> values is set on the effect.
+		/// </summary>
+		Vector4Array,
 
         /// <summary>
         /// A <see cref="Sedulous.Color"/> value is set on the effect.
@@ -161,15 +161,15 @@ namespace Sedulous.OpenGL.Graphics
         /// </summary>
         Mat3x4Array,
 
-        /// <summary>
-        /// A <see cref="Sedulous.Matrix"/> value is set on the effect.
-        /// </summary>
-        Mat4,
+		/// <summary>
+		/// A <see cref="System.Numerics.Matrix4x4"/> value is set on the effect.
+		/// </summary>
+		Mat4,
 
-        /// <summary>
-        /// An array of <see cref="Sedulous.Matrix"/> values is set on the effect.
-        /// </summary>
-        Mat4Array,
+		/// <summary>
+		/// An array of <see cref="System.Numerics.Matrix4x4"/> values is set on the effect.
+		/// </summary>
+		Mat4Array,
 
         /// <summary>
         /// A <see cref="Uniforms.Mat4x2"/> value is set on the effect.

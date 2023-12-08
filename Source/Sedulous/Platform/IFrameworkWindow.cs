@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Sedulous.Graphics;
 
 namespace Sedulous.Platform
@@ -66,7 +67,7 @@ namespace Sedulous.Platform
         /// </summary>
         /// <param name="size">The window's client size.</param>
         /// <param name="scale">The window's scaling factor.</param>
-        void SetWindowedClientSize(Size2 size, Single scale = 1f);
+        void SetWindowedClientSize(Size size, Single scale = 1f);
 
         /// <summary>
         /// Sets the client size to which the window will be restored upon entering non-maximized windowed mode,
@@ -74,7 +75,7 @@ namespace Sedulous.Platform
         /// </summary>
         /// <param name="size">The window's client size.</param>
         /// <param name="scale">The window's scaling factor.</param>
-        void SetWindowedClientSizeCentered(Size2 size, Single scale = 1f);
+        void SetWindowedClientSizeCentered(Size size, Single scale = 1f);
 
         /// <summary>
         /// Sets the window's window mode.
@@ -141,7 +142,7 @@ namespace Sedulous.Platform
         /// <summary>
         /// Gets or sets the window's position.
         /// </summary>
-        Point2 Position
+        Point Position
         {
             get;
             set;
@@ -150,7 +151,7 @@ namespace Sedulous.Platform
         /// <summary>
         /// Gets or sets the position to which the window will be restored upon entering non-maximized windowed mode.
         /// </summary>
-        Point2 WindowedPosition
+        Point WindowedPosition
         {
             get;
             set;
@@ -160,7 +161,7 @@ namespace Sedulous.Platform
         /// Gets the window's drawable size. On high-density displays, this value may be larger than the value
         /// of <see cref="ClientSize"/> due to the distinction between logical and virtual pixels.
         /// </summary>
-        Size2 DrawableSize
+        Size DrawableSize
         {
             get;
         }
@@ -168,7 +169,7 @@ namespace Sedulous.Platform
         /// <summary>
         /// Gets or sets the window's client size.
         /// </summary>
-        Size2 ClientSize
+        Size ClientSize
         {
             get;
             set;
@@ -177,7 +178,7 @@ namespace Sedulous.Platform
         /// <summary>
         /// Gets or sets the client size to which the window will be restored upon entering non-maximized windowed mode.
         /// </summary>
-        Size2 WindowedClientSize
+        Size WindowedClientSize
         {
             get;
             set;
@@ -186,7 +187,7 @@ namespace Sedulous.Platform
         /// <summary>
         /// Gets or sets the window's minimum client size.
         /// </summary>
-        Size2 MinimumClientSize
+        Size MinimumClientSize
         {
             get;
             set;
@@ -195,7 +196,7 @@ namespace Sedulous.Platform
         /// <summary>
         /// Gets or sets the window's maximum client size.
         /// </summary>
-        Size2 MaximumClientSize
+        Size MaximumClientSize
         {
             get;
             set;

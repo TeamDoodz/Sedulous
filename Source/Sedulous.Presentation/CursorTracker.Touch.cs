@@ -78,7 +78,7 @@ namespace Sedulous.Presentation
                     return null;
 
                 var coords = device.DenormalizeCoordinates(touchInfo.CurrentX, touchInfo.CurrentY);
-                return View.Display.PixelsToDips(coords);
+                return View.Display.PixelsToDips(new Point2D(coords.X, coords.Y));
             }
 
             /// <inheritdoc/>

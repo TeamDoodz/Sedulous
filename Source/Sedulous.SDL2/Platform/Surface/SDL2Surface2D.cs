@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using Sedulous.Core;
 using Sedulous.Platform;
@@ -185,7 +186,7 @@ namespace Sedulous.Sdl2.Platform.Surface
         }
 
         /// <inheritdoc/>
-        public override void Blit(Surface2D dst, Point2 position)
+        public override void Blit(Surface2D dst, Point position)
         {
             Contract.EnsureNotDisposed(this, Disposed);
             Contract.Require(dst, nameof(dst));
@@ -196,7 +197,7 @@ namespace Sedulous.Sdl2.Platform.Surface
         }
 
         /// <inheritdoc/>
-        public override void Blit(Surface2D dst, Point2 position, SurfaceFlipDirection direction)
+        public override void Blit(Surface2D dst, Point position, SurfaceFlipDirection direction)
         {
             Contract.EnsureNotDisposed(this, Disposed);
             Contract.Require(dst, nameof(dst));
@@ -358,7 +359,7 @@ namespace Sedulous.Sdl2.Platform.Surface
         /// <summary>
         /// Blits the surface onto the specified destination surface.
         /// </summary>
-        private static void BlitInternal(SDL2Surface2D src, SDL2Surface2D dst, Point2 position, SurfaceFlipDirection direction)
+        private static void BlitInternal(SDL2Surface2D src, SDL2Surface2D dst, Point position, SurfaceFlipDirection direction)
         {
             switch (direction)
             {
@@ -379,7 +380,7 @@ namespace Sedulous.Sdl2.Platform.Surface
         /// <summary>
         /// Blits the surface onto the specified destination surface, flipping it horizontally.
         /// </summary>
-        private static void BlitInternalFlipH(SDL2Surface2D src, SDL2Surface2D dst, Point2 position)
+        private static void BlitInternalFlipH(SDL2Surface2D src, SDL2Surface2D dst, Point position)
         {
             var srcNative = src.NativePtr;
             var dstNative = dst.NativePtr;
@@ -423,7 +424,7 @@ namespace Sedulous.Sdl2.Platform.Surface
         /// <summary>
         /// Blits the surface onto the specified destination surface, flipping it vertically.
         /// </summary>
-        private static void BlitInternalFlipV(SDL2Surface2D src, SDL2Surface2D dst, Point2 position)
+        private static void BlitInternalFlipV(SDL2Surface2D src, SDL2Surface2D dst, Point position)
         {
             var srcNative = src.NativePtr;
             var dstNative = dst.NativePtr;

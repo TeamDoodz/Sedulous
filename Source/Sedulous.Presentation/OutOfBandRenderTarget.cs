@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Core;
 using Sedulous.Graphics;
 
@@ -107,7 +108,7 @@ namespace Sedulous.Presentation
         /// <summary>
         /// Gets the cumulative transform of all ancestors of the rendered element.
         /// </summary>
-        public Matrix VisualTransform
+        public Matrix4x4 VisualTransform
         {
             get;
             internal set;

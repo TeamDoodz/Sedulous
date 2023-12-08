@@ -1,4 +1,5 @@
-﻿using Sedulous.Core;
+﻿using System.Numerics;
+using Sedulous.Core;
 using Sedulous.Presentation.Media;
 
 namespace Sedulous.Presentation.Documents
@@ -25,7 +26,7 @@ namespace Sedulous.Presentation.Documents
         /// Provides the <see cref="Adorner"/> a chance to modify the transformation matrix which will be applied to it.
         /// </summary>
         /// <param name="transform">The transformation matrix which is being applied to the adorner.</param>
-        public virtual void GetDesiredTransform(ref Matrix transform)
+        public virtual void GetDesiredTransform(ref Matrix4x4 transform)
         {
 
         }

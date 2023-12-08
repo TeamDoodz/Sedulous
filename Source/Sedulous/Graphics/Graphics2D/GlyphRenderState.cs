@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using Sedulous.Core.Text;
 using Sedulous.Graphics.Graphics2D.Text;
@@ -16,7 +18,7 @@ namespace Sedulous.Graphics.Graphics2D
             /// Creates a new <see cref="GlyphRenderState"/> structure from the parameters to the <see cref="DrawStringInternal{TSource}"/> method.
             /// </summary>
             public static GlyphRenderState FromDrawStringParameters(FrameworkFontFace fontFace,
-                Vector2 position, Vector2 origin, Vector2 scale, Single rotation, SpriteEffects effects, Size2 measure)
+                Vector2 position, Vector2 origin, Vector2 scale, Single rotation, SpriteEffects effects, Size measure)
             {
                 // Determine whether the text is flipped.
                 var isFlippedHorizontally = (effects & SpriteEffects.FlipHorizontally) == SpriteEffects.FlipHorizontally;
@@ -27,15 +29,15 @@ namespace Sedulous.Graphics.Graphics2D
                 var areaBR = new Vector2(position.X - origin.X + measure.Width, position.Y - origin.Y + measure.Height);
 
                 // Calculate the transformation matrix.
-                var transformRotation = Matrix.CreateRotationZ(rotation);
-                var transformScale = Matrix.CreateScale(scale.X, scale.Y, 1f);
-                Matrix.Multiply(ref transformRotation, ref transformScale, out var transform);
+                var transformRotation = Matrix4x4.CreateRotationZ(rotation);
+                var transformScale = Matrix4x4.CreateScale(scale.X, scale.Y, 1f);
+                Matrix4x4 transform = transformRotation * transformScale;
 
-                // Transform the text area.
-                Vector2.Transform(ref areaTL, ref transform, out var areaTransformedTL);
-                Vector2.Transform(ref areaBR, ref transform, out var areaTransformedBR);
-                var areaSize = new Size2F(areaBR.X - areaTL.X, areaBR.Y - areaTL.Y);
-                var areaTransformedSize = new Size2F(
+				// Transform the text area.
+				var areaTransformedTL = Vector2.Transform(areaTL, transform);
+				var areaTransformedBR = Vector2.Transform(areaBR, transform);
+                var areaSize = new SizeF(areaBR.X - areaTL.X, areaBR.Y - areaTL.Y);
+                var areaTransformedSize = new SizeF(
                     areaTransformedBR.X - areaTransformedTL.X,
                     areaTransformedBR.Y - areaTransformedTL.Y);
                 var textStartPosition = new Vector2(
@@ -55,8 +57,8 @@ namespace Sedulous.Graphics.Graphics2D
                     TextIsFlippedVertically = isFlippedVertically,
                     TextDirection = new Vector2(isFlippedHorizontally ? -1 : 1, isFlippedVertically ? -1 : 1),
                     TextTransform = transform,
-                    TextArea = new RectangleF(areaTL, areaSize),
-                    TextAreaTransformed = new RectangleF(areaTransformedTL, areaTransformedSize),
+                    TextArea = new RectangleF(areaTL.X, areaTL.Y, areaSize.Width, areaSize.Height),
+                    TextAreaTransformed = new RectangleF(areaTransformedTL.X, areaTransformedTL.Y, areaTransformedSize.Width, areaTransformedSize.Height),
                 };
             }
 
@@ -289,7 +291,7 @@ namespace Sedulous.Graphics.Graphics2D
             /// <summary>
             /// The matrix which is used to transform the text.
             /// </summary>
-            public Matrix TextTransform;
+            public Matrix4x4 TextTransform;
 
             /// <summary>
             /// Gets the character which this glyph represents.

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Numerics;
 
 namespace Sedulous.Graphics.Graphics2D
 {
@@ -45,17 +47,20 @@ namespace Sedulous.Graphics.Graphics2D
         }
 
         /// <inheritdoc/>
-        public Size2 TextureSize
+        public Size TextureSize
         {
             // NOTE: On OpenGL ES 2.0 we don't support integer vertex attributes and therefore
             // we don't do the normalization in the GLSL, which means that TextureSize gets
             // optimized out. So we can just ignore it.
-            get => (Size2)(epTextureSize?.GetValueVector2() ?? Vector2.Zero);
-            set => epTextureSize?.SetValue((Vector2)value);
+            get {
+				Vector2 vector2 = epTextureSize?.GetValueVector2() ?? Vector2.Zero;
+				return new Size((int)vector2.X, (int)vector2.Y);
+			}
+			set => epTextureSize?.SetValue(new Vector2(value.Width, value.Height));
         }
 
         /// <inheritdoc/>
-        public Matrix MatrixTransform
+        public Matrix4x4 MatrixTransform
         {
             get => epMatrixTransform.GetValueMatrix();
             set => epMatrixTransform.SetValue(value);

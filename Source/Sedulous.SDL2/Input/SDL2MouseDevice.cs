@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Sedulous.Core;
 using Sedulous.Core.Messages;
 using Sedulous.Input;
@@ -155,14 +156,14 @@ namespace Sedulous.Sdl2.Input
         }
 
         /// <inheritdoc/>
-        public override Point2? GetPositionInWindow(IFrameworkWindow window)
+        public override Point? GetPositionInWindow(IFrameworkWindow window)
         {
             Contract.Require(window, nameof(window));
 
             if (Window != window)
                 return null;
 
-            var spos = (Point2)Position;
+            var spos = Position;
             var cpos = Window.Compositor.WindowToPoint(spos);
 
             return cpos;
@@ -244,7 +245,7 @@ namespace Sedulous.Sdl2.Input
         public override IFrameworkWindow Window => window;
 
         /// <inheritdoc/>
-        public override Point2 Position => new Point2(x, y);
+        public override Point Position => new Point(x, y);
 
         /// <inheritdoc/>
         public override Int32 X => x;

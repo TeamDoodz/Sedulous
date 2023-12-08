@@ -1,4 +1,5 @@
-﻿using Sedulous.Graphics;
+﻿using System.Numerics;
+using Sedulous.Graphics;
 using Sedulous.Graphics.Graphics2D;
 
 namespace Sedulous.Presentation
@@ -18,7 +19,7 @@ namespace Sedulous.Presentation
         /// <param name="localTransform">The drawing context's local transformation matrix.</param>
         /// <param name="globalTransform">The drawing context's global transformation matrix.</param>
         /// <param name="combinedTransform">The drawing context's combined transformation matrix.</param>
-        internal DrawingContextState(SpriteSortMode sortMode, BlendState blendState, SamplerState samplerState, Effect customEffect, ref Matrix localTransform, ref Matrix globalTransform, ref Matrix combinedTransform)
+        internal DrawingContextState(SpriteSortMode sortMode, BlendState blendState, SamplerState samplerState, Effect customEffect, ref Matrix4x4 localTransform, ref Matrix4x4 globalTransform, ref Matrix4x4 combinedTransform)
         {
             this.sortMode = sortMode;
             this.blendState = blendState;
@@ -64,7 +65,7 @@ namespace Sedulous.Presentation
         /// <summary>
         /// Gets the local transformation matrix which is in effect for the context.
         /// </summary>
-        public Matrix LocalTransform
+        public Matrix4x4 LocalTransform
         {
             get { return localTransform; }
         }
@@ -72,7 +73,7 @@ namespace Sedulous.Presentation
         /// <summary>
         /// Gets the global transform matrix which is in effect for the context.
         /// </summary>
-        public Matrix GlobalTransform
+        public Matrix4x4 GlobalTransform
         {
             get { return globalTransform; }
         }
@@ -80,7 +81,7 @@ namespace Sedulous.Presentation
         /// <summary>
         /// Gets the combined transform matrix which is in effect for the context.
         /// </summary>
-        public Matrix CombinedTransform
+        public Matrix4x4 CombinedTransform
         {
             get { return combinedTransform; }
         }
@@ -90,8 +91,8 @@ namespace Sedulous.Presentation
         private readonly BlendState blendState;
         private readonly SamplerState samplerState;
         private readonly Effect customEffect;
-        private readonly Matrix localTransform;
-        private readonly Matrix globalTransform;
-        private readonly Matrix combinedTransform;
+        private readonly Matrix4x4 localTransform;
+        private readonly Matrix4x4 globalTransform;
+        private readonly Matrix4x4 combinedTransform;
     }
 }

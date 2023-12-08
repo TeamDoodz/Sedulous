@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Newtonsoft.Json;
 using Sedulous.Core;
 
@@ -15,7 +16,7 @@ namespace Sedulous
         /// </summary>
         /// <param name="value">The view/projection matrix which defines the frustum.</param>
         [JsonConstructor]
-        public BoundingFrustum(Matrix value)
+        public BoundingFrustum(Matrix4x4 value)
         {
             this.Matrix = value;
         }
@@ -235,9 +236,9 @@ namespace Sedulous
             foreach (var plane in planes)
             {
                 var normal = plane.Normal;
-                Vector3.Dot(ref ray.Direction, ref normal, out Single dirDotNormal);
-                Vector3.Dot(ref ray.Position, ref normal, out Single posDotNormal);
-                posDotNormal += plane.D;
+				float dirDotNormal = Vector3.Dot(ray.Direction, normal);
+				float posDotNormal = Vector3.Dot(ray.Position, normal);
+				posDotNormal += plane.D;
 
                 if (MathUtility.IsApproximatelyNonZero(dirDotNormal))
                 {
@@ -297,8 +298,8 @@ namespace Sedulous
             foreach (var plane in planes)
             {
                 var normal = plane.Normal;
-                Vector3.Dot(ref ray.Direction, ref normal, out Single dirDotNormal);
-                Vector3.Dot(ref ray.Position, ref normal, out Single posDotNormal);
+                float dirDotNormal = Vector3.Dot(ray.Direction, normal);
+                float posDotNormal = Vector3.Dot(ray.Position, normal);
                 posDotNormal += plane.D;
 
                 if (MathUtility.IsApproximatelyNonZero(dirDotNormal))
@@ -348,7 +349,7 @@ namespace Sedulous
 
             for (int i = 0; i < CornerCount; i++)
             {
-                Vector3.Dot(ref corners[i], ref plane.Normal, out Single cornerDotNormal);
+                float cornerDotNormal = Vector3.Dot(corners[i], plane.Normal);
                 if (cornerDotNormal + plane.D > 0f)
                 {
                     intersectFront = true;
@@ -377,8 +378,8 @@ namespace Sedulous
 
             for (int i = 0; i < CornerCount; i++)
             {
-                Vector3.Dot(ref corners[i], ref plane.Normal, out Single cornerDotNormal);
-                if (cornerDotNormal + plane.D > 0f)
+				float cornerDotNormal = Vector3.Dot(corners[i], plane.Normal);
+				if (cornerDotNormal + plane.D > 0f)
                 {
                     intersectFront = true;
                 }
@@ -511,7 +512,7 @@ namespace Sedulous
         /// The matrix which describes the frustum.
         /// </summary>
         [JsonProperty(Required = Required.Always)]
-        public Matrix Matrix
+        public Matrix4x4 Matrix
         {
             get { return matrix; }
             set
@@ -618,6 +619,6 @@ namespace Sedulous
         // Property values.
         private readonly Vector3[] corners = new Vector3[CornerCount];
         private readonly Plane[] planes = new Plane[PlaneCount];
-        private Matrix matrix;
+        private Matrix4x4 matrix;
     }
 }

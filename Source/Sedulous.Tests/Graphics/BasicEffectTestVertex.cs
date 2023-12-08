@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Graphics;
 
 namespace Sedulous.Tests.Graphics

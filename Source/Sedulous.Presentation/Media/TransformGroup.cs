@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Sedulous.Presentation.Media
 {
@@ -68,20 +69,20 @@ namespace Sedulous.Presentation.Media
         }
 
         /// <inheritdoc/>
-        public override Matrix Value
+        public override Matrix4x4 Value
         {
             get
             {
-                var matrix   = Matrix.Identity;
+                var matrix   = Matrix4x4.Identity;
                 var children = Children;
 
                 if (children != null && children.Count > 0)
                 {
-                    Matrix value;
+                    Matrix4x4 value;
                     foreach (var child in children)
                     {
                         value = child.Value;
-                        Matrix.Multiply(ref matrix, ref value, out matrix);
+                        matrix = Matrix4x4.Multiply(matrix, value);
                     }
                 }
 
@@ -90,13 +91,13 @@ namespace Sedulous.Presentation.Media
         }
 
         /// <inheritdoc/>
-        public override Matrix? Inverse
+        public override Matrix4x4? Inverse
         {
             get
             {
-                Matrix value = Value;
-                Matrix inverse;
-                if (Matrix.TryInvert(value, out inverse))
+                Matrix4x4 value = Value;
+                Matrix4x4 inverse;
+                if (Matrix4x4.Invert(value, out inverse))
                 {
                     return inverse;
                 }

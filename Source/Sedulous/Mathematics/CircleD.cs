@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Newtonsoft.Json;
 
 namespace Sedulous
@@ -38,9 +39,9 @@ namespace Sedulous
         /// Offsets the specified <see cref="CircleD"/> by adding the specified <see cref="Point2D"/> to its location.
         /// </summary>
         /// <param name="circle">The <see cref="CircleD"/> to offset.</param>
-        /// <param name="point">The <see cref="Point2"/> by which to offset the Circle.</param>
+        /// <param name="point">The <see cref="Point"/> by which to offset the Circle.</param>
         /// <returns>A <see cref="CircleD"/> that has been offset by the specified amount.</returns>
-        public static CircleD operator +(CircleD circle, Point2 point)
+        public static CircleD operator +(CircleD circle, Point point)
         {
             CircleD result;
 
@@ -55,9 +56,9 @@ namespace Sedulous
         /// Offsets the specified <see cref="CircleD"/> by subtracting the specified <see cref="Point2D"/> from its location.
         /// </summary>
         /// <param name="circle">The <see cref="CircleD"/> to offset.</param>
-        /// <param name="point">The <see cref="Point2"/> by which to offset the Circle.</param>
+        /// <param name="point">The <see cref="Point"/> by which to offset the Circle.</param>
         /// <returns>A <see cref="CircleD"/> that has been offset by the specified amount.</returns>
-        public static CircleD operator -(CircleD circle, Point2 point)
+        public static CircleD operator -(CircleD circle, Point point)
         {
             CircleD result;
 
@@ -72,9 +73,9 @@ namespace Sedulous
         /// Offsets the specified <see cref="CircleD"/> by adding the specified <see cref="Point2D"/> to its location.
         /// </summary>
         /// <param name="circle">The <see cref="CircleD"/> to offset.</param>
-        /// <param name="point">The <see cref="Point2F"/> by which to offset the Circle.</param>
+        /// <param name="point">The <see cref="PointF"/> by which to offset the Circle.</param>
         /// <returns>A <see cref="CircleD"/> that has been offset by the specified amount.</returns>
-        public static CircleD operator +(CircleD circle, Point2F point)
+        public static CircleD operator +(CircleD circle, PointF point)
         {
             CircleD result;
 
@@ -89,9 +90,9 @@ namespace Sedulous
         /// Offsets the specified <see cref="CircleD"/> by subtracting the specified <see cref="Point2D"/> from its location.
         /// </summary>
         /// <param name="circle">The <see cref="CircleD"/> to offset.</param>
-        /// <param name="point">The <see cref="Point2F"/> by which to offset the Circle.</param>
+        /// <param name="point">The <see cref="PointF"/> by which to offset the Circle.</param>
         /// <returns>A <see cref="CircleD"/> that has been offset by the specified amount.</returns>
-        public static CircleD operator -(CircleD circle, Point2F point)
+        public static CircleD operator -(CircleD circle, PointF point)
         {
             CircleD result;
 

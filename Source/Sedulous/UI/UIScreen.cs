@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using Sedulous.Content;
 using Sedulous.Core;
 using Sedulous.Graphics;
@@ -110,7 +111,7 @@ namespace Sedulous.UI
         public override Int32 Y => 0;
 
         /// <inheritdoc/>
-        public override Size2 Size => WindowSize;
+        public override Size Size => WindowSize;
 
         /// <inheritdoc/>
         public override Int32 Width => WindowWidth;

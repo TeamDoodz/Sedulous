@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Numerics;
 using Sedulous.Core;
 using Sedulous.Presentation.Media;
 using Sedulous.Presentation.Styles;
@@ -279,7 +281,7 @@ namespace Sedulous.Presentation.Controls.Primitives
         /// <summary>
         /// Gets the matrix which transforms coordinates in popup space to view space.
         /// </summary>
-        internal Matrix PopupTransformToView
+        internal Matrix4x4 PopupTransformToView
         {
             get { return transformToView; }
         }
@@ -287,7 +289,7 @@ namespace Sedulous.Presentation.Controls.Primitives
         /// <summary>
         /// Gets the matrix which transforms coordinates in popup space to view space, offset by the popup's transform origin.
         /// </summary>
-        internal Matrix PopupTransformToViewWithOrigin
+        internal Matrix4x4 PopupTransformToViewWithOrigin
         {
             get { return transformToViewWithOrigin; }
         }
@@ -295,7 +297,7 @@ namespace Sedulous.Presentation.Controls.Primitives
         /// <summary>
         /// Gets the matrix which transforms coordinates in popup space to view space using device pixels.
         /// </summary>
-        internal Matrix PopupTransformToViewInDevicePixels
+        internal Matrix4x4 PopupTransformToViewInDevicePixels
         {
             get
             {
@@ -303,7 +305,7 @@ namespace Sedulous.Presentation.Controls.Primitives
                 var roundedM41 = (Int32)Display.DipsToPixels(mtxDips.M41);
                 var roundedM42 = (Int32)Display.DipsToPixels(mtxDips.M42);
 
-                var mtxPixs = new Matrix(
+                var mtxPixs = new Matrix4x4(
                     mtxDips.M11, mtxDips.M12, mtxDips.M13, mtxDips.M14,
                     mtxDips.M21, mtxDips.M22, mtxDips.M23, mtxDips.M24,
                     mtxDips.M31, mtxDips.M32, mtxDips.M33, mtxDips.M34,
@@ -316,7 +318,7 @@ namespace Sedulous.Presentation.Controls.Primitives
         /// <summary>
         /// Gets the matrix which transforms coordinates in popup space to view space, offset by the popup's transform origin.
         /// </summary>
-        internal Matrix PopupTransformToViewWithOriginInDevicePixels
+        internal Matrix4x4 PopupTransformToViewWithOriginInDevicePixels
         {
             get
             {
@@ -324,7 +326,7 @@ namespace Sedulous.Presentation.Controls.Primitives
                 var roundedM41 = (Int32)Display.DipsToPixels(mtxDips.M41);
                 var roundedM42 = (Int32)Display.DipsToPixels(mtxDips.M42);
 
-                var mtxPixs = new Matrix(
+                var mtxPixs = new Matrix4x4(
                     mtxDips.M11, mtxDips.M12, mtxDips.M13, mtxDips.M14,
                     mtxDips.M21, mtxDips.M22, mtxDips.M23, mtxDips.M24,
                     mtxDips.M31, mtxDips.M32, mtxDips.M33, mtxDips.M34,
@@ -627,7 +629,7 @@ namespace Sedulous.Presentation.Controls.Primitives
             alignmentX = 0;
             alignmentY = 0;
 
-            var screenArea = Display.PixelsToDips(View.Area);
+            var screenArea = Display.PixelsToDips(new RectangleD(View.Area.X, View.Area.Y, View.Area.Width, View.Area.Height));
             var popupArea  = RectangleD.Empty;
 
             switch (Placement)
@@ -908,7 +910,7 @@ namespace Sedulous.Presentation.Controls.Primitives
 
             var placementArea = GetPlacementTargetArea(out actualTargetElement, true);
             if (placementArea.IsEmpty)
-                placementArea = Display.PixelsToDips(View.Area);
+                placementArea = Display.PixelsToDips(new RectangleD(View.Area.X, View.Area.Y, View.Area.Width, View.Area.Height));
 
             var popupArea = PositionRects(actualTargetElement,
                 PopupAlignmentPoint.TopLeft, placementArea,
@@ -1004,7 +1006,7 @@ namespace Sedulous.Presentation.Controls.Primitives
 
             var placementArea = GetPlacementTargetArea(out actualTargetElement, true);
             if (placementArea.IsEmpty)
-                placementArea = Display.PixelsToDips(View.Area);
+                placementArea = Display.PixelsToDips(new RectangleD(View.Area.X, View.Area.Y, View.Area.Width, View.Area.Height));
 
             var popupArea = PositionRects(actualTargetElement,
                 PopupAlignmentPoint.TopLeft, placementArea,
@@ -1207,10 +1209,11 @@ namespace Sedulous.Presentation.Controls.Primitives
             var mouseWidthPixs = (cursor == null) ? DefaultCursorWidth : cursor.Width;
             var mouseHeightPixs = (cursor == null) ? DefaultCursorHeight : cursor.Height;
 
-            var mouseTL = (Point2)mousePosInWindow.Value;
-            var mouseBR = mouseTL + Window.Compositor.WindowToPoint(mouseWidthPixs, mouseHeightPixs);
+            var mouseTL = (Point)mousePosInWindow.Value;
+            var windowToPoint = Window.Compositor.WindowToPoint(mouseWidthPixs, mouseHeightPixs);
+            var mouseBR = new Point(mouseTL.X + windowToPoint.X, mouseTL.Y + windowToPoint.Y);
             
-            var mousePosDips = Display.PixelsToDips(mouseTL);
+            var mousePosDips = Display.PixelsToDips(new Point2D(mouseTL.X, mouseTL.Y));
             var mouseWidthDips = Display.PixelsToDips(mouseBR.X - mouseTL.X);
             var mouseHeightDips = Display.PixelsToDips(mouseBR.Y - mouseTL.Y);
 
@@ -1227,16 +1230,16 @@ namespace Sedulous.Presentation.Controls.Primitives
             var alignedM41 = (Single)(popupPosition.X + alignmentX);
             var alignedM42 = (Single)(popupPosition.Y + alignmentY);
 
-            transformToView = new Matrix(
+            transformToView = new Matrix4x4(
                 rawTransform.M11, rawTransform.M12, rawTransform.M13, rawTransform.M14,
                 rawTransform.M21, rawTransform.M22, rawTransform.M23, rawTransform.M24,
                 rawTransform.M31, rawTransform.M32, rawTransform.M33, rawTransform.M34,
                       alignedM41,       alignedM42,                0, 1);
 
-            transformToViewWithOrigin = Matrix.Multiply(
-                Matrix.CreateTranslation(-(Single)popupTransformOrigin.X, -(Single)popupTransformOrigin.Y, 0), transformToView);
+            transformToViewWithOrigin =
+                Matrix4x4.CreateTranslation(-(Single)popupTransformOrigin.X, -(Single)popupTransformOrigin.Y, 0) * transformToView;
 
-            transformToViewInverse = Matrix.Invert(transformToView);
+            Matrix4x4.Invert(transformToView, out transformToViewInverse);
         }
 
         // State values.
@@ -1251,9 +1254,9 @@ namespace Sedulous.Presentation.Controls.Primitives
         // Popup position values
         private Point2D popupTransformOrigin;
         private Point2D popupPosition;
-        private Matrix transformToView = Matrix.Identity;
-        private Matrix transformToViewWithOrigin = Matrix.Identity;
-        private Matrix transformToViewInverse = Matrix.Identity;
+        private Matrix4x4 transformToView = Matrix4x4.Identity;
+        private Matrix4x4 transformToViewWithOrigin = Matrix4x4.Identity;
+        private Matrix4x4 transformToViewInverse = Matrix4x4.Identity;
         private Double alignmentX;
         private Double alignmentY;
     }

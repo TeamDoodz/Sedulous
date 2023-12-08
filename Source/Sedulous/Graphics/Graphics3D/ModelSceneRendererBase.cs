@@ -1,4 +1,5 @@
-﻿using Sedulous.Core;
+﻿using System.Numerics;
+using Sedulous.Core;
 
 namespace Sedulous.Graphics.Graphics3D
 {
@@ -15,7 +16,7 @@ namespace Sedulous.Graphics.Graphics3D
         /// <param name="scene">The scene to draw.</param>
         /// <param name="camera">The camera with which to draw the scene.</param>
         /// <param name="worldMatrix">The scene's world matrix.</param>
-        public void Draw(TScene scene, Camera camera, ref Matrix worldMatrix)
+        public void Draw(TScene scene, Camera camera, ref Matrix4x4 worldMatrix)
         {
             Contract.Require(scene, nameof(scene));
             Contract.Require(camera, nameof(camera));
@@ -88,7 +89,7 @@ namespace Sedulous.Graphics.Graphics3D
         /// <param name="scene">The <typeparamref name="TScene"/> instance that is being rendered.</param>
         /// <param name="camera">The camera with which the scene is being drawn.</param>
         /// <param name="transform">The transformation which is being applied to the node.</param>
-        protected virtual void OnDrawingModelScene(TScene scene, Camera camera, ref Matrix transform)
+        protected virtual void OnDrawingModelScene(TScene scene, Camera camera, ref Matrix4x4 transform)
         { }
 
         /// <summary>
@@ -104,7 +105,7 @@ namespace Sedulous.Graphics.Graphics3D
         /// <param name="camera">The camera with which the scene is being drawn.</param>
         /// <param name="effect">The current <see cref="Effect"/> instance.</param>
         /// <param name="transform">The transformation which is being applied to the node.</param>
-        protected virtual void OnDrawingModelNode(TNode node, Camera camera, Effect effect, ref Matrix transform) 
+        protected virtual void OnDrawingModelNode(TNode node, Camera camera, Effect effect, ref Matrix4x4 transform) 
         { }
 
         /// <summary>
@@ -114,7 +115,7 @@ namespace Sedulous.Graphics.Graphics3D
         /// <param name="camera">The camera with which the scene is being drawn.</param>
         /// <param name="transform">The transformation which is being applied to the node.</param>
         /// <param name="material">The <see cref="Material"/> with which the mesh is being rendered.</param>
-        protected virtual void OnDrawingModelMesh(ModelMesh mesh, Camera camera, ref Matrix transform, ref Material material) 
+        protected virtual void OnDrawingModelMesh(ModelMesh mesh, Camera camera, ref Matrix4x4 transform, ref Material material) 
         {
             var effect = material.Effect;
             var parameters = effect.Parameters;
@@ -135,8 +136,8 @@ namespace Sedulous.Graphics.Graphics3D
             if (effect is IEffectWorldViewProj effectWorldViewProj)
             {
                 camera.GetViewProjectionMatrix(out var viewProj);
-                Matrix.Multiply(ref transform, ref viewProj, out var worldViewProj);
-                effectWorldViewProj.WorldViewProj = worldViewProj;
+				Matrix4x4 worldViewProj = transform * viewProj;
+				effectWorldViewProj.WorldViewProj = worldViewProj;
             }
             else
             { 
@@ -144,7 +145,7 @@ namespace Sedulous.Graphics.Graphics3D
                 if (epWorldViewProj != null)
                 {
                     camera.GetViewProjectionMatrix(out var viewProj);
-                    Matrix.Multiply(ref transform, ref viewProj, out var worldViewProj);
+                    Matrix4x4 worldViewProj = transform * viewProj;
                     epWorldViewProj.SetValueRef(ref worldViewProj);
                 }
             }
@@ -180,14 +181,14 @@ namespace Sedulous.Graphics.Graphics3D
         /// <summary>
         /// Draws a <typeparamref name="TNode"/> instance.
         /// </summary>
-        private void DrawNode(TNode node, Camera camera, ref Effect effect, Matrix transform)
+        private void DrawNode(TNode node, Camera camera, ref Effect effect, Matrix4x4 transform)
         {
             var modelNode = node.ModelNode;
             if (modelNode == null || !modelNode.HasGeometry)
                 return;
 
             modelNode.Transform.AsMatrix(out var nodeTransformMatrix);
-            transform = Matrix.Multiply(nodeTransformMatrix, transform);
+            transform = nodeTransformMatrix * transform;
             OnDrawingModelNode(node, camera, effect, ref transform);
 
             var modelMesh = modelNode.Mesh;

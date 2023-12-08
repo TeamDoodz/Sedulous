@@ -71,44 +71,6 @@ namespace Sedulous.Tests
             TheResultingValue(volume1.Equals(volume4)).ShouldBe(false);
             TheResultingValue(volume1.Equals(volume5)).ShouldBe(false);
         }
-
-        [Test]
-        public void Size3D_TryParse_SucceedsForValidStrings()
-        {
-            var str    = "123.45 456.78 789.99";
-            var result = default(Size3D);
-            if (!Size3D.TryParse(str, out result))
-                throw new InvalidOperationException("Unable to parse string to Size3D.");
-
-            TheResultingValue(result)
-                .ShouldBe(123.45, 456.78, 789.99);
-        }
-
-        [Test]
-        public void Size3D_TryParse_FailsForInvalidStrings()
-        {
-            var result    = default(Size3D);
-            var succeeded = Size3D.TryParse("foo", out result);
-
-            TheResultingValue(succeeded).ShouldBe(false);
-        }
-
-        [Test]
-        public void Size3D_Parse_SucceedsForValidStrings()
-        {
-            var str    = "123.45 456.78 789.99";
-            var result = Size3D.Parse(str);
-
-            TheResultingValue(result)
-                .ShouldBe(123.45, 456.78, 789.99);
-        }
-
-        [Test]
-        public void Size3D_Parse_FailsForInvalidStrings()
-        {
-            Assert.That(() => Size3D.Parse("foo"),
-                Throws.TypeOf<FormatException>());
-        }
         
         [Test]
         public void Size3D_Volume_IsCalculatedCorrectly()

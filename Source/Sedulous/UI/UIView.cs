@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Sedulous.Content;
 using Sedulous.Core;
 using Sedulous.Graphics.Graphics2D;
@@ -230,9 +231,9 @@ namespace Sedulous.UI
         /// <param name="x">The x-coordinate of the screen space position to convert.</param>
         /// <param name="y">The y-coordinate of the screen space position to convert.</param>
         /// <returns>The converted view space position.</returns>
-        public Point2 ScreenPositionToViewPosition(Int32 x, Int32 y)
+        public Point ScreenPositionToViewPosition(Int32 x, Int32 y)
         {
-            return new Point2(x - Area.X, y - Area.Y);
+            return new Point(x - Area.X, y - Area.Y);
         }
 
         /// <summary>
@@ -240,7 +241,7 @@ namespace Sedulous.UI
         /// </summary>
         /// <param name="position">The screen space position to convert.</param>
         /// <returns>The converted view space position.</returns>
-        public Point2 ScreenPositionToViewPosition(Point2 position)
+        public Point ScreenPositionToViewPosition(Point position)
         {
             return ScreenPositionToViewPosition(position.X, position.Y);
         }
@@ -251,9 +252,9 @@ namespace Sedulous.UI
         /// <param name="x">The x-coordinate of the view space position to convert.</param>
         /// <param name="y">The y-coordinate of the view space position to convert.</param>
         /// <returns>The converted screen space position.</returns>
-        public Point2 ViewPositionToScreenPosition(Int32 x, Int32 y)
+        public Point ViewPositionToScreenPosition(Int32 x, Int32 y)
         {
-            return new Point2(x + Area.X, y + Area.Y);
+            return new Point(x + Area.X, y + Area.Y);
         }
 
         /// <summary>
@@ -261,7 +262,7 @@ namespace Sedulous.UI
         /// </summary>
         /// <param name="position">The view space position to convert.</param>
         /// <returns>The converted screen space position.</returns>
-        public Point2 ViewPositionToScreenPosition(Point2 position)
+        public Point ViewPositionToScreenPosition(Point position)
         {
             return ViewPositionToScreenPosition(position.X, position.Y);
         }

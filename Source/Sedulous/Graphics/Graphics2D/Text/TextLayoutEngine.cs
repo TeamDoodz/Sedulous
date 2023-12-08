@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 using Sedulous.Core;
 using Sedulous.Core.Text;
@@ -916,8 +917,8 @@ namespace Sedulous.Graphics.Graphics2D.Text
             var tokenNextOffset = 0;
             var tokenLengthInput = 0;
             var tokenLengthOutput = 0;
-            var tokenSize = default(Size2);
-            var tokenKerning = default(Size2);
+            var tokenSize = default(Size);
+            var tokenKerning = default(Size);
             var tokenIsBreakingSpace = false;
 
             var fallbackFontInfoPrev = state.FallbackFontInfo;
@@ -978,7 +979,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
                 }
 
                 tokenSize = MeasureToken(activeFont, token.TokenType, tokenText, tokenNext, tokenNextOffset, ref settings);
-                tokenKerning = (shape || tokenText.IsEmpty) ? Size2.Zero : activeFont.GetHypotheticalKerningInfo(ref tokenText, tokenLengthOutput - 1, ' ');
+                tokenKerning = (shape || tokenText.IsEmpty) ? Size.Empty : activeFont.GetHypotheticalKerningInfo(ref tokenText, tokenLengthOutput - 1, ' ');
 
                 // NOTE: We assume in a couple of places that tokens sizes don't exceed Int16.MaxValue, so try to
                 // avoid accumulating tokens larger than that just in case somebody is doing something dumb
@@ -1039,14 +1040,14 @@ namespace Sedulous.Graphics.Graphics2D.Text
                 var preLineBreakTextStart = accumulatedInputStart;
                 var preLineBreakTextLength = state.LineBreakOffsetInput.Value;
                 var preLineBreakText = CreateStringSegmentFromCurrentSource(preLineBreakTextStart, preLineBreakTextLength);
-                var preLineBreakSize = (preLineBreakText.Length == 0) ? Size2.Zero :
+                var preLineBreakSize = (preLineBreakText.Length == 0) ? Size.Empty :
                     MeasureToken(activeFont, TextParserTokenType.Text, preLineBreakText, null, 0, ref settings);
                 state.BrokenTextSizeBeforeBreak = preLineBreakSize;
 
                 var postLineBreakStart = accumulatedInputStart + (state.LineBreakOffsetInput.Value + 1);
                 var postLineBreakLength = accumulatedInputLength - (state.LineBreakOffsetInput.Value + 1);
                 var postLineBreakText = CreateStringSegmentFromCurrentSource(postLineBreakStart, postLineBreakLength);
-                var postLineBreakSize = (postLineBreakText.Length == 0) ? Size2.Zero :
+                var postLineBreakSize = (postLineBreakText.Length == 0) ? Size.Empty :
                     MeasureToken(activeFont, TextParserTokenType.Text, postLineBreakText, GetNextTextToken(input, index - 1), 0, ref settings);
                 state.BrokenTextSizeAfterBreak = postLineBreakSize;
             }
@@ -1195,7 +1196,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
         /// <summary>
         /// Given a string and an available space, returns the largest substring which will fit within that space.
         /// </summary>
-        private Boolean GetFittedSubstring(FrameworkFontFace font, Int32 maxLineWidth, ref StringSegment tokenText, ref Int32 tokenLength, ref Size2 tokenSize, ref LayoutState state, ref TextLayoutSettings settings)
+        private Boolean GetFittedSubstring(FrameworkFontFace font, Int32 maxLineWidth, ref StringSegment tokenText, ref Int32 tokenLength, ref Size tokenSize, ref LayoutState state, ref TextLayoutSettings settings)
         {
             var hyphenate = (settings.Options & TextLayoutOptions.Hyphenate) == TextLayoutOptions.Hyphenate;
             var shape = (settings.Options & TextLayoutOptions.Shape) == TextLayoutOptions.Shape;
@@ -1258,7 +1259,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
 
             tokenText = substringLength > 0 ? tokenText.Substring(0, substringLength) : StringSegment.Empty;
             tokenLength = tokenText.Length;
-            tokenSize = new Size2(substringWidth, tokenSize.Height);
+            tokenSize = new Size(substringWidth, tokenSize.Height);
 
             return substringLength > 0;
         }
@@ -1266,7 +1267,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
         /// <summary>
         /// Calculates the size of the specified parser token when rendered according to the current layout state.
         /// </summary>
-        private Size2 MeasureToken(FrameworkFontFace font, TextParserTokenType tokenType, StringSegment tokenText, TextParserToken? tokenNext, Int32 tokenNextOffset, ref TextLayoutSettings settings)
+        private Size MeasureToken(FrameworkFontFace font, TextParserTokenType tokenType, StringSegment tokenText, TextParserToken? tokenNext, Int32 tokenNextOffset, ref TextLayoutSettings settings)
         {
             switch (tokenType)
             {
@@ -1277,12 +1278,12 @@ namespace Sedulous.Graphics.Graphics2D.Text
 
                         var iconWidth = icon.Width ?? icon.Icon.Controller.Width;
                         var iconHeight = icon.Height ?? icon.Icon.Controller.Height;
-                        return new Size2(iconWidth, iconHeight);
+                        return new Size(iconWidth, iconHeight);
                     }
 
                 case TextParserTokenType.Text:
                     {
-                        var size = default(Size2);
+                        var size = default(Size);
                         var shape = (settings.Options & TextLayoutOptions.Shape) == TextLayoutOptions.Shape;
                         if (shape)
                         {
@@ -1307,16 +1308,16 @@ namespace Sedulous.Graphics.Graphics2D.Text
                                 if (textPrevPrevIndex >= 0 && Char.IsSurrogatePair(tokenText[textPrevPrevIndex], tokenText[textPrevIndex]))
                                     textPrevIndex--;
 
-                                var kerning = tokenText.IsEmpty || textNext.IsEmpty ? Size2.Zero :
+                                var kerning = tokenText.IsEmpty || textNext.IsEmpty ? Size.Empty :
                                     font.GetKerningInfo(ref tokenText, textPrevIndex, ref textNext, tokenNextOffset);
-                                return new Size2(size.Width + kerning.Width, size.Height);
+                                return new Size(size.Width + kerning.Width, size.Height);
                             }
                         }
 
                         return size;
                     }
             }
-            return Size2.Zero;
+            return Size.Empty;
         }
 
         /// <summary>

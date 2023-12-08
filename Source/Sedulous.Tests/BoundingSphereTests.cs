@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Sedulous.TestFramework;
@@ -115,8 +116,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingSphere_CreateFromFrustumWorksCorrectly()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var result = BoundingSphere.CreateFromFrustum(frustum);
@@ -140,8 +141,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingSphere_CreateFromFrustumWorksCorrectly_WithOutParam()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             BoundingSphere.CreateFromFrustum(frustum, out BoundingSphere result);
@@ -197,8 +198,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingSphere_CalculatesContainsBoundingFrustumCorrectly()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var sphere1 = new BoundingSphere(new Vector3(10f, 10f, 10f), 10f);
@@ -215,8 +216,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingSphere_CalculatesContainsBoundingFrustumCorrectly_WithOutParam()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var sphere1 = new BoundingSphere(new Vector3(10f, 10f, 10f), 10f);
@@ -313,8 +314,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingSphere_CalculatesIntersectsBoundingFrustumCorrectly()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var sphere1 = new BoundingSphere(new Vector3(10f, 10f, 10f), 10f);
@@ -331,8 +332,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingSphere_CalculatesIntersectsBoundingFrustumCorrectly_WithOutParam()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var sphere1 = new BoundingSphere(new Vector3(10f, 10f, 10f), 10f);
@@ -429,7 +430,7 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingSphere_CalculatesIntersectsPlaneCorrectly()
         {
-            var plane = new Plane(Vector3.Forward, 100f);
+            var plane = new Plane(-Vector3.UnitZ, 100f);
 
             var sphere1 = new BoundingSphere(new Vector3(100f, 100f, 200f), 10f);
             var result1 = sphere1.Intersects(plane);
@@ -449,7 +450,7 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingSphere_CalculatesIntersectsPlaneCorrectly_WithOutParam()
         {
-            var plane = new Plane(Vector3.Forward, 100f);
+            var plane = new Plane(-Vector3.UnitZ, 100f);
 
             var sphere1 = new BoundingSphere(new Vector3(100f, 100f, 200f), 10f);
             sphere1.Intersects(ref plane, out var result1);
@@ -503,7 +504,7 @@ namespace Sedulous.Tests
         {
             var sphere = new BoundingSphere(Vector3.Zero, 10f);
 
-            var matrix = Matrix.CreateScale(2f) * Matrix.CreateTranslation(1f, 2f, 3f);
+            var matrix = Matrix4x4.CreateScale(2f) * Matrix4x4.CreateTranslation(1f, 2f, 3f);
             var result = sphere.Transform(matrix);
 
             TheResultingValue(result)
@@ -516,50 +517,12 @@ namespace Sedulous.Tests
         {
             var sphere = new BoundingSphere(Vector3.Zero, 10f);
 
-            var matrix = Matrix.CreateScale(2f) * Matrix.CreateTranslation(1f, 2f, 3f);
+            var matrix = Matrix4x4.CreateScale(2f) * Matrix4x4.CreateTranslation(1f, 2f, 3f);
             sphere.Transform(ref matrix, out var result);
 
             TheResultingValue(result)
                 .ShouldHaveCenter(1f, 2f, 3f)
                 .ShouldHaveRadius(20f);
-        }
-        
-        [Test]
-        public void BoundingSphere_TryParse_SucceedsForValidStrings()
-        {
-            var str = "12.3 45.6 78.9 10.11";
-            if (!BoundingSphere.TryParse(str, out var result))
-                throw new InvalidOperationException("Unable to parse string to BoundingSphere.");
-
-            TheResultingValue(result)
-                .ShouldHaveCenter(12.3f, 45.6f, 78.9f)
-                .ShouldHaveRadius(10.11f);
-        }
-
-        [Test]
-        public void BoundingSphere_TryParse_FailsForInvalidStrings()
-        {
-            var succeeded = BoundingSphere.TryParse("foo", out var result);
-
-            TheResultingValue(succeeded).ShouldBe(false);
-        }
-
-        [Test]
-        public void BoundingSphere_Parse_SucceedsForValidStrings()
-        {
-            var str = "12.3 45.6 78.9 10.11";
-            var result = BoundingSphere.Parse(str);
-
-            TheResultingValue(result)
-                .ShouldHaveCenter(12.3f, 45.6f, 78.9f)
-                .ShouldHaveRadius(10.11f);
-        }
-
-        [Test]
-        public void BoundingSphere_Parse_FailsForInvalidStrings()
-        {
-            Assert.That(() => BoundingSphere.Parse("foo"),
-                Throws.TypeOf<FormatException>());
         }
 
         [Test]

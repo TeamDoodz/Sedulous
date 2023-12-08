@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using Sedulous.Abstractions;
 using Sedulous.Core;
@@ -1079,7 +1080,7 @@ namespace Sedulous.OpenGL
             if (oglRenderTarget != this.renderTarget)
             {
                 var targetName = GL.DefaultFramebuffer;
-                var targetSize = Size2.Zero;
+                var targetSize = Size.Empty;
 
                 if (oglRenderTarget != null)
                 {

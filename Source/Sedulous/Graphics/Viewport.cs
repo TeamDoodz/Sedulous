@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Numerics;
 using Sedulous.Core;
 
 namespace Sedulous.Graphics
@@ -51,7 +53,7 @@ namespace Sedulous.Graphics
         /// <param name="view">The view matrix.</param>
         /// <param name="world">The world matrix.</param>
         /// <returns>The projected vector.</returns>
-        public Vector3 Project(Vector3 source, Matrix projection, Matrix view, Matrix world)
+        public Vector3 Project(Vector3 source, Matrix4x4 projection, Matrix4x4 view, Matrix4x4 world)
         {
             Project(ref source, ref projection, ref view, ref world, out var result);
             return result;
@@ -65,12 +67,11 @@ namespace Sedulous.Graphics
         /// <param name="view">The view matrix.</param>
         /// <param name="world">The world matrix.</param>
         /// <param name="result">The projected vector.</param>
-        public void Project(ref Vector3 source, ref Matrix projection, ref Matrix view, ref Matrix world, out Vector3 result)
+        public void Project(ref Vector3 source, ref Matrix4x4 projection, ref Matrix4x4 view, ref Matrix4x4 world, out Vector3 result)
         {
-            Matrix.Multiply(ref world, ref view, out var matrix);
-            Matrix.Multiply(ref matrix, ref projection, out matrix);
+			Matrix4x4 matrix = world * view * projection;
 
-            Vector3.Transform(ref source, ref matrix, out result);
+            result = Vector3.Transform(source, matrix);
 
             var a = (((source.X * matrix.M14) + (source.Y * matrix.M24)) + (source.Z * matrix.M34)) + matrix.M44;
             if (!MathUtility.AreApproximatelyEqual(a, 1.0f))
@@ -93,7 +94,7 @@ namespace Sedulous.Graphics
         /// <param name="view">The view matrix.</param>
         /// <param name="world">The world matrix.</param>
         /// <returns>The projected vector.</returns>
-        public Vector3 Unproject(Vector3 source, Matrix projection, Matrix view, Matrix world)
+        public Vector3 Unproject(Vector3 source, Matrix4x4 projection, Matrix4x4 view, Matrix4x4 world)
         {
             Unproject(ref source, ref projection, ref view, ref world, out var result);
             return result;
@@ -107,17 +108,17 @@ namespace Sedulous.Graphics
         /// <param name="view">The view matrix.</param>
         /// <param name="world">The world matrix.</param>
         /// <param name="result">The projected vector.</param>
-        public void Unproject(ref Vector3 source, ref Matrix projection, ref Matrix view, ref Matrix world, out Vector3 result)
+        public void Unproject(ref Vector3 source, ref Matrix4x4 projection, ref Matrix4x4 view, ref Matrix4x4 world, out Vector3 result)
         {
-            Matrix.Multiply(ref world, ref view, out var matrix);
-            Matrix.Multiply(ref matrix, ref projection, out matrix);
-            Matrix.Invert(ref matrix, out matrix);
+            Matrix4x4 matrix = world * view * projection;
+
+			Matrix4x4.Invert(matrix, out matrix);
 
             source.X = (((source.X - X) / Width) * 2f) - 1f;
             source.Y = -((((source.Y - Y) / Height) * 2f) - 1f);
             source.Z = (source.Z - MinDepth) / (MaxDepth - MinDepth);
 
-            Vector3.Transform(ref source, ref matrix, out var vector);
+            Vector3 vector = Vector3.Transform(source, matrix);
 
             var a = (((source.X * matrix.M14) + (source.Y * matrix.M24)) + (source.Z * matrix.M34)) + matrix.M44;
             if (!MathUtility.AreApproximatelyEqual(a, 1.0f))

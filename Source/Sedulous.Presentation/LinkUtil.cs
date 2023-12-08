@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Sedulous.Core;
 using Sedulous.Graphics.Graphics2D.Text;
 
@@ -23,7 +24,7 @@ namespace Sedulous.Presentation
                 return;
             
             var positionDips = position;
-            var positionPixs = positionDips.HasValue ? (Point2)element.View.Display.DipsToPixels(positionDips.Value) : (Point2?)null;
+            var positionPixs = positionDips.HasValue ? (Point)element.View.Display.DipsToPixels(positionDips.Value) : (Point?)null;
 
             if (positionDips.HasValue && (element.IsMouseOver || element.IsMouseCaptured))
             {

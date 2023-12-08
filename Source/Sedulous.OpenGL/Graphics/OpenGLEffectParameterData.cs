@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Core;
 using Sedulous.Graphics;
 using Sedulous.OpenGL.Graphics.Uniforms;
@@ -322,7 +323,7 @@ namespace Sedulous.OpenGL.Graphics
         /// Sets a value into the buffer.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public void SetMat2(in Matrix value)
+        public void SetMat2(in Matrix4x4 value)
         {
             fixed (Byte* pValData = valData)
             {
@@ -338,7 +339,7 @@ namespace Sedulous.OpenGL.Graphics
         /// Sets a value into the buffer.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public void SetMat2(Matrix[] value)
+        public void SetMat2(Matrix4x4[] value)
         {
             Contract.Require(value, nameof(value));
 
@@ -351,7 +352,7 @@ namespace Sedulous.OpenGL.Graphics
         /// Sets a value into the buffer.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public void SetMat2x3(in Matrix value)
+        public void SetMat2x3(in Matrix4x4 value)
         {
             fixed (Byte* pValData = valData)
             {
@@ -367,7 +368,7 @@ namespace Sedulous.OpenGL.Graphics
         /// Sets a value into the buffer.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public void SetMat2x3(Matrix[] value)
+        public void SetMat2x3(Matrix4x4[] value)
         {
             Contract.Require(value, nameof(value));
 
@@ -380,7 +381,7 @@ namespace Sedulous.OpenGL.Graphics
         /// Sets a value into the buffer.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public void SetMat2x4(in Matrix value)
+        public void SetMat2x4(in Matrix4x4 value)
         {
             fixed (Byte* pValData = valData)
             {
@@ -396,7 +397,7 @@ namespace Sedulous.OpenGL.Graphics
         /// Sets a value into the buffer.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public void SetMat2x4(Matrix[] value)
+        public void SetMat2x4(Matrix4x4[] value)
         {
             Contract.Require(value, nameof(value));
 
@@ -409,7 +410,7 @@ namespace Sedulous.OpenGL.Graphics
         /// Sets a value into the buffer.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public void SetMat3(in Matrix value)
+        public void SetMat3(in Matrix4x4 value)
         {
             fixed (Byte* pValData = valData)
             {
@@ -425,7 +426,7 @@ namespace Sedulous.OpenGL.Graphics
         /// Sets a value into the buffer.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public void SetMat3(Matrix[] value)
+        public void SetMat3(Matrix4x4[] value)
         {
             Contract.Require(value, nameof(value));
 
@@ -438,7 +439,7 @@ namespace Sedulous.OpenGL.Graphics
         /// Sets a value into the buffer.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public void SetMat3x2(in Matrix value)
+        public void SetMat3x2(in Matrix4x4 value)
         {
             fixed (Byte* pValData = valData)
             {
@@ -454,7 +455,7 @@ namespace Sedulous.OpenGL.Graphics
         /// Sets a value into the buffer.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public void SetMat3x2(Matrix[] value)
+        public void SetMat3x2(Matrix4x4[] value)
         {
             Contract.Require(value, nameof(value));
 
@@ -467,7 +468,7 @@ namespace Sedulous.OpenGL.Graphics
         /// Sets a value into the buffer.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public void SetMat3x4(in Matrix value)
+        public void SetMat3x4(in Matrix4x4 value)
         {
             fixed (Byte* pValData = valData)
             {
@@ -483,7 +484,7 @@ namespace Sedulous.OpenGL.Graphics
         /// Sets a value into the buffer.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public void SetMat3x4(Matrix[] value)
+        public void SetMat3x4(Matrix4x4[] value)
         {
             Contract.Require(value, nameof(value));
 
@@ -496,7 +497,7 @@ namespace Sedulous.OpenGL.Graphics
         /// Sets a value into the buffer.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public void SetMat4(in Matrix value)
+        public void SetMat4(in Matrix4x4 value)
         {
             fixed (Byte* pValData = valData)
             {
@@ -504,7 +505,7 @@ namespace Sedulous.OpenGL.Graphics
                 ElementCount = 1;
                 Version++;
 
-                *((Matrix*)pValData) = value;
+                *((Matrix4x4*)pValData) = value;
             }
         }
 
@@ -512,7 +513,7 @@ namespace Sedulous.OpenGL.Graphics
         /// Sets a value into the buffer.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public void SetMat4(Matrix[] value)
+        public void SetMat4(Matrix4x4[] value)
         {
             Contract.Require(value, nameof(value));
 
@@ -525,7 +526,7 @@ namespace Sedulous.OpenGL.Graphics
         /// Sets a value into the buffer.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public void SetMat4x2(in Matrix value)
+        public void SetMat4x2(in Matrix4x4 value)
         {
             fixed (Byte* pValData = valData)
             {
@@ -541,7 +542,7 @@ namespace Sedulous.OpenGL.Graphics
         /// Sets a value into the buffer.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public void SetMat4x2(Matrix[] value)
+        public void SetMat4x2(Matrix4x4[] value)
         {
             Contract.Require(value, nameof(value));
 
@@ -554,7 +555,7 @@ namespace Sedulous.OpenGL.Graphics
         /// Sets a value into the buffer.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public void SetMat4x3(in Matrix value)
+        public void SetMat4x3(in Matrix4x4 value)
         {
             fixed (Byte* pValData = valData)
             {
@@ -570,7 +571,7 @@ namespace Sedulous.OpenGL.Graphics
         /// Sets a value into the buffer.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public void SetMat4x3(Matrix[] value)
+        public void SetMat4x3(Matrix4x4[] value)
         {
             Contract.Require(value, nameof(value));
 
@@ -1033,7 +1034,7 @@ namespace Sedulous.OpenGL.Graphics
         /// </summary>
         /// <param name="array">An array to populate with values.</param>
         /// <param name="count">The maximum number of values to copy into the array.</param>
-        public void GetMat2Array(Matrix[] array, Int32 count)
+        public void GetMat2Array(Matrix4x4[] array, Int32 count)
         {
             Contract.Require(array, nameof(array));
             Contract.EnsureRange(count >= 0 && count < array.Length, nameof(count));
@@ -1046,7 +1047,7 @@ namespace Sedulous.OpenGL.Graphics
 
             if (DataType == OpenGLEffectParameterDataType.Mat2Array)
             {
-                GetArray<Mat2, Matrix>(array, count, x => (Matrix)x);
+                GetArray<Mat2, Matrix4x4>(array, count, x => (Matrix4x4)x);
                 return;
             }
             throw new InvalidCastException();
@@ -1077,7 +1078,7 @@ namespace Sedulous.OpenGL.Graphics
         /// </summary>
         /// <param name="array">An array to populate with values.</param>
         /// <param name="count">The maximum number of values to copy into the array.</param>
-        public void GetMat2x3Array(Matrix[] array, Int32 count)
+        public void GetMat2x3Array(Matrix4x4[] array, Int32 count)
         {
             Contract.Require(array, nameof(array));
             Contract.EnsureRange(count >= 0 && count < array.Length, nameof(count));
@@ -1090,7 +1091,7 @@ namespace Sedulous.OpenGL.Graphics
 
             if (DataType == OpenGLEffectParameterDataType.Mat2x3Array)
             {
-                GetArray<Mat2x3, Matrix>(array, count, x => (Matrix)x);
+                GetArray<Mat2x3, Matrix4x4>(array, count, x => (Matrix4x4)x);
                 return;
             }
             throw new InvalidCastException();
@@ -1121,7 +1122,7 @@ namespace Sedulous.OpenGL.Graphics
         /// </summary>
         /// <param name="array">An array to populate with values.</param>
         /// <param name="count">The maximum number of values to copy into the array.</param>
-        public void GetMat2x4Array(Matrix[] array, Int32 count)
+        public void GetMat2x4Array(Matrix4x4[] array, Int32 count)
         {
             Contract.Require(array, nameof(array));
             Contract.EnsureRange(count >= 0 && count < array.Length, nameof(count));
@@ -1134,7 +1135,7 @@ namespace Sedulous.OpenGL.Graphics
 
             if (DataType == OpenGLEffectParameterDataType.Mat2x4Array)
             {
-                GetArray<Mat2x4, Matrix>(array, count, x => (Matrix)x);
+                GetArray<Mat2x4, Matrix4x4>(array, count, x => (Matrix4x4)x);
                 return;
             }
             throw new InvalidCastException();
@@ -1165,7 +1166,7 @@ namespace Sedulous.OpenGL.Graphics
         /// </summary>
         /// <param name="array">An array to populate with values.</param>
         /// <param name="count">The maximum number of values to copy into the array.</param>
-        public void GetMat3Array(Matrix[] array, Int32 count)
+        public void GetMat3Array(Matrix4x4[] array, Int32 count)
         {
             Contract.Require(array, nameof(array));
             Contract.EnsureRange(count >= 0 && count < array.Length, nameof(count));
@@ -1178,7 +1179,7 @@ namespace Sedulous.OpenGL.Graphics
 
             if (DataType == OpenGLEffectParameterDataType.Mat3Array)
             {
-                GetArray<Mat3, Matrix>(array, count, x => (Matrix)x);
+                GetArray<Mat3, Matrix4x4>(array, count, x => (Matrix4x4)x);
                 return;
             }
             throw new InvalidCastException();
@@ -1209,7 +1210,7 @@ namespace Sedulous.OpenGL.Graphics
         /// </summary>
         /// <param name="array">An array to populate with values.</param>
         /// <param name="count">The maximum number of values to copy into the array.</param>
-        public void GetMat3x2Array(Matrix[] array, Int32 count)
+        public void GetMat3x2Array(Matrix4x4[] array, Int32 count)
         {
             Contract.Require(array, nameof(array));
             Contract.EnsureRange(count >= 0 && count < array.Length, nameof(count));
@@ -1222,7 +1223,7 @@ namespace Sedulous.OpenGL.Graphics
 
             if (DataType == OpenGLEffectParameterDataType.Mat3x2Array)
             {
-                GetArray<Mat3x2, Matrix>(array, count, x => (Matrix)x);
+                GetArray<Mat3x2, Matrix4x4>(array, count, x => (Matrix4x4)x);
                 return;
             }
             throw new InvalidCastException();
@@ -1253,7 +1254,7 @@ namespace Sedulous.OpenGL.Graphics
         /// </summary>
         /// <param name="array">An array to populate with values.</param>
         /// <param name="count">The maximum number of values to copy into the array.</param>
-        public void GetMat3x4Array(Matrix[] array, Int32 count)
+        public void GetMat3x4Array(Matrix4x4[] array, Int32 count)
         {
             Contract.Require(array, nameof(array));
             Contract.EnsureRange(count >= 0 && count < array.Length, nameof(count));
@@ -1266,7 +1267,7 @@ namespace Sedulous.OpenGL.Graphics
 
             if (DataType == OpenGLEffectParameterDataType.Mat3x4Array)
             {
-                GetArray<Mat3x4, Matrix>(array, count, x => (Matrix)x);
+                GetArray<Mat3x4, Matrix4x4>(array, count, x => (Matrix4x4)x);
                 return;
             }
             throw new InvalidCastException();
@@ -1276,16 +1277,16 @@ namespace Sedulous.OpenGL.Graphics
         /// Gets the value that is set into the buffer.
         /// </summary>
         /// <returns>The value that is set into the buffer.</returns>
-        public Matrix GetMat4()
+        public Matrix4x4 GetMat4()
         {
             if (DataType == OpenGLEffectParameterDataType.None)
-                return default(Matrix);
+                return default(Matrix4x4);
 
             if (DataType == OpenGLEffectParameterDataType.Mat4)
             {
                 fixed (Byte* pValData = valData)
                 {
-                    return *((Matrix*)pValData);
+                    return *((Matrix4x4*)pValData);
                 }
             }
 
@@ -1297,7 +1298,7 @@ namespace Sedulous.OpenGL.Graphics
         /// </summary>
         /// <param name="array">An array to populate with values.</param>
         /// <param name="count">The maximum number of values to copy into the array.</param>
-        public void GetMat4Array(Matrix[] array, Int32 count)
+        public void GetMat4Array(Matrix4x4[] array, Int32 count)
         {
             Contract.Require(array, nameof(array));
             Contract.EnsureRange(count >= 0 && count < array.Length, nameof(count));
@@ -1341,7 +1342,7 @@ namespace Sedulous.OpenGL.Graphics
         /// </summary>
         /// <param name="array">An array to populate with values.</param>
         /// <param name="count">The maximum number of values to copy into the array.</param>
-        public void GetMat4x2Array(Matrix[] array, Int32 count)
+        public void GetMat4x2Array(Matrix4x4[] array, Int32 count)
         {
             Contract.Require(array, nameof(array));
             Contract.EnsureRange(count >= 0 && count < array.Length, nameof(count));
@@ -1354,7 +1355,7 @@ namespace Sedulous.OpenGL.Graphics
 
             if (DataType == OpenGLEffectParameterDataType.Mat4x2Array)
             {
-                GetArray<Mat4x2, Matrix>(array, count, x => (Matrix)x);
+                GetArray<Mat4x2, Matrix4x4>(array, count, x => (Matrix4x4)x);
                 return;
             }
             throw new InvalidCastException();
@@ -1385,7 +1386,7 @@ namespace Sedulous.OpenGL.Graphics
         /// </summary>
         /// <param name="array">An array to populate with values.</param>
         /// <param name="count">The maximum number of values to copy into the array.</param>
-        public void GetMat4x3Array(Matrix[] array, Int32 count)
+        public void GetMat4x3Array(Matrix4x4[] array, Int32 count)
         {
             Contract.Require(array, nameof(array));
             Contract.EnsureRange(count >= 0 && count < array.Length, nameof(count));
@@ -1398,7 +1399,7 @@ namespace Sedulous.OpenGL.Graphics
 
             if (DataType == OpenGLEffectParameterDataType.Mat4x3Array)
             {
-                GetArray<Mat4x3, Matrix>(array, count, x => (Matrix)x);
+                GetArray<Mat4x3, Matrix4x4>(array, count, x => (Matrix4x4)x);
                 return;
             }
             throw new InvalidCastException();

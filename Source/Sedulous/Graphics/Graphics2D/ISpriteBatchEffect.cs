@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Sedulous.Graphics.Graphics2D
 {
@@ -7,10 +8,10 @@ namespace Sedulous.Graphics.Graphics2D
     /// </summary>
     public interface ISpriteBatchEffect
     {
-        /// <summary>
-        /// Gets or sets the effect's transformation matrix.
-        /// </summary>
-        Matrix MatrixTransform
+		/// <summary>
+		/// Gets or sets the effect's transformation matrix.
+		/// </summary>
+		Matrix4x4 MatrixTransform
         {
             get;
             set;

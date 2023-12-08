@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Graphics;
 using Sedulous.Graphics.Graphics2D;
 
@@ -64,7 +65,7 @@ namespace Sedulous.Presentation.Media.Effects
             effect.Value.Radius = GetRadiusInPixels(element);
             effect.Value.Direction = BlurDirection.Horizontal;
 
-            dc.Begin(SpriteSortMode.Immediate, effect, Matrix.Identity);
+            dc.Begin(SpriteSortMode.Immediate, effect, Matrix4x4.Identity);
             dc.RawDraw(target.ColorBuffer, Vector2.Zero, Color.White);
             dc.End();
         }
@@ -82,7 +83,7 @@ namespace Sedulous.Presentation.Media.Effects
             effect.Value.Radius = GetRadiusInPixels(element);
             effect.Value.Direction = BlurDirection.Vertical;
 
-            dc.Begin(SpriteSortMode.Immediate, effect, Matrix.Identity);
+            dc.Begin(SpriteSortMode.Immediate, effect, Matrix4x4.Identity);
 
             var shadowTexture = target.Next.ColorBuffer;
             dc.RawDraw(shadowTexture, positionRounded, null, Color.White, 0f, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);

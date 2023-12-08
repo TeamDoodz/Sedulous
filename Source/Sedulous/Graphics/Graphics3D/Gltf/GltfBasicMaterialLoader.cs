@@ -4,6 +4,7 @@ using System.Linq;
 using SharpGLTF.Schema2;
 using Sedulous.Content;
 using Sedulous.Core;
+using System.Numerics;
 
 namespace Sedulous.Graphics.Graphics3D
 {

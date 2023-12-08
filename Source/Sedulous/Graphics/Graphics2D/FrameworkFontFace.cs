@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Text;
 using Sedulous.Core.Text;
 using Sedulous.Graphics.Graphics2D.Text;
@@ -44,7 +45,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// </summary>
         /// <param name="text">The text to measure.</param>
         /// <returns>The size of the specified string of text when rendered using this font.</returns>
-        public abstract Size2 MeasureString(String text);
+        public abstract Size MeasureString(String text);
 
         /// <summary>
         /// Measures the size of the specified substring of text when rendered using this font.
@@ -53,14 +54,14 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="start">The index of the first character of the substring to measure.</param>
         /// <param name="count">The number of characters in the substring to measure.</param>
         /// <returns>The size of the specified substring of text when rendered using this font.</returns>
-        public abstract Size2 MeasureString(String text, Int32 start, Int32 count);
+        public abstract Size MeasureString(String text, Int32 start, Int32 count);
 
         /// <summary>
         /// Measures the size of the specified string of text when rendered using this font.
         /// </summary>
         /// <param name="text">The text to measure.</param>
         /// <returns>The size of the specified string of text when rendered using this font.</returns>
-        public abstract Size2 MeasureString(StringBuilder text);
+        public abstract Size MeasureString(StringBuilder text);
 
         /// <summary>
         /// Measures the size of the specified substring of text when rendered using this font.
@@ -69,14 +70,14 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="start">The index of the first character of the substring to measure.</param>
         /// <param name="count">The number of characters in the substring to measure.</param>
         /// <returns>The size of the specified substring of text when rendered using this font.</returns>
-        public abstract Size2 MeasureString(StringBuilder text, Int32 start, Int32 count);
+        public abstract Size MeasureString(StringBuilder text, Int32 start, Int32 count);
 
         /// <summary>
         /// Measures the size of the specified string of text when rendered using this font.
         /// </summary>
         /// <param name="text">The text to measure.</param>
         /// <returns>The size of the specified string of text when rendered using this font.</returns>
-        public abstract Size2 MeasureString(ref StringSegment text);
+        public abstract Size MeasureString(ref StringSegment text);
 
         /// <summary>
         /// Measures the size of the specified substring of text when rendered using this font.
@@ -85,7 +86,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="start">The index of the first character of the substring to measure.</param>
         /// <param name="count">The number of characters in the substring to measure.</param>
         /// <returns>The size of the specified substring of text when rendered using this font.</returns>
-        public abstract Size2 MeasureString(ref StringSegment text, Int32 start, Int32 count);
+        public abstract Size MeasureString(ref StringSegment text, Int32 start, Int32 count);
 
         /// <summary>
         /// Measures the size of the specified string of text when rendered using this font.
@@ -93,7 +94,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <typeparam name="TSource">The type of string source which represents the text to measure.</typeparam>
         /// <param name="text">The text to measure.</param>
         /// <returns>The size of the specified string of text when rendered using this font.</returns>
-        public abstract Size2 MeasureString<TSource>(ref TSource text)
+        public abstract Size MeasureString<TSource>(ref TSource text)
             where TSource : IStringSource<Char>;
 
         /// <summary>
@@ -104,7 +105,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="start">The index of the first character of the substring to measure.</param>
         /// <param name="count">The number of characters in the substring to measure.</param>
         /// <returns>The size of the specified substring of text when rendered using this font.</returns>
-        public abstract Size2 MeasureString<TSource>(ref TSource text, Int32 start, Int32 count)
+        public abstract Size MeasureString<TSource>(ref TSource text, Int32 start, Int32 count)
             where TSource : IStringSource<Char>;
 
         /// <summary>
@@ -113,7 +114,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="text">The shaped text to measure.</param>
         /// <param name="rtl">A value indicating whether to reverse the order in which glyphs are accessed.</param>
         /// <returns>The size of the specified string of shaped text when rendered using this font.</returns>
-        public abstract Size2 MeasureShapedString(ShapedString text, Boolean rtl = false);
+        public abstract Size MeasureShapedString(ShapedString text, Boolean rtl = false);
 
         /// <summary>
         /// Measures the size of the specified substring of shaped text when rendered using this font.
@@ -123,7 +124,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="count">The number of characters in the substring to measure.</param>
         /// <param name="rtl">A value indicating whether to reverse the order in which glyphs are accessed.</param>
         /// <returns>The size of the specified substring of shaped text when rendered using this font.</returns>
-        public abstract Size2 MeasureShapedString(ShapedString text, Int32 start, Int32 count, Boolean rtl = false);
+        public abstract Size MeasureShapedString(ShapedString text, Int32 start, Int32 count, Boolean rtl = false);
 
         /// <summary>
         /// Measures the size of the specified string of shaped text when rendered using this font.
@@ -131,7 +132,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="text">The shaped text to measure.</param>
         /// <param name="rtl">A value indicating whether to reverse the order in which glyphs are accessed.</param>
         /// <returns>The size of the specified string of shaped text when rendered using this font.</returns>
-        public abstract Size2 MeasureShapedString(ShapedStringBuilder text, Boolean rtl = false);
+        public abstract Size MeasureShapedString(ShapedStringBuilder text, Boolean rtl = false);
 
         /// <summary>
         /// Measures the size of the specified substring of shaped text when rendered using this font.
@@ -141,7 +142,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="count">The number of characters in the substring to measure.</param>
         /// <param name="rtl">A value indicating whether to reverse the order in which glyphs are accessed.</param>
         /// <returns>The size of the specified substring of shaped text when rendered using this font.</returns>
-        public abstract Size2 MeasureShapedString(ShapedStringBuilder text, Int32 start, Int32 count, Boolean rtl = false);
+        public abstract Size MeasureShapedString(ShapedStringBuilder text, Int32 start, Int32 count, Boolean rtl = false);
 
         /// <summary>
         /// Measures the size of the specified string of shaped text when rendered using this font.
@@ -150,7 +151,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="text">The shaped text to measure.</param>
         /// <param name="rtl">A value indicating whether to reverse the order in which glyphs are accessed.</param>
         /// <returns>The size of the specified string of shaped text when rendered using this font.</returns>
-        public abstract Size2 MeasureShapedString<TSource>(ref TSource text, Boolean rtl = false)
+        public abstract Size MeasureShapedString<TSource>(ref TSource text, Boolean rtl = false)
             where TSource : IStringSource<ShapedChar>;
 
         /// <summary>
@@ -162,7 +163,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="count">The number of characters in the substring to measure.</param>
         /// <param name="rtl">A value indicating whether to reverse the order in which glyphs are accessed.</param>
         /// <returns>The size of the specified substring of shaped text when rendered using this font.</returns>
-        public abstract Size2 MeasureShapedString<TSource>(ref TSource text, Int32 start, Int32 count, Boolean rtl = false)
+        public abstract Size MeasureShapedString<TSource>(ref TSource text, Int32 start, Int32 count, Boolean rtl = false)
             where TSource : IStringSource<ShapedChar>;
 
         /// <summary>
@@ -171,7 +172,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="c1">The code point of the first glyph to measure.</param>
         /// <param name="c2">The code point of the glyph that comes immediately after the glyph being measured.</param>
         /// <returns>The size of the specified glyph.</returns>
-        public abstract Size2 MeasureGlyph(Int32 c1, Int32? c2 = null);
+        public abstract Size MeasureGlyph(Int32 c1, Int32? c2 = null);
 
         /// <summary>
         /// Measures the glyph that corresponds to the specified glyph index, taking kerning into account.
@@ -179,7 +180,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="glyphIndex1">The glyph index of the first glyph to measure.</param>
         /// <param name="glyphIndex2">The glyph index of the glyph that comes immediatley after the glyph being measures.</param>
         /// <returns>The size of the specified glyph.</returns>
-        public abstract Size2 MeasureGlyphByGlyphIndex(Int32 glyphIndex1, Int32? glyphIndex2 = null);
+        public abstract Size MeasureGlyphByGlyphIndex(Int32 glyphIndex1, Int32? glyphIndex2 = null);
 
         /// <summary>
         /// Measures the specified glyph in a string, taking kerning into account.
@@ -187,7 +188,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="text">The text that contains the glyph to measure.</param>
         /// <param name="ix">The index of the glyph to measure.</param>
         /// <returns>The size of the specified glyph.</returns>
-        public abstract Size2 MeasureGlyph(String text, Int32 ix);
+        public abstract Size MeasureGlyph(String text, Int32 ix);
 
         /// <summary>
         /// Measures the specified glyph in a string, taking kerning into account.
@@ -195,7 +196,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="text">The text that contains the glyph to measure.</param>
         /// <param name="ix">The index of the glyph to measure.</param>
         /// <returns>The size of the specified glyph.</returns>
-        public abstract Size2 MeasureGlyph(StringBuilder text, Int32 ix);
+        public abstract Size MeasureGlyph(StringBuilder text, Int32 ix);
 
         /// <summary>
         /// Measures the specified glyph in a string, taking kerning into account.
@@ -203,7 +204,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="text">The text that contains the glyph to measure.</param>
         /// <param name="ix">The index of the glyph to measure.</param>
         /// <returns>The size of the specified glyph.</returns>
-        public abstract Size2 MeasureGlyph(ref StringSegment text, Int32 ix);
+        public abstract Size MeasureGlyph(ref StringSegment text, Int32 ix);
 
         /// <summary>
         /// Measures the specified glyph in a string, taking kerning into account.
@@ -212,7 +213,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="source">The text that contains the glyph to measure.</param>
         /// <param name="ix">The index of the glyph to measure.</param>
         /// <returns>The size of the specified glyph.</returns>
-        public abstract Size2 MeasureGlyph<TSource>(ref TSource source, Int32 ix)
+        public abstract Size MeasureGlyph<TSource>(ref TSource source, Int32 ix)
             where TSource : IStringSource<Char>;
 
         /// <summary>
@@ -222,7 +223,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="ix">The index of the glyph to measure.</param>
         /// <param name="rtl">A value indicating whether to reverse the order in which glyphs are accessed.</param>
         /// <returns>The size of the specified glyph.</returns>
-        public abstract Size2 MeasureShapedGlyph(ShapedString text, Int32 ix, Boolean rtl = false);
+        public abstract Size MeasureShapedGlyph(ShapedString text, Int32 ix, Boolean rtl = false);
 
         /// <summary>
         /// Measures the specified glyph in a shaped string, taking kerning into account.
@@ -231,7 +232,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="ix">The index of the glyph to measure.</param>
         /// <param name="rtl">A value indicating whether to reverse the order in which glyphs are accessed.</param>
         /// <returns>The size of the specified glyph.</returns>
-        public abstract Size2 MeasureShapedGlyph(ShapedStringBuilder text, Int32 ix, Boolean rtl = false);
+        public abstract Size MeasureShapedGlyph(ShapedStringBuilder text, Int32 ix, Boolean rtl = false);
 
         /// <summary>
         /// Measures the specified glyph in a shaped string, taking kerning into account.
@@ -241,7 +242,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="ix">The index of the glyph to measure.</param>
         /// <param name="rtl">A value indicating whether to reverse the order in which glyphs are accessed.</param>
         /// <returns>The size of the specified glyph.</returns>
-        public abstract Size2 MeasureShapedGlyph<TSource>(ref TSource source, Int32 ix, Boolean rtl = false)
+        public abstract Size MeasureShapedGlyph<TSource>(ref TSource source, Int32 ix, Boolean rtl = false)
             where TSource : IStringSource<ShapedChar>;
 
         /// <summary>
@@ -251,7 +252,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="ix">The index of the glyph to measure.</param>
         /// <param name="c2">The glyph that comes immediately after the glyph being measured.</param>
         /// <returns>The size of the specified glyph.</returns>
-        public abstract Size2 MeasureGlyphWithHypotheticalKerning(ref StringSegment text, Int32 ix, Int32 c2);
+        public abstract Size MeasureGlyphWithHypotheticalKerning(ref StringSegment text, Int32 ix, Int32 c2);
 
         /// <summary>
         /// Measures the specified glyph in a string, taking kerning with a hypothetical second character into account.
@@ -261,7 +262,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="ix">The index of the glyph to measure.</param>
         /// <param name="c2">The Unicode code point of the glyph that comes immediately after the glyph being measured.</param>
         /// <returns>The size of the specified glyph.</returns>
-        public abstract Size2 MeasureGlyphWithHypotheticalKerning<TSource>(ref TSource text, Int32 ix, Int32 c2)
+        public abstract Size MeasureGlyphWithHypotheticalKerning<TSource>(ref TSource text, Int32 ix, Int32 c2)
             where TSource : IStringSource<Char>;
 
         /// <summary>
@@ -273,7 +274,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="glyphIndex2">The glyph index of the glyph that comes immediately after the glyph being measured.</param>
         /// <param name="rtl">A value indicating whether to reverse the order in which glyphs are accessed.</param>
         /// <returns>The size of the specified glyph.</returns>
-        public abstract Size2 MeasureShapedGlyphWithHypotheticalKerning<TSource>(ref TSource text, Int32 ix, Int32 glyphIndex2, Boolean rtl = false)
+        public abstract Size MeasureShapedGlyphWithHypotheticalKerning<TSource>(ref TSource text, Int32 ix, Int32 glyphIndex2, Boolean rtl = false)
             where TSource : IStringSource<ShapedChar>;
 
         /// <summary>
@@ -282,7 +283,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="text">The text that contains the glyph to measure.</param>
         /// <param name="ix">The index of the glyph to measure.</param>
         /// <returns>The size of the specified glyph.</returns>
-        public abstract Size2 MeasureGlyphWithoutKerning(ref StringSegment text, Int32 ix);
+        public abstract Size MeasureGlyphWithoutKerning(ref StringSegment text, Int32 ix);
 
         /// <summary>
         /// Measures the specified glyph in a string, ignoring kerning.
@@ -291,7 +292,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="text">The text that contains the glyph to measure.</param>
         /// <param name="ix">The index of the glyph to measure.</param>
         /// <returns>The size of the specified glyph.</returns>
-        public abstract Size2 MeasureGlyphWithoutKerning<TSource>(ref TSource text, Int32 ix)
+        public abstract Size MeasureGlyphWithoutKerning<TSource>(ref TSource text, Int32 ix)
             where TSource : IStringSource<Char>;
 
         /// <summary>
@@ -302,7 +303,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="ix">The index of the glyph to measure.</param>
         /// <param name="rtl">A value indicating whether to reverse the order in which glyphs are accessed.</param>
         /// <returns>The size of the specified glyph.</returns>
-        public abstract Size2 MeasureShapedGlyphWithoutKerning<TSource>(ref TSource text, Int32 ix, Boolean rtl = false)
+        public abstract Size MeasureShapedGlyphWithoutKerning<TSource>(ref TSource text, Int32 ix, Boolean rtl = false)
             where TSource : IStringSource<ShapedChar>;
 
         /// <summary>
@@ -311,7 +312,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="glyphIndex1">The glyph index that represents the first glyph in the pair to evaluate.</param>
         /// <param name="glyphIndex2">The glyph index that represents the second glyph in the pair to evaluate.</param>
         /// <returns>The kerning offset for the specified glyph pair.</returns>
-        public abstract Size2 GetKerningInfoByGlyphIndex(Int32 glyphIndex1, Int32 glyphIndex2);
+        public abstract Size GetKerningInfoByGlyphIndex(Int32 glyphIndex1, Int32 glyphIndex2);
 
         /// <summary>
         /// Gets this font's kerning offset for the specified glyph pair.
@@ -319,7 +320,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="c1">The Unicode code point that represents the first glyph in the pair to evaluate.</param>
         /// <param name="c2">The Unicode code point that represents the second glyph in the pair to evaluate.</param>
         /// <returns>The kerning offset for the specified glyph pair.</returns>
-        public abstract Size2 GetKerningInfo(Int32 c1, Int32 c2);
+        public abstract Size GetKerningInfo(Int32 c1, Int32 c2);
 
         /// <summary>
         /// Gets this font's kerning offset for the specified character pair.
@@ -327,7 +328,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="text">The string segment that contains the character pair.</param>
         /// <param name="ix">The index of the first character in the pair to evaluate.</param>
         /// <returns>The kerning offset for the specified character pair.</returns>
-        public abstract Size2 GetKerningInfo(ref StringSegment text, Int32 ix);
+        public abstract Size GetKerningInfo(ref StringSegment text, Int32 ix);
 
         /// <summary>
         /// Gets this font's kerning offset for the specified character pair.
@@ -337,7 +338,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="text2">The string segment that contains the second character in the pair.</param>
         /// <param name="ix2">The index of the second character in the pair to evaluate.</param>
         /// <returns>The kerning offset for the specified character pair.</returns>
-        public abstract Size2 GetKerningInfo(ref StringSegment text1, Int32 ix1, ref StringSegment text2, Int32 ix2);
+        public abstract Size GetKerningInfo(ref StringSegment text1, Int32 ix1, ref StringSegment text2, Int32 ix2);
 
         /// <summary>
         /// Gets this font's kerning offset for the specified character pair.
@@ -346,7 +347,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="text">The string source that contains the character pair.</param>
         /// <param name="ix">The index of the first character in the pair to evaluate.</param>
         /// <returns>The kerning offset for the specified character pair.</returns>
-        public abstract Size2 GetKerningInfo<TSource>(ref TSource text, Int32 ix)
+        public abstract Size GetKerningInfo<TSource>(ref TSource text, Int32 ix)
             where TSource : IStringSource<Char>;
 
         /// <summary>
@@ -359,7 +360,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="text2">The string source that contains the second character in the pair.</param>
         /// <param name="ix2">The index of the second character in the pair to evaluate.</param>
         /// <returns>The kerning offset for the specified character pair.</returns>
-        public abstract Size2 GetKerningInfo<TSource1, TSource2>(ref TSource1 text1, Int32 ix1, ref TSource2 text2, Int32 ix2)
+        public abstract Size GetKerningInfo<TSource1, TSource2>(ref TSource1 text1, Int32 ix1, ref TSource2 text2, Int32 ix2)
             where TSource1 : IStringSource<Char>
             where TSource2 : IStringSource<Char>;
 
@@ -370,7 +371,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="text">The shaped string source that contains the glyph pair.</param>
         /// <param name="ix">The index of the first glyph in the pair to evaluate.</param>
         /// <returns>The kerning offset for the specified glyph pair.</returns>
-        public abstract Size2 GetShapedKerningInfo<TSource>(ref TSource text, Int32 ix)
+        public abstract Size GetShapedKerningInfo<TSource>(ref TSource text, Int32 ix)
             where TSource : IStringSource<ShapedChar>;
 
         /// <summary>
@@ -384,7 +385,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="ix2">The index of the second glyph in the pair to evaluate.</param>
         /// <param name="rtl">A value indicating whether to reverse the order in which glyphs are accessed.</param>
         /// <returns>The kerning offset for the specified glyph pair.</returns>
-        public abstract Size2 GetShapedKerningInfo<TSource1, TSource2>(ref TSource1 text1, Int32 ix1, ref TSource2 text2, Int32 ix2, Boolean rtl = false)
+        public abstract Size GetShapedKerningInfo<TSource1, TSource2>(ref TSource1 text1, Int32 ix1, ref TSource2 text2, Int32 ix2, Boolean rtl = false)
             where TSource1 : IStringSource<ShapedChar>
             where TSource2 : IStringSource<ShapedChar>;
 
@@ -395,7 +396,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="ix">The index of the first character in the pair to evaluate.</param>
         /// <param name="c2">The second character in the pair to evaluate.</param>
         /// <returns>The kerning offset for the specified character pair.</returns>
-        public abstract Size2 GetHypotheticalKerningInfo(ref StringSegment text, Int32 ix, Int32 c2);
+        public abstract Size GetHypotheticalKerningInfo(ref StringSegment text, Int32 ix, Int32 c2);
 
         /// <summary>
         /// Gets this font's kerning offset for the specified character pair.
@@ -405,7 +406,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="ix">The index of the first character in the pair to evaluate.</param>
         /// <param name="c2">The Unicode code point of the second character in the pair to evaluate.</param>
         /// <returns>The kerning offset for the specified character pair.</returns>
-        public abstract Size2 GetHypotheticalKerningInfo<TSource>(ref TSource text, Int32 ix, Int32 c2)
+        public abstract Size GetHypotheticalKerningInfo<TSource>(ref TSource text, Int32 ix, Int32 c2)
             where TSource : IStringSource<Char>;
 
         /// <summary>
@@ -417,7 +418,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="glyphIndex2">The glyph index of the second glyph in the pair to evaluate.</param>
         /// <param name="rtl">A value indicating whether to reverse the order in which glyphs are accessed.</param>
         /// <returns>The kerning offset for the specified glyph pair.</returns>
-        public abstract Size2 GetHypotheticalShapedKerningInfo<TSource>(ref TSource text, Int32 ix, Int32 glyphIndex2, Boolean rtl = false)
+        public abstract Size GetHypotheticalShapedKerningInfo<TSource>(ref TSource text, Int32 ix, Int32 glyphIndex2, Boolean rtl = false)
             where TSource : IStringSource<ShapedChar>;
 
         /// <summary>

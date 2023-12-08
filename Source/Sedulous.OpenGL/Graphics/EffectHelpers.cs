@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Graphics;
 
 namespace Sedulous.OpenGL.Graphics
@@ -76,8 +77,8 @@ namespace Sedulous.OpenGL.Graphics
 
             if (parameters.WorldInverseTranspose != null)
             {
-                Matrix.TryInvertRef(ref world, out var worldInverse);
-                Matrix.Transpose(ref worldInverse, out var worldInverseTranspose);
+                Matrix4x4.Invert(world, out var worldInverse);
+				var worldInverseTranspose = Matrix4x4.Transpose(worldInverse);
                 parameters.WorldInverseTranspose.SetValueRef(ref worldInverseTranspose);
             }
         }
@@ -85,19 +86,20 @@ namespace Sedulous.OpenGL.Graphics
         /// <summary>
         /// Updates the world/view/proj matrix parameter for the specified effect.
         /// </summary>
-        public static void UpdateEffectWorldViewProj<TEffect>(TEffect effect, OpenGLBasicEffectParameterBlock parameters, ref Matrix worldView)
+        public static void UpdateEffectWorldViewProj<TEffect>(TEffect effect, OpenGLBasicEffectParameterBlock parameters, ref Matrix4x4 worldView)
             where TEffect : IEffectMatrices
         {
             var world = effect.World;
             var view = effect.View;
-            Matrix.Multiply(ref world, ref view, out worldView);
+            worldView = world * view;
 
-            if (parameters.WorldViewProj != null)
+
+			if (parameters.WorldViewProj != null)
             {
                 var proj = effect.Projection;
 
-                Matrix.Multiply(ref worldView, ref proj, out var worldViewProj);
-                parameters.WorldViewProj.SetValue(worldViewProj);
+                var worldViewProj = worldView * proj;
+				parameters.WorldViewProj.SetValue(worldViewProj);
             }
         }
 
@@ -111,7 +113,7 @@ namespace Sedulous.OpenGL.Graphics
 
             if (parameters.EyePosition != null)
             {
-                Matrix.TryInvertRef(ref view, out var viewInverse);
+                Matrix4x4.Invert(view, out var viewInverse);
                 parameters.EyePosition.SetValue(viewInverse.Translation);
             }
         }
@@ -119,7 +121,7 @@ namespace Sedulous.OpenGL.Graphics
         /// <summary>
         /// Updates the fog parameters for the specified effect.
         /// </summary>
-        public static void UpdateEffectFog<TEffect>(TEffect effect, OpenGLBasicEffectParameterBlock parameters, ref Matrix worldView)
+        public static void UpdateEffectFog<TEffect>(TEffect effect, OpenGLBasicEffectParameterBlock parameters, ref Matrix4x4 worldView)
             where TEffect : IEffectFog
         {
             if (effect.FogEnabled)
@@ -160,7 +162,7 @@ namespace Sedulous.OpenGL.Graphics
         /// <summary>
         /// Updates the basic effect parameters for the specified effect.
         /// </summary>
-        public static void UpdateEffectParameters<TEffect>(TEffect effect, EffectDirtyFlags dirtyFlags, OpenGLBasicEffectParameterBlock parameters, ref Matrix worldView)
+        public static void UpdateEffectParameters<TEffect>(TEffect effect, EffectDirtyFlags dirtyFlags, OpenGLBasicEffectParameterBlock parameters, ref Matrix4x4 worldView)
             where TEffect : IEffectMatrices, IEffectFog, IEffectLights, IEffectTexture, IEffectMaterialColor
         {
             if ((dirtyFlags & EffectDirtyFlags.SrgbColor) == EffectDirtyFlags.SrgbColor)

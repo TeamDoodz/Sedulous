@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Sedulous.Input;
 
 namespace Sedulous.Shims.NETCore.Input

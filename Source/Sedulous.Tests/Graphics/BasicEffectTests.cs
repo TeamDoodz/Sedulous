@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using NUnit.Framework;
 using Sedulous.Graphics;
 using Sedulous.TestApplication;
@@ -196,9 +197,9 @@ namespace Sedulous.Tests.Graphics
                     var window = uv.GetPlatform().Windows.GetCurrent();
                     var aspectRatio = window.DrawableSize.Width / (Single)window.DrawableSize.Height;
 
-                    effect.World = Matrix.CreateRotationY((float)(2.0 * Math.PI * 0.45f));
-                    effect.View = Matrix.CreateLookAt(new Vector3(0, 3, 6), new Vector3(0, 1f, 0), Vector3.Up);
-                    effect.Projection = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, aspectRatio, 1f, 1000f);
+                    effect.World = Matrix4x4.CreateRotationY((float)(2.0 * Math.PI * 0.45f));
+                    effect.View = Matrix4x4.CreateLookAt(new Vector3(0, 3, 6), new Vector3(0, 1f, 0), Vector3.UnitY);
+                    effect.Projection = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, aspectRatio, 1f, 1000f);
 
                     gfx.SetGeometryStream(gstream);
                     DrawGeometry(gfx, effect, rasterizerStateSolid, DepthStencilState.Default, vbuffer.VertexCount / 3);

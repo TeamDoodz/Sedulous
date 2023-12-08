@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Sedulous.Graphics.Graphics2D
 {
@@ -57,6 +58,6 @@ namespace Sedulous.Graphics.Graphics2D
         /// <summary>
         /// Gets or sets the point of origin for the frame group's frames.
         /// </summary>
-        public Point2? Origin { get; set; }
+        public Point? Origin { get; set; }
     }
 }

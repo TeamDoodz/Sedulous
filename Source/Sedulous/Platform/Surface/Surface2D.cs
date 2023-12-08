@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using Sedulous.Core;
 using Sedulous.Graphics;
@@ -187,7 +188,7 @@ namespace Sedulous.Platform
         /// </summary>
         /// <param name="dst">The destination surface.</param>
         /// <param name="position">The position at which to blit the surface.</param>
-        public abstract void Blit(Surface2D dst, Point2 position);
+        public abstract void Blit(Surface2D dst, Point position);
 
         /// <summary>
         /// Blits the surface onto the specified destination surface at the given location relative
@@ -196,7 +197,7 @@ namespace Sedulous.Platform
         /// <param name="dst">The destination surface.</param>
         /// <param name="position">The position at which to blit the surface.</param>
         /// <param name="direction">The direction in which to flip the surface.</param>
-        public abstract void Blit(Surface2D dst, Point2 position, SurfaceFlipDirection direction);
+        public abstract void Blit(Surface2D dst, Point position, SurfaceFlipDirection direction);
 
         /// <summary>
         /// Creates a copy of the surface.

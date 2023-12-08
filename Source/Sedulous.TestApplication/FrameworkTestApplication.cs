@@ -307,7 +307,7 @@ namespace Sedulous.TestApplication
         protected override void OnInitialized()
         {
             if (!headless)
-                FrameworkContext.GetPlatform().Windows.GetPrimary().ClientSize = new Size2(480, 360);
+                FrameworkContext.GetPlatform().Windows.GetPrimary().ClientSize = new Size(480, 360);
 
             initializer?.Invoke(FrameworkContext);
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Text;
 using Sedulous.Core;
 using Sedulous.Core.Collections.Specialized;
@@ -535,7 +536,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
         /// </summary>
         /// <param name="position">The cursor's position relative to the text's layout area, 
         /// or <see langword="null"/> to indicate that the cursor is not over the text.</param>
-        public void UpdateCursor(Point2? position)
+        public void UpdateCursor(Point? position)
         {
             CursorPosition = position;
 
@@ -550,7 +551,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
         /// <param name="y">The y-coordinate of the cursor relative to the text's layout area.</param>
         public void UpdateCursor(Int32 x, Int32 y)
         {
-            CursorPosition = new Point2(x, y);
+            CursorPosition = new Point(x, y);
         }
 
         /// <summary>
@@ -1271,7 +1272,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
         /// <summary>
         /// Gets or sets the position of the mouse cursor relative to the command stream's layout area.
         /// </summary>
-        public Point2? CursorPosition
+        public Point? CursorPosition
         {
             get;
             private set;

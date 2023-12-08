@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Sedulous.Core;
 
 namespace Sedulous.Graphics.Graphics3D
@@ -18,7 +19,7 @@ namespace Sedulous.Graphics.Graphics3D
         /// <param name="mesh">The node's associated mesh.</param>
         /// <param name="children">The node's list of child nodes.</param>
         /// <param name="transform">The node's transform matrix.</param>
-        public ModelNode(Int32 logicalIndex, String name, ModelMesh mesh, IList<ModelNode> children, Matrix transform)
+        public ModelNode(Int32 logicalIndex, String name, ModelMesh mesh, IList<ModelNode> children, Matrix4x4 transform)
         {
             this.LogicalIndex = logicalIndex;
             this.Name = name;

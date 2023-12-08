@@ -111,7 +111,7 @@ namespace Sedulous.Presentation.Input
                     if (visualRoot == null)
                         return new Point2D(Double.NaN, Double.NaN);
 
-                    var positionDips = uiElement.View.Display.PixelsToDips(positionPixs.Value);
+                    var positionDips = uiElement.View.Display.PixelsToDips(new Point2D(positionPixs.Value.X, positionPixs.Value.Y));
                     
                     if (visualRoot is PopupRoot)
                     {

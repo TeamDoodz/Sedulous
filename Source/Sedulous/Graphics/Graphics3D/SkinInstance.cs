@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Core;
 
 namespace Sedulous.Graphics.Graphics3D
@@ -22,7 +23,7 @@ namespace Sedulous.Graphics.Graphics3D
             this.Template = template;
             this.ParentModelInstance = parentModelInstance;
 
-            this.boneTransforms = new Matrix[template.Joints.Count];
+            this.boneTransforms = new Matrix4x4[template.Joints.Count];
             Reset();
         }
 
@@ -32,7 +33,7 @@ namespace Sedulous.Graphics.Graphics3D
         public void Reset()
         {
             for (var i = 0; i < boneTransforms.Length; i++)
-                boneTransforms[i] = Matrix.Identity;
+                boneTransforms[i] = Matrix4x4.Identity;
         }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace Sedulous.Graphics.Graphics3D
                 var nodeInstance = ParentModelInstance.GetNodeInstanceByLogicalIndex(node.LogicalIndex);
                 
                 nodeInstance.GetWorldMatrix(out var worldMatrix);
-                Matrix.Multiply(ref jointInverseBindMatrix, ref worldMatrix, out worldMatrix);
+                worldMatrix = jointInverseBindMatrix * worldMatrix;
 
                 boneTransforms[i] = worldMatrix;
             }
@@ -59,7 +60,7 @@ namespace Sedulous.Graphics.Graphics3D
         /// Gets the skin instance's bone transforms by copying them into the specified array.
         /// </summary>
         /// <param name="destination">The destination array into which the bone transforms will be copied.</param>
-        public void GetBoneTransforms(Matrix[] destination)
+        public void GetBoneTransforms(Matrix4x4[] destination)
         {
             Contract.Require(destination, nameof(destination));
 
@@ -71,7 +72,7 @@ namespace Sedulous.Graphics.Graphics3D
         /// Gets the skin instance's bone transforms by returning the instance's internal array.
         /// </summary>
         /// <returns>An array containing the skin instance's bone transforms.</returns>
-        public Matrix[] GetBoneTransforms() => boneTransforms;
+        public Matrix4x4[] GetBoneTransforms() => boneTransforms;
 
         /// <summary>
         /// Gets the <see cref="Skin"/> which serves as this instance's template.
@@ -89,6 +90,6 @@ namespace Sedulous.Graphics.Graphics3D
         public Int32 BoneCount => boneTransforms.Length;
 
         // State values.
-        private readonly Matrix[] boneTransforms;
+        private readonly Matrix4x4[] boneTransforms;
     }
 }

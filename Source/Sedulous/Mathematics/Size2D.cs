@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Numerics;
 using Newtonsoft.Json;
 
 namespace Sedulous
@@ -156,7 +158,7 @@ namespace Sedulous
         /// <returns>The converted structure.</returns>
         public static explicit operator Vector2(Size2D size)
         {
-            Vector2 result;
+            Vector2 result = new();
 
             result.X = (Single)size.Width;
             result.Y = (Single)size.Height;
@@ -165,13 +167,13 @@ namespace Sedulous
         }
 
         /// <summary>
-        /// Explicitly converts a <see cref="Size2D"/> structure to a <see cref="Point2"/> structure.
+        /// Explicitly converts a <see cref="Size2D"/> structure to a <see cref="Point"/> structure.
         /// </summary>
         /// <param name="size">The structure to convert.</param>
         /// <returns>The converted structure.</returns>
-        public static explicit operator Point2(Size2D size)
+        public static explicit operator Point(Size2D size)
         {
-            Point2 result;
+            Point result = new();
 
             result.X = (Int32)size.Width;
             result.Y = (Int32)size.Height;
@@ -180,13 +182,13 @@ namespace Sedulous
         }
 
         /// <summary>
-        /// Explicitly converts a <see cref="Size2D"/> structure to a <see cref="Point2F"/> structure.
+        /// Explicitly converts a <see cref="Size2D"/> structure to a <see cref="PointF"/> structure.
         /// </summary>
         /// <param name="size">The structure to convert.</param>
         /// <returns>The converted structure.</returns>
-        public static explicit operator Point2F(Size2D size)
+        public static explicit operator PointF(Size2D size)
         {
-            Point2F result;
+            PointF result = new();
 
             result.X = (Single)size.Width;
             result.Y = (Single)size.Height;
@@ -210,13 +212,13 @@ namespace Sedulous
         }
 
         /// <summary>
-        /// Explicitly converts a <see cref="Size2D"/> structure to a <see cref="Size2"/> structure.
+        /// Explicitly converts a <see cref="Size2D"/> structure to a <see cref="Size"/> structure.
         /// </summary>
         /// <param name="size">The structure to convert.</param>
         /// <returns>The converted structure.</returns>
-        public static explicit operator Size2(Size2D size)
+        public static explicit operator Size(Size2D size)
         {
-            Size2 result;
+            Size result = new();
 
             result.Width = (Int32)size.Width;
             result.Height = (Int32)size.Height;
@@ -225,13 +227,13 @@ namespace Sedulous
         }
         
         /// <summary>
-        /// Explicitly converts a <see cref="Size2D"/> structure to a <see cref="Size2F"/> structure.
+        /// Explicitly converts a <see cref="Size2D"/> structure to a <see cref="SizeF"/> structure.
         /// </summary>
         /// <param name="size">The structure to convert.</param>
         /// <returns>The converted structure.</returns>
-        public static explicit operator Size2F(Size2D size)
+        public static explicit operator SizeF(Size2D size)
         {
-            Size2F result;
+            SizeF result = new();
 
             result.Width = (Single)size.Width;
             result.Height = (Single)size.Height;

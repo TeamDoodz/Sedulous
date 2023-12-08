@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Graphics;
 
 namespace Sedulous.OpenGL.Graphics
@@ -159,7 +160,7 @@ namespace Sedulous.OpenGL.Graphics
         }
 
         // Calculated parameter values.
-        private Matrix worldView;
+        private Matrix4x4 worldView;
         private Boolean oneLight;
 
         // Effect parameters.

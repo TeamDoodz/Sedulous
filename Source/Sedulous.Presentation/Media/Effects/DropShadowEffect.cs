@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Graphics;
 using Sedulous.Graphics.Graphics2D;
 
@@ -112,10 +113,10 @@ namespace Sedulous.Presentation.Media.Effects
             var cumulativeTransform = target.VisualTransform;
 
             var shadowVectorStart = new Vector2(0, 0);
-            Vector2.Transform(ref shadowVectorStart, ref cumulativeTransform, out shadowVectorStart);
+			shadowVectorStart = Vector2.Transform(shadowVectorStart, cumulativeTransform);
 
-            var shadowVectorEnd = Vector2.Transform(new Vector2(1, 0), Matrix.CreateRotationZ(Radians.FromDegrees(-Direction)));
-            Vector2.Transform(ref shadowVectorEnd, ref cumulativeTransform, out shadowVectorEnd);
+            var shadowVectorEnd = Vector2.Transform(new Vector2(1, 0), Matrix4x4.CreateRotationZ(Radians.FromDegrees(-Direction)));
+			shadowVectorEnd = Vector2.Transform(shadowVectorEnd, cumulativeTransform);
 
             var shadowDepth = (Int32)element.View.Display.DipsToPixels(ShadowDepth);
             var shadowVector = Vector2.Normalize(shadowVectorEnd - shadowVectorStart) * shadowDepth;
@@ -127,7 +128,7 @@ namespace Sedulous.Presentation.Media.Effects
             effect.Value.Radius = GetBlurRadiusInPixels(element);
             effect.Value.Direction = BlurDirection.Horizontal;
 
-            dc.Begin(SpriteSortMode.Immediate, effect, Matrix.Identity);
+            dc.Begin(SpriteSortMode.Immediate, effect, Matrix4x4.Identity);
             dc.RawDraw(target.ColorBuffer, Vector2.Zero, Color);
             dc.End();
 
@@ -138,12 +139,12 @@ namespace Sedulous.Presentation.Media.Effects
             effect.Value.Radius = GetBlurRadiusInPixels(element);
             effect.Value.Direction = BlurDirection.Vertical;
 
-            dc.Begin(SpriteSortMode.Immediate, effect, Matrix.Identity);
+            dc.Begin(SpriteSortMode.Immediate, effect, Matrix4x4.Identity);
             dc.RawDraw(pass1Target.ColorBuffer, shadowVector, null, Color, 0f, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
             dc.End();
 
             // Draw the element on top of the shadow
-            dc.Begin(SpriteSortMode.Immediate, null, Matrix.Identity);
+            dc.Begin(SpriteSortMode.Immediate, null, Matrix4x4.Identity);
             dc.RawDraw(target.ColorBuffer, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
             dc.End();
         }
@@ -158,7 +159,7 @@ namespace Sedulous.Presentation.Media.Effects
 
             dc.End();
 
-            dc.Begin(SpriteSortMode.Immediate, null, Matrix.Identity);
+            dc.Begin(SpriteSortMode.Immediate, null, Matrix4x4.Identity);
             dc.RawDraw(target.Next.Next.ColorBuffer, positionRounded, null, Color.White, 0f, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);            
             dc.End();
 

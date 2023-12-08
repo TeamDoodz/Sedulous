@@ -6,6 +6,8 @@ using sspack;
 using Sedulous.Content;
 using Sedulous.Core;
 using Sedulous.Platform;
+using System.Drawing;
+using System.Numerics;
 
 namespace Sedulous.Graphics
 {
@@ -105,10 +107,10 @@ namespace Sedulous.Graphics
         /// <summary>
         /// Gets the size of the specified image.
         /// </summary>
-        private static Size2 GetImageSize(ContentManager content, IContentProcessorMetadata metadata, String path)
+        private static Size GetImageSize(ContentManager content, IContentProcessorMetadata metadata, String path)
         {
             using (var image = content.Load<Surface2D>(path, metadata.AssetDensity, false, metadata.IsLoadedFromSolution))
-                return new Size2(image.Width, image.Height);
+                return new Size(image.Width, image.Height);
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using Sedulous.Core;
+﻿using System.Drawing;
+using Sedulous.Core;
 using Sedulous.Platform;
 
 namespace Sedulous.Graphics
@@ -52,6 +53,6 @@ namespace Sedulous.Graphics
         }
 
         /// <inheritdoc/>
-        public override Size2 Size => Window.DrawableSize;
+        public override Size Size => Window.DrawableSize;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using static Sedulous.FreeType2.Native.FreeTypeNative;
 using static Sedulous.FreeType2.Native.FT_Error;
@@ -78,7 +79,7 @@ namespace Sedulous.FreeType2.Native
         /// <param name="ixLeft">The index of the left glyph.</param>
         /// <param name="ixRight">The index of the right glyph.</param>
         /// <returns>The kerning information for the specified glyph pair.</returns>
-        public Size2 GetKerning(UInt32 ixLeft, UInt32 ixRight)
+        public Size GetKerning(UInt32 ixLeft, UInt32 ixRight)
         {
             var kx = 0;
             var ky = 0;
@@ -106,16 +107,16 @@ namespace Sedulous.FreeType2.Native
 
             var x = FreeTypeCalc.F26Dot6ToInt32(kx);
             var y = FreeTypeCalc.F26Dot6ToInt32(ky);
-            return new Size2(x, y);
+            return new Size(x, y);
         }
 
         /// <summary>
         /// Gets the size of the current glyph.
         /// </summary>
         /// <returns>The size of the current glyph.</returns>
-        public Size2 GetGlyphSize()
+        public Size GetGlyphSize()
         {
-            return new Size2(GlyphMetricWidth, GlyphMetricHeight);
+            return new Size(GlyphMetricWidth, GlyphMetricHeight);
         }
         
         /// <summary>

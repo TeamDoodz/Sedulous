@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Numerics;
 using NUnit.Framework;
 using Sedulous.Graphics;
 using Sedulous.Graphics.Graphics2D;
@@ -106,7 +108,7 @@ namespace Sedulous.Tests.Graphics
                 return false;
 
             surface.ProcessAlpha(true, Color.Magenta);
-            surface.Blit(atlas.Surface, new Point2(reservation.X, reservation.Y), atlas.IsFlipped ?
+            surface.Blit(atlas.Surface, new Point(reservation.X, reservation.Y), atlas.IsFlipped ?
                 SurfaceFlipDirection.Vertical : SurfaceFlipDirection.None);
 
             return true;

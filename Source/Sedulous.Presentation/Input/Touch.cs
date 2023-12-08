@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Sedulous.Core;
 using Sedulous.Input;
 using Sedulous.Presentation.Controls.Primitives;
@@ -235,8 +236,8 @@ namespace Sedulous.Presentation.Input
                 if (visualRoot == null)
                     return new Point2D(Double.NaN, Double.NaN);
 
-                var positionPixs = PrimaryDevice.DenormalizeCoordinates(new Point2F(touchInfo.CurrentX, touchInfo.CurrentY));
-                var positionDips = uiElement.View.Display.PixelsToDips(positionPixs);
+                var positionPixs = PrimaryDevice.DenormalizeCoordinates(new PointF(touchInfo.CurrentX, touchInfo.CurrentY));
+                var positionDips = uiElement.View.Display.PixelsToDips(new Point2D(positionPixs.X, positionPixs.Y));
 
                 if (visualRoot is PopupRoot)
                 {

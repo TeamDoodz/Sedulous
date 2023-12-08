@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Drawing;
 using System.Globalization;
+using System.Numerics;
 using Sedulous.Content;
 using Sedulous.Core;
 using Sedulous.Core.Data;
@@ -103,13 +105,13 @@ namespace Sedulous.Graphics.Graphics2D
         /// <summary>
         /// Gets the size of the image's texture region.
         /// </summary>
-        public Size2 TextureRegionSize => TextureRegion.Size;
+        public Size TextureRegionSize => TextureRegion.Size;
 
         /// <summary>
         /// Gets the image's minimum recommended size. Texture images may be drawn at sizes smaller than that specified
         /// by this property, but doing so will degrade their graphical quality.
         /// </summary>
-        public Size2 MinimumRecommendedSize { get; protected set; }
+        public Size MinimumRecommendedSize { get; protected set; }
 
         /// <summary>
         /// Gets a value indicating whether this object represents a valid image.

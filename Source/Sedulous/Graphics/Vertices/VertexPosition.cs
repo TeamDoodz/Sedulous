@@ -1,4 +1,6 @@
-﻿namespace Sedulous.Graphics
+﻿using System.Numerics;
+
+namespace Sedulous.Graphics
 {
     /// <summary>
     /// Represents a vertex containing only 3D position data.

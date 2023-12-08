@@ -1,4 +1,6 @@
 ﻿
+using System.Numerics;
+
 namespace Sedulous.Graphics
 {
     /// <summary>
@@ -6,10 +8,10 @@ namespace Sedulous.Graphics
     /// </summary>
     public interface IEffectViewProj
     {
-        /// <summary>
-        /// Gets or sets the effect's view-projection matrix.
-        /// </summary>
-        Matrix ViewProj
+		/// <summary>
+		/// Gets or sets the effect's view-projection matrix.
+		/// </summary>
+		Matrix4x4 ViewProj
         {
             get;
             set;

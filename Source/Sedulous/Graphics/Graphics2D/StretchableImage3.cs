@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Numerics;
 using Sedulous.Content;
 using Sedulous.Core;
 
@@ -362,11 +364,11 @@ namespace Sedulous.Graphics.Graphics2D
         {
             if (vertical)
             {
-                MinimumRecommendedSize = new Size2(0, left + right);
+                MinimumRecommendedSize = new Size(0, left + right);
             }
             else
             {
-                MinimumRecommendedSize = new Size2(left + right, 0);
+                MinimumRecommendedSize = new Size(left + right, 0);
             }
         }
 

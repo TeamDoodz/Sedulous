@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Graphics.Graphics2D;
 using Sedulous.Graphics.Graphics2D.Text;
 using Sedulous.Input;

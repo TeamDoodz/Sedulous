@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Core;
 
 namespace Sedulous.Presentation.Media
@@ -10,13 +11,13 @@ namespace Sedulous.Presentation.Media
     public sealed class SkewTransform : Transform
     {
         /// <inheritdoc/>
-        public override Matrix Value
+        public override Matrix4x4 Value
         {
             get { return value; }
         }
 
         /// <inheritdoc/>
-        public override Matrix? Inverse
+        public override Matrix4x4? Inverse
         {
             get { return inverse; }
         }
@@ -158,7 +159,7 @@ namespace Sedulous.Presentation.Media
             var tanX = (Single)Math.Tan(Radians.FromDegrees(AngleX));
             var tanY = (Single)Math.Tan(Radians.FromDegrees(AngleY));
 
-            var mtxSkew = new Matrix(
+            var mtxSkew = new Matrix4x4(
                    1, tanY, 0, 0,
                 tanX,    1, 0, 0,
                    0,    0, 1, 0,
@@ -167,12 +168,10 @@ namespace Sedulous.Presentation.Media
             var hasCenter = (centerX != 0 || centerY != 0);
             if (hasCenter)
             {
-                var mtxTransformCenter = Matrix.CreateTranslation(-centerX, -centerY, 0f);
-                var mtxTransformCenterInverse = Matrix.CreateTranslation(centerX, centerY, 0f);
+                var mtxTransformCenter = Matrix4x4.CreateTranslation(-centerX, -centerY, 0f);
+                var mtxTransformCenterInverse = Matrix4x4.CreateTranslation(centerX, centerY, 0f);
 
-                Matrix mtxResult;
-                Matrix.Multiply(ref mtxTransformCenter, ref mtxSkew, out mtxResult);
-                Matrix.Multiply(ref mtxResult, ref mtxTransformCenterInverse, out mtxResult);
+                Matrix4x4 mtxResult = mtxTransformCenter * mtxSkew * mtxTransformCenterInverse;
 
                 this.value = mtxResult;
             }
@@ -181,14 +180,14 @@ namespace Sedulous.Presentation.Media
                 this.value = mtxSkew;
             }
 
-            Matrix invertedValue;
-            this.inverse = Matrix.TryInvert(value, out invertedValue) ? invertedValue : (Matrix?)null; 
-            this.isIdentity = Matrix.Identity.Equals(value);
+            Matrix4x4 invertedValue;
+            this.inverse = Matrix4x4.Invert(value, out invertedValue) ? invertedValue : (Matrix4x4?)null; 
+            this.isIdentity = Matrix4x4.Identity.Equals(value);
         }
 
         // Property values.
-        private Matrix value = Matrix.Identity;
-        private Matrix? inverse;
+        private Matrix4x4 value = Matrix4x4.Identity;
+        private Matrix4x4? inverse;
         private Boolean isIdentity;
     }
 }

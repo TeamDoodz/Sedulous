@@ -73,44 +73,6 @@ namespace Sedulous.Tests
         }
 
         [Test]
-        public void Size3F_TryParse_SucceedsForValidStrings()
-        {
-            var str    = "123.45 456.78 789.99";
-            var result = default(Size3F);
-            if (!Size3F.TryParse(str, out result))
-                throw new InvalidOperationException("Unable to parse string to Size3F.");
-
-            TheResultingValue(result)
-                .ShouldBe(123.45f, 456.78f, 789.99f);
-        }
-
-        [Test]
-        public void Size3F_TryParse_FailsForInvalidStrings()
-        {
-            var result    = default(Size3F);
-            var succeeded = Size3F.TryParse("foo", out result);
-
-            TheResultingValue(succeeded).ShouldBe(false);
-        }
-
-        [Test]
-        public void Size3F_Parse_SucceedsForValidStrings()
-        {
-            var str    = "123.45 456.78 789.99";
-            var result = Size3F.Parse(str);
-
-            TheResultingValue(result)
-                .ShouldBe(123.45f, 456.78f, 789.99f);
-        }
-
-        [Test]
-        public void Size3F_Parse_FailsForInvalidStrings()
-        {
-            Assert.That(() => Size3F.Parse("foo"),
-                Throws.TypeOf<FormatException>());
-        }
-
-        [Test]
         public void Size3F_Volume_IsCalculatedCorrectly()
         {
             var volume1width  = 123.45f;

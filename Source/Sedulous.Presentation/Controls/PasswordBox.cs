@@ -521,8 +521,8 @@ namespace Sedulous.Presentation.Controls
         private void UpdateTextInputRegion(Boolean clear = false)
         {
             var service = SoftwareKeyboardService.Create();
-            service.TextInputRegion = clear ? (Sedulous.Rectangle?)null :
-                (Sedulous.Rectangle)Display.DipsToPixels(CalculateTransformedVisualBounds());
+            service.TextInputRegion = clear ? (System.Drawing.Rectangle?)null :
+                (System.Drawing.Rectangle)Display.DipsToPixels(CalculateTransformedVisualBounds());
         }
 
         // Component references.

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Sedulous.TestFramework;
@@ -11,8 +12,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingFrustum_ConstructorSetsValues()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             TheResultingValue(frustum.Near).WithinDelta(0.0001f)
@@ -32,8 +33,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingFrustum_CalculatesCornersCorrectly()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var corners = new Vector3[BoundingFrustum.CornerCount];
@@ -60,8 +61,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingFrustum_CalculatesContainsVector3Correctly()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var c1 = frustum.Contains(new Vector3(0, 0, 0));
@@ -74,8 +75,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingFrustum_CalculatesContainsVector3Correctly_WithOutParam()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var pt1 = new Vector3(0, 0, 0);
@@ -91,16 +92,16 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingFrustum_CalculatesContainsBoundingFrustumCorrectly()
         {
-            var view1 = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj1 = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view1 = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj1 = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum1 = new BoundingFrustum(view1 * proj1);
 
-            var view2 = Matrix.CreateLookAt(new Vector3(0, 0, 5), new Vector3(0, 0, 10), Vector3.Up);
-            var proj2 = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view2 = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), new Vector3(0, 0, 10), Vector3.UnitY);
+            var proj2 = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum2 = new BoundingFrustum(view2 * proj2);
 
-            var view3 = Matrix.CreateLookAt(new Vector3(0, 0, 5), new Vector3(2, 0, 0), Vector3.Up);
-            var proj3 = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view3 = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), new Vector3(2, 0, 0), Vector3.UnitY);
+            var proj3 = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum3 = new BoundingFrustum(view3 * proj3);
 
             var r1 = frustum1.Contains(frustum2);
@@ -115,16 +116,16 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingFrustum_CalculatesContainsBoundingFrustumCorrectly_WithOutParam()
         {
-            var view1 = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj1 = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view1 = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj1 = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum1 = new BoundingFrustum(view1 * proj1);
 
-            var view2 = Matrix.CreateLookAt(new Vector3(0, 0, 5), new Vector3(0, 0, 10), Vector3.Up);
-            var proj2 = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view2 = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), new Vector3(0, 0, 10), Vector3.UnitY);
+            var proj2 = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum2 = new BoundingFrustum(view2 * proj2);
 
-            var view3 = Matrix.CreateLookAt(new Vector3(0, 0, 5), new Vector3(2, 0, 0), Vector3.Up);
-            var proj3 = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view3 = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), new Vector3(2, 0, 0), Vector3.UnitY);
+            var proj3 = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum3 = new BoundingFrustum(view3 * proj3);
 
             frustum1.Contains(frustum2, out ContainmentType r1);
@@ -139,8 +140,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingFrustum_CalculatesContainsBoundingSphereCorrectly()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var sphere1 = new BoundingSphere(new Vector3(10f, 10f, 10f), 10f);
@@ -157,8 +158,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingFrustum_CalculatesContainsBoundingSphereCorrectly_WithOutParam()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var sphere1 = new BoundingSphere(new Vector3(10f, 10f, 10f), 10f);
@@ -175,8 +176,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingFrustum_CalculatesContainsBoundingBoxCorrectly()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var sphere1 = new BoundingBox(new Vector3(0f, 0f, 0f), new Vector3(20f, 20f, 20f));
@@ -193,8 +194,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingFrustum_CalculatesContainsBoundingBoxCorrectly_WithOutParam()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var sphere1 = new BoundingBox(new Vector3(0f, 0f, 0f), new Vector3(20f, 20f, 20f));
@@ -211,8 +212,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingFrustum_CalculatesIntersectsRayCorrectly()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var ray1 = new Ray(new Vector3(0, 0, 10), Vector3.Zero - new Vector3(0, 0, 10));
@@ -228,8 +229,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingFrustum_CalculatesIntersectsRayCorrectly_WithOutParam()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var ray1 = new Ray(new Vector3(0, 0, 10), Vector3.Zero - new Vector3(0, 0, 10));
@@ -245,8 +246,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingFrustum_CalculatesIntersectsPlaneCorrectly()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var plane1 = new Plane(frustum.Near.Normal, frustum.Near.D - 1000f);
@@ -265,8 +266,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingFrustum_CalculatesIntersectsPlaneCorrectly_WithOutParam()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var plane1 = new Plane(frustum.Near.Normal, frustum.Near.D - 1000f);
@@ -285,16 +286,16 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingFrustum_CalculatesIntersectsBoundingFrustumCorrectly()
         {
-            var view1 = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj1 = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view1 = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj1 = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum1 = new BoundingFrustum(view1 * proj1);
 
-            var view2 = Matrix.CreateLookAt(new Vector3(0, 0, 5), new Vector3(0, 0, 10), Vector3.Up);
-            var proj2 = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view2 = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), new Vector3(0, 0, 10), Vector3.UnitY);
+            var proj2 = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum2 = new BoundingFrustum(view2 * proj2);
 
-            var view3 = Matrix.CreateLookAt(new Vector3(0, 0, 5), new Vector3(2, 0, 0), Vector3.Up);
-            var proj3 = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view3 = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), new Vector3(2, 0, 0), Vector3.UnitY);
+            var proj3 = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum3 = new BoundingFrustum(view3 * proj3);
 
             var r1 = frustum1.Intersects(frustum2);
@@ -309,16 +310,16 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingFrustum_CalculatesIntersectsBoundingFrustumCorrectly_WithOutParam()
         {
-            var view1 = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj1 = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view1 = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj1 = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum1 = new BoundingFrustum(view1 * proj1);
 
-            var view2 = Matrix.CreateLookAt(new Vector3(0, 0, 5), new Vector3(0, 0, 10), Vector3.Up);
-            var proj2 = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view2 = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), new Vector3(0, 0, 10), Vector3.UnitY);
+            var proj2 = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum2 = new BoundingFrustum(view2 * proj2);
 
-            var view3 = Matrix.CreateLookAt(new Vector3(0, 0, 5), new Vector3(2, 0, 0), Vector3.Up);
-            var proj3 = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view3 = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), new Vector3(2, 0, 0), Vector3.UnitY);
+            var proj3 = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum3 = new BoundingFrustum(view3 * proj3);
 
             frustum1.Intersects(frustum2, out Boolean r1);
@@ -333,8 +334,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingFrustum_CalculatesIntersectsBoundingSphereCorrectly()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var sphere1 = new BoundingSphere(new Vector3(10f, 10f, 10f), 10f);
@@ -351,8 +352,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingFrustum_CalculatesIntersectsBoundingSphereCorrectly_WithOutParam()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var sphere1 = new BoundingSphere(new Vector3(10f, 10f, 10f), 10f);
@@ -369,8 +370,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingFrustum_CalculatesIntersectsBoundingBoxCorrectly()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var sphere1 = new BoundingBox(new Vector3(0f, 0f, 0f), new Vector3(20f, 20f, 20f));
@@ -387,8 +388,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingFrustum_CalculatesIntersectsBoundingBoxCorrectly_WithOutParam()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var sphere1 = new BoundingBox(new Vector3(0f, 0f, 0f), new Vector3(20f, 20f, 20f));
@@ -403,52 +404,10 @@ namespace Sedulous.Tests
         }
 
         [Test]
-        public void BoundingFrustum_TryParse_SucceedsForValidStrings()
-        {
-            var str = "11 12 13 14 21 22 23 24 31 32 33 34 41 42 43 44";
-            if (!BoundingFrustum.TryParse(str, out var result))
-                throw new InvalidOperationException("Unable to parse string to BoundingFrustum.");
-
-            var matrix = new Matrix(11, 12, 13, 14, 21, 22, 23, 24, 31, 32, 33, 34, 41, 42, 43, 44);
-            var expected = new BoundingFrustum(matrix);
-
-            TheResultingValue(result == expected)
-                .ShouldBe(true);
-        }
-
-        [Test]
-        public void BoundingFrustum_TryParse_FailsForInvalidStrings()
-        {
-            var succeeded = BoundingFrustum.TryParse("foo", out var result);
-
-            TheResultingValue(succeeded).ShouldBe(false);
-        }
-
-        [Test]
-        public void BoundingFrustum_Parse_SucceedsForValidStrings()
-        {
-            var str = "11 12 13 14 21 22 23 24 31 32 33 34 41 42 43 44";
-            var result = BoundingFrustum.Parse(str);
-
-            var matrix = new Matrix(11, 12, 13, 14, 21, 22, 23, 24, 31, 32, 33, 34, 41, 42, 43, 44);
-            var expected = new BoundingFrustum(matrix);
-
-            TheResultingValue(result == expected)
-                .ShouldBe(true);
-        }
-
-        [Test]
-        public void BoundingFrustum_Parse_FailsForInvalidStrings()
-        {
-            Assert.That(() => BoundingFrustum.Parse("foo"),
-                Throws.TypeOf<FormatException>());
-        }
-
-        [Test]
         public void BoundingFrustum_SerializesToJson()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
             var matrix = frustum.Matrix;
 

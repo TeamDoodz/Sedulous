@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Sedulous.Graphics
 {
@@ -71,13 +72,13 @@ namespace Sedulous.Graphics
         }
 
         /// <inheritdoc/>
-        public abstract void SetBoneTransforms(Matrix[] boneTransforms);
+        public abstract void SetBoneTransforms(Matrix4x4[] boneTransforms);
 
         /// <inheritdoc/>
-        public abstract void GetBoneTransforms(Matrix[] boneTransforms);
+        public abstract void GetBoneTransforms(Matrix4x4[] boneTransforms);
 
         /// <inheritdoc/>
-        public abstract void GetBoneTransforms(Matrix[] boneTransforms, Int32 count);
+        public abstract void GetBoneTransforms(Matrix4x4[] boneTransforms, Int32 count);
 
         /// <inheritdoc/>
         Int32 IEffectSkin.MaxBoneCount { get; } = MaxBoneCount;
@@ -226,7 +227,7 @@ namespace Sedulous.Graphics
         private Single specularPower = 16.0f;
 
         /// <inheritdoc/>
-        public Matrix World
+        public Matrix4x4 World
         {
             get => world;
             set
@@ -240,10 +241,10 @@ namespace Sedulous.Graphics
         /// Called when the value of the <see cref="World"/> property is set.
         /// </summary>
         protected virtual void OnWorldSet() { }
-        private Matrix world;
+        private Matrix4x4 world;
 
         /// <inheritdoc/>
-        public Matrix View
+        public Matrix4x4 View
         {
             get => view;
             set
@@ -257,10 +258,10 @@ namespace Sedulous.Graphics
         /// Called when the value of the <see cref="View"/> property is set.
         /// </summary>
         protected virtual void OnViewSet() { }
-        private Matrix view;
+        private Matrix4x4 view;
 
         /// <inheritdoc/>
-        public Matrix Projection
+        public Matrix4x4 Projection
         {
             get => projection;
             set
@@ -274,7 +275,7 @@ namespace Sedulous.Graphics
         /// Called when the value of the <see cref="Projection"/> property is set.
         /// </summary>
         protected virtual void OnProjectionSet() { }
-        private Matrix projection;
+        private Matrix4x4 projection;
 
         /// <inheritdoc/>
         public Color AmbientLightColor

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Sedulous.Platform;
 
 namespace Sedulous.Graphics.Graphics2D

@@ -7,6 +7,7 @@ using Sedulous.Content;
 using Sedulous.Graphics.PackedVector;
 using SharpGLTF.Runtime;
 using System.Xml.Linq;
+using System.Numerics;
 
 namespace Sedulous.Graphics.Graphics3D
 {

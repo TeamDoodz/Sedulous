@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Sedulous.Core;
 using Sedulous.Graphics;
 using Sedulous.OpenGL.Bindings;
@@ -299,7 +300,7 @@ namespace Sedulous.OpenGL.Graphics
         public UInt32 OpenGLName => framebuffer;
 
         /// <inheritdoc/>
-        public override Size2 Size => new Size2(width, height);
+        public override Size Size => new Size(width, height);
 
         /// <inheritdoc/>
         public override Int32 Width => width;

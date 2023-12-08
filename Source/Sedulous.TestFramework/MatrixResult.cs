@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using NUnit.Framework;
 
 namespace Sedulous.TestFramework
@@ -12,7 +13,7 @@ namespace Sedulous.TestFramework
         /// Initializes a new instance of the MatrixResult class.
         /// </summary>
         /// <param name="value">The value being examined.</param>
-        internal MatrixResult(Matrix value)
+        internal MatrixResult(Matrix4x4 value)
         {
             this.value = value;
         }
@@ -71,7 +72,7 @@ namespace Sedulous.TestFramework
         /// </summary>
         /// <param name="expected">The expected matrix value.</param>
         /// <returns>The result object.</returns>
-        public MatrixResult ShouldBe(Matrix expected)
+        public MatrixResult ShouldBe(Matrix4x4 expected)
         {
             Assert.AreEqual(expected.M11, value.M11, delta);
             Assert.AreEqual(expected.M12, value.M12, delta);
@@ -110,13 +111,13 @@ namespace Sedulous.TestFramework
         /// <summary>
         /// Gets the underlying value.
         /// </summary>
-        public Matrix Value
+        public Matrix4x4 Value
         {
             get { return value; }
         }
 
         // State values.
-        private readonly Matrix value;
+        private readonly Matrix4x4 value;
         private Single delta = 0.1f;
     }
 }

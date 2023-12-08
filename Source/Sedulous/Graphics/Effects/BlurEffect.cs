@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Numerics;
 
 namespace Sedulous.Graphics
 {
@@ -49,7 +51,7 @@ namespace Sedulous.Graphics
         }
 
         /// <inheritdoc/>
-        public Size2 TextureSize
+        public Size TextureSize
         {
             get => textureSize;
             set
@@ -57,28 +59,28 @@ namespace Sedulous.Graphics
                 if (textureSize != value)
                 {
                     textureSize = value;
-                    epTextureSize.SetValue((Vector2)value);
+                    epTextureSize.SetValue(new Vector2(value.Width, value.Height));
                     OnTextureSizeChanged();
                 }
             }
         }
 
         /// <inheritdoc/>
-        public Matrix World
+        public Matrix4x4 World
         {
             get => epWorld.GetValueMatrix();
             set => epWorld.SetValue(value);
         }
 
         /// <inheritdoc/>
-        public Matrix View
+        public Matrix4x4 View
         {
             get => epView.GetValueMatrix();
             set => epView.SetValue(value);
         }
 
         /// <inheritdoc/>
-        public Matrix Projection
+        public Matrix4x4 Projection
         {
             get => epProjection.GetValueMatrix();
             set => epProjection.SetValue(value);
@@ -152,7 +154,7 @@ namespace Sedulous.Graphics
 
         // Property values.
         private BlurDirection direction;
-        private Size2 textureSize;
+        private Size textureSize;
         private Single radius;
 
         // Cached effect parameters.

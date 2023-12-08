@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Sedulous.Graphics
 {
@@ -13,7 +14,7 @@ namespace Sedulous.Graphics
         /// <param name="name">The name of the image.</param>
         /// <param name="path">The path to the image asset.</param>
         /// <param name="size">The size of the image.</param>
-        public TextureAtlasImage(String name, String path, Size2 size)
+        public TextureAtlasImage(String name, String path, Size size)
         {
             this.name = name;
             this.path = path;
@@ -33,11 +34,11 @@ namespace Sedulous.Graphics
         /// <summary>
         /// Gets the size of the image asset.
         /// </summary>
-        public Size2 Size { get { return size; } }
+        public Size Size { get { return size; } }
 
         // Property values.
         private readonly String name;
         private readonly String path;
-        private readonly Size2 size;
+        private readonly Size size;
     }
 }

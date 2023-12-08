@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Sedulous.Graphics.Graphics2D.Text
 {
@@ -238,7 +239,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
 
                 var sizeBeforeBreak = BrokenTextSizeBeforeBreak.Value;
                 var sizeAfterBreak = BrokenTextSizeAfterBreak.Value;
-                var brokenCommandSize = Size2.Zero;
+                var brokenCommandSize = Size.Empty;
                 var brokenCommandGlyphOffset = 0;
                 var brokenCommandGlyphLength = 0;
                 var brokenCommandSourceOffset = 0;
@@ -558,12 +559,12 @@ namespace Sedulous.Graphics.Graphics2D.Text
             /// <summary>
             /// Gets or sets the size of the pre-break portion of the text which contains this line's break point.
             /// </summary>
-            public Size2? BrokenTextSizeBeforeBreak { get; set; }
+            public Size? BrokenTextSizeBeforeBreak { get; set; }
 
             /// <summary>
             /// Gets or sets the size of the post-break portion of the text which contains this line's break point.
             /// </summary>
-            public Size2? BrokenTextSizeAfterBreak { get; set; }
+            public Size? BrokenTextSizeAfterBreak { get; set; }
 
             /// <summary>
             /// Gets the bounds of the text after layout has been performed, relative to the layout area.

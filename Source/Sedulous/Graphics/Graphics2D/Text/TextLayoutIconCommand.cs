@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Numerics;
 
 namespace Sedulous.Graphics.Graphics2D.Text
 {
@@ -46,14 +48,14 @@ namespace Sedulous.Graphics.Graphics2D.Text
         /// <param name="lineWidth">The width of the line of text that is being rendered.</param>
         /// <param name="lineHeight">The height of the line of text that is being rendered.</param>
         /// <param name="direction">The direction in which the text is oriented.</param>
-        /// <returns>A <see cref="Point2"/> that describes the absolute position of the icon.</returns>
-        public Point2 GetAbsolutePosition(Int32 x, Int32 y, Int32 lineWidth, Int32 lineHeight, TextDirection direction)
+        /// <returns>A <see cref="Point"/> that describes the absolute position of the icon.</returns>
+        public Point GetAbsolutePosition(Int32 x, Int32 y, Int32 lineWidth, Int32 lineHeight, TextDirection direction)
         {
             var lineHeightSansDescender = lineHeight + IconDescender;
             var iconHeightSansDescender = IconHeight + IconDescender;
             var absX = (direction == TextDirection.RightToLeft) ? (x + lineWidth) - (IconX + IconWidth) : x + IconX;
             var absY = (y - IconDescender) + IconY + ((lineHeightSansDescender - iconHeightSansDescender) / 2);
-            return new Point2(absX, absY);
+            return new Point(absX, absY);
         }
 
         /// <summary>

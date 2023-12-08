@@ -1,4 +1,6 @@
-﻿namespace Sedulous
+﻿using System.Numerics;
+
+namespace Sedulous
 {
     /// <summary>
     /// Represents the type of intersection between a plane and a bounding volume.

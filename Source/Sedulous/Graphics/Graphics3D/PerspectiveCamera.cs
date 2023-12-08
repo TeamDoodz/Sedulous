@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Platform;
 
 namespace Sedulous.Graphics.Graphics3D
@@ -30,19 +31,19 @@ namespace Sedulous.Graphics.Graphics3D
             var win = window ?? FrameworkContext.GetPlatform().Windows.GetCurrent() ?? FrameworkContext.GetPlatform().Windows.GetPrimary();
             var aspectRatio = win.DrawableSize.Width / (Single)win.DrawableSize.Height;
 
-            view = Matrix.CreateLookAt(Position, Target, Up);
-            proj = Matrix.CreatePerspectiveFieldOfView(FieldOfView, aspectRatio, NearPlaneDistance, FarPlaneDistance);
-            Matrix.Multiply(ref view, ref proj, out viewproj);
+            view = Matrix4x4.CreateLookAt(Position, Target, Up);
+            proj = Matrix4x4.CreatePerspectiveFieldOfView(FieldOfView, aspectRatio, NearPlaneDistance, FarPlaneDistance);
+            viewproj = view * proj;
         }
 
         /// <inheritdoc/>
-        public override void GetViewMatrix(out Matrix matrix) => matrix = view;
+        public override void GetViewMatrix(out Matrix4x4 matrix) => matrix = view;
 
         /// <inheritdoc/>
-        public override void GetProjectionMatrix(out Matrix matrix) => matrix = proj;
+        public override void GetProjectionMatrix(out Matrix4x4 matrix) => matrix = proj;
 
         /// <inheritdoc/>
-        public override void GetViewProjectionMatrix(out Matrix matrix) => matrix = viewproj;
+        public override void GetViewProjectionMatrix(out Matrix4x4 matrix) => matrix = viewproj;
 
         /// <summary>
         /// Gets the camera's field of view in radians.
@@ -72,11 +73,11 @@ namespace Sedulous.Graphics.Graphics3D
         /// <summary>
         /// Gets or sets the vector that denotes which direction is "up" for this camera.
         /// </summary>
-        public Vector3 Up { get; set; } = Vector3.Up;
+        public Vector3 Up { get; set; } = Vector3.UnitY;
 
         // Calculated matrices.
-        private Matrix view;
-        private Matrix proj;
-        private Matrix viewproj;
+        private Matrix4x4 view;
+        private Matrix4x4 proj;
+        private Matrix4x4 viewproj;
     }
 }

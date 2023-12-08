@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Newtonsoft.Json;
 
 namespace Sedulous
@@ -24,6 +25,6 @@ namespace Sedulous
         /// Gets or sets the cursor's hotspot point.
         /// </summary>
         [JsonProperty(Required = Required.DisallowNull)]
-        public Point2 Hotspot { get; set; }
+        public Point Hotspot { get; set; }
     }
 }

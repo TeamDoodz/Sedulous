@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using Sedulous.Core;
 using Sedulous.Core.Messages;
@@ -112,11 +114,11 @@ namespace Sedulous.Sdl2.Platform
                     break;
 
                 case SDL_WINDOWEVENT_MOVED:
-                    UpdateWindowedPosition(new Point2(msg.Event.window.data1, msg.Event.window.data2));
+                    UpdateWindowedPosition(new Point(msg.Event.window.data1, msg.Event.window.data2));
                     break;
 
                 case SDL_WINDOWEVENT_SIZE_CHANGED:
-                    UpdateWindowedClientSize(new Size2(msg.Event.window.data1, msg.Event.window.data2));
+                    UpdateWindowedClientSize(new Size(msg.Event.window.data1, msg.Event.window.data2));
                     break;
 
                 case SDL_WINDOWEVENT_FOCUS_GAINED:
@@ -184,7 +186,7 @@ namespace Sedulous.Sdl2.Platform
         }
 
         /// <inheritdoc/>
-        public void SetWindowedClientSize(Size2 size, Single scale = 1f)
+        public void SetWindowedClientSize(Size size, Single scale = 1f)
         {
             Contract.EnsureNotDisposed(this, Disposed);
             Contract.EnsureRange(scale >= 1f, nameof(scale));
@@ -194,14 +196,14 @@ namespace Sedulous.Sdl2.Platform
         }
 
         /// <inheritdoc/>
-        public void SetWindowedClientSizeCentered(Size2 size, Single scale = 1f)
+        public void SetWindowedClientSizeCentered(Size size, Single scale = 1f)
         {
             Contract.EnsureNotDisposed(this, Disposed);
             Contract.EnsureRange(scale >= 1f, nameof(scale));
 
             this.WindowedClientSize = size;
             this.WindowScale = scale;
-            this.WindowedPosition = new Point2((Int32)SDL_WINDOWPOS_CENTERED_MASK, (Int32)SDL_WINDOWPOS_CENTERED_MASK);
+            this.WindowedPosition = new Point((Int32)SDL_WINDOWPOS_CENTERED_MASK, (Int32)SDL_WINDOWPOS_CENTERED_MASK);
         }
 
         /// <inheritdoc/>
@@ -366,10 +368,14 @@ namespace Sedulous.Sdl2.Platform
             if (Display == display)
                 return;
 
-            var x = display.Bounds.Center.X - (ClientSize.Width / 2);
-            var y = display.Bounds.Center.Y - (ClientSize.Height / 2);
+            var x = GetCenter(display.Bounds).X - (ClientSize.Width / 2);
+            var y = GetCenter(display.Bounds).Y - (ClientSize.Height / 2);
 
-            Position = new Point2(x, y);
+            Position = new Point((int)x, (int)y);
+        }
+
+        private static Vector2 GetCenter(Rectangle rectangle) {
+            return new Vector2(rectangle.X + rectangle.Width / 2f, rectangle.Y + rectangle.Height / 2f);
         }
 
         /// <summary>
@@ -416,14 +422,14 @@ namespace Sedulous.Sdl2.Platform
         public Single WindowScale { get; private set; }
 
         /// <inheritdoc/>
-        public Point2 Position
+        public Point Position
         {
             get
             {
                 Contract.EnsureNotDisposed(this, Disposed);
 
                 SDL_GetWindowPosition(ptr, out var x, out var y);
-                return new Point2(x, y);
+                return new Point(x, y);
             }
             set
             {
@@ -437,7 +443,7 @@ namespace Sedulous.Sdl2.Platform
         }
 
         /// <inheritdoc/>
-        public Point2 WindowedPosition
+        public Point WindowedPosition
         {
             get => windowedPosition.GetValueOrDefault();
             set
@@ -453,7 +459,7 @@ namespace Sedulous.Sdl2.Platform
         }
 
         /// <inheritdoc/>
-        public Size2 DrawableSize
+        public Size DrawableSize
         {
             get
             {
@@ -471,19 +477,19 @@ namespace Sedulous.Sdl2.Platform
                     SDL_GetWindowSize(ptr, out w, out h);
                 }
 
-                return new Size2(w, h);
+                return new Size(w, h);
             }
         }
 
         /// <inheritdoc/>
-        public Size2 ClientSize
+        public Size ClientSize
         {
             get
             {
                 Contract.EnsureNotDisposed(this, Disposed);
 
                 SDL_GetWindowSize(ptr, out var w, out var h);
-                return new Size2(w, h);
+                return new Size(w, h);
             }
             set
             {
@@ -499,7 +505,7 @@ namespace Sedulous.Sdl2.Platform
         }
 
         /// <inheritdoc/>
-        public Size2 WindowedClientSize
+        public Size WindowedClientSize
         {
             get => windowedClientSize.GetValueOrDefault();
             set
@@ -515,14 +521,14 @@ namespace Sedulous.Sdl2.Platform
         }
 
         /// <inheritdoc/>
-        public Size2 MinimumClientSize
+        public Size MinimumClientSize
         {
             get
             {
                 Contract.EnsureNotDisposed(this, Disposed);
 
                 SDL_GetWindowMinimumSize(ptr, out var w, out var h);
-                return new Size2(w, h);
+                return new Size(w, h);
             }
             set
             {
@@ -533,14 +539,14 @@ namespace Sedulous.Sdl2.Platform
         }
 
         /// <inheritdoc/>
-        public Size2 MaximumClientSize
+        public Size MaximumClientSize
         {
             get
             {
                 Contract.EnsureNotDisposed(this, Disposed);
 
                 SDL_GetWindowMaximumSize(ptr, out var w, out var h);
-                return new Size2(w, h);
+                return new Size(w, h);
             }
             set
             {
@@ -995,9 +1001,9 @@ namespace Sedulous.Sdl2.Platform
                 SDL_GetWindowPosition(ptr, out var windowX, out var windowY);
                 SDL_GetWindowSize(ptr, out var windowW, out var windowH);
                 
-                var size = new Size2((Int32)(windowW * factor), (Int32)(windowH * factor));
+                var size = new Size((Int32)(windowW * factor), (Int32)(windowH * factor));
                 var bounds = new Rectangle(windowX, windowY, windowW, windowH);
-                Rectangle.Inflate(ref bounds, (Int32)Math.Ceiling((size.Width - windowW) / 2.0), 0, out bounds);
+                bounds = Rectangle.Inflate(bounds, (Int32)Math.Ceiling((size.Width - windowW) / 2.0), 0);
 
                 WindowedPosition = bounds.Location;
                 WindowedClientSize = size;
@@ -1014,7 +1020,7 @@ namespace Sedulous.Sdl2.Platform
         /// Updates the window's windowed position, if it is currently in the correct mode and state.
         /// </summary>
         /// <param name="position">The new windowed position.</param>
-        private void UpdateWindowedPosition(Point2 position)
+        private void UpdateWindowedPosition(Point position)
         {
             if (windowedPosition == null || (GetWindowState() == WindowState.Normal && GetWindowMode() == WindowMode.Windowed))
             {
@@ -1026,7 +1032,7 @@ namespace Sedulous.Sdl2.Platform
         /// Updates the window's windowed client size, if it is currently in the correct mode and state.
         /// </summary>
         /// <param name="size">The new windowed client size.</param>
-        private void UpdateWindowedClientSize(Size2 size)
+        private void UpdateWindowedClientSize(Size size)
         {
             if (windowedClientSize == null || (GetWindowState() == WindowState.Normal && GetWindowMode() == WindowMode.Windowed))
             {
@@ -1140,8 +1146,8 @@ namespace Sedulous.Sdl2.Platform
         private IntPtr wndProcPrev;
 
         // Property values.
-        private Point2? windowedPosition;
-        private Size2? windowedClientSize;
+        private Point? windowedPosition;
+        private Size? windowedClientSize;
         private Boolean grabsMouseWhenWindowed;
         private Boolean grabsMouseWhenFullscreenWindowed;
         private Boolean grabsMouseWhenFullscreen;

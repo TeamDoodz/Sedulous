@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Sedulous.Core;
 using Sedulous.Input;
 using Sedulous.Presentation.Controls.Primitives;
@@ -637,7 +638,7 @@ namespace Sedulous.Presentation.Controls
         private static void HandleLoaded(DependencyObject dobj, RoutedEventData data)
         {
             var comboBox = (ComboBox)dobj;
-            comboBox.viewSize = (comboBox.View == null) ? Size2.Zero : comboBox.View.Area.Size;
+            comboBox.viewSize = (comboBox.View == null) ? Size.Empty : comboBox.View.Area.Size;
             comboBox.UpdateInputCapture(comboBox.IsDropDownOpen);
             comboBox.UpdateActualMaxDropDownHeight();
         }
@@ -946,7 +947,7 @@ namespace Sedulous.Presentation.Controls
         private readonly VisualClone visualClone;
 
         // State values.
-        private Size2 viewSize;
+        private Size viewSize;
         private Boolean isDropDownOpenChanging;
     }
 }

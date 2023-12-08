@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Presentation.Media;
 using Sedulous.Presentation.Styles;
 
@@ -83,11 +84,11 @@ namespace Sedulous.Presentation.Controls.Primitives
                 var offsetY = dc.IsTransformed ? offsetRaw.Y : Math.Floor(offsetRaw.Y);
                 var offset = new Vector2((Single)offsetX, (Single)offsetY);
                 
-                var mtxTransform = Matrix.CreateTranslation(-offset.X, -offset.Y, 0);
+                var mtxTransform = Matrix4x4.CreateTranslation(-offset.X, -offset.Y, 0);
                 var mtxTransformToView = GetTransformToViewMatrix(true);
                 var mtxTransformGlobal = dcState.GlobalTransform;
-                Matrix.Multiply(ref mtxTransform, ref mtxTransformToView, out mtxTransform);
-                Matrix.Multiply(ref mtxTransform, ref mtxTransformGlobal, out mtxTransform);
+				mtxTransform = Matrix4x4.Multiply(mtxTransform, mtxTransformToView);
+				mtxTransform = Matrix4x4.Multiply(mtxTransform, mtxTransformGlobal);
 
                 if (!dc.IsTransformed && !clonedElement.HasNonIdentityTransform)
                 {
@@ -95,7 +96,7 @@ namespace Sedulous.Presentation.Controls.Primitives
                     var floorM42 = (Single)Math.Floor(mtxTransform.M42);
                     var floorM43 = (Single)Math.Floor(mtxTransform.M43);
 
-                    mtxTransform = new Matrix(
+                    mtxTransform = new Matrix4x4(
                         mtxTransform.M11, mtxTransform.M12, mtxTransform.M13, mtxTransform.M14,
                         mtxTransform.M21, mtxTransform.M22, mtxTransform.M23, mtxTransform.M24,
                         mtxTransform.M31, mtxTransform.M32, mtxTransform.M33, mtxTransform.M34,
@@ -105,7 +106,7 @@ namespace Sedulous.Presentation.Controls.Primitives
                 dc.IsOutOfBandRenderingSuppressed = true;
                 dc.GlobalTransform = mtxTransform;
 
-                dc.Begin(Graphics.Graphics2D.SpriteSortMode.Deferred, null, Matrix.Identity);
+                dc.Begin(Graphics.Graphics2D.SpriteSortMode.Deferred, null, Matrix4x4.Identity);
                 clonedElement.Draw(null, dc);
                 dc.End();
 
@@ -132,7 +133,7 @@ namespace Sedulous.Presentation.Controls.Primitives
             if (clonedElement != null)
             {
                 var clonedParent = VisualTreeHelper.GetParent(clonedElement) as UIElement;
-                var clonedTransform = (clonedParent == null) ? Matrix.Identity : clonedElement.GetTransformToAncestorMatrix(clonedParent);
+                var clonedTransform = (clonedParent == null) ? Matrix4x4.Identity : clonedElement.GetTransformToAncestorMatrix(clonedParent);
 
                 if (!clonedElement.IsVisuallyConnectedToViewRoot)
                 {

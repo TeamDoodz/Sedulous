@@ -72,46 +72,6 @@ namespace Sedulous.Tests
         }
 
         [Test]
-        public void CircleD_TryParse_SucceedsForValidStrings()
-        {
-            var str = "123.45 456.78 100.10";
-            var result = default(CircleD);
-            if (!CircleD.TryParse(str, out result))
-                throw new InvalidOperationException("Unable to parse string to CircleD.");
-
-            TheResultingValue(result)
-                .ShouldHavePosition(123.45, 456.78)
-                .ShouldHaveRadius(100.10);
-        }
-
-        [Test]
-        public void CircleD_TryParse_FailsForInvalidStrings()
-        {
-            var result    = default(CircleD);
-            var succeeded = CircleD.TryParse("foo", out result);
-
-            TheResultingValue(succeeded).ShouldBe(false);
-        }
-
-        [Test]
-        public void CircleD_Parse_SucceedsForValidStrings()
-        {
-            var str    = "123.45 456.78 100.10";
-            var result = CircleD.Parse(str);
-
-            TheResultingValue(result)
-                .ShouldHavePosition(123.45, 456.78)
-                .ShouldHaveRadius(100.10);
-        }
-
-        [Test]
-        public void CircleD_Parse_FailsForInvalidStrings()
-        {
-            Assert.That(() => CircleD.Parse("foo"),
-                Throws.TypeOf<FormatException>());
-        }
-
-        [Test]
         public void CircleD_SerializesToJson()
         {
             var circle = new CircleD(1.2, 2.3, 3.4);

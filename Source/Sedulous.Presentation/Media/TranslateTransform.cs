@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Core;
 
 namespace Sedulous.Presentation.Media
@@ -10,13 +11,13 @@ namespace Sedulous.Presentation.Media
     public sealed class TranslateTransform : Transform
     {
         /// <inheritdoc/>
-        public override Matrix Value
+        public override Matrix4x4 Value
         {
             get { return value; }
         }
 
         /// <inheritdoc/>
-        public override Matrix? Inverse
+        public override Matrix4x4? Inverse
         {
             get { return inverse; }
         }
@@ -92,10 +93,10 @@ namespace Sedulous.Presentation.Media
         /// </summary>
         private void UpdateValue()
         {
-            this.value = Matrix.CreateTranslation((Single)X, (Single)Y, 0f);
+            this.value = Matrix4x4.CreateTranslation((Single)X, (Single)Y, 0f);
 
-            Matrix inverse;
-            if (Matrix.TryInvert(value, out inverse))
+            Matrix4x4 inverse;
+            if (Matrix4x4.Invert(value, out inverse))
             {
                 this.inverse = inverse;
             }
@@ -104,12 +105,12 @@ namespace Sedulous.Presentation.Media
                 this.inverse = null;
             }
 
-            this.isIdentity = Matrix.Identity.Equals(value);
+            this.isIdentity = Matrix4x4.Identity.Equals(value);
         }
 
         // Property values.
-        private Matrix value = Matrix.Identity;
-        private Matrix? inverse;
+        private Matrix4x4 value = Matrix4x4.Identity;
+        private Matrix4x4? inverse;
         private Boolean isIdentity;
     }
 }

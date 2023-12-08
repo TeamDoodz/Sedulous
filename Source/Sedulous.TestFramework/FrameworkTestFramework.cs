@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using Sedulous.Core.TestFramework;
 
@@ -33,7 +35,7 @@ namespace Sedulous.TestFramework
         /// </summary>
         /// <param name="value">The value to wrap.</param>
         /// <returns>The wrapped value.</returns>
-        protected static MatrixResult TheResultingValue(Matrix value)
+        protected static MatrixResult TheResultingValue(Matrix4x4 value)
         {
             return new MatrixResult(value);
         }
@@ -123,7 +125,7 @@ namespace Sedulous.TestFramework
         /// </summary>
         /// <param name="value">The value to wrap.</param>
         /// <returns>The wrapped value.</returns>
-        protected static Size2FResult TheResultingValue(Size2F value)
+        protected static Size2FResult TheResultingValue(SizeF value)
         {
             return new Size2FResult(value);
         }
@@ -143,7 +145,7 @@ namespace Sedulous.TestFramework
         /// </summary>
         /// <param name="value">The value to wrap.</param>
         /// <returns>The wrapped value.</returns>
-        protected static Size2Result TheResultingValue(Size2 value)
+        protected static Size2Result TheResultingValue(Size value)
         {
             return new Size2Result(value);
         }
@@ -213,7 +215,7 @@ namespace Sedulous.TestFramework
         /// </summary>
         /// <param name="value">The value to wrap.</param>
         /// <returns>The wrapped value.</returns>
-        protected static Point2Result TheResultingValue(Point2 value)
+        protected static Point2Result TheResultingValue(Point value)
         {
             return new Point2Result(value);
         }
@@ -223,7 +225,7 @@ namespace Sedulous.TestFramework
         /// </summary>
         /// <param name="value">The value to wrap.</param>
         /// <returns>The wrapped value.</returns>
-        protected static Point2FResult TheResultingValue(Point2F value)
+        protected static Point2FResult TheResultingValue(PointF value)
         {
             return new Point2FResult(value);
         }

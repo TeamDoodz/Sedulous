@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Sedulous.TestFramework;
@@ -353,8 +354,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingBox_CalculatesContainsBoundingFrustumCorrectly()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var box1 = new BoundingBox(new Vector3(0f, 0f, 0f), new Vector3(20f, 20f, 20f));
@@ -371,8 +372,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingBox_CalculatesContainsBoundingFrustumCorrectly_WithOutParam()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var box1 = new BoundingBox(new Vector3(0f, 0f, 0f), new Vector3(20f, 20f, 20f));
@@ -469,8 +470,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingBox_CalculatesIntersectsBoundingFrustumCorrectly()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var box1 = new BoundingBox(new Vector3(0f, 0f, 0f), new Vector3(20f, 20f, 20f));
@@ -487,8 +488,8 @@ namespace Sedulous.Tests
         [Test]
         public void BoundingBox_CalculatesIntersectsBoundingFrustumCorrectly_WithOutParam()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
 
             var box1 = new BoundingBox(new Vector3(0f, 0f, 0f), new Vector3(20f, 20f, 20f));
@@ -588,44 +589,6 @@ namespace Sedulous.Tests
 
             TheResultingValue(result.HasValue)
                 .ShouldBe(false);
-        }
-
-        [Test]
-        public void BoundingBox_TryParse_SucceedsForValidStrings()
-        {
-            var str = "12.3 45.6 78.9 10.11 11.12 13.14";
-            if (!BoundingBox.TryParse(str, out var result))
-                throw new InvalidOperationException("Unable to parse string to BoundingBox.");
-
-            TheResultingValue(result)
-                .ShouldHaveMin(12.3f, 45.6f, 78.9f)
-                .ShouldHaveMax(10.11f, 11.12f, 13.14f);
-        }
-
-        [Test]
-        public void BoundingBox_TryParse_FailsForInvalidStrings()
-        {
-            var succeeded = BoundingBox.TryParse("foo", out var result);
-
-            TheResultingValue(succeeded).ShouldBe(false);
-        }
-
-        [Test]
-        public void BoundingBox_Parse_SucceedsForValidStrings()
-        {
-            var str = "12.3 45.6 78.9 10.11 11.12 13.14";
-            var result = BoundingBox.Parse(str);
-
-            TheResultingValue(result)
-                .ShouldHaveMin(12.3f, 45.6f, 78.9f)
-                .ShouldHaveMax(10.11f, 11.12f, 13.14f);
-        }
-
-        [Test]
-        public void BoundingBox_Parse_FailsForInvalidStrings()
-        {
-            Assert.That(() => BoundingSphere.Parse("foo"),
-                Throws.TypeOf<FormatException>());
         }
 
         [Test]

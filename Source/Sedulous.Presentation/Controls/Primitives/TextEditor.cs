@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using System.Text;
 using Sedulous.Core;
 using Sedulous.Core.Text;
@@ -496,7 +497,8 @@ namespace Sedulous.Presentation.Controls.Primitives
         {
             BeginTrackingSelectionChanges();
 
-            var positionPixs = (Point2)Display.DipsToPixels(position) - new Point2(textOffsetX, textOffsetY);
+			System.Drawing.Point point = (System.Drawing.Point)Display.DipsToPixels(position);
+			var positionPixs = new System.Drawing.Point(point.X - textOffsetX, point.Y - textOffsetY);
 
             caretBlinkTimer = 0;
             caretPosition = View.Resources.TextRenderer.GetInsertionPointAtPosition(textLayoutStream, positionPixs);
@@ -948,7 +950,7 @@ namespace Sedulous.Presentation.Controls.Primitives
             var bounds = View.Resources.TextRenderer.GetInsertionPointBounds(
                 textLayoutStream, charIndex + (trailingEdge ? 1 : 0));
 
-            return Display.PixelsToDips(bounds);
+            return Display.PixelsToDips(new RectangleD(bounds.X, bounds.Y, bounds.Width, bounds.Height));
         }
 
         /// <summary>
@@ -1990,11 +1992,11 @@ namespace Sedulous.Presentation.Controls.Primitives
         /// Gets the default size of the insertion caret.
         /// </summary>
         /// <returns>The default size of the insertion caret.</returns>
-        private Size2 GetDefaultSizeOfInsertionCaret()
+        private System.Drawing.Size GetDefaultSizeOfInsertionCaret()
         {
             var textFontFace = TextFontFace;
             if (textFontFace == null)
-                return Size2.Zero;
+                return System.Drawing.Size.Empty;
 
             var fontLineSpacing = textFontFace.LineSpacing - textFontFace.Descender;
             var fontLineSpacingHalf = fontLineSpacing / 2;
@@ -2002,18 +2004,18 @@ namespace Sedulous.Presentation.Controls.Primitives
             var caretWidth = Math.Min((Int32)Display.DipsToPixels(CaretWidth), fontLineSpacingHalf);
             var caretHeight = fontLineSpacing;
 
-            return new Size2(caretWidth, caretHeight);
+            return new System.Drawing.Size(caretWidth, caretHeight);
         }
 
         /// <summary>
         /// Gets the default size of the overwrite caret.
         /// </summary>
         /// <returns>The default size of the overwrite caret.</returns>
-        private Size2 GetDefaultSizeOfOverwriteCaret()
+        private System.Drawing.Size GetDefaultSizeOfOverwriteCaret()
         {
             var textFontFace = TextFontFace;
             if (textFontFace == null)
-                return Size2.Zero;
+                return System.Drawing.Size.Empty;
 
             var fontLineSpacing = textFontFace.LineSpacing;
             var fontLineSpacingHalf = fontLineSpacing / 2;
@@ -2021,7 +2023,7 @@ namespace Sedulous.Presentation.Controls.Primitives
             var caretWidth = fontLineSpacingHalf;
             var caretHeight = fontLineSpacing;
 
-            return new Size2(caretWidth, caretHeight);
+            return new System.Drawing.Size(caretWidth, caretHeight);
         }
 
         /// <summary>
@@ -2153,10 +2155,11 @@ namespace Sedulous.Presentation.Controls.Primitives
             var selectionColor = isActive ? SelectionColor : InactiveSelectionColor;
 
             // Draw the first line
-            var selectionTopOffset = global::Sedulous.Rectangle.Offset(selectionTop, textOffsetX, textOffsetY);
+            var selectionTopOffset = selectionTop;
+            selectionTopOffset.Offset(textOffsetX, textOffsetY);
             if ((!minClip.HasValue || selectionTopOffset.Bottom > minClip.Value) && (!maxClip.HasValue || selectionTopOffset.Top <= maxClip.Value))
             {
-                var selectionTopDips = Display.PixelsToDips(selectionTopOffset);
+                var selectionTopDips = Display.PixelsToDips(new RectangleD(selectionTopOffset.X, selectionTopOffset.Y, selectionTopOffset.Width, selectionTopOffset.Height));
                 DrawImage(dc, SelectionImage, selectionTopDips, selectionColor, true);
             }
 
@@ -2171,7 +2174,7 @@ namespace Sedulous.Presentation.Controls.Primitives
                 {
                     textLayoutStream.GetNextLineInfoRef(ref lineInfo, out lineInfo);
 
-                    var lineBounds = new Sedulous.Rectangle(lineInfo.X + textOffsetX, lineInfo.Y + textOffsetY, lineInfo.Width, lineInfo.Height);
+                    var lineBounds = new System.Drawing.Rectangle(lineInfo.X + textOffsetX, lineInfo.Y + textOffsetY, lineInfo.Width, lineInfo.Height);
 
                     if (minClip.HasValue && lineBounds.Bottom <= minClip.Value)
                         continue;
@@ -2179,7 +2182,7 @@ namespace Sedulous.Presentation.Controls.Primitives
                     if (maxClip.HasValue && lineBounds.Top > maxClip.Value)
                         break;
 
-                    var lineBoundsDips = Display.PixelsToDips(lineBounds);
+                    var lineBoundsDips = Display.PixelsToDips(new RectangleD(lineBounds.X, lineBounds.Y, lineBounds.Width, lineBounds.Height));
                     DrawImage(dc, SelectionImage, lineBoundsDips, selectionColor, true);
                 }
 
@@ -2189,10 +2192,11 @@ namespace Sedulous.Presentation.Controls.Primitives
             // Draw the last line
             if (selectionLineCount > 1)
             {
-                var selectionBottomOffset = global::Sedulous.Rectangle.Offset(selectionBottom, textOffsetX, textOffsetY);
+                var selectionBottomOffset = selectionBottom;
+                selectionBottomOffset.Offset(textOffsetX, textOffsetY);
                 if ((!minClip.HasValue || selectionBottomOffset.Bottom > minClip.Value) && (!maxClip.HasValue || selectionBottomOffset.Top <= maxClip.Value))
                 {
-                    var selectionBottomDips = Display.PixelsToDips(selectionBottomOffset);
+                    var selectionBottomDips = Display.PixelsToDips(new RectangleD(selectionBottomOffset.X, selectionBottomOffset.Y, selectionBottomOffset.Width, selectionBottomOffset.Height));
                     DrawImage(dc, SelectionImage, selectionBottomDips, selectionColor, true);
                 }
             }
@@ -2238,11 +2242,12 @@ namespace Sedulous.Presentation.Controls.Primitives
             var isCaretVisible = ((Int32)(caretBlinkTimer / 500.0) % 2 == 0);
             if (isCaretVisible)
             {
-                var caretBoundsOffset = global::Sedulous.Rectangle.Offset(caretRenderBounds, textOffsetX, textOffsetY);
-                if ((minClip.HasValue && caretBoundsOffset.Bottom < minClip.Value) || (maxClip.HasValue && caretBoundsOffset.Top > maxClip.Value))
+                var caretBoundsOffset = caretRenderBounds;
+                caretBoundsOffset.Offset(textOffsetX, textOffsetY);
+				if ((minClip.HasValue && caretBoundsOffset.Bottom < minClip.Value) || (maxClip.HasValue && caretBoundsOffset.Top > maxClip.Value))
                     return;
 
-                var caretBoundsDips = Display.PixelsToDips(caretBoundsOffset);
+                var caretBoundsDips = Display.PixelsToDips(new RectangleD(caretBoundsOffset.X, caretBoundsOffset.Y, caretBoundsOffset.Width, caretBoundsOffset.Height));
                 var caretImage = (actualInsertionMode == CaretMode.Insert) ? CaretInsertImage : CaretOverwriteImage;
                 var caretColor = (actualInsertionMode == CaretMode.Insert) ? CaretInsertColor : CaretOverwriteColor;
                 DrawImage(dc, caretImage, caretBoundsDips, caretColor, true);
@@ -2713,13 +2718,13 @@ namespace Sedulous.Presentation.Controls.Primitives
                     caretY = glyphBounds.Top;
 
                     caretWidth = glyphBounds.Width;
-                    caretBounds = new Sedulous.Rectangle(caretX, caretY, caretWidth, glyphBounds.Height);
+                    caretBounds = new System.Drawing.Rectangle(caretX, caretY, caretWidth, glyphBounds.Height);
                     caretLineIndex = glyphLineInfo.LineIndex;
                 }
                 else
                 {
                     caretAlignment = GetActualTextAlignment();
-                    caretBounds = new Sedulous.Rectangle(caretX, caretY, caretWidth, fontLineSpacing);
+                    caretBounds = new System.Drawing.Rectangle(caretX, caretY, caretWidth, fontLineSpacing);
                     caretLineIndex = 0;
                 }
                 
@@ -2742,7 +2747,7 @@ namespace Sedulous.Presentation.Controls.Primitives
                     var caretPositionInGlyphs = View.Resources.TextRenderer.GetGlyphAtCharacterIndex(textLayoutStream, caretPosition);
 
                     var insertLineInfo = default(LineInfo);
-                    var insertGlyphBounds = default(Sedulous.Rectangle?);
+                    var insertGlyphBounds = default(System.Drawing.Rectangle?);
                     var insertBounds = View.Resources.TextRenderer.GetInsertionPointBounds(textLayoutStream,
                         caretPositionInGlyphs, out insertLineInfo, out insertGlyphBounds);
 
@@ -2751,13 +2756,13 @@ namespace Sedulous.Presentation.Controls.Primitives
 
                     caretWidth = (insertGlyphBounds.HasValue && insertGlyphBounds.Value.Width > 0) ? insertGlyphBounds.Value.Width : fontLineSpacingHalf;
                     caretHeight = insertBounds.Height;
-                    caretBounds = new Sedulous.Rectangle(caretX, caretY, caretWidth, caretHeight);
+                    caretBounds = new System.Drawing.Rectangle(caretX, caretY, caretWidth, caretHeight);
                     caretLineIndex = insertLineInfo.LineIndex;                           
                 }
                 else
                 {
                     caretAlignment = GetActualTextAlignment();
-                    caretBounds = new Sedulous.Rectangle(caretX, caretY, caretWidth, caretHeight);
+                    caretBounds = new System.Drawing.Rectangle(caretX, caretY, caretWidth, caretHeight);
                     caretLineIndex = 0;
                 }
 
@@ -2773,7 +2778,7 @@ namespace Sedulous.Presentation.Controls.Primitives
                     break;
 
                 case TextAlignment.Center:
-                    caretRenderX = caretBounds.Center.X - (caretRenderWidth / 2);
+                    caretRenderX = (int)(GetCenter(caretBounds).X - (caretRenderWidth / 2));
                     break;
 
                 case TextAlignment.Right:
@@ -2781,13 +2786,17 @@ namespace Sedulous.Presentation.Controls.Primitives
                     break;
             }
 
-            caretRenderBounds = new Sedulous.Rectangle(caretRenderX, caretRenderY, caretRenderWidth, caretRenderHeight);
+            caretRenderBounds = new System.Drawing.Rectangle(caretRenderX, caretRenderY, caretRenderWidth, caretRenderHeight);
         }
 
-        /// <summary>
-        /// Calculates the parameters with which to draw the selection.
-        /// </summary>
-        private void UpdateSelection()
+		private static Vector2 GetCenter(System.Drawing.Rectangle rectangle) {
+			return new Vector2(rectangle.X + rectangle.Width / 2f, rectangle.Y + rectangle.Height / 2f);
+		}
+
+		/// <summary>
+		/// Calculates the parameters with which to draw the selection.
+		/// </summary>
+		private void UpdateSelection()
         {
             if (View == null || textLayoutStream.Count == 0 || !selectionPosition.HasValue || pendingTextLayout)
                 return;
@@ -2797,8 +2806,8 @@ namespace Sedulous.Presentation.Controls.Primitives
                 selectionLineStart = 0;
                 selectionLineCount = 0;
 
-                selectionTop = default(Sedulous.Rectangle);
-                selectionBottom = default(Sedulous.Rectangle);
+                selectionTop = default(System.Drawing.Rectangle);
+                selectionBottom = default(System.Drawing.Rectangle);
             }
             else
             {
@@ -2825,7 +2834,7 @@ namespace Sedulous.Presentation.Controls.Primitives
                     var selectionTopHeight = selectionStartLineInfo.Height;
                     var selectionTopX = selectionStartGlyphBounds.Right - selectionTopWidth;
                     var selectionTopY = selectionStartGlyphBounds.Top;
-                    selectionTop = new Sedulous.Rectangle(selectionTopX, selectionTopY, selectionTopWidth, selectionTopHeight);
+                    selectionTop = new System.Drawing.Rectangle(selectionTopX, selectionTopY, selectionTopWidth, selectionTopHeight);
 
                     // Bottom
                     if (selectionLineCount > 1)
@@ -2834,7 +2843,7 @@ namespace Sedulous.Presentation.Controls.Primitives
                         var selectionBottomY = selectionEndGlyphBounds.Top;
                         var selectionBottomWidth = (selectionEndLineInfo.X + selectionEndLineInfo.Width) - selectionBottomX;
                         var selectionBottomHeight = selectionEndLineInfo.Height;
-                        selectionBottom = new Sedulous.Rectangle(selectionBottomX, selectionBottomY, selectionBottomWidth, selectionBottomHeight);
+                        selectionBottom = new System.Drawing.Rectangle(selectionBottomX, selectionBottomY, selectionBottomWidth, selectionBottomHeight);
                     }
                 }
                 else
@@ -2845,7 +2854,7 @@ namespace Sedulous.Presentation.Controls.Primitives
                     var selectionTopHeight = selectionStartLineInfo.Height;
                     var selectionTopX = selectionStartGlyphBounds.Left;
                     var selectionTopY = selectionStartGlyphBounds.Top;
-                    selectionTop = new Sedulous.Rectangle(selectionTopX, selectionTopY, selectionTopWidth, selectionTopHeight);
+                    selectionTop = new System.Drawing.Rectangle(selectionTopX, selectionTopY, selectionTopWidth, selectionTopHeight);
 
                     // Bottom
                     if (selectionLineCount > 1)
@@ -2854,7 +2863,7 @@ namespace Sedulous.Presentation.Controls.Primitives
                         var selectionBottomY = selectionEndGlyphBounds.Top;
                         var selectionBottomWidth = selectionEndGlyphBounds.Right - selectionBottomX;
                         var selectionBottomHeight = selectionEndLineInfo.Height;
-                        selectionBottom = new Sedulous.Rectangle(selectionBottomX, selectionBottomY, selectionBottomWidth, selectionBottomHeight);
+                        selectionBottom = new System.Drawing.Rectangle(selectionBottomX, selectionBottomY, selectionBottomWidth, selectionBottomHeight);
                     }
                 }
             }
@@ -2886,8 +2895,8 @@ namespace Sedulous.Presentation.Controls.Primitives
             }
 
             var boundsViewport = new RectangleD(scrollViewer.ContentHorizontalOffset, scrollViewer.ContentVerticalOffset, scrollViewer.ViewportWidth, scrollViewer.ViewportHeight); 
-            var boundsCaretPixs = new Sedulous.Rectangle(caretBounds.X, caretBounds.Y, caretRenderBounds.Width, caretBounds.Height);
-            var boundsCaretDips = Display.PixelsToDips(boundsCaretPixs);
+            var boundsCaretPixs = new System.Drawing.Rectangle(caretBounds.X, caretBounds.Y, caretRenderBounds.Width, caretBounds.Height);
+            var boundsCaretDips = Display.PixelsToDips(new RectangleD(boundsCaretPixs.X, boundsCaretPixs.Y, boundsCaretPixs.Width, boundsCaretPixs.Height));
 
             var isHorizontalScrollingNecessary = (boundsCaretDips.Left <= boundsViewport.Left || boundsCaretDips.Right >= boundsViewport.Right);
             var isVerticalScrollingNecessary = (boundsCaretDips.Top <= boundsViewport.Top || boundsCaretDips.Bottom >= boundsViewport.Bottom);
@@ -3100,8 +3109,8 @@ namespace Sedulous.Presentation.Controls.Primitives
         private Double caretBlinkTimer;
         private Int32 caretPosition;
         private Int32 caretLineIndex;
-        private Sedulous.Rectangle caretBounds;
-        private Sedulous.Rectangle caretRenderBounds;
+        private System.Drawing.Rectangle caretBounds;
+        private System.Drawing.Rectangle caretRenderBounds;
         private CaretMode caretInsertionMode = CaretMode.Insert;
         private CaretMode actualInsertionMode = CaretMode.Insert;
 
@@ -3111,8 +3120,8 @@ namespace Sedulous.Presentation.Controls.Primitives
         private Int32 selectionLineCount;
         private Int64 selectionFollowingCursorID;
         private Boolean selectionFollowingCursor;
-        private Sedulous.Rectangle selectionTop;
-        private Sedulous.Rectangle selectionBottom;
+        private System.Drawing.Rectangle selectionTop;
+        private System.Drawing.Rectangle selectionBottom;
 
         // Cached values for selection change tracking.
         private Int32 selectionTrackingCounter;

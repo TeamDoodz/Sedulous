@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Sedulous.Core;
@@ -66,7 +68,7 @@ namespace Sedulous.Graphics.Graphics2D
             Contract.EnsureNotDisposed(this, Disposed);
             Contract.EnsureNot(begun, FrameworkStrings.BeginCannotBeCalledAgain);
 
-            BeginInternal(SpriteSortMode.Deferred, null, null, null, null, null, Matrix.Identity);
+            BeginInternal(SpriteSortMode.Deferred, null, null, null, null, null, Matrix4x4.Identity);
         }
 
         /// <summary>
@@ -80,7 +82,7 @@ namespace Sedulous.Graphics.Graphics2D
             Contract.EnsureNotDisposed(this, Disposed);
             Contract.EnsureNot(begun, FrameworkStrings.BeginCannotBeCalledAgain);
 
-            BeginInternal(sortMode, blendState, null, null, null, null, Matrix.Identity);
+            BeginInternal(sortMode, blendState, null, null, null, null, Matrix4x4.Identity);
         }
 
         /// <summary>
@@ -97,7 +99,7 @@ namespace Sedulous.Graphics.Graphics2D
             Contract.EnsureNotDisposed(this, Disposed);
             Contract.EnsureNot(begun, FrameworkStrings.BeginCannotBeCalledAgain);
 
-            BeginInternal(sortMode, blendState, samplerState, depthStencilState, rasterizerState, null, Matrix.Identity);
+            BeginInternal(sortMode, blendState, samplerState, depthStencilState, rasterizerState, null, Matrix4x4.Identity);
         }
 
         /// <summary>
@@ -115,7 +117,7 @@ namespace Sedulous.Graphics.Graphics2D
             Contract.EnsureNotDisposed(this, Disposed);
             Contract.EnsureNot(begun, FrameworkStrings.BeginCannotBeCalledAgain);
 
-            BeginInternal(sortMode, blendState, samplerState, depthStencilState, rasterizerState, effect, Matrix.Identity);
+            BeginInternal(sortMode, blendState, samplerState, depthStencilState, rasterizerState, effect, Matrix4x4.Identity);
         }
 
         /// <summary>
@@ -129,7 +131,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="effect">The batch's custom effect.</param>
         /// <param name="transformMatrix">The batch's transformation matrix.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Begin(SpriteSortMode sortMode, BlendState blendState, SamplerState samplerState, DepthStencilState depthStencilState, RasterizerState rasterizerState, Effect effect, Matrix transformMatrix)
+        public void Begin(SpriteSortMode sortMode, BlendState blendState, SamplerState samplerState, DepthStencilState depthStencilState, RasterizerState rasterizerState, Effect effect, Matrix4x4 transformMatrix)
         {
             Contract.EnsureNotDisposed(this, Disposed);
             Contract.EnsureNot(begun, FrameworkStrings.BeginCannotBeCalledAgain);
@@ -2478,7 +2480,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <summary>
         /// Gets the transformation matrix which is in effect for the current batch.
         /// </summary>
-        public Matrix CurrentTransformMatrix
+        public Matrix4x4 CurrentTransformMatrix
             => begun ? transformMatrix : throw new InvalidOperationException(FrameworkStrings.BeginMustBeCalledBeforeStateQuery);
 
         /// <summary>
@@ -3067,7 +3069,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="effect">The batch's custom effect.</param>
         /// <param name="transformMatrix">The batch's transformation matrix.</param>
         private void BeginInternal(SpriteSortMode sortMode,
-            BlendState blendState, SamplerState samplerState, DepthStencilState depthStencilState, RasterizerState rasterizerState, Effect effect, Matrix transformMatrix)
+            BlendState blendState, SamplerState samplerState, DepthStencilState depthStencilState, RasterizerState rasterizerState, Effect effect, Matrix4x4 transformMatrix)
         {
             if (sortMode == SpriteSortMode.Immediate)
             {
@@ -3287,10 +3289,10 @@ namespace Sedulous.Graphics.Graphics2D
                     continue;
 
                 // Add the glyph to the batch.
-                var kerning = Size2.Zero;
+                var kerning = Size.Empty;
                 if (glyphRenderState.GlyphTexture != null)
                 {
-                    Vector2.Transform(ref glyphRenderState.GlyphPosition, ref glyphRenderState.TextTransform, out var glyphPosTransformed);
+					Vector2 glyphPosTransformed = Vector2.Transform(glyphRenderState.GlyphPosition, glyphRenderState.TextTransform);
                     DrawInternal(glyphRenderState.GlyphTexture, glyphPosTransformed + glyphRenderState.GlyphOrigin,
                         glyphRenderState.GlyphTextureRegion, glyphRenderState.GlyphColor, rotation, glyphRenderState.GlyphOrigin, glyphRenderState.GlyphScale, effects, layerDepth, data);
 
@@ -3305,7 +3307,7 @@ namespace Sedulous.Graphics.Graphics2D
                             kerning = fontFace.GetKerningInfo(ref text, i, ref text, i - 1);
                     }
                 }
-                glyphRenderState.GlyphKerning = (Vector2)kerning;
+                glyphRenderState.GlyphKerning = new Vector2(kerning.Width, kerning.Height);
                 glyphRenderState.TextRenderPosition.X += (glyphRenderState.GlyphAdvance.X + glyphRenderState.GlyphKerning.X) * glyphRenderState.TextDirection.X;
             }
         }
@@ -3348,17 +3350,17 @@ namespace Sedulous.Graphics.Graphics2D
                     continue;
 
                 // Add the glyph to the batch.
-                var kerning = Size2.Zero;
+                var kerning = Size.Empty;
                 if (glyphRenderState.GlyphTexture != null)
                 {
-                    Vector2.Transform(ref glyphRenderState.GlyphPosition, ref glyphRenderState.TextTransform, out var glyphPosTransformed);
+					var glyphPosTransformed = Vector2.Transform(glyphRenderState.GlyphPosition, glyphRenderState.TextTransform);
                     DrawInternal(glyphRenderState.GlyphTexture, glyphPosTransformed + glyphRenderState.GlyphOrigin,
                         glyphRenderState.GlyphTextureRegion, glyphRenderState.GlyphColor, rotation, glyphRenderState.GlyphOrigin, glyphRenderState.GlyphScale, effects, layerDepth, data);
 
                     if (i != text.Length - 1)
                         kerning = fontFace.GetShapedKerningInfo(ref text, i);
                 }
-                glyphRenderState.GlyphKerning = (Vector2)kerning;
+                glyphRenderState.GlyphKerning = new Vector2(kerning.Width, kerning.Height);
                 glyphRenderState.TextRenderPosition.X += (glyphRenderState.GlyphAdvance.X + glyphRenderState.GlyphKerning.X) * glyphRenderState.TextDirection.X;
             }
         }
@@ -3443,7 +3445,7 @@ namespace Sedulous.Graphics.Graphics2D
             if (spriteBatchEffect != null)
             {
                 var viewport = FrameworkContext.GetGraphics().GetViewport();
-                var projection = Matrix.CreateOrthographicOffCenter(0, viewport.Width, viewport.Height, 0, 0, 1);
+                var projection = Matrix4x4.CreateOrthographicOffCenter(0, viewport.Width, viewport.Height, 0, 0, 1);
                 spriteBatchEffect.MatrixTransform = transformMatrix * projection;
                 spriteBatchEffect.SrgbColor = graphics.CurrentRenderTargetIsSrgbEncoded;
             }
@@ -3453,7 +3455,7 @@ namespace Sedulous.Graphics.Graphics2D
                 if (matrixTransformParam != null)
                 {
                     var viewport = graphics.GetViewport();
-                    var projection = Matrix.CreateOrthographicOffCenter(0, viewport.Width, viewport.Height, 0, 0, 1);
+                    var projection = Matrix4x4.CreateOrthographicOffCenter(0, viewport.Width, viewport.Height, 0, 0, 1);
                     matrixTransformParam.SetValue(transformMatrix * projection);
                 }
 
@@ -3470,7 +3472,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// </summary>
         private void ApplyTexture(Texture2D texture)
         {
-            var textureSize = texture == null ? Size2.Zero : new Size2(texture.Width, texture.Height);
+            var textureSize = texture == null ? Size.Empty : new Size(texture.Width, texture.Height);
 
             if (customEffect is IEffectTexture iet)
                 iet.Texture = texture;
@@ -3480,7 +3482,7 @@ namespace Sedulous.Graphics.Graphics2D
             if (customEffect is IEffectTextureSize iets)
                 iets.TextureSize = textureSize;
             else
-                customEffect.Parameters["TextureSize"]?.SetValue((Vector2)textureSize);
+                customEffect.Parameters["TextureSize"]?.SetValue(new Vector2(textureSize.Width, textureSize.Height));
         }
 
         /// <summary>
@@ -3597,7 +3599,7 @@ namespace Sedulous.Graphics.Graphics2D
         private RasterizerState rasterizerState;
         private Effect spriteEffect;
         private Effect customEffect;
-        private Matrix transformMatrix;
+        private Matrix4x4 transformMatrix;
         private Boolean begun;
 
         // Vertex data

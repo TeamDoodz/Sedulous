@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using Sedulous.Content;
 using Sedulous.Core;
 using Sedulous.Core.Text;
@@ -160,7 +162,7 @@ namespace Sedulous.Presentation
 
             if (Diagnostics.DrawDiagnosticsVisuals)
             {
-                drawingContext.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, Matrix.Identity);
+                drawingContext.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, Matrix4x4.Identity);
                 DrawDiagnosticsVisuals(drawingContext, layoutRoot);
                 drawingContext.End();
             }
@@ -532,9 +534,9 @@ namespace Sedulous.Presentation
         /// </summary>
         /// <param name="point">The point in screen space to evaluate.</param>
         /// <returns>The topmost <see cref="Visual"/> in the view which contains the specified point, or <see langword="null"/>.</returns>
-        public Visual HitTestScreenPixel(Point2 point)
+        public Visual HitTestScreenPixel(Point point)
         {
-            var dipsPoint = Display.PixelsToDips(point - Area.Location);
+            var dipsPoint = Display.PixelsToDips(new Point2D(point.X - Area.Location.X, point.Y - Area.Location.Y));
 
             var popup = default(Popup);
 
@@ -562,9 +564,9 @@ namespace Sedulous.Presentation
         /// </summary>
         /// <param name="point">The point in view-relative screen space to evaluate.</param>
         /// <returns>The topmost <see cref="Visual"/> in the view which contains the specified point, or <see langword="null"/>.</returns>
-        public Visual HitTestPixel(Point2 point)
+        public Visual HitTestPixel(Point point)
         {
-            var dipsPoint = Display.PixelsToDips(point - Area.Location);
+            var dipsPoint = Display.PixelsToDips(new Point2D(point.X - Area.Location.X, point.Y - Area.Location.Y));
 
             var popup = default(Popup);
 
@@ -1175,7 +1177,8 @@ namespace Sedulous.Presentation
             {
                 var display = element.View.Display;
                 var bounds = element.TransformedVisualBounds;
-                var position = (Vector2)(Point2)display.DipsToPixels(bounds.Location);
+				Point2D point2D = display.DipsToPixels(bounds.Location);
+				var position = new Vector2((float)point2D.X, (float)point2D.Y);
                 var width = (Int32)display.DipsToPixels(bounds.Width);
                 var height = (Int32)display.DipsToPixels(bounds.Height);
                 var color = Diagnostics.GetDrawVisualBoundsColor(element);
@@ -1279,7 +1282,7 @@ namespace Sedulous.Presentation
             if (!viewIsOpen)
                 return;
 
-            var dipsArea = Display.PixelsToDips(Area);
+            var dipsArea = Display.PixelsToDips(new RectangleD(Area.X, Area.Y, Area.Width, Area.Height));
             layoutRoot.Measure(dipsArea.Size);
             layoutRoot.Arrange(dipsArea);
 
@@ -1806,7 +1809,7 @@ namespace Sedulous.Presentation
             var xRelativeToView = posRelativeToCompositor.X - this.X;
             var yRelativeToView = posRelativeToCompositor.Y - this.Y;
 
-            return (Point2D)Display.PixelsToDips(new Vector2(xRelativeToView, yRelativeToView));
+            return (Point2D)Display.PixelsToDips(new Point2D(xRelativeToView, yRelativeToView));
         }
 
         /// <summary>
@@ -1819,7 +1822,7 @@ namespace Sedulous.Presentation
             var xPixels = windowSize.Width * x;
             var yPixels = windowSize.Height * y;
 
-            return (Point2D)Display.PixelsToDips(new Vector2(xPixels, yPixels));
+            return (Point2D)Display.PixelsToDips(new Point2D(xPixels, yPixels));
         }
         
         /// <summary>
@@ -2470,10 +2473,10 @@ namespace Sedulous.Presentation
                 var originalFocus = elementWithFocus;
 
                 var position = device.DenormalizeCoordinates(x, y);
-                var positionDips = Display.PixelsToDips(position);
+                var positionDips = Display.PixelsToDips(new Point2D(position.X, position.Y));
 
                 var delta = device.DenormalizeCoordinates(dx, dy);
-                var deltaDips = Display.PixelsToDips(delta);
+                var deltaDips = Display.PixelsToDips(new Point2D(delta.X, delta.Y));
 
                 var dobj = recipient as DependencyObject;
                 if (dobj != null)
@@ -2508,7 +2511,7 @@ namespace Sedulous.Presentation
                 var originalFocus = elementWithFocus;
 
                 var position = device.DenormalizeCoordinates(x, y);
-                var positionDips = Display.PixelsToDips(position);
+                var positionDips = Display.PixelsToDips(new Point2D(position.X, position.Y));
 
                 var dobj = recipient as DependencyObject;
                 if (dobj != null)
@@ -2567,7 +2570,7 @@ namespace Sedulous.Presentation
                 return;
 
             var position = device.DenormalizeCoordinates(x, y);
-            var positionDips = Display.PixelsToDips(position);
+            var positionDips = Display.PixelsToDips(new Point2D(position.X, position.Y));
 
             var recipient = HitTest(positionDips);
             if (recipient != null)
@@ -2597,7 +2600,7 @@ namespace Sedulous.Presentation
                 return;
 
             var position = device.DenormalizeCoordinates(x, y);
-            var positionDips = Display.PixelsToDips(position);
+            var positionDips = Display.PixelsToDips(new Point2D(position.X, position.Y));
 
             var tracker = touchCursorTrackers?.GetTrackerByTouchID(touchID);
             if (tracker == null)
@@ -2633,7 +2636,7 @@ namespace Sedulous.Presentation
             // This isn't associated with any particular touch, so it always goes to whichever
             // element is directly under the centroid.
             var centroidPixs = device.DenormalizeCoordinates(x, y);
-            var centroidDips = Display.PixelsToDips(centroidPixs);
+            var centroidDips = Display.PixelsToDips(new Point2D(centroidPixs.X, centroidPixs.Y));
 
             var recipient = HitTest(centroidDips);
             if (recipient != null)
@@ -2656,7 +2659,7 @@ namespace Sedulous.Presentation
             // This isn't associated with any particular touch, so it always goes to whichever
             // element is directly under the centroid.
             var centroidPixs = device.DenormalizeCoordinates(x, y);
-            var centroidDips = Display.PixelsToDips(centroidPixs);
+            var centroidDips = Display.PixelsToDips(new Point2D(centroidPixs.X, centroidPixs.Y));
 
             var recipient = HitTest(centroidDips);
             if (recipient != null)

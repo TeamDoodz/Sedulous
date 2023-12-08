@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Core;
 using Sedulous.Presentation.Controls.Primitives;
 
@@ -59,50 +60,50 @@ namespace Sedulous.Presentation.Media
         /// </summary>
         /// <param name="inDevicePixels">A value indicating whether the transform is scaled to device pixels (<see langword="true"/>) or device-independent pixels (<see langword="false"/>).</param>
         /// <returns>A transformation matrix which can be used to transform coordinates from this visual to the layout root of the visual's view.</returns>
-        public Matrix GetTransformToViewMatrix(Boolean inDevicePixels = false)
+        public Matrix4x4 GetTransformToViewMatrix(Boolean inDevicePixels = false)
         {
             var element = this as UIElement;
             if (element == null)
-                return Matrix.Identity;
+                return Matrix4x4.Identity;
 
             var root = VisualTreeHelper.GetRoot(element) as UIElement;
             if (root == null || root == element)
-                return Matrix.Identity;
+                return Matrix4x4.Identity;
 
             var mtxTransform = element.GetTransformToAncestorMatrix(root, inDevicePixels);
 
             if (root is PopupRoot)
             {
                 var popup = root.Parent as Popup;
-                var popupMatrix = (popup == null) ? Matrix.Identity : (inDevicePixels ? popup.PopupTransformToViewWithOriginInDevicePixels : popup.PopupTransformToViewWithOrigin);
-                Matrix.Multiply(ref mtxTransform, ref popupMatrix, out mtxTransform);
+                var popupMatrix = (popup == null) ? Matrix4x4.Identity : (inDevicePixels ? popup.PopupTransformToViewWithOriginInDevicePixels : popup.PopupTransformToViewWithOrigin);
+                mtxTransform *= popupMatrix;
             }
 
             return mtxTransform;
         }
 
-        /// <summary>
-        /// Returns a transformation matrix which can be used to transform coordinates from this visual to
-        /// the specified ancestor of this visual.
-        /// </summary>
-        /// <param name="ancestor">The ancestor to which coordinates will be transformed.</param>
-        /// <param name="inDevicePixels">A value indicating whether the transform is scaled to device pixels (<see langword="true"/>) or device-independent pixels (<see langword="false"/>).</param>
-        /// <returns>A <see cref="Matrix"/> which represents the specified transformation.</returns>
-        public Matrix GetTransformToAncestorMatrix(Visual ancestor, Boolean inDevicePixels = false)
+		/// <summary>
+		/// Returns a transformation matrix which can be used to transform coordinates from this visual to
+		/// the specified ancestor of this visual.
+		/// </summary>
+		/// <param name="ancestor">The ancestor to which coordinates will be transformed.</param>
+		/// <param name="inDevicePixels">A value indicating whether the transform is scaled to device pixels (<see langword="true"/>) or device-independent pixels (<see langword="false"/>).</param>
+		/// <returns>A <see cref="Matrix4x4"/> which represents the specified transformation.</returns>
+		public Matrix4x4 GetTransformToAncestorMatrix(Visual ancestor, Boolean inDevicePixels = false)
         {
             Contract.Require(ancestor, nameof(ancestor));
 
             return this.MatrixTransformToAncestorInternal(ancestor, false, inDevicePixels);
         }
 
-        /// <summary>
-        /// Returns a transformation matrix which can be used to transform coordinates from this visual to
-        /// the specified descendant of this visual.
-        /// </summary>
-        /// <param name="descendant">The descendnat to which coordinates will be transformed.</param>
-        /// <param name="inDevicePixels">A value indicating whether the transform is scaled to device pixels (<see langword="true"/>) or device-independent pixels (<see langword="false"/>).</param>
-        /// <returns>A <see cref="Matrix"/> which represents the specified transformation.</returns>
-        public Matrix GetTransformToDescendantMatrix(Visual descendant, Boolean inDevicePixels = false)
+		/// <summary>
+		/// Returns a transformation matrix which can be used to transform coordinates from this visual to
+		/// the specified descendant of this visual.
+		/// </summary>
+		/// <param name="descendant">The descendnat to which coordinates will be transformed.</param>
+		/// <param name="inDevicePixels">A value indicating whether the transform is scaled to device pixels (<see langword="true"/>) or device-independent pixels (<see langword="false"/>).</param>
+		/// <returns>A <see cref="Matrix4x4"/> which represents the specified transformation.</returns>
+		public Matrix4x4 GetTransformToDescendantMatrix(Visual descendant, Boolean inDevicePixels = false)
         {
             Contract.Require(descendant, nameof(descendant));
 
@@ -143,7 +144,7 @@ namespace Sedulous.Presentation.Media
             var matrix = GetTransformToAncestorMatrix(ancestor);
 
             Vector2 result;
-            Vector2.Transform(ref vector, ref matrix, out result);
+            result = Vector2.Transform(vector, matrix);
 
             return result;
         }
@@ -177,7 +178,7 @@ namespace Sedulous.Presentation.Media
             var matrix = GetTransformToDescendantMatrix(descendant);
 
             Vector2 result;
-            Vector2.Transform(ref vector, ref matrix, out result);
+            result = Vector2.Transform(vector, matrix);
 
             return result;
         }
@@ -321,22 +322,22 @@ namespace Sedulous.Presentation.Media
         /// </summary>
         /// <param name="inDevicePixels">A value indicating whether the transform is scaled to device pixels (<see langword="true"/>) or device-independent pixels (<see langword="false"/>).</param>
         /// <returns>The visual's transformation matrix.</returns>
-        protected virtual Matrix GetTransformMatrix(Boolean inDevicePixels = false)
+        protected virtual Matrix4x4 GetTransformMatrix(Boolean inDevicePixels = false)
         {
-            return Matrix.Identity;
+            return Matrix4x4.Identity;
         }
 
-        /// <summary>
-        /// Returns a transformation matrix which can be used to transform coordinates from this visual to
-        /// the specified ancestor of this visual.
-        /// </summary>
-        /// <param name="ancestor">The ancestor to which coordinates will be transformed.</param>
-        /// <param name="invert">A value indicating whether to invert the resulting matrix.</param>
-        /// <param name="inDevicePixels">A value indicating whether the transform is scaled to device pixels (<see langword="true"/>) or device-independent pixels (<see langword="false"/>).</param>
-        /// <returns>A <see cref="Matrix"/> which represents the specified transformation.</returns>
-        private Matrix MatrixTransformToAncestorInternal(Visual ancestor, Boolean invert, Boolean inDevicePixels = false)
+		/// <summary>
+		/// Returns a transformation matrix which can be used to transform coordinates from this visual to
+		/// the specified ancestor of this visual.
+		/// </summary>
+		/// <param name="ancestor">The ancestor to which coordinates will be transformed.</param>
+		/// <param name="invert">A value indicating whether to invert the resulting matrix.</param>
+		/// <param name="inDevicePixels">A value indicating whether the transform is scaled to device pixels (<see langword="true"/>) or device-independent pixels (<see langword="false"/>).</param>
+		/// <returns>A <see cref="Matrix4x4"/> which represents the specified transformation.</returns>
+		private Matrix4x4 MatrixTransformToAncestorInternal(Visual ancestor, Boolean invert, Boolean inDevicePixels = false)
         {
-            var mtxFinal = Matrix.Identity;
+            var mtxFinal = Matrix4x4.Identity;
 
             DependencyObject current;
             for (current = this; current != null && current != ancestor; current = VisualTreeHelper.GetParent(current))
@@ -351,13 +352,11 @@ namespace Sedulous.Presentation.Media
                     }
 
                     var mtxTransform = uiElement.GetTransformMatrix(inDevicePixels);
-                    var mtxTranslateToClientSpace = Matrix.CreateTranslation(
+                    var mtxTranslateToClientSpace = Matrix4x4.CreateTranslation(
                         (Single)bounds.X, 
                         (Single)bounds.Y, 0f);
 
-                    Matrix mtxResult;
-                    Matrix.Multiply(ref mtxFinal, ref mtxTransform, out mtxResult);
-                    Matrix.Multiply(ref mtxResult, ref mtxTranslateToClientSpace, out mtxFinal);
+                    mtxFinal = mtxFinal * mtxTransform * mtxTranslateToClientSpace;
                 }
             }
 
@@ -370,11 +369,11 @@ namespace Sedulous.Presentation.Media
 
             if (invert)
             {
-                if (Matrix.TryInvert(mtxFinal, out mtxFinal))
+                if (Matrix4x4.Invert(mtxFinal, out mtxFinal))
                 {
                     return mtxFinal;
                 }
-                return Matrix.Identity;
+                return Matrix4x4.Identity;
             }
             return mtxFinal;
         }

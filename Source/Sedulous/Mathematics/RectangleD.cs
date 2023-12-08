@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Numerics;
 using Newtonsoft.Json;
 
 namespace Sedulous
@@ -40,9 +42,9 @@ namespace Sedulous
         /// Offsets the specified <see cref="RectangleD"/> by adding the specified <see cref="Point2D"/> to its location.
         /// </summary>
         /// <param name="rect">The <see cref="RectangleD"/> to offset.</param>
-        /// <param name="point">The <see cref="Point2"/> by which to offset the rectangle.</param>
+        /// <param name="point">The <see cref="Point"/> by which to offset the rectangle.</param>
         /// <returns>A <see cref="RectangleD"/> that has been offset by the specified amount.</returns>
-        public static RectangleD operator +(RectangleD rect, Point2 point)
+        public static RectangleD operator +(RectangleD rect, Point point)
         {
             RectangleD result;
 
@@ -58,9 +60,9 @@ namespace Sedulous
         /// Offsets the specified <see cref="RectangleD"/> by subtracting the specified <see cref="Point2D"/> from its location.
         /// </summary>
         /// <param name="rect">The <see cref="RectangleD"/> to offset.</param>
-        /// <param name="point">The <see cref="Point2"/> by which to offset the rectangle.</param>
+        /// <param name="point">The <see cref="Point"/> by which to offset the rectangle.</param>
         /// <returns>A <see cref="RectangleD"/> that has been offset by the specified amount.</returns>
-        public static RectangleD operator -(RectangleD rect, Point2 point)
+        public static RectangleD operator -(RectangleD rect, Point point)
         {
             RectangleD result;
 
@@ -76,9 +78,9 @@ namespace Sedulous
         /// Offsets the specified <see cref="RectangleD"/> by adding the specified <see cref="Point2D"/> to its location.
         /// </summary>
         /// <param name="rect">The <see cref="RectangleD"/> to offset.</param>
-        /// <param name="point">The <see cref="Point2F"/> by which to offset the rectangle.</param>
+        /// <param name="point">The <see cref="PointF"/> by which to offset the rectangle.</param>
         /// <returns>A <see cref="RectangleD"/> that has been offset by the specified amount.</returns>
-        public static RectangleD operator +(RectangleD rect, Point2F point)
+        public static RectangleD operator +(RectangleD rect, PointF point)
         {
             RectangleD result;
 
@@ -94,9 +96,9 @@ namespace Sedulous
         /// Offsets the specified <see cref="RectangleD"/> by subtracting the specified <see cref="Point2D"/> from its location.
         /// </summary>
         /// <param name="rect">The <see cref="RectangleD"/> to offset.</param>
-        /// <param name="point">The <see cref="Point2F"/> by which to offset the rectangle.</param>
+        /// <param name="point">The <see cref="PointF"/> by which to offset the rectangle.</param>
         /// <returns>A <see cref="RectangleD"/> that has been offset by the specified amount.</returns>
-        public static RectangleD operator -(RectangleD rect, Point2F point)
+        public static RectangleD operator -(RectangleD rect, PointF point)
         {
             RectangleD result;
 
@@ -151,7 +153,7 @@ namespace Sedulous
         /// <returns>The converted structure.</returns>
         public static explicit operator Rectangle(RectangleD rect)
         {
-            Rectangle result;
+            Rectangle result = new();
 
             result.X = (Int32)rect.X;
             result.Y = (Int32)rect.Y;
@@ -373,17 +375,17 @@ namespace Sedulous
         /// <param name="rectangle">The rectangle to transform.</param>
         /// <param name="transform">The transform matrix.</param>
         /// <returns>The axis-aligned bounding box of <paramref name="rectangle"/> after it has been transformed.</returns>
-        public static RectangleD TransformAxisAligned(RectangleD rectangle, Matrix transform)
+        public static RectangleD TransformAxisAligned(RectangleD rectangle, Matrix4x4 transform)
         {
             var tl = new Vector2((Single)rectangle.Left, (Single)rectangle.Top);
             var tr = new Vector2((Single)rectangle.Right, (Single)rectangle.Top);
             var bl = new Vector2((Single)rectangle.Left, (Single)rectangle.Bottom);
             var br = new Vector2((Single)rectangle.Right, (Single)rectangle.Bottom);
 
-            Vector2.Transform(ref tl, ref transform, out tl);
-            Vector2.Transform(ref tr, ref transform, out tr);
-            Vector2.Transform(ref bl, ref transform, out bl);
-            Vector2.Transform(ref br, ref transform, out br);
+            tl = Vector2.Transform(tl, transform);
+            tr = Vector2.Transform(tr, transform);
+            bl = Vector2.Transform(bl, transform);
+            br = Vector2.Transform(br, transform);
 
             var minX = Math.Min(Math.Min(tl.X, tr.X), Math.Min(bl.X, br.X));
             var maxX = Math.Max(Math.Max(tl.X, tr.X), Math.Max(bl.X, br.X));
@@ -406,19 +408,19 @@ namespace Sedulous
         /// <param name="rectangle">The rectangle to transform.</param>
         /// <param name="transform">The transform matrix.</param>
         /// <param name="result">The axis-aligned bounding box of <paramref name="rectangle"/> after it has been transformed.</param>
-        public static void TransformAxisAligned(ref RectangleD rectangle, ref Matrix transform, out RectangleD result)
+        public static void TransformAxisAligned(ref RectangleD rectangle, ref Matrix4x4 transform, out RectangleD result)
         {
             var tl = new Vector2((Single)rectangle.Left, (Single)rectangle.Top);
             var tr = new Vector2((Single)rectangle.Right, (Single)rectangle.Top);
             var bl = new Vector2((Single)rectangle.Left, (Single)rectangle.Bottom);
             var br = new Vector2((Single)rectangle.Right, (Single)rectangle.Bottom);
 
-            Vector2.Transform(ref tl, ref transform, out tl);
-            Vector2.Transform(ref tr, ref transform, out tr);
-            Vector2.Transform(ref bl, ref transform, out bl);
-            Vector2.Transform(ref br, ref transform, out br);
+			tl = Vector2.Transform(tl, transform);
+			tr = Vector2.Transform(tr, transform);
+			bl = Vector2.Transform(bl, transform);
+			br = Vector2.Transform(br, transform);
 
-            var minX = Math.Min(Math.Min(tl.X, tr.X), Math.Min(bl.X, br.X));
+			var minX = Math.Min(Math.Min(tl.X, tr.X), Math.Min(bl.X, br.X));
             var maxX = Math.Max(Math.Max(tl.X, tr.X), Math.Max(bl.X, br.X));
             var minY = Math.Min(Math.Min(tl.Y, tr.Y), Math.Min(bl.Y, br.Y));
             var maxY = Math.Max(Math.Max(tl.Y, tr.Y), Math.Max(bl.Y, br.Y));

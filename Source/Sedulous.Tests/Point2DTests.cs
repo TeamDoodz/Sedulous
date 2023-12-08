@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Sedulous.TestFramework;
@@ -65,51 +66,12 @@ namespace Sedulous.Tests
             TheResultingValue(point1.Equals(point3)).ShouldBe(false);
             TheResultingValue(point1.Equals(point4)).ShouldBe(false);
         }
-
-        [Test]
-        public void Point2D_TryParse_SucceedsForValidStrings()
-        {
-            var str    = "123.45 456.78";
-            var result = default(Point2D);
-            if (!Point2D.TryParse(str, out result))
-                throw new InvalidOperationException("Unable to parse string to Point2D.");
-
-            TheResultingValue(result)
-                .ShouldBe(123.45, 456.78);
-        }
-
-        [Test]
-        public void Point2D_TryParse_FailsForInvalidStrings()
-        {
-            var result    = default(Point2D);
-            var succeeded = Point2D.TryParse("foo", out result);
-
-            TheResultingValue(succeeded)
-                .ShouldBe(false);
-        }
-
-        [Test]
-        public void Point2D_Parse_SucceedsForValidStrings()
-        {
-            var str    = "123.45 456.78";
-            var result = Point2D.Parse(str);
-
-            TheResultingValue(result)
-                .ShouldBe(123.45, 456.78);
-        }
-
-        [Test]
-        public void Point2D_Parse_FailsForInvalidStrings()
-        {
-            Assert.That(() => Point2D.Parse("foo"),
-                Throws.TypeOf<FormatException>());
-        }
         
         [Test]
         public void Point2D_TransformsCorrectly_WithMatrix()
         {
             var point1 = new Point2D(123, 456);
-            var transform = Matrix.CreateRotationZ((float)Math.PI);
+            var transform = Matrix4x4.CreateRotationZ((float)Math.PI);
 
             var result = Point2D.Transform(point1, transform);
 
@@ -121,7 +83,7 @@ namespace Sedulous.Tests
         public void Point2D_TransformsCorrectly_WithMatrix_WithOutParam()
         {
             var point1 = new Point2D(123, 456);
-            var transform = Matrix.CreateRotationZ((float)Math.PI);
+            var transform = Matrix4x4.CreateRotationZ((float)Math.PI);
 
             var result = Point2D.Zero;
             Point2D.Transform(ref point1, ref transform, out result);
@@ -134,7 +96,7 @@ namespace Sedulous.Tests
         public void Point2D_TransformsCorrectly_WithQuaternion()
         {
             var point1 = new Point2D(123, 456);
-            var matrix = Matrix.CreateRotationZ((float)Math.PI);
+            var matrix = Matrix4x4.CreateRotationZ((float)Math.PI);
             var transform = Quaternion.CreateFromRotationMatrix(matrix);
 
             var result = Point2D.Transform(point1, transform);
@@ -147,7 +109,7 @@ namespace Sedulous.Tests
         public void Point2D_TransformsForrectly_WithQuaternion_WithOutParam()
         {
             var point1 = new Point2D(123, 456);
-            var matrix = Matrix.CreateRotationZ((float)Math.PI);
+            var matrix = Matrix4x4.CreateRotationZ((float)Math.PI);
             var transform = Quaternion.CreateFromRotationMatrix(matrix);
 
             Point2D.Transform(ref point1, ref transform, out Point2D result);

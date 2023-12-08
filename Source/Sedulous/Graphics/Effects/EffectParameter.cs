@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Sedulous.Graphics
 {
@@ -252,36 +253,36 @@ namespace Sedulous.Graphics
         /// <param name="value">The value to set.</param>
         public abstract void SetValue(Color[] value);
 
-        /// <summary>
-        /// Gets the parameter's value as a <see cref="Matrix"/>.
-        /// </summary>
-        /// <returns>The parameter's value.</returns>
-        public abstract Matrix GetValueMatrix();
+		/// <summary>
+		/// Gets the parameter's value as a <see cref="Matrix4x4"/>.
+		/// </summary>
+		/// <returns>The parameter's value.</returns>
+		public abstract Matrix4x4 GetValueMatrix();
 
         /// <summary>
         /// Sets the parameter's value.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public abstract void SetValue(Matrix value);
+        public abstract void SetValue(Matrix4x4 value);
 
         /// <summary>
         /// Sets the parameter's value.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public abstract void SetValueRef(ref Matrix value);
+        public abstract void SetValueRef(ref Matrix4x4 value);
 
-        /// <summary>
-        /// Copies the parameter's value to the specified array of <see cref="Matrix"/>.
-        /// </summary>
-        /// <param name="value">An array to populate with the parameter's values.</param>
-        /// <param name="count">The number of values to copy from the parameter.</param>
-        public abstract void GetValueMatrixArray(Matrix[] value, Int32 count);
+		/// <summary>
+		/// Copies the parameter's value to the specified array of <see cref="Matrix4x4"/>.
+		/// </summary>
+		/// <param name="value">An array to populate with the parameter's values.</param>
+		/// <param name="count">The number of values to copy from the parameter.</param>
+		public abstract void GetValueMatrixArray(Matrix4x4[] value, Int32 count);
 
         /// <summary>
         /// Sets the parameter's value.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public abstract void SetValue(Matrix[] value);
+        public abstract void SetValue(Matrix4x4[] value);
 
         /// <summary>
         /// Gets the parameter's value as a <see cref="Texture2D"/>.

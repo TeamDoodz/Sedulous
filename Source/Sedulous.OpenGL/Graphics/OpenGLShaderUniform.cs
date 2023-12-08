@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Buffers;
+using System.Numerics;
 using Sedulous.Core;
 using Sedulous.Graphics;
 using Sedulous.OpenGL.Bindings;
@@ -216,7 +217,7 @@ namespace Sedulous.OpenGL.Graphics
 					
                 case OpenGLEffectParameterDataType.Mat4Array:
                     fixed (Byte* pBuffer = source.RawDataBuffer)
-                        SetValue((Matrix*)pBuffer, source.ElementCount);
+                        SetValue((Matrix4x4*)pBuffer, source.ElementCount);
                     break;
 
                 case OpenGLEffectParameterDataType.Mat4x2:
@@ -689,11 +690,11 @@ namespace Sedulous.OpenGL.Graphics
         /// Sets the parameter's value.
         /// </summary>
         /// <param name="value">The value to set.</param>
-        public void SetValue(Matrix value)
+        public void SetValue(Matrix4x4 value)
         {
             var transpose = GL.IsMatrixTranspositionAvailable;
             if (!transpose)
-                Matrix.Transpose(ref value, out value);
+                value = Matrix4x4.Transpose(value);
 
             GL.UniformMatrix4fv(location, 1, transpose, (Single*)&value);
             GL.ThrowIfError();
@@ -704,12 +705,16 @@ namespace Sedulous.OpenGL.Graphics
         /// </summary>
         /// <param name="pValue">A pointer to the buffer that contains the value to set.</param>
         /// <param name="count">The number of elements in the array to set.</param>
-        public void SetValue(Matrix* pValue, Int32 count)
+        public void SetValue(Matrix4x4* pValue, Int32 count)
         {
-            SetMatrixArrayValueInternal<Matrix>((IntPtr)pValue, count,
-                (ptr, index) => Matrix.Transpose(ref ((Matrix*)ptr)[index], out ((Matrix*)ptr)[index]),
-                (ptr, index) => Matrix.Transpose(ref ((Matrix*)ptr)[index], out ((Matrix*)ptr)[index]),
+            SetMatrixArrayValueInternal<Matrix4x4>((IntPtr)pValue, count,
+                (ptr, index) => Transpose(ref ((Matrix4x4*)ptr)[index], out ((Matrix4x4*)ptr)[index]),
+                (ptr, index) => Transpose(ref ((Matrix4x4*)ptr)[index], out ((Matrix4x4*)ptr)[index]),
                 (l, c, t, v) => GL.UniformMatrix4fv(l, c, t, (Single*)v));
+        }
+
+        private static void Transpose(ref Matrix4x4 matrix, out Matrix4x4 result) {
+            result = Matrix4x4.Transpose(matrix);
         }
 
         /// <summary>

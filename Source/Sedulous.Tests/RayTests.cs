@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Sedulous.TestFramework;
@@ -130,8 +131,8 @@ namespace Sedulous.Tests
         [Test]
         public void Ray_CalculatesBoundingFrustumIntersectionCorrectly_WhenIntersectionExists()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
             var ray = new Ray(new Vector3(100f, 0, 0), new Vector3(-1f, 0, 0));
 
@@ -144,8 +145,8 @@ namespace Sedulous.Tests
         [Test]
         public void Ray_CalculatesBoundingFrustumIntersectionCorrectly_WhenIntersectionExists_WithOutParam()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
             var ray = new Ray(new Vector3(100f, 0, 0), new Vector3(-1f, 0, 0));
 
@@ -158,8 +159,8 @@ namespace Sedulous.Tests
         [Test]
         public void Ray_CalculatesBoundingFrustumIntersectionCorrectly_WhenNoIntersectionExists()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
             var ray = new Ray(new Vector3(100f, 0, 0), new Vector3(1f, 0, 0));
 
@@ -172,8 +173,8 @@ namespace Sedulous.Tests
         [Test]
         public void Ray_CalculatesBoundingFrustumIntersectionCorrectly_WhenNoIntersectionExists_WithOutParam()
         {
-            var view = Matrix.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.Up);
-            var proj = Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
+            var view = Matrix4x4.CreateLookAt(new Vector3(0, 0, 5), Vector3.Zero, Vector3.UnitY);
+            var proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4f, 4f / 3f, 1f, 1000f);
             var frustum = new BoundingFrustum(view * proj);
             var ray = new Ray(new Vector3(100f, 0, 0), new Vector3(1f, 0, 0));
 

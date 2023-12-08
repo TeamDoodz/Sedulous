@@ -1,4 +1,6 @@
-﻿namespace Sedulous.Graphics.Graphics3D
+﻿using System.Numerics;
+
+namespace Sedulous.Graphics.Graphics3D
 {
     /// <summary>
     /// An intermediate representation of a single triangle in an STL model file.

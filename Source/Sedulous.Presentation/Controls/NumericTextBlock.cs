@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Presentation.Controls.Primitives;
 
 namespace Sedulous.Presentation.Controls
@@ -103,7 +104,8 @@ namespace Sedulous.Presentation.Controls
             View.Resources.StringFormatter.Format(Format ?? "{0}", View.Resources.StringBuffer);
 
             var face = font.Resource.Value.GetFace(FontStyle);
-            return face.MeasureString(View.Resources.StringBuffer);
+			System.Drawing.Size size = face.MeasureString(View.Resources.StringBuffer);
+			return new Size2D(size.Width, size.Height);
         }
 
         /// <inheritdoc/>

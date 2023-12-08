@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Sedulous.Core;
@@ -45,7 +47,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
         /// <param name="input">The command stream that contains the layout information to evaluate.</param>
         /// <param name="position">The cursor's position relative to the text's layout area, 
         /// or <see langword="null"/> to indicate that the cursor is not over the text.</param>
-        public void UpdateCursor(TextLayoutCommandStream input, Point2? position)
+        public void UpdateCursor(TextLayoutCommandStream input, Point? position)
         {
             Contract.Require(input, nameof(input));
 
@@ -236,7 +238,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
         /// layout area, regardless of the line's actual width.</param>
         /// <returns>The index of the line of text at the specified layout-relative position, 
         /// or <see langword="null"/> if the specified position is not contained by any line.</returns>
-        public Int32? GetLineAtPosition(TextLayoutCommandStream input, Point2 position, Boolean stretch = false) =>
+        public Int32? GetLineAtPosition(TextLayoutCommandStream input, Point position, Boolean stretch = false) =>
             GetLineAtPosition(input, position.X, position.Y, stretch);
 
         /// <summary>
@@ -336,7 +338,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
         /// <param name="position">The position to evaluate.</param>
         /// <returns>The index of the glyph at the specified layout-relative position,
         /// or <c>nulll</c> if the specified position is not contained by any glyph.</returns>
-        public Int32? GetGlyphAtPosition(TextLayoutCommandStream input, Point2 position) =>
+        public Int32? GetGlyphAtPosition(TextLayoutCommandStream input, Point position) =>
             GetGlyphAtPosition(input, position.X, position.Y, false, out _);
 
         /// <summary>
@@ -348,7 +350,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
         /// whether the position corresponds to an actual glyph.</param>
         /// <returns>The index of the glyph at the specified layout-relative position,
         /// or <c>nulll</c> if the specified position is not contained by any glyph.</returns>
-        public Int32? GetGlyphAtPosition(TextLayoutCommandStream input, Point2 position, out Int32? lineAtPosition) =>
+        public Int32? GetGlyphAtPosition(TextLayoutCommandStream input, Point position, out Int32? lineAtPosition) =>
             GetGlyphAtPosition(input, position.X, position.Y, false, out lineAtPosition);
 
         /// <summary>
@@ -361,7 +363,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
         /// whether the position corresponds to an actual glyph.</param>
         /// <returns>The index of the glyph at the specified layout-relative position,
         /// or <c>nulll</c> if the specified position is not contained by any glyph.</returns>
-        public Int32? GetGlyphAtPosition(TextLayoutCommandStream input, Point2 position, Boolean snapToLine, out Int32? lineAtPosition) =>
+        public Int32? GetGlyphAtPosition(TextLayoutCommandStream input, Point position, Boolean snapToLine, out Int32? lineAtPosition) =>
             GetGlyphAtPosition(input, position.X, position.Y, snapToLine, out lineAtPosition);
 
         /// <summary>
@@ -588,7 +590,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
         /// <param name="input">The command stream that contains the layout information to evaluate.</param>
         /// <param name="position">The position to evaluate.</param>
         /// <returns>The index of the insertion point which is closest to the specified layout-relative position.</returns>
-        public Int32 GetInsertionPointAtPosition(TextLayoutCommandStream input, Point2 position) =>
+        public Int32 GetInsertionPointAtPosition(TextLayoutCommandStream input, Point position) =>
             GetInsertionPointAtPosition(input, position.X, position.Y);
 
         /// <summary>
@@ -600,7 +602,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
         /// <param name="position">The position to evaluate.</param>
         /// <param name="lineAtPosition">The index of the line of text that contains the specified insertion point.</param>
         /// <returns>The index of the insertion point which is closest to the specified layout-relative position.</returns>
-        public Int32 GetInsertionPointAtPosition(TextLayoutCommandStream input, Point2 position, out Int32 lineAtPosition) =>
+        public Int32 GetInsertionPointAtPosition(TextLayoutCommandStream input, Point position, out Int32 lineAtPosition) =>
             GetInsertionPointAtPosition(input, position.X, position.Y, out lineAtPosition);
 
         /// <summary>
@@ -820,7 +822,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
             if (seekState.NumberOfGlyphsSeen + cmd->GlyphLength > glyphIndex)
             {
                 var glyphOffset = 0;
-                var glyphSize = Size2.Zero;
+                var glyphSize = Size.Empty;
 
                 var shaped = (input.Settings.Options & TextLayoutOptions.Shape) == TextLayoutOptions.Shape;
                 if (shaped)
@@ -854,7 +856,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
                     glyphPosition.Y = cmd->Bounds.Y;
                 }
 
-                bounds = new Rectangle(glyphPosition, spanLineHeight ? new Size2(glyphSize.Width, seekState.LineHeight) : glyphSize);
+                bounds = new Rectangle(glyphPosition, spanLineHeight ? new Size(glyphSize.Width, seekState.LineHeight) : glyphSize);
             }
 
             seekState.NumberOfSourceCharactersSeen += cmd->SourceLength;
@@ -877,7 +879,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
 
             if (seekState.NumberOfGlyphsSeen + 1 > glyphIndex)
             {
-                var glyphSize = new Size2(cmd->IconWidth, cmd->IconHeight);
+                var glyphSize = new Size(cmd->IconWidth, cmd->IconHeight);
 
                 var glyphRelX = seekState.LineOffsetX;
                 var glyphRelY = drawState.BlockOffset;
@@ -887,7 +889,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
                     glyphPosition.Y = cmd->Bounds.Y;
                 }
 
-                bounds = new Rectangle(glyphPosition, spanLineHeight ? new Size2(glyphSize.Width, seekState.LineHeight) : glyphSize);
+                bounds = new Rectangle(glyphPosition, spanLineHeight ? new Size(glyphSize.Width, seekState.LineHeight) : glyphSize);
             }
 
             seekState.NumberOfSourceCharactersSeen += cmd->SourceLength;
@@ -1575,7 +1577,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
         /// Adjusts the position of a command to account for hyphenation.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private Vector2 AdjustCommandPositionForHyphen(TextDirection direction, Vector2 position, Int32 hyphenWidth, Int32 hyphenatedTextWidth, Size2 hyphenatedTextKerning)
+        private Vector2 AdjustCommandPositionForHyphen(TextDirection direction, Vector2 position, Int32 hyphenWidth, Int32 hyphenatedTextWidth, Size hyphenatedTextKerning)
         {
             var cmdX = (direction == TextDirection.RightToLeft) ?
                (position.X - (hyphenWidth - hyphenatedTextKerning.Width)) :
@@ -2420,13 +2422,14 @@ namespace Sedulous.Graphics.Graphics2D.Text
                 if (glyphSourceIndex.HasValue)
                 {
                     var max = seekState.LineStartInSource + seekState.LineLengthInSource - seekState.TerminatingLineBreakLength;
+                    Vector2 glyphBoundsCenter = new Vector2(glyphBounds.X, glyphBounds.Y) + new Vector2(glyphBounds.Width / 2f, glyphBounds.Height / 2f);
                     if (input.Settings.Direction == TextDirection.RightToLeft)
                     {
-                        return Math.Min(max, (x - glyphBounds.Center.X < 0) ? glyphSourceIndex.Value + (isSurrogatePair ? 2 : 1) : glyphSourceIndex.Value);
+                        return Math.Min(max, (x - glyphBoundsCenter.X < 0) ? glyphSourceIndex.Value + (isSurrogatePair ? 2 : 1) : glyphSourceIndex.Value);
                     }
                     else
                     {
-                        return Math.Min(max, (x - glyphBounds.Center.X < 0) ? glyphSourceIndex.Value : glyphSourceIndex.Value + (isSurrogatePair ? 2 : 1));
+                        return Math.Min(max, (x - glyphBoundsCenter.X < 0) ? glyphSourceIndex.Value : glyphSourceIndex.Value + (isSurrogatePair ? 2 : 1));
                     }
                 }
                 lineAtPosition = input.LineCount - 1;

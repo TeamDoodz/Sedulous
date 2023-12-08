@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Sedulous.Core;
@@ -102,58 +103,58 @@ namespace Sedulous.FreeType2
             info = GetGlyphInfo((UInt32)glyphIndex, true, out var ginfo) ? ginfo.ToGlyphRenderInfo() : default(GlyphRenderInfo);
 
         /// <inheritdoc/>
-        public override Size2 MeasureString(String text)
+        public override Size MeasureString(String text)
         {
             var source = new StringSource(text);
             return MeasureString(ref source, 0, text.Length);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureString(String text, Int32 start, Int32 count)
+        public override Size MeasureString(String text, Int32 start, Int32 count)
         {
             var source = new StringSource(text);
             return MeasureString(ref source, start, count);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureString(StringBuilder text)
+        public override Size MeasureString(StringBuilder text)
         {
             var source = new StringBuilderSource(text);
             return MeasureString(ref source, 0, text.Length);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureString(StringBuilder text, Int32 start, Int32 count)
+        public override Size MeasureString(StringBuilder text, Int32 start, Int32 count)
         {
             var source = new StringBuilderSource(text);
             return MeasureString(ref source, start, count);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureString(ref StringSegment text)
+        public override Size MeasureString(ref StringSegment text)
         {
             var source = new StringSegmentSource(text);
             return MeasureString(ref source, 0, text.Length);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureString(ref StringSegment text, Int32 start, Int32 count)
+        public override Size MeasureString(ref StringSegment text, Int32 start, Int32 count)
         {
             var source = new StringSegmentSource(text);
             return MeasureString(ref source, start, count);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureString<TSource>(ref TSource text)
+        public override Size MeasureString<TSource>(ref TSource text)
         {
             return MeasureString(ref text, 0, text.Length);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureString<TSource>(ref TSource text, Int32 start, Int32 count)
+        public override Size MeasureString<TSource>(ref TSource text, Int32 start, Int32 count)
         {
             if (count == 0)
-                return Size2.Zero;
+                return Size.Empty;
 
             Contract.EnsureRange(start >= 0 && start < text.Length, nameof(start));
             Contract.EnsureRange(count >= 0 && start + count <= text.Length, nameof(count));
@@ -191,34 +192,34 @@ namespace Sedulous.FreeType2
             }
             maxLineWidth = Math.Max(maxLineWidth, cx);
 
-            return new Size2(maxLineWidth, cy + totalDesignHeight);
+            return new Size(maxLineWidth, cy + totalDesignHeight);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedString(ShapedString text, Boolean rtl = false) =>
+        public override Size MeasureShapedString(ShapedString text, Boolean rtl = false) =>
             MeasureShapedString(ref text, 0, text.Length, rtl);
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedString(ShapedString text, Int32 start, Int32 count, Boolean rtl = false) =>
+        public override Size MeasureShapedString(ShapedString text, Int32 start, Int32 count, Boolean rtl = false) =>
             MeasureShapedString(ref text, start, count, rtl);
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedString(ShapedStringBuilder text, Boolean rtl = false) =>
+        public override Size MeasureShapedString(ShapedStringBuilder text, Boolean rtl = false) =>
             MeasureShapedString(ref text, 0, text.Length, rtl);
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedString(ShapedStringBuilder text, Int32 start, Int32 count, Boolean rtl = false) =>
+        public override Size MeasureShapedString(ShapedStringBuilder text, Int32 start, Int32 count, Boolean rtl = false) =>
             MeasureShapedString(ref text, start, count, rtl);
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedString<TSource>(ref TSource text, Boolean rtl = false) =>
+        public override Size MeasureShapedString<TSource>(ref TSource text, Boolean rtl = false) =>
             MeasureShapedString(ref text, 0, text.Length, rtl);
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedString<TSource>(ref TSource text, Int32 start, Int32 count, Boolean rtl = false)
+        public override Size MeasureShapedString<TSource>(ref TSource text, Int32 start, Int32 count, Boolean rtl = false)
         {
             if (count == 0)
-                return Size2.Zero;
+                return Size.Empty;
 
             Contract.EnsureRange(start >= 0 && start < text.Length, nameof(start));
             Contract.EnsureRange(count >= 0 && start + count <= text.Length, nameof(count));
@@ -249,133 +250,133 @@ namespace Sedulous.FreeType2
             }
             maxLineWidth = Math.Max(maxLineWidth, cx);
 
-            return new Size2(maxLineWidth, totalDesignHeight);
+            return new Size(maxLineWidth, totalDesignHeight);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureGlyph(Int32 c1, Int32? c2 = null)
+        public override Size MeasureGlyph(Int32 c1, Int32? c2 = null)
         {
             if (!GetGlyphInfo((UInt32)c1, false, out var c1Info))
-                return Size2.Zero;
+                return Size.Empty;
 
-            return new Size2(c1Info.Advance, totalDesignHeight);
+            return new Size(c1Info.Advance, totalDesignHeight);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureGlyphByGlyphIndex(Int32 glyphIndex1, Int32? glyphIndex2 = null)
+        public override Size MeasureGlyphByGlyphIndex(Int32 glyphIndex1, Int32? glyphIndex2 = null)
         {
             if (!GetGlyphInfo((UInt32)glyphIndex1, true, out var info))
-                return Size2.Zero;
+                return Size.Empty;
 
-            return new Size2(info.Advance, totalDesignHeight);
+            return new Size(info.Advance, totalDesignHeight);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureGlyph(String text, Int32 ix)
+        public override Size MeasureGlyph(String text, Int32 ix)
         {
             var source = new StringSource(text);
             return MeasureGlyph(ref source, ix);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureGlyph(StringBuilder text, Int32 ix)
+        public override Size MeasureGlyph(StringBuilder text, Int32 ix)
         {
             var source = new StringBuilderSource(text);
             return MeasureGlyph(ref source, ix);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureGlyph(ref StringSegment text, Int32 ix)
+        public override Size MeasureGlyph(ref StringSegment text, Int32 ix)
         {
             var source = new StringSegmentSource(text);
             return MeasureGlyph(ref source, ix);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureGlyph<TSource>(ref TSource text, Int32 ix)
+        public override Size MeasureGlyph<TSource>(ref TSource text, Int32 ix)
         {
             GetUtf32CodePointFromString(ref text, ix, out var c1, out var c1length);
             if (!GetGlyphInfo(c1, false, out var cinfo))
-                return Size2.Zero;
+                return Size.Empty;
 
             var c2 = (ix + c1length < text.Length) ? text[ix + c1length] : (Char?)null;
-            var offset = c2.HasValue ? GetKerningInfo((Int32)c1, c2.GetValueOrDefault()) : Size2.Zero;
-            return new Size2(cinfo.Advance, totalDesignHeight) + offset;
+            var offset = c2.HasValue ? GetKerningInfo((Int32)c1, c2.GetValueOrDefault()) : Size.Empty;
+            return new Size(cinfo.Advance, totalDesignHeight) + offset;
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedGlyph(ShapedString text, Int32 ix, Boolean rtl = false) =>
+        public override Size MeasureShapedGlyph(ShapedString text, Int32 ix, Boolean rtl = false) =>
             MeasureShapedGlyph(ref text, ix, rtl);
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedGlyph(ShapedStringBuilder text, Int32 ix, Boolean rtl = false) =>
+        public override Size MeasureShapedGlyph(ShapedStringBuilder text, Int32 ix, Boolean rtl = false) =>
             MeasureShapedGlyph(ref text, ix, rtl);
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedGlyph<TSource>(ref TSource source, Int32 ix, Boolean rtl = false)
+        public override Size MeasureShapedGlyph<TSource>(ref TSource source, Int32 ix, Boolean rtl = false)
         {
             var sc = source[rtl ? (source.Length - 1) - ix : ix];
             switch (sc.GetSpecialCharacter())
             {
                 case '\n':
-                    return Size2.Zero;
+                    return Size.Empty;
 
                 case '\t':
-                    return new Size2(TabWidth, totalDesignHeight);
+                    return new Size(TabWidth, totalDesignHeight);
 
                 default:
-                    return new Size2(sc.Advance, totalDesignHeight);
+                    return new Size(sc.Advance, totalDesignHeight);
             }
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureGlyphWithHypotheticalKerning(ref StringSegment text, Int32 ix, Int32 c2)
+        public override Size MeasureGlyphWithHypotheticalKerning(ref StringSegment text, Int32 ix, Int32 c2)
         {
             var source = new StringSegmentSource(text);
             return MeasureGlyphWithHypotheticalKerning(ref source, ix, c2);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureGlyphWithHypotheticalKerning<TSource>(ref TSource text, Int32 ix, Int32 c2)
+        public override Size MeasureGlyphWithHypotheticalKerning<TSource>(ref TSource text, Int32 ix, Int32 c2)
         {
             GetUtf32CodePointFromString(ref text, ix, out var c1, out _);
             if (!GetGlyphInfo(c1, false, out var cinfo))
-                return Size2.Zero;
+                return Size.Empty;
 
             var offset = GetKerningInfo((Int32)c1, c2);
-            return new Size2(cinfo.Advance, totalDesignHeight) + offset;
+            return new Size(cinfo.Advance, totalDesignHeight) + offset;
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedGlyphWithHypotheticalKerning<TSource>(ref TSource text, Int32 ix, Int32 glyphIndex2, Boolean rtl = false) =>
-            new Size2(text[rtl ? (text.Length - 1) - ix : ix].Advance, totalDesignHeight);
+        public override Size MeasureShapedGlyphWithHypotheticalKerning<TSource>(ref TSource text, Int32 ix, Int32 glyphIndex2, Boolean rtl = false) =>
+            new Size(text[rtl ? (text.Length - 1) - ix : ix].Advance, totalDesignHeight);
 
         /// <inheritdoc/>
-        public override Size2 MeasureGlyphWithoutKerning(ref StringSegment text, Int32 ix)
+        public override Size MeasureGlyphWithoutKerning(ref StringSegment text, Int32 ix)
         {
             var source = new StringSegmentSource(text);
             return MeasureGlyphWithoutKerning(ref source, ix);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureGlyphWithoutKerning<TSource>(ref TSource text, Int32 ix)
+        public override Size MeasureGlyphWithoutKerning<TSource>(ref TSource text, Int32 ix)
         {
             GetUtf32CodePointFromString(ref text, ix, out var c1, out _);
             if (!GetGlyphInfo(c1, false, out var cinfo))
-                return Size2.Zero;
+                return Size.Empty;
 
-            return new Size2(cinfo.Advance, totalDesignHeight);
+            return new Size(cinfo.Advance, totalDesignHeight);
         }
 
         /// <inheritdoc/>
-        public override Size2 MeasureShapedGlyphWithoutKerning<TSource>(ref TSource text, Int32 ix, Boolean rtl = false) =>
-            new Size2(text[rtl ? (text.Length - 1) - ix : ix].Advance, totalDesignHeight);
+        public override Size MeasureShapedGlyphWithoutKerning<TSource>(ref TSource text, Int32 ix, Boolean rtl = false) =>
+            new Size(text[rtl ? (text.Length - 1) - ix : ix].Advance, totalDesignHeight);
 
         /// <inheritdoc/>
-        public override Size2 GetKerningInfoByGlyphIndex(Int32 glyphIndex1, Int32 glyphIndex2)
+        public override Size GetKerningInfoByGlyphIndex(Int32 glyphIndex1, Int32 glyphIndex2)
         {
             if (face == IntPtr.Zero || !HasKerningInfo)
-                return Size2.Zero;
+                return Size.Empty;
 
             if (Use64BitInterface)
             {
@@ -386,7 +387,7 @@ namespace Sedulous.FreeType2
 
                 var x = FreeTypeCalc.F26Dot6ToInt32(kerning.x);
                 var y = FreeTypeCalc.F26Dot6ToInt32(kerning.y);
-                return new Size2(x, y);
+                return new Size(x, y);
             }
             else
             {
@@ -397,23 +398,23 @@ namespace Sedulous.FreeType2
 
                 var x = FreeTypeCalc.F26Dot6ToInt32(kerning.x);
                 var y = FreeTypeCalc.F26Dot6ToInt32(kerning.y);
-                return new Size2(x, y);
+                return new Size(x, y);
             }
         }
 
         /// <inheritdoc/>
-        public override Size2 GetKerningInfo(Int32 c1, Int32 c2)
+        public override Size GetKerningInfo(Int32 c1, Int32 c2)
         {
             if (face == IntPtr.Zero || !HasKerningInfo)
-                return Size2.Zero;
+                return Size.Empty;
 
             var c1Index = facade.GetCharIndex((UInt32)c1);
             if (c1Index == 0)
-                return Size2.Zero;
+                return Size.Empty;
 
             var c2Index = facade.GetCharIndex((UInt32)c2);
             if (c2Index == 0)
-                return Size2.Zero;
+                return Size.Empty;
 
             if (Use64BitInterface)
             {
@@ -424,7 +425,7 @@ namespace Sedulous.FreeType2
 
                 var x = FreeTypeCalc.F26Dot6ToInt32(kerning.x);
                 var y = FreeTypeCalc.F26Dot6ToInt32(kerning.y);
-                return new Size2(x, y);
+                return new Size(x, y);
             }
             else
             {
@@ -435,19 +436,19 @@ namespace Sedulous.FreeType2
 
                 var x = FreeTypeCalc.F26Dot6ToInt32(kerning.x);
                 var y = FreeTypeCalc.F26Dot6ToInt32(kerning.y);
-                return new Size2(x, y);
+                return new Size(x, y);
             }
         }
 
         /// <inheritdoc/>
-        public override Size2 GetKerningInfo(ref StringSegment text, Int32 ix)
+        public override Size GetKerningInfo(ref StringSegment text, Int32 ix)
         {
             var source = new StringSegmentSource(text);
             return GetKerningInfo(ref source, ix);
         }
 
         /// <inheritdoc/>
-        public override Size2 GetKerningInfo(ref StringSegment text1, Int32 ix1, ref StringSegment text2, Int32 ix2)
+        public override Size GetKerningInfo(ref StringSegment text1, Int32 ix1, ref StringSegment text2, Int32 ix2)
         {
             var source1 = new StringSegmentSource(text1);
             var source2 = new StringSegmentSource(text2);
@@ -455,24 +456,24 @@ namespace Sedulous.FreeType2
         }
 
         /// <inheritdoc/>
-        public override Size2 GetKerningInfo<TSource>(ref TSource text, Int32 ix)
+        public override Size GetKerningInfo<TSource>(ref TSource text, Int32 ix)
         {
             if (ix + 1 >= text.Length)
-                return Size2.Zero;
+                return Size.Empty;
 
             var pos = ix;
             GetUtf32CodePointFromString(ref text, pos, out var c1, out var c1length);
             pos += c1length;
 
             if (pos >= text.Length)
-                return Size2.Zero;
+                return Size.Empty;
 
             GetUtf32CodePointFromString(ref text, pos, out var c2, out _);
             return GetKerningInfo((Int32)c1, (Int32)c2);
         }
 
         /// <inheritdoc/>
-        public override Size2 GetKerningInfo<TSource1, TSource2>(ref TSource1 text1, Int32 ix1, ref TSource2 text2, Int32 ix2)
+        public override Size GetKerningInfo<TSource1, TSource2>(ref TSource1 text1, Int32 ix1, ref TSource2 text2, Int32 ix2)
         {
             var c1 = text1[ix1];
             var c2 = text2[ix2];
@@ -480,27 +481,27 @@ namespace Sedulous.FreeType2
         }
 
         /// <inheritdoc/>
-        public override Size2 GetShapedKerningInfo<TSource>(ref TSource text, Int32 ix) => Size2.Zero;
+        public override Size GetShapedKerningInfo<TSource>(ref TSource text, Int32 ix) => Size.Empty;
 
         /// <inheritdoc/>
-        public override Size2 GetShapedKerningInfo<TSource1, TSource2>(ref TSource1 text1, Int32 ix1, ref TSource2 text2, Int32 ix2, Boolean rtl = false) => Size2.Zero;
+        public override Size GetShapedKerningInfo<TSource1, TSource2>(ref TSource1 text1, Int32 ix1, ref TSource2 text2, Int32 ix2, Boolean rtl = false) => Size.Empty;
 
         /// <inheritdoc/>
-        public override Size2 GetHypotheticalKerningInfo(ref StringSegment text, Int32 ix, Int32 c2)
+        public override Size GetHypotheticalKerningInfo(ref StringSegment text, Int32 ix, Int32 c2)
         {
             var source = new StringSegmentSource(text);
             return GetHypotheticalKerningInfo(ref source, ix, c2);
         }
 
         /// <inheritdoc/>
-        public override Size2 GetHypotheticalKerningInfo<TSource>(ref TSource text, Int32 ix, Int32 c2)
+        public override Size GetHypotheticalKerningInfo<TSource>(ref TSource text, Int32 ix, Int32 c2)
         {
             var c1 = text[ix];
             return GetKerningInfo(c1, c2);
         }
 
         /// <inheritdoc/>
-        public override Size2 GetHypotheticalShapedKerningInfo<TSource>(ref TSource text, Int32 ix, Int32 glyphIndex2, Boolean rtl = false) => Size2.Zero;
+        public override Size GetHypotheticalShapedKerningInfo<TSource>(ref TSource text, Int32 ix, Int32 glyphIndex2, Boolean rtl = false) => Size.Empty;
 
         /// <inheritdoc/>
         public override Boolean ContainsGlyph(Int32 c) =>

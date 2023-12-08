@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Sedulous.Core;
 using Sedulous.Platform;
 
@@ -35,7 +36,7 @@ namespace Sedulous.Graphics
         /// </summary>
         /// <param name="pt">The point in screen space to convert.</param>
         /// <returns>The converted point in window space.</returns>
-        public virtual Point2 PointToWindow(Point2 pt)
+        public virtual Point PointToWindow(Point pt)
         {
             return pt;
         }
@@ -46,9 +47,9 @@ namespace Sedulous.Graphics
         /// <param name="x">The x-coordinate of the point in screen space to convert.</param>
         /// <param name="y">The y-coordinate of the point in screen space to convert.</param>
         /// <returns>The converted point in window space.</returns>
-        public Point2 PointToWindow(Int32 x, Int32 y)
+        public Point PointToWindow(Int32 x, Int32 y)
         {
-            return PointToWindow(new Point2(x, y));
+            return PointToWindow(new Point(x, y));
         }
 
         /// <summary>
@@ -56,7 +57,7 @@ namespace Sedulous.Graphics
         /// </summary>
         /// <param name="pt">The point in window space to convert.</param>
         /// <returns>The converted point in compositor space.</returns>
-        public virtual Point2 WindowToPoint(Point2 pt)
+        public virtual Point WindowToPoint(Point pt)
         {
             return pt;
         }
@@ -67,9 +68,9 @@ namespace Sedulous.Graphics
         /// <param name="x">The x-coordinate of the point in window space to convert.</param>
         /// <param name="y">The y-coordinate of the point in window space to convert.</param>
         /// <returns>The converted point in compositor space.</returns>
-        public Point2 WindowToPoint(Int32 x, Int32 y)
+        public Point WindowToPoint(Int32 x, Int32 y)
         {
-            return WindowToPoint(new Point2(x, y));
+            return WindowToPoint(new Point(x, y));
         }
 
         /// <summary>
@@ -120,7 +121,7 @@ namespace Sedulous.Graphics
         /// <summary>
         /// Gets the current size of the composition buffer.
         /// </summary>
-        public abstract Size2 Size { get; }
+        public abstract Size Size { get; }
 
         /// <summary>
         /// Gets the current width of the composition buffer.

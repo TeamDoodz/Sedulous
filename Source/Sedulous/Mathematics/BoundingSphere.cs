@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using Newtonsoft.Json;
 using Sedulous.Core;
 
@@ -44,7 +45,7 @@ namespace Sedulous
         /// <param name="result">The merged <see cref="BoundingSphere"/> which was created.</param>
         public static void CreateMerged(ref BoundingSphere original, ref BoundingSphere additional, out BoundingSphere result)
         {
-            Vector3.Subtract(ref additional.Center, ref original.Center, out Vector3 offset);
+            Vector3 offset = additional.Center - original.Center;
 
             var distance = offset.Length();
             if (original.Radius + additional.Radius >= distance)
@@ -123,29 +124,29 @@ namespace Sedulous
                     maxZ = point;
             }
 
-            Vector3.Distance(ref minX, ref maxX, out Single diameterX);
-            Vector3.Distance(ref minY, ref maxY, out Single diameterY);
-            Vector3.Distance(ref minZ, ref maxZ, out Single diameterZ);
+            float diameterX = Vector3.Distance(minX, maxX);
+            float diameterY = Vector3.Distance(minY, maxY);
+            float diameterZ = Vector3.Distance(minZ, maxZ);
 
             var center = default(Vector3);
             var radius = default(Single);
 
             if (diameterX > diameterY && diameterX > diameterZ)
             {
-                Vector3.Lerp(ref minX, ref minY, 0.5f, out center);
+                center = Vector3.Lerp(minX, minY, 0.5f);
                 radius = diameterX * 0.5f;
             }
             else
             {
                 if (diameterY > diameterZ)
                 {
-                    Vector3.Lerp(ref minY, ref maxY, 0.5f, out center);
-                    radius = diameterY * 0.5f;
+					center = Vector3.Lerp(minX, minY, 0.5f);
+					radius = diameterY * 0.5f;
                 }
                 else
                 {
-                    Vector3.Lerp(ref minZ, ref maxZ, 0.5f, out center);
-                    radius = diameterZ * 0.5f;
+					center = Vector3.Lerp(minX, minY, 0.5f);
+					radius = diameterZ * 0.5f;
                 }
             }
 
@@ -221,29 +222,29 @@ namespace Sedulous
                     maxZ = point;
             }
 
-            Vector3.Distance(ref minX, ref maxX, out Single diameterX);
-            Vector3.Distance(ref minY, ref maxY, out Single diameterY);
-            Vector3.Distance(ref minZ, ref maxZ, out Single diameterZ);
+			float diameterX = Vector3.Distance(minX, maxX);
+			float diameterY = Vector3.Distance(minY, maxY);
+			float diameterZ = Vector3.Distance(minZ, maxZ);
 
             var center = default(Vector3);
             var radius = default(Single);
             
             if (diameterX > diameterY && diameterX > diameterZ)
             {
-                Vector3.Lerp(ref minX, ref minY, 0.5f, out center);
+                center = Vector3.Lerp(minX, minY, 0.5f);
                 radius = diameterX * 0.5f;
             }
             else
             {
                 if (diameterY > diameterZ)
                 {
-                    Vector3.Lerp(ref minY, ref maxY, 0.5f, out center);
-                    radius = diameterY * 0.5f;
+					center = Vector3.Lerp(minX, minY, 0.5f);
+					radius = diameterY * 0.5f;
                 }
                 else
                 {
-                    Vector3.Lerp(ref minZ, ref maxZ, 0.5f, out center);
-                    radius = diameterZ * 0.5f;
+					center = Vector3.Lerp(minX, minY, 0.5f);
+					radius = diameterZ * 0.5f;
                 }
             }
 
@@ -251,9 +252,9 @@ namespace Sedulous
             {
                 var point = points[i];
 
-                Vector3.Subtract(ref point, ref center, out Vector3 pointRelativeToCenter);
+                Vector3 pointRelativeToCenter = point - center;
 
-                var pointDistanceToCenter = pointRelativeToCenter.Length();
+				var pointDistanceToCenter = pointRelativeToCenter.Length();
                 if (pointDistanceToCenter > radius)
                 {
                     radius = (radius + pointDistanceToCenter) * 0.5f;
@@ -296,7 +297,7 @@ namespace Sedulous
         /// <returns>A <see cref="ContainmentType"/> value representing the relationship between this sphere and the evaluated point.</returns>
         public ContainmentType Contains(Vector3 point)
         {
-            Vector3.DistanceSquared(ref point, ref Center, out Single distanceSquared);
+            float distanceSquared = Vector3.DistanceSquared(point, Center);
             return distanceSquared < Radius * Radius ? ContainmentType.Contains : ContainmentType.Disjoint;
         }
 
@@ -307,8 +308,8 @@ namespace Sedulous
         /// <param name="result">A <see cref="ContainmentType"/> value representing the relationship between this sphere and the evaluated point.</param>
         public void Contains(ref Vector3 point, out ContainmentType result)
         {
-            Vector3.DistanceSquared(ref point, ref Center, out Single distanceSquared);
-            result = distanceSquared < Radius * Radius ? ContainmentType.Contains : ContainmentType.Disjoint;
+			float distanceSquared = Vector3.DistanceSquared(point, Center);
+			result = distanceSquared < Radius * Radius ? ContainmentType.Contains : ContainmentType.Disjoint;
         }
 
         /// <summary>
@@ -367,9 +368,9 @@ namespace Sedulous
         /// <param name="result">A <see cref="ContainmentType"/> value representing the relationship between this sphere and the evaluated sphere.</param>
         public void Contains(ref BoundingSphere sphere, out ContainmentType result)
         {
-            Vector3.DistanceSquared(ref Center, ref sphere.Center, out Single distanceSquared);
+			float distanceSquared = Vector3.DistanceSquared(Center, sphere.Center);
 
-            var combinedRadii = Radius + sphere.Radius;
+			var combinedRadii = Radius + sphere.Radius;
             var combinedRadiiSquared = combinedRadii * combinedRadii;
 
             if (distanceSquared > combinedRadiiSquared)
@@ -490,9 +491,9 @@ namespace Sedulous
         /// <param name="result"><see langword="true"/> if this sphere intersects the evaluated frustum; otherwise, <see langword="false"/>.</param>
         public void Intersects(ref BoundingSphere sphere, out Boolean result)
         {
-            Vector3.DistanceSquared(ref Center, ref sphere.Center, out Single distanceSquared);
+			float distanceSquared = Vector3.DistanceSquared(Center, sphere.Center);
 
-            var combinedRadii = Radius + sphere.Radius;
+			var combinedRadii = Radius + sphere.Radius;
             var combinedRadiiSquared = combinedRadii * combinedRadii;
 
             result = distanceSquared <= combinedRadiiSquared;
@@ -536,7 +537,7 @@ namespace Sedulous
         /// <param name="result"><see langword="true"/> if this sphere intersects the evaluated plane; otherwise, <see langword="false"/>.</param>
         public void Intersects(ref Plane plane, out PlaneIntersectionType result)
         {
-            Vector3.Dot(ref plane.Normal, ref Center, out Single distance);
+            float distance = Vector3.Dot(plane.Normal, Center);
             distance += plane.D;
 
             if (distance > Radius)
@@ -583,7 +584,7 @@ namespace Sedulous
         /// </summary>
         /// <param name="matrix">The transformation matrix to apply to the sphere.</param>
         /// <returns>The transformed <see cref="BoundingSphere"/> that was created.</returns>
-        public BoundingSphere Transform(Matrix matrix)
+        public BoundingSphere Transform(Matrix4x4 matrix)
         {
             var result = new BoundingSphere()
             {
@@ -603,7 +604,7 @@ namespace Sedulous
         /// </summary>
         /// <param name="matrix">The transformation matrix to apply to the sphere.</param>
         /// <param name="result">The transformed <see cref="BoundingSphere"/> that was created.</param>
-        public void Transform(ref Matrix matrix, out BoundingSphere result)
+        public void Transform(ref Matrix4x4 matrix, out BoundingSphere result)
         {
             result = new BoundingSphere()
             {

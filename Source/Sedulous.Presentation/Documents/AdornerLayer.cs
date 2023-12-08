@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Sedulous.Core;
 using Sedulous.Presentation.Media;
 
@@ -245,7 +246,7 @@ namespace Sedulous.Presentation.Documents
 
                 if (!IsUnderTransform(adornedElement))
                 {
-                    transformMatrix = new Matrix(
+                    transformMatrix = new Matrix4x4(
                                transformMatrix.M11,        transformMatrix.M12,        transformMatrix.M13, transformMatrix.M14,
                                transformMatrix.M21,        transformMatrix.M22,        transformMatrix.M23, transformMatrix.M24,
                                transformMatrix.M31,        transformMatrix.M32,        transformMatrix.M33, transformMatrix.M34,
@@ -337,7 +338,7 @@ namespace Sedulous.Presentation.Documents
                     else
                     {
                         var transformMatrix = adornedElement.GetTransformToAncestorMatrix(layerParent);
-                        if (!state.LastTransform.EqualsRef(ref transformMatrix))
+                        if (!state.LastTransform.Equals(transformMatrix))
                         {
                             invalidateAdorner = true;
                         }

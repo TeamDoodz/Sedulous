@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Sedulous.Core;
 
 namespace Sedulous.Graphics.Graphics3D
@@ -43,7 +44,7 @@ namespace Sedulous.Graphics.Graphics3D
             this.rotation = Quaternion.Identity;
             this.scale = Vector3.One;
             this.translation = Vector3.Zero;
-            this.matrix = Matrix.Identity;
+            this.matrix = Matrix4x4.Identity;
         }
 
         /// <summary>
@@ -66,9 +67,9 @@ namespace Sedulous.Graphics.Graphics3D
         /// described by the specified matrix.
         /// </summary>
         /// <param name="transform">An affine transformation matrix.</param>
-        public void UpdateFromMatrix(in Matrix transform)
+        public void UpdateFromMatrix(in Matrix4x4 transform)
         {
-            if (!transform.Decompose(out this.scale, out this.rotation, out this.translation))
+            if (!Matrix4x4.Decompose(transform, out this.scale, out this.rotation, out this.translation))
                 throw new ArgumentException(FrameworkStrings.NonAffineTransformationMatrix);
 
             this.matrix = transform;
@@ -89,17 +90,17 @@ namespace Sedulous.Graphics.Graphics3D
             this.matrix = transform.matrix;
         }
 
-        /// <summary>
-        /// Calculates the <see cref="Matrix"/> which represents this transformation.
-        /// </summary>
-        /// <param name="matrix">The matrix which represents this transformation.</param>
-        public void AsMatrix(out Matrix matrix)
+		/// <summary>
+		/// Calculates the <see cref="Matrix4x4"/> which represents this transformation.
+		/// </summary>
+		/// <param name="matrix">The matrix which represents this transformation.</param>
+		public void AsMatrix(out Matrix4x4 matrix)
         {
             if (!this.matrix.HasValue)
             {
-                Matrix.CreateScale(ref this.scale, out var matScale);
-                Matrix.CreateFromQuaternion(ref this.rotation, out var matRotation);
-                Matrix.Multiply(ref matScale, ref matRotation, out var matResult);
+				Matrix4x4 matScale = Matrix4x4.CreateScale(this.scale);
+				Matrix4x4 matRotation = Matrix4x4.CreateFromQuaternion(this.rotation);
+                Matrix4x4 matResult = matScale * matRotation;
                 matResult.Translation = Translation;
                 this.matrix = matResult;
             }
@@ -169,6 +170,6 @@ namespace Sedulous.Graphics.Graphics3D
         private Quaternion rotation;
         private Vector3 scale;
         private Vector3 translation;
-        private Matrix? matrix;
+        private Matrix4x4? matrix;
     }
 }

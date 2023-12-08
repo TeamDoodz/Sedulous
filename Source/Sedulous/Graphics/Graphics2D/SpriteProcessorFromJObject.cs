@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
@@ -67,7 +68,7 @@ namespace Sedulous.Graphics.Graphics2D
                                 frameGroupDefaults?.Height ?? animFrameGroupDefaults?.Height ?? spriteFrameGroupDefaults?.Height ?? 0;
 
                             frameGroup.Origin = frameGroup.Origin ??
-                                frameGroupDefaults?.Origin ?? animFrameGroupDefaults?.Origin ?? spriteFrameGroupDefaults?.Origin ?? Point2.Zero;
+                                frameGroupDefaults?.Origin ?? animFrameGroupDefaults?.Origin ?? spriteFrameGroupDefaults?.Origin ?? Point.Empty;
 
                             frameGroup.FrameCount = frameGroup.FrameCount ??
                                 frameGroupDefaults?.FrameCount ?? animFrameGroupDefaults?.FrameCount ?? spriteFrameGroupDefaults.FrameCount ?? 0;
@@ -111,7 +112,7 @@ namespace Sedulous.Graphics.Graphics2D
                                 frameDefaults?.Height ?? animFrameDefaults?.Height ?? spriteFrameDefaults?.Height ?? 0;
 
                             frame.Origin = frame.Origin ??
-                                frameDefaults?.Origin ?? animFrameDefaults?.Origin ?? spriteFrameDefaults?.Origin ?? Point2.Zero;
+                                frameDefaults?.Origin ?? animFrameDefaults?.Origin ?? spriteFrameDefaults?.Origin ?? Point.Empty;
 
                             frame.Duration = frame.Duration ??
                                 frameDefaults?.Duration ?? animFrameDefaults?.Duration ?? spriteFrameDefaults?.Duration ?? 0;

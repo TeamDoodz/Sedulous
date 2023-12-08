@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Threading.Tasks;
 using Sedulous.Content;
 using Sedulous.Core;
@@ -165,7 +166,7 @@ namespace Sedulous.UI
         /// <summary>
         /// Gets the panel's size in pixels.
         /// </summary>
-        public abstract Size2 Size
+        public abstract Size Size
         {
             get;
         }
@@ -602,7 +603,7 @@ namespace Sedulous.UI
         /// <summary>
         /// Gets the size of the panel's current window.
         /// </summary>
-        protected Size2 WindowSize => window?.Compositor.Size ?? Size2.Zero;
+        protected Size WindowSize => window?.Compositor.Size ?? Size.Empty;
 
         /// <summary>
         /// Gets the width of the panel's current window.

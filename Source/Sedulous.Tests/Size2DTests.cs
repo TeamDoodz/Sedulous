@@ -65,45 +65,6 @@ namespace Sedulous.Tests
             TheResultingValue(size1.Equals(size3)).ShouldBe(false);
             TheResultingValue(size1.Equals(size4)).ShouldBe(false);
         }
-
-        [Test]
-        public void Size2D_TryParse_SucceedsForValidStrings()
-        {
-            var str    = "123.45 456.78";
-            var result = default(Size2D);
-            if (!Size2D.TryParse(str, out result))
-                throw new InvalidOperationException("Unable to parse string to Size2D.");
-
-            TheResultingValue(result)
-                .ShouldBe(123.45, 456.78);
-        }
-
-        [Test]
-        public void Size2D_TryParse_FailsForInvalidStrings()
-        {
-            var result    = default(Size2D);
-            var succeeded = Size2D.TryParse("foo", out result);
-
-            TheResultingValue(succeeded)
-                .ShouldBe(false);
-        }
-
-        [Test]
-        public void Size2D_Parse_SucceedsForValidStrings()
-        {
-            var str    = "123.45 456.78";
-            var result = Size2D.Parse(str);
-
-            TheResultingValue(result)
-                .ShouldBe(123.45, 456.78);
-        }
-
-        [Test]
-        public void Size2D_Parse_FailsForInvalidStrings()
-        {
-            Assert.That(() => Size2D.Parse("foo"),
-                Throws.TypeOf<FormatException>());
-        }
         
         [Test]
         public void Size2D_Area_IsCalculatedCorrectly()

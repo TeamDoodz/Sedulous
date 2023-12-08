@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using NUnit.Framework;
 using Sedulous.FreeType2;
 using Sedulous.Graphics;
@@ -577,8 +579,8 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                 "The |i|quick|i| brown |i|fox|i|\njumps over the |b||i|lazy dog|i||b|");
 
             var glyphPositions = shaped ?
-                new[] { new Point2(7, 6), new Point2(37, 13), new Point2(73, 35), new Point2(46, 69), new Point2(122, 91) } :
-                new[] { new Point2(7, 6), new Point2(49, 10), new Point2(88, 33), new Point2(55, 55), new Point2(146, 77) };
+                new[] { new Point(7, 6), new Point(37, 13), new Point(73, 35), new Point(46, 69), new Point(122, 91) } :
+                new[] { new Point(7, 6), new Point(49, 10), new Point(88, 33), new Point(55, 55), new Point(146, 77) };
 
             var glyphIndices = new Int32?[glyphPositions.Length];
             var glyphLines = new Int32?[glyphPositions.Length];
@@ -655,8 +657,8 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                 "The |i|quick|i| brown |i|fox|i|\njumps over the |b||i|lazy dog|i||b|");
 
             var glyphPositions = shaped ?
-                new[] { new Point2(169, 32), new Point2(178, 122), new Point2(472, 8), new Point2(114, 203), new Point2(391, 217) } :
-                new[] { new Point2(169, 32), new Point2(178, 122), new Point2(472, 8), new Point2(114, 203), new Point2(391, 217) };
+                new[] { new Point(169, 32), new Point(178, 122), new Point(472, 8), new Point(114, 203), new Point(391, 217) } :
+                new[] { new Point(169, 32), new Point(178, 122), new Point(472, 8), new Point(114, 203), new Point(391, 217) };
 
             var glyphIndices = new Int32?[glyphPositions.Length];
             var glyphLines = new Int32?[glyphPositions.Length];
@@ -1229,7 +1231,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                         "Links can be |link:visited|visisted|link| if you've already clicked them.\n" +
                         "Links can be |link:active|active even if they\ncross multiple lines|link| if the cursor is clicking them.", textStream, settings);
                     
-                    textRenderer.UpdateCursor(textStream, new Point2(236, 191));
+                    textRenderer.UpdateCursor(textStream, new Point(236, 191));
                     textRenderer.ActivateLinkAtCursor(textStream);
 
                     textRenderer.Draw(spriteBatch, textStream, Vector2.Zero, Color.White);
@@ -1295,7 +1297,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                         "Links can be |link:visited|visisted|link| if you've already clicked them.\n" +
                         "Links can be |link:active|active even if they\ncross multiple lines|link| if the cursor is clicking them.", textStream, settings);
 
-                    textRenderer.UpdateCursor(textStream, new Point2(236, 191));
+                    textRenderer.UpdateCursor(textStream, new Point(236, 191));
                     textRenderer.ActivateLinkAtCursor(textStream);
 
                     textRenderer.Draw(spriteBatch, textStream, Vector2.Zero, Color.White);

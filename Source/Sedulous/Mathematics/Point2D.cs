@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Numerics;
 using Newtonsoft.Json;
 
 namespace Sedulous
@@ -59,7 +61,7 @@ namespace Sedulous
         /// <param name="point">The <see cref="Point2D"/> to offset.</param>
         /// <param name="offset">The <see cref="Size2D"/> that specifies how much to offset <paramref name="point"/>.</param>
         /// <returns>A <see cref="Point2D"/> that represents the original point plus the specified offset.</returns>
-        public static Point2D operator +(Point2D point, Size2 offset)
+        public static Point2D operator +(Point2D point, Size offset)
         {
             Point2D result;
 
@@ -73,9 +75,9 @@ namespace Sedulous
         /// Offsets a point by subtracting the specified size.
         /// </summary>
         /// <param name="point">The <see cref="Point2D"/> to offset.</param>
-        /// <param name="offset">The <see cref="Size2"/> that specifies how much to offset <paramref name="point"/>.</param>
+        /// <param name="offset">The <see cref="Size"/> that specifies how much to offset <paramref name="point"/>.</param>
         /// <returns>A <see cref="Point2D"/> that represents the original point plus the specified offset.</returns>
-        public static Point2D operator -(Point2D point, Size2 offset)
+        public static Point2D operator -(Point2D point, Size offset)
         {
             Point2D result;
 
@@ -89,11 +91,11 @@ namespace Sedulous
         /// Offsets a point by adding the specified size.
         /// </summary>
         /// <param name="point">The <see cref="Point2D"/> to offset.</param>
-        /// <param name="offset">The <see cref="Size2F"/> that specifies how much to offset <paramref name="point"/>.</param>
+        /// <param name="offset">The <see cref="SizeF"/> that specifies how much to offset <paramref name="point"/>.</param>
         /// <returns>A <see cref="Point2D"/> that represents the original point plus the specified offset.</returns>
-        public static Point2D operator +(Point2D point, Size2F offset)
+        public static Point2D operator +(Point2D point, SizeF offset)
         {
-            Point2D result;
+            Point2D result = new();
 
             result.X = point.X + offset.Width;
             result.Y = point.Y + offset.Height;
@@ -105,9 +107,9 @@ namespace Sedulous
         /// Offsets a point by subtracting the specified size.
         /// </summary>
         /// <param name="point">The <see cref="Point2D"/> to offset.</param>
-        /// <param name="offset">The <see cref="Size2F"/> that specifies how much to offset <paramref name="point"/>.</param>
+        /// <param name="offset">The <see cref="SizeF"/> that specifies how much to offset <paramref name="point"/>.</param>
         /// <returns>A <see cref="Point2D"/> that represents the original point plus the specified offset.</returns>
-        public static Point2D operator -(Point2D point, Size2F offset)
+        public static Point2D operator -(Point2D point, SizeF offset)
         {
             Point2D result;
 
@@ -121,7 +123,7 @@ namespace Sedulous
         /// Offsets a point by adding the specified size.
         /// </summary>
         /// <param name="point">The <see cref="Point2D"/> to offset.</param>
-        /// <param name="offset">The <see cref="Size2"/> that specifies how much to offset <paramref name="point"/>.</param>
+        /// <param name="offset">The <see cref="Size"/> that specifies how much to offset <paramref name="point"/>.</param>
         /// <returns>A <see cref="Point2D"/> that represents the original point plus the specified offset.</returns>
         public static Point2D operator +(Point2D point, Size2D offset)
         {
@@ -261,13 +263,13 @@ namespace Sedulous
         }
 
         /// <summary>
-        /// Explicitly converts a <see cref="Point2D"/> structure to a <see cref="Size2"/> structure.
+        /// Explicitly converts a <see cref="Point2D"/> structure to a <see cref="Size"/> structure.
         /// </summary>
         /// <param name="point">The structure to convert.</param>
         /// <returns>The converted structure.</returns>
-        public static explicit operator Size2(Point2D point)
+        public static explicit operator Size(Point2D point)
         {
-            Size2 result;
+            Size result = new();
 
             result.Width = (Int32)point.X;
             result.Height = (Int32)point.Y;
@@ -276,13 +278,13 @@ namespace Sedulous
         }
 
         /// <summary>
-        /// Explicitly converts a <see cref="Point2D"/> structure to a <see cref="Size2F"/> structure.
+        /// Explicitly converts a <see cref="Point2D"/> structure to a <see cref="SizeF"/> structure.
         /// </summary>
         /// <param name="point">The structure to convert.</param>
         /// <returns>The converted structure.</returns>
-        public static explicit operator Size2F(Point2D point)
+        public static explicit operator SizeF(Point2D point)
         {
-            Size2F result;
+            SizeF result = new();
 
             result.Width = (Single)point.X;
             result.Height = (Single)point.Y;
@@ -306,13 +308,13 @@ namespace Sedulous
         }
 
         /// <summary>
-        /// Explicitly converts a <see cref="Point2D"/> structure to a <see cref="Point2"/> structure.
+        /// Explicitly converts a <see cref="Point2D"/> structure to a <see cref="Point"/> structure.
         /// </summary>
         /// <param name="point">The structure to convert.</param>
         /// <returns>The converted structure.</returns>
-        public static explicit operator Point2(Point2D point)
+        public static explicit operator Point(Point2D point)
         {
-            Point2 result;
+            Point result = new();
 
             result.X = (Int32)point.X;
             result.Y = (Int32)point.Y;
@@ -321,13 +323,13 @@ namespace Sedulous
         }
 
         /// <summary>
-        /// Explicitly converts a <see cref="Point2D"/> structure to a <see cref="Point2F"/> structure.
+        /// Explicitly converts a <see cref="Point2D"/> structure to a <see cref="PointF"/> structure.
         /// </summary>
         /// <param name="point">The structure to convert.</param>
         /// <returns>The converted structure.</returns>
-        public static explicit operator Point2F(Point2D point)
+        public static explicit operator PointF(Point2D point)
         {
-            Point2F result;
+            PointF result = new();
 
             result.X = (Single)point.X;
             result.Y = (Single)point.Y;
@@ -393,7 +395,7 @@ namespace Sedulous
         /// <param name="point">The <see cref="Point2D"/> to transform.</param>
         /// <param name="matrix">The matrix by which to transform the point.</param>
         /// <returns>The transformed <see cref="Point2D"/>.</returns>
-        public static Point2D Transform(Point2D point, Matrix matrix)
+        public static Point2D Transform(Point2D point, Matrix4x4 matrix)
         {
             Point2D result;
 
@@ -409,7 +411,7 @@ namespace Sedulous
         /// <param name="point">The <see cref="Point2D"/> to transform.</param>
         /// <param name="matrix">The matrix by which to transform the point.</param>
         /// <param name="result">The transformed <see cref="Point2D"/>.</param>
-        public static void Transform(ref Point2D point, ref Matrix matrix, out Point2D result)
+        public static void Transform(ref Point2D point, ref Matrix4x4 matrix, out Point2D result)
         {
             Point2D temp;
 

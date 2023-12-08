@@ -1,4 +1,5 @@
-﻿using Sedulous.Platform;
+﻿using System.Numerics;
+using Sedulous.Platform;
 
 namespace Sedulous.Graphics
 {
@@ -28,18 +29,18 @@ namespace Sedulous.Graphics
         /// Gets the camera's view matrix.
         /// </summary>
         /// <param name="matrix">The resulting matrix.</param>
-        public abstract void GetViewMatrix(out Matrix matrix);
+        public abstract void GetViewMatrix(out Matrix4x4 matrix);
 
         /// <summary>
         /// Gets the camera's projection matrix.
         /// </summary>
         /// <param name="matrix">The resulting matrix.</param>
-        public abstract void GetProjectionMatrix(out Matrix matrix);
+        public abstract void GetProjectionMatrix(out Matrix4x4 matrix);
 
         /// <summary>
         /// Gets the camera's combined view-projection matrix.
         /// </summary>
         /// <param name="matrix">The resulting matrix.</param>
-        public abstract void GetViewProjectionMatrix(out Matrix matrix);
+        public abstract void GetViewProjectionMatrix(out Matrix4x4 matrix);
     }
 }
