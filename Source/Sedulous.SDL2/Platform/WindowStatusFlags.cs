@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sedulous.SDL2.Platform
+namespace Sedulous.Sdl2.Platform
 {
     /// <summary>
     /// Represents flags which can be applied to a window in order to track various states.

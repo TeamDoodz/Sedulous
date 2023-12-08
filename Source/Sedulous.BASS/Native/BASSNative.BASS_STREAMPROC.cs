@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sedulous.BASS.Native
+namespace Sedulous.Bass.Native
 {
 #pragma warning disable 1591
     public delegate UInt32 StreamProc(UInt32 handle, IntPtr buffer, UInt32 length, IntPtr user);

@@ -2,17 +2,17 @@
 using Sedulous.Core;
 using Sedulous.Core.Messages;
 using Sedulous.Input;
-using Sedulous.SDL2.Messages;
-using static Sedulous.SDL2.Native.SDL_EventType;
-using static Sedulous.SDL2.Native.SDLNative;
+using Sedulous.Sdl2.Messages;
+using static Sedulous.Sdl2.Native.SDL_EventType;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2.Input
+namespace Sedulous.Sdl2.Input
 {
     /// <summary>
     /// Manages the Sedulous context's connected game pad devices.
     /// </summary>
     internal sealed class GamePadDeviceInfo : FrameworkResource,
-        IMessageSubscriber<FrameworkMessageID>
+        IMessageSubscriber<FrameworkMessageId>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GamePadDeviceInfo"/> class.
@@ -21,7 +21,7 @@ namespace Sedulous.SDL2.Input
         public GamePadDeviceInfo(FrameworkContext context)
             : base(context)
         {
-            this.devicesByPlayer = new SDL2GamePadDevice[SDL_NumJoysticks()];
+            this.devicesByPlayer = new Sdl2GamePadDevice[SDL_NumJoysticks()];
 
             for (int i = 0; i < this.devicesByPlayer.Length; i++)
             {
@@ -32,16 +32,16 @@ namespace Sedulous.SDL2.Input
             }
 
             context.Messages.Subscribe(this,
-                SDL2FrameworkMessages.SDLEvent);
+                Sdl2FrameworkMessages.SdlEvent);
         }
 
         /// <inheritdoc/>
-        void IMessageSubscriber<FrameworkMessageID>.ReceiveMessage(FrameworkMessageID type, MessageData data)
+        void IMessageSubscriber<FrameworkMessageId>.ReceiveMessage(FrameworkMessageId type, MessageData data)
         {
-            if (type != SDL2FrameworkMessages.SDLEvent)
+            if (type != Sdl2FrameworkMessages.SdlEvent)
                 return;
 
-            var evt = ((SDL2EventMessageData)data).Event;
+            var evt = ((Sdl2EventMessageData)data).Event;
             switch (evt.type)
             {
                 case SDL_CONTROLLERDEVICEADDED:
@@ -92,7 +92,7 @@ namespace Sedulous.SDL2.Input
         /// </summary>
         /// <param name="playerIndex">The index of the player for which to retrieve a game pad.</param>
         /// <returns>The game pad that belongs to the specified player, or <see langword="null"/> if no such game pad exists.</returns>
-        public SDL2GamePadDevice GetGamePadForPlayer(Int32 playerIndex)
+        public Sdl2GamePadDevice GetGamePadForPlayer(Int32 playerIndex)
         {
             Contract.EnsureRange(playerIndex >= 0, nameof(playerIndex));
             Contract.EnsureNotDisposed(this, Disposed);
@@ -104,7 +104,7 @@ namespace Sedulous.SDL2.Input
         /// Gets the first connected game pad device.
         /// </summary>
         /// <returns>The first connected game pad device, or <see langword="null"/> if no game pads are connected.</returns>
-        public SDL2GamePadDevice GetFirstConnectedGamePad()
+        public Sdl2GamePadDevice GetFirstConnectedGamePad()
         {
             Contract.EnsureNotDisposed(this, Disposed);
 
@@ -122,7 +122,7 @@ namespace Sedulous.SDL2.Input
         /// Gets the first registered game pad device.
         /// </summary>
         /// <returns>The first registered game pad device, or <see langword="null"/> if no game pads are registered.</returns>
-        public SDL2GamePadDevice GetFirstRegisteredGamePad()
+        public Sdl2GamePadDevice GetFirstRegisteredGamePad()
         {
             Contract.EnsureNotDisposed(this, Disposed);
 
@@ -186,7 +186,7 @@ namespace Sedulous.SDL2.Input
             }
 
             var playerIndex = GetFirstAvailablePlayerIndex();
-            var device = new SDL2GamePadDevice(FrameworkContext, joystickIndex, playerIndex);
+            var device = new Sdl2GamePadDevice(FrameworkContext, joystickIndex, playerIndex);
 
             devicesByPlayer[playerIndex] = device;
             count++;
@@ -246,7 +246,7 @@ namespace Sedulous.SDL2.Input
             }
         
             var devicesOld = devicesByPlayer;
-            var devicesNew = new SDL2GamePadDevice[devicesOld.Length + 1];
+            var devicesNew = new Sdl2GamePadDevice[devicesOld.Length + 1];
             Array.Copy(devicesOld, devicesNew, devicesOld.Length);
 
             devicesByPlayer = devicesNew;
@@ -255,7 +255,7 @@ namespace Sedulous.SDL2.Input
         }
 
         // State values.
-        private SDL2GamePadDevice[] devicesByPlayer;
+        private Sdl2GamePadDevice[] devicesByPlayer;
         private Int32 count;
     }
 }

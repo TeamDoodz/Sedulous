@@ -2,7 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using Sedulous.Core;
 
-namespace Sedulous.BASS.Native
+namespace Sedulous.Bass.Native
 {
 #pragma warning disable 1591
     public static unsafe partial class BASSNative

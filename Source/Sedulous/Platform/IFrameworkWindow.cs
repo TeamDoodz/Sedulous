@@ -116,7 +116,7 @@ namespace Sedulous.Platform
         /// <summary>
         /// Gets the window's identifier within its windowing system.
         /// </summary>
-        Int32 ID
+        Int32 Id
         {
             get;
         }

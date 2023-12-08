@@ -85,7 +85,7 @@ namespace Sedulous.ImGuiViewProvider.Bindings
         {
             ImGuiNative.ImDrawList_PathBezierCurveTo(NativePtr, p1, p2, p3, num_segments);
         }
-        public void UpdateTextureID()
+        public void UpdateTextureId()
         {
             ImGuiNative.ImDrawList_UpdateTextureID(NativePtr);
         }

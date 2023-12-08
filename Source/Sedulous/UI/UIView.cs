@@ -138,7 +138,7 @@ namespace Sedulous.UI
         /// <typeparam name="TOutput">The type of object being loaded.</typeparam>
         /// <param name="asset">The identifier of the asset to load.</param>
         /// <returns>The asset that was loaded.</returns>
-        public TOutput LoadGlobalContent<TOutput>(AssetID asset)
+        public TOutput LoadGlobalContent<TOutput>(AssetId asset)
         {
             if (!asset.IsValid)
                 return default(TOutput);
@@ -154,7 +154,7 @@ namespace Sedulous.UI
         /// <typeparam name="TOutput">The type of object being loaded.</typeparam>
         /// <param name="asset">The identifier of the asset to load.</param>
         /// <returns>The asset that was loaded.</returns>
-        public TOutput LoadLocalContent<TOutput>(AssetID asset)
+        public TOutput LoadLocalContent<TOutput>(AssetId asset)
         {
             if (!asset.IsValid)
                 return default(TOutput);
@@ -169,7 +169,7 @@ namespace Sedulous.UI
         /// </summary>
         /// <param name="animation">The identifier of the animation to load.</param>
         /// <returns>The animation that was loaded.</returns>
-        public SpriteAnimation LoadGlobalContent(SpriteAnimationID animation)
+        public SpriteAnimation LoadGlobalContent(SpriteAnimationId animation)
         {
             if (!animation.IsValid || globalContent == null)
                 return null;
@@ -184,7 +184,7 @@ namespace Sedulous.UI
         /// </summary>
         /// <param name="animation">The identifier of the animation to load.</param>
         /// <returns>The animation that was loaded.</returns>
-        public SpriteAnimation LoadLocalContent(SpriteAnimationID animation)
+        public SpriteAnimation LoadLocalContent(SpriteAnimationId animation)
         {
             if (!animation.IsValid || localContent == null)
                 return null;

@@ -66,7 +66,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the internal identifier of the finger which caused the touch event.
         /// </summary>
-        public Int64 FingerID
+        public Int64 FingerId
         {
             get { return fingerID; }
             internal set { fingerID = value; }

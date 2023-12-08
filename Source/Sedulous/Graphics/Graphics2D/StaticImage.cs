@@ -21,7 +21,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// </summary>
         /// <param name="texture">The asset identifier of the texture that contains the image.</param>
         /// <returns>The new instance of <see cref="StaticImage"/> that was created.</returns>
-        public static StaticImage Create(AssetID texture)
+        public static StaticImage Create(AssetId texture)
         {
             return Create(texture, 0, 0, 0, 0);
         }
@@ -35,10 +35,10 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="width">The width of the region on the image's texture that contains the image.</param>
         /// <param name="height">The height of the region on the image's texture that contains the image.</param>
         /// <returns>The new instance of <see cref="StaticImage"/> that was created.</returns>
-        public static StaticImage Create(AssetID texture, Int32 x, Int32 y, Int32 width, Int32 height)
+        public static StaticImage Create(AssetId texture, Int32 x, Int32 y, Int32 width, Int32 height)
         {
             var img           = new StaticImage();
-            img.TextureID     = texture;
+            img.TextureId     = texture;
             img.TextureRegion = new Rectangle(x, y, width, height);
             return img;
         }
@@ -49,7 +49,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="texture">The asset identifier of the texture that contains the image.</param>
         /// <param name="textureRegion">The region of the image's texture which contains the image.</param>
         /// <returns>The new instance of <see cref="StaticImage"/> that was created.</returns>
-        public static StaticImage Create(AssetID texture, Rectangle textureRegion)
+        public static StaticImage Create(AssetId texture, Rectangle textureRegion)
         {
             return Create(texture, textureRegion.X, textureRegion.Y, textureRegion.Width, textureRegion.Height);
         }

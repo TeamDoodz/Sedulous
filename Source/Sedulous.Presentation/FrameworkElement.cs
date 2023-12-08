@@ -905,8 +905,8 @@ namespace Sedulous.Presentation
                 var arrangedSizeAfterLayoutTransform =
                     CalculateMaximumAvailableSizeBeforeLayoutTransform(desiredWidth, desiredHeight, layoutTransformUsedDuringLayout);
 
-                if (MathUtil.IsApproximatelyGreaterThanOrEqual(arrangedSizeAfterLayoutTransform.Width, layoutTransformSizeDesiredBeforeTransform.Width) &&
-                    MathUtil.IsApproximatelyGreaterThanOrEqual(arrangedSizeAfterLayoutTransform.Height, layoutTransformSizeDesiredBeforeTransform.Height))
+                if (MathUtility.IsApproximatelyGreaterThanOrEqual(arrangedSizeAfterLayoutTransform.Width, layoutTransformSizeDesiredBeforeTransform.Width) &&
+                    MathUtility.IsApproximatelyGreaterThanOrEqual(arrangedSizeAfterLayoutTransform.Height, layoutTransformSizeDesiredBeforeTransform.Height))
                 {
                     desiredWidth = arrangedSizeAfterLayoutTransform.Width;
                     desiredHeight = arrangedSizeAfterLayoutTransform.Height;
@@ -1241,7 +1241,7 @@ namespace Sedulous.Presentation
             xmax = Double.IsInfinity(xmax) ? ymax : xmax;
             ymax = Double.IsInfinity(ymax) ? xmax : ymax;
 
-            if (MathUtil.IsApproximatelyZero(xmax) || MathUtil.IsApproximatelyZero(ymax) || MathUtil.IsApproximatelyZero(transform.Determinant()))
+            if (MathUtility.IsApproximatelyZero(xmax) || MathUtility.IsApproximatelyZero(ymax) || MathUtility.IsApproximatelyZero(transform.Determinant()))
                 return Size2D.Zero;
             
             var m11 = transform.M11;
@@ -1252,10 +1252,10 @@ namespace Sedulous.Presentation
             var w = 0.0;
             var h = 0.0;
 
-            var xConstraintInterceptW = MathUtil.IsApproximatelyZero(m11) ? Double.NaN : Math.Abs(xmax / m11);
-            var xConstraintInterceptH = MathUtil.IsApproximatelyZero(m21) ? Double.NaN : Math.Abs(xmax / m21);
-            var yConstraintInterceptW = MathUtil.IsApproximatelyZero(m12) ? Double.NaN : Math.Abs(ymax / m12);
-            var yConstraintInterceptH = MathUtil.IsApproximatelyZero(m22) ? Double.NaN : Math.Abs(ymax / m22);
+            var xConstraintInterceptW = MathUtility.IsApproximatelyZero(m11) ? Double.NaN : Math.Abs(xmax / m11);
+            var xConstraintInterceptH = MathUtility.IsApproximatelyZero(m21) ? Double.NaN : Math.Abs(xmax / m21);
+            var yConstraintInterceptW = MathUtility.IsApproximatelyZero(m12) ? Double.NaN : Math.Abs(ymax / m12);
+            var yConstraintInterceptH = MathUtility.IsApproximatelyZero(m22) ? Double.NaN : Math.Abs(ymax / m22);
 
             var xConstraintIsHorz = Double.IsNaN(xConstraintInterceptW);
             var xConstraintIsVert = Double.IsNaN(xConstraintInterceptH);
@@ -1305,7 +1305,7 @@ namespace Sedulous.Presentation
             var constraintXSlope = xConstraintInterceptH / xConstraintInterceptW;
             var constraintYSlope = yConstraintInterceptH / xConstraintInterceptW;
 
-            var constraintLinesCross = !MathUtil.AreApproximatelyEqual(constraintXSlope, constraintYSlope);
+            var constraintLinesCross = !MathUtility.AreApproximatelyEqual(constraintXSlope, constraintYSlope);
             if (constraintLinesCross)
             {
                 RectangleD area = new RectangleD(0, 0, w, h);

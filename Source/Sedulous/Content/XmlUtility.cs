@@ -8,7 +8,7 @@ namespace Sedulous.Content
     /// <summary>
     /// Contains utility methods for handling XML files.
     /// </summary>
-    public static class XmlUtil
+    public static class XmlUtility
     {
         /// <summary>
         /// Loads the XML document from the specified stream.

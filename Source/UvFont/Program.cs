@@ -450,8 +450,8 @@ namespace UvFont
 
         private static Bitmap GenerateCombinedTexture(IEnumerable<FontFaceInfo> faces, Size size)
         {
-            var widthPowerOfTwo = MathUtil.FindNextPowerOfTwo(size.Width);
-            var heightPowerOfTwo = MathUtil.FindNextPowerOfTwo(size.Height);
+            var widthPowerOfTwo = MathUtility.FindNextPowerOfTwo(size.Width);
+            var heightPowerOfTwo = MathUtility.FindNextPowerOfTwo(size.Height);
             var output = new Bitmap(widthPowerOfTwo, heightPowerOfTwo);
 
             var x = 0;

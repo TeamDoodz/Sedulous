@@ -1,12 +1,12 @@
 ﻿using Sedulous.Core.Messages;
-using Sedulous.SDL2.Native;
+using Sedulous.Sdl2.Native;
 
-namespace Sedulous.SDL2.Messages
+namespace Sedulous.Sdl2.Messages
 {
     /// <summary>
     /// Represents the message data for an SDL2Event message.
     /// </summary>
-    public sealed class SDL2EventMessageData : MessageData
+    public sealed class Sdl2EventMessageData : MessageData
     {
         /// <summary>
         /// Gets or sets the SDL event data.

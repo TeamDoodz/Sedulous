@@ -247,7 +247,7 @@ namespace Sedulous.Core.Data
                     if (!ValidateObject(obj, out error))
                     {
                         throw new InvalidOperationException(
-                            CoreStrings.DataObjectFailedValidation.Format(typeof(T).Name, obj.GlobalID, error));
+                            CoreStrings.DataObjectFailedValidation.Format(typeof(T).Name, obj.GlobalId, error));
                     }
                 }
 
@@ -362,9 +362,9 @@ namespace Sedulous.Core.Data
                 foreach (var item in description.Items)
                 {
                     if (item.Key == null || keys.ContainsKey(item.Key))
-                        throw new InvalidOperationException(CoreStrings.DataObjectInvalidKey.Format(item.Key ?? "(null)", item.ID));
+                        throw new InvalidOperationException(CoreStrings.DataObjectInvalidKey.Format(item.Key ?? "(null)", item.Id));
 
-                    keys[item.Key] = item.ID;
+                    keys[item.Key] = item.Id;
                 }
             }
         }
@@ -380,16 +380,16 @@ namespace Sedulous.Core.Data
             if (index > UInt16.MaxValue)
                 throw new InvalidOperationException(CoreStrings.DataObjectRegistryCapacityExceeded);
 
-            if (objectsByGlobalID.ContainsKey(obj.GlobalID))
-                throw new InvalidOperationException(CoreStrings.DataObjectRegistryAlreadyContainsID.Format(obj.GlobalID));
+            if (objectsByGlobalID.ContainsKey(obj.GlobalId))
+                throw new InvalidOperationException(CoreStrings.DataObjectRegistryAlreadyContainsID.Format(obj.GlobalId));
 
-            obj.LocalID = (UInt16)index;
+            obj.LocalId = (UInt16)index;
             index++;
 
-            keys[obj.Key] = obj.GlobalID;
+            keys[obj.Key] = obj.GlobalId;
             objectsByKey[obj.Key] = obj;
-            objectsByLocalID[obj.LocalID] = obj;
-            objectsByGlobalID[obj.GlobalID] = obj;
+            objectsByLocalID[obj.LocalId] = obj;
+            objectsByGlobalID[obj.GlobalId] = obj;
         }
 
         /// <summary>

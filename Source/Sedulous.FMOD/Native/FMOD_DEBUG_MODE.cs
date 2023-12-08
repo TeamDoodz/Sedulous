@@ -1,4 +1,4 @@
-﻿namespace Sedulous.FMOD.Native
+﻿namespace Sedulous.Fmod.Native
 {
 #pragma warning disable 1591
     public enum FMOD_DEBUG_MODE

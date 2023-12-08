@@ -2,7 +2,7 @@ using System;
 
 namespace Sedulous
 {
-    partial struct FrameworkMessageID
+    partial struct FrameworkMessageId
     {
         /// <inheritdoc/>
         public override Int32 GetHashCode()
@@ -16,7 +16,7 @@ namespace Sedulous
         /// <param name="v1">The first value to compare.</param>
         /// <param name="v2">The second value to compare.</param>
         /// <returns><see langword="true"/> if the two values are equal; otherwise, <see langword="false"/>.</returns>
-        public static Boolean operator ==(FrameworkMessageID v1, FrameworkMessageID v2)
+        public static Boolean operator ==(FrameworkMessageId v1, FrameworkMessageId v2)
         {
             return v1.Equals(v2);
         }
@@ -27,7 +27,7 @@ namespace Sedulous
         /// <param name="v1">The first value to compare.</param>
         /// <param name="v2">The second value to compare.</param>
         /// <returns><see langword="true"/> if the two values are unequal; otherwise, <see langword="false"/>.</returns>
-        public static Boolean operator !=(FrameworkMessageID v1, FrameworkMessageID v2)
+        public static Boolean operator !=(FrameworkMessageId v1, FrameworkMessageId v2)
         {
             return !v1.Equals(v2);
         }
@@ -35,11 +35,11 @@ namespace Sedulous
         /// <inheritdoc/>
         public override Boolean Equals(Object other)
         {
-            return (other is FrameworkMessageID x) ? Equals(x) : false;
+            return (other is FrameworkMessageId x) ? Equals(x) : false;
         }
         
         /// <inheritdoc/>
-        public Boolean Equals(FrameworkMessageID other)
+        public Boolean Equals(FrameworkMessageId other)
         {
             return
                 this.value == other.value;

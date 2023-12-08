@@ -2,7 +2,7 @@ using System;
 
 namespace Sedulous.Content
 {
-    partial struct AssetID
+    partial struct AssetId
     {
         /// <inheritdoc/>
         public override Int32 GetHashCode()
@@ -25,7 +25,7 @@ namespace Sedulous.Content
         /// <param name="v1">The first value to compare.</param>
         /// <param name="v2">The second value to compare.</param>
         /// <returns><see langword="true"/> if the two values are equal; otherwise, <see langword="false"/>.</returns>
-        public static Boolean operator ==(AssetID v1, AssetID v2)
+        public static Boolean operator ==(AssetId v1, AssetId v2)
         {
             return v1.Equals(v2);
         }
@@ -36,7 +36,7 @@ namespace Sedulous.Content
         /// <param name="v1">The first value to compare.</param>
         /// <param name="v2">The second value to compare.</param>
         /// <returns><see langword="true"/> if the two values are unequal; otherwise, <see langword="false"/>.</returns>
-        public static Boolean operator !=(AssetID v1, AssetID v2)
+        public static Boolean operator !=(AssetId v1, AssetId v2)
         {
             return !v1.Equals(v2);
         }
@@ -44,11 +44,11 @@ namespace Sedulous.Content
         /// <inheritdoc/>
         public override Boolean Equals(Object other)
         {
-            return (other is AssetID x) ? Equals(x) : false;
+            return (other is AssetId x) ? Equals(x) : false;
         }
         
         /// <inheritdoc/>
-        public Boolean Equals(AssetID other)
+        public Boolean Equals(AssetId other)
         {
             return
                 this.manifestName == other.manifestName &&

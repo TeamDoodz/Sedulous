@@ -34,6 +34,6 @@ namespace Sedulous
         FrameworkPlatform Platform { get; }
 
         /// <inheritdoc cref="FrameworkContext.Messages" />
-        IMessageQueue<FrameworkMessageID> Messages { get; }
+        IMessageQueue<FrameworkMessageId> Messages { get; }
     }
 }

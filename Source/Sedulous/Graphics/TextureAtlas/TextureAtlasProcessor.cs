@@ -332,8 +332,8 @@ namespace Sedulous.Graphics
                 // if we require a power of two texture, find the next power of two that can fit this image
                 if (atlasDesc.Metadata.RequirePowerOfTwo)
                 {
-                    testWidth  = MathUtil.FindNextPowerOfTwo(testWidth);
-                    testHeight = MathUtil.FindNextPowerOfTwo(testHeight);
+                    testWidth  = MathUtility.FindNextPowerOfTwo(testWidth);
+                    testHeight = MathUtility.FindNextPowerOfTwo(testHeight);
                 }
 
                 // if we require a square texture, set the width and height to the larger of the two

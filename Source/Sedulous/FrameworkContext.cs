@@ -59,7 +59,7 @@ namespace Sedulous
     /// </summary>
     public abstract class FrameworkContext
         :
-        IMessageSubscriber<FrameworkMessageID>,
+        IMessageSubscriber<FrameworkMessageId>,
         ICrossThreadFrameworkContext,
         IDisposable
     {
@@ -96,7 +96,7 @@ namespace Sedulous
 
             this.thread = Thread.CurrentThread;
 
-            this.messages = new LocalMessageQueue<FrameworkMessageID>();
+            this.messages = new LocalMessageQueue<FrameworkMessageId>();
             this.messages.Subscribe(this, FrameworkMessages.Quit);
 
             this.syncContext = new FrameworkSynchronizationContext(this);
@@ -188,7 +188,7 @@ namespace Sedulous
         /// </summary>
         /// <param name="type">The type of message that was received.</param>
         /// <param name="data">The data for the message that was received.</param>
-        void IMessageSubscriber<FrameworkMessageID>.ReceiveMessage(FrameworkMessageID type, MessageData data)
+        void IMessageSubscriber<FrameworkMessageId>.ReceiveMessage(FrameworkMessageId type, MessageData data)
         {
             Contract.EnsureNotDisposed(this, Disposed);
 
@@ -556,7 +556,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the context's message queue.
         /// </summary>
-        public IMessageQueue<FrameworkMessageID> Messages => messages;
+        public IMessageQueue<FrameworkMessageId> Messages => messages;
 
         /// <summary>
         /// Gets or sets a value indicating whether the context is currently processing messages
@@ -917,7 +917,7 @@ namespace Sedulous
         /// </summary>
         /// <param name="type">The message type.</param>
         /// <param name="data">The message data.</param>
-        protected virtual void OnReceivedMessage(FrameworkMessageID type, MessageData data)
+        protected virtual void OnReceivedMessage(FrameworkMessageId type, MessageData data)
         {
 
         }
@@ -1019,6 +1019,6 @@ namespace Sedulous
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
         // The context event queue.
-        private readonly LocalMessageQueue<FrameworkMessageID> messages;
+        private readonly LocalMessageQueue<FrameworkMessageId> messages;
     }
 }

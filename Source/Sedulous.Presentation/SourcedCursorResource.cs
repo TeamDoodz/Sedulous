@@ -24,7 +24,7 @@ namespace Sedulous.Presentation
         /// </summary>
         /// <param name="cursorCollectionID">The asset identifier of the cursor collection that contains the cursor.</param>
         /// <param name="cursorName">The name of the cursor within its cursor collection.</param>
-        public SourcedCursorResource(AssetID cursorCollectionID, String cursorName)
+        public SourcedCursorResource(AssetId cursorCollectionID, String cursorName)
         {
             this.cursorCollectionID = cursorCollectionID;
             this.cursorName = cursorName;
@@ -50,7 +50,7 @@ namespace Sedulous.Presentation
         /// <summary>
         /// Gets or sets the asset identifier of the cursor collection which contains the cursor resource.
         /// </summary>
-        public AssetID CursorCollectionID
+        public AssetId CursorCollectionID
         {
             get { return cursorCollectionID; }
             set
@@ -104,14 +104,14 @@ namespace Sedulous.Presentation
                 throw new FormatException();
             
             var cursorCollection = components[0];
-            var cursorCollectionAssetID = AssetID.Parse(cursorCollection);
+            var cursorCollectionAssetID = AssetId.Parse(cursorCollection);
             var cursorName = components[1];
 
             return new SourcedCursorResource(cursorCollectionAssetID, cursorName);
         }
 
         // Property values.
-        private AssetID cursorCollectionID;
+        private AssetId cursorCollectionID;
         private String cursorName;
         private WatchableAssetReference<CursorCollection> cursorCollection;
     }

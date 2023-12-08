@@ -801,7 +801,7 @@ namespace Sedulous.Presentation.Controls
         /// </summary>
         private static void HandleScrollChanged(DependencyObject dobj, ScrollChangedRoutedEventData data)
         {
-            if (!MathUtil.IsApproximatelyZero(data.ViewportHeightChange))
+            if (!MathUtility.IsApproximatelyZero(data.ViewportHeightChange))
             {
                 ((TextBox)dobj).UpdateScrollViewerSize();
             }
@@ -915,7 +915,7 @@ namespace Sedulous.Presentation.Controls
         /// <returns><see langword="true"/> if the text box's height is constrained; otherwise, <see langword="false"/>.</returns>
         private Boolean IsHeightConstrained()
         {
-            return !Double.IsNaN(Height) || !MathUtil.IsApproximatelyZero(MinHeight) || !Double.IsPositiveInfinity(MaxHeight);
+            return !Double.IsNaN(Height) || !MathUtility.IsApproximatelyZero(MinHeight) || !Double.IsPositiveInfinity(MaxHeight);
         }
 
         /// <summary>

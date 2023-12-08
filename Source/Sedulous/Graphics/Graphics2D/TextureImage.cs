@@ -35,11 +35,11 @@ namespace Sedulous.Graphics.Graphics2D
         {
             Contract.Require(content, nameof(content));
 
-            if (!TextureID.IsValid)
+            if (!TextureId.IsValid)
                 return;
 
-            texture = watch ? content.Watchers.GetSharedWatchedAsset<Texture2D>(TextureID) : 
-                (WatchableAssetReference<Texture2D>)content.Load<Texture2D>(TextureID);            
+            texture = watch ? content.Watchers.GetSharedWatchedAsset<Texture2D>(TextureId) : 
+                (WatchableAssetReference<Texture2D>)content.Load<Texture2D>(TextureId);            
 
             if (TextureRegion.IsEmpty && !texture.IsNullReference)
                 TextureRegion = new Rectangle(0, 0, texture.Value.Width, texture.Value.Height);
@@ -56,11 +56,11 @@ namespace Sedulous.Graphics.Graphics2D
         {
             Contract.Require(content, nameof(content));
 
-            if (!TextureID.IsValid)
+            if (!TextureId.IsValid)
                 return;
 
-            texture = watch ? content.Watchers.GetSharedWatchedAsset<Texture2D>(TextureID, density) :
-                (WatchableAssetReference<Texture2D>)content.Load<Texture2D>(TextureID, density);
+            texture = watch ? content.Watchers.GetSharedWatchedAsset<Texture2D>(TextureId, density) :
+                (WatchableAssetReference<Texture2D>)content.Load<Texture2D>(TextureId, density);
 
             if (TextureRegion.IsEmpty && !texture.IsNullReference)
                 TextureRegion = new Rectangle(0, 0, texture.Value.Width, texture.Value.Height);
@@ -75,14 +75,14 @@ namespace Sedulous.Graphics.Graphics2D
             protected set
             {
                 texture = value;
-                textureID = AssetID.Invalid;
+                textureID = AssetId.Invalid;
             }
         }
 
         /// <summary>
         /// Gets or sets the asset identifier of the texture which contains the stretchable image data.
         /// </summary>
-        public AssetID TextureID
+        public AssetId TextureId
         {
             get { return textureID; }
             set
@@ -187,6 +187,6 @@ namespace Sedulous.Graphics.Graphics2D
 
         // Property values.
         private WatchableAssetReference<Texture2D> texture;
-        private AssetID textureID;
+        private AssetId textureID;
     }
 }

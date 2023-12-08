@@ -1,4 +1,4 @@
-﻿namespace Sedulous.FMOD
+﻿namespace Sedulous.Fmod
 {
 //    /// <summary>
 //    /// Initializes factory methods for the FMOD implementation of the audio subsystem.

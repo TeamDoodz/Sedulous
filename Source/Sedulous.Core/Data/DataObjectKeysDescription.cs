@@ -18,6 +18,6 @@ namespace Sedulous.Core.Data
         /// Gets or sets the object's globally-unique identifier.
         /// </summary>
         [JsonProperty(Required = Required.Always)]
-        public Guid ID { get; set; }
+        public Guid Id { get; set; }
     }
 }

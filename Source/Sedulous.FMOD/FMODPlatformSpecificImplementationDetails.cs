@@ -1,27 +1,27 @@
-﻿namespace Sedulous.FMOD
+﻿namespace Sedulous.Fmod
 {
     /// <summary>
-    /// Represents a factory method which constructs instances of the <see cref="FMODPlatformSpecificImplementationDetails"/> class.
+    /// Represents a factory method which constructs instances of the <see cref="FmodPlatformSpecificImplementationDetails"/> class.
     /// </summary>
     /// <param name="context">The Sedulous context.</param>
-    /// <returns>The instance of <see cref="FMODPlatformSpecificImplementationDetails"/> that was created.</returns>
-    public delegate FMODPlatformSpecificImplementationDetails FMODPlatformSpecificImplementationDetailsFactory(FrameworkContext context);
+    /// <returns>The instance of <see cref="FmodPlatformSpecificImplementationDetails"/> that was created.</returns>
+    public delegate FmodPlatformSpecificImplementationDetails FMODPlatformSpecificImplementationDetailsFactory(FrameworkContext context);
 
     /// <summary>
     /// Represents platform-specific implementation details for FMOD which can be provided by an additional assembly.
     /// </summary>
-    public abstract class FMODPlatformSpecificImplementationDetails
+    public abstract class FmodPlatformSpecificImplementationDetails
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="FMODPlatformSpecificImplementationDetails"/> class.
+        /// Creates a new instance of the <see cref="FmodPlatformSpecificImplementationDetails"/> class.
         /// </summary>
-        /// <returns>The instance of <see cref="FMODPlatformSpecificImplementationDetails"/> that was created.</returns>
-        public static FMODPlatformSpecificImplementationDetails Create()
+        /// <returns>The instance of <see cref="FmodPlatformSpecificImplementationDetails"/> that was created.</returns>
+        public static FmodPlatformSpecificImplementationDetails Create()
         {
             var uv = FrameworkContext.DemandCurrent();
             var factory = uv.TryGetFactoryMethod<FMODPlatformSpecificImplementationDetailsFactory>();
             if (factory == null)
-                return new FMODGenericPlatformImplementationDetails();
+                return new FmodGenericPlatformImplementationDetails();
 
             return factory(uv);
         }

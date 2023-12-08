@@ -1,17 +1,17 @@
 ﻿using System.Reflection;
 using Sedulous.Core.Text;
 
-namespace Sedulous.FMOD
+namespace Sedulous.Fmod
 {
     /// <summary>
     /// Contains the implementation's string resources.
     /// </summary>
-    public static class FMODStrings
+    public static class FmodStrings
     {
         /// <summary>
-        /// Initializes the <see cref="FMODStrings"/> type.
+        /// Initializes the <see cref="FmodStrings"/> type.
         /// </summary>
-        static FMODStrings()
+        static FmodStrings()
         {
             var asm = Assembly.GetExecutingAssembly();
             using (var stream = asm.GetManifestResourceStream("Sedulous.FMOD.Resources.Strings.xml"))

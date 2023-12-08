@@ -8,17 +8,17 @@ namespace Sedulous.Content
     /// Represents a value which identifies an asset within one of the application's content manifests.
     /// </summary>
     [JsonConverter(typeof(FrameworkJsonConverter))]
-    public partial struct AssetID : IEquatable<AssetID>
+    public partial struct AssetId : IEquatable<AssetId>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AssetID"/> structure.
+        /// Initializes a new instance of the <see cref="AssetId"/> structure.
         /// </summary>
         /// <param name="manifestName">The name of the content manifest that contains the asset.</param>
         /// <param name="manifestGroup">The name of the content manifest group that contains the asset.</param>
         /// <param name="assetName">The asset's name within its content manifest group.</param>
         /// <param name="assetPath">The asset's path as specified by its content manifest.</param>
         /// <param name="assetIndex">The asset's index within its content manifest group.</param>
-        internal AssetID(String manifestName, String manifestGroup, String assetName, String assetPath, Int32 assetIndex)
+        internal AssetId(String manifestName, String manifestGroup, String assetName, String assetPath, Int32 assetIndex)
         {
             Contract.RequireNotEmpty(manifestName, nameof(manifestName));
             Contract.RequireNotEmpty(manifestGroup, nameof(manifestGroup));
@@ -37,7 +37,7 @@ namespace Sedulous.Content
         /// </summary>
         /// <param name="id">The identifier of the asset to evaluate.</param>
         /// <returns>The name of the content manifest that contains the specified asset.</returns>
-        public static String GetManifestName(AssetID id)
+        public static String GetManifestName(AssetId id)
         {
             return id.manifestName;
         }
@@ -47,7 +47,7 @@ namespace Sedulous.Content
         /// </summary>
         /// <param name="id">The identifier of the asset to evaluate.</param>
         /// <returns>The name of the content manifest that contains the specified asset.</returns>
-        public static String GetManifestNameRef(ref AssetID id)
+        public static String GetManifestNameRef(ref AssetId id)
         {
             return id.manifestName;
         }
@@ -57,7 +57,7 @@ namespace Sedulous.Content
         /// </summary>
         /// <param name="id">The identifier of the asset to evaluate.</param>
         /// <returns>The name of the content manifest group that contains the specified asset.</returns>
-        public static String GetManifestGroup(AssetID id)
+        public static String GetManifestGroup(AssetId id)
         {
             return id.manifestGroup;
         }
@@ -67,7 +67,7 @@ namespace Sedulous.Content
         /// </summary>
         /// <param name="id">The identifier of the asset to evaluate.</param>
         /// <returns>The name of the content manifest group that contains the specified asset.</returns>
-        public static String GetManifestGroupRef(ref AssetID id)
+        public static String GetManifestGroupRef(ref AssetId id)
         {
             return id.manifestGroup;
         }
@@ -77,7 +77,7 @@ namespace Sedulous.Content
         /// </summary>
         /// <param name="id">The identifier of the asset to evaluate.</param>
         /// <returns>The specified asset's name within its content manifest group.</returns>
-        public static String GetAssetName(AssetID id)
+        public static String GetAssetName(AssetId id)
         {
             return id.assetName;
         }
@@ -87,7 +87,7 @@ namespace Sedulous.Content
         /// </summary>
         /// <param name="id">The identifier of the asset to evaluate.</param>
         /// <returns>The specified asset's name within its content manifest group.</returns>
-        public static String GetAssetNameRef(ref AssetID id)
+        public static String GetAssetNameRef(ref AssetId id)
         {
             return id.assetName;
         }
@@ -97,7 +97,7 @@ namespace Sedulous.Content
         /// </summary>
         /// <param name="id">The identifier of the asset to evaluate.</param>
         /// <returns>The specified asset's full path relative to the content root directory.</returns>
-        public static String GetAssetPath(AssetID id)
+        public static String GetAssetPath(AssetId id)
         {
             return id.assetPath;
         }
@@ -107,7 +107,7 @@ namespace Sedulous.Content
         /// </summary>
         /// <param name="id">The identifier of the asset to evaluate.</param>
         /// <returns>The specified asset's full path relative to the content root directory.</returns>
-        public static String GetAssetPathRef(ref AssetID id)
+        public static String GetAssetPathRef(ref AssetId id)
         {
             return id.assetPath;
         }
@@ -117,7 +117,7 @@ namespace Sedulous.Content
         /// </summary>
         /// <param name="id">The identifier of the asset to evaluate.</param>
         /// <returns>The specified asset's index within its content manifest group.</returns>
-        public static Int32 GetAssetIndex(AssetID id)
+        public static Int32 GetAssetIndex(AssetId id)
         {
             return id.assetIndex;
         }
@@ -127,7 +127,7 @@ namespace Sedulous.Content
         /// </summary>
         /// <param name="id">The identifier of the asset to evaluate.</param>
         /// <returns>The specified asset's index within its content manifest group.</returns>
-        public static Int32 GetAssetIndexRef(ref AssetID id)
+        public static Int32 GetAssetIndexRef(ref AssetId id)
         {
             return id.assetIndex;
         }
@@ -135,9 +135,9 @@ namespace Sedulous.Content
         /// <summary>
         /// Gets an invalid asset identifier.
         /// </summary>
-        public static AssetID Invalid
+        public static AssetId Invalid
         {
-            get { return new AssetID(); }
+            get { return new AssetId(); }
         }
 
         /// <inheritdoc/>

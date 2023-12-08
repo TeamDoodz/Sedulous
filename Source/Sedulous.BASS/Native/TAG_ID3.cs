@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Sedulous.BASS.Native
+namespace Sedulous.Bass.Native
 {
 #pragma warning disable 1591
     [StructLayout(LayoutKind.Sequential)]

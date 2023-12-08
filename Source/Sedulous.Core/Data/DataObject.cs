@@ -18,7 +18,7 @@ namespace Sedulous.Core.Data
             Contract.RequireNotEmpty(key, nameof(key));
 
             Key = key;
-            GlobalID = id;
+            GlobalId = id;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Sedulous.Core.Data
         /// </summary>
         /// <remarks>A data object's global identifier allows it to be addressed in a way which does not change
         /// across instances of the application.</remarks>
-        public Guid GlobalID
+        public Guid GlobalId
         {
             get;
             private set;
@@ -46,7 +46,7 @@ namespace Sedulous.Core.Data
         /// </summary>
         /// <remarks>A data object's local identifier allows it to be conveniently and efficiently addressed
         /// within a single process. Local identifiers may change across instances of an application.</remarks>
-        public UInt16 LocalID
+        public UInt16 LocalId
         {
             get;
             internal set;

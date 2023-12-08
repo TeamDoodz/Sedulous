@@ -8,14 +8,14 @@ namespace Sedulous.Graphics.Graphics2D
     /// Represents a value which identifies a particular sprite animation.
     /// </summary>
     [JsonConverter(typeof(FrameworkJsonConverter))]
-    public partial struct SpriteAnimationID : IEquatable<SpriteAnimationID>
+    public partial struct SpriteAnimationId : IEquatable<SpriteAnimationId>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SpriteAnimationID"/> structure from the specified animation name.
+        /// Initializes a new instance of the <see cref="SpriteAnimationId"/> structure from the specified animation name.
         /// </summary>
-        /// <param name="spriteAssetID">The <see cref="AssetID"/> that represents the sprite that contains the animation.</param>
+        /// <param name="spriteAssetID">The <see cref="AssetId"/> that represents the sprite that contains the animation.</param>
         /// <param name="animationName">The name of the referenced animation.</param>
-        internal SpriteAnimationID(AssetID spriteAssetID, String animationName)
+        internal SpriteAnimationId(AssetId spriteAssetID, String animationName)
         {
             this.spriteAssetID = spriteAssetID;
             this.animationName = animationName;
@@ -23,11 +23,11 @@ namespace Sedulous.Graphics.Graphics2D
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SpriteAnimationID"/> structure from the specified animation name.
+        /// Initializes a new instance of the <see cref="SpriteAnimationId"/> structure from the specified animation name.
         /// </summary>
-        /// <param name="spriteAssetID">The <see cref="AssetID"/> that represents the sprite that contains the animation.</param>
+        /// <param name="spriteAssetID">The <see cref="AssetId"/> that represents the sprite that contains the animation.</param>
         /// <param name="animationIndex">The index of the referenced animation.</param>
-        internal SpriteAnimationID(AssetID spriteAssetID, Int32 animationIndex)
+        internal SpriteAnimationId(AssetId spriteAssetID, Int32 animationIndex)
         {
             this.spriteAssetID = spriteAssetID;
             this.animationName = null;
@@ -39,7 +39,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// </summary>
         /// <param name="id">The identifier of the animation to evaluate.</param>
         /// <returns>The asset identifier of the sprite that contains the specified animation.</returns>
-        public static AssetID GetSpriteAssetID(SpriteAnimationID id)
+        public static AssetId GetSpriteAssetId(SpriteAnimationId id)
         {
             return id.spriteAssetID;
         }
@@ -49,7 +49,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// </summary>
         /// <param name="id">The identifier of the animation to evaluate.</param>
         /// <returns>The asset identifier of the sprite that contains the specified animation.</returns>
-        public static AssetID GetSpriteAssetIDRef(ref SpriteAnimationID id)
+        public static AssetId GetSpriteAssetIdRef(ref SpriteAnimationId id)
         {
             return id.spriteAssetID;
         }
@@ -59,7 +59,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// </summary>
         /// <param name="id">The identifier of the animation to evaluate.</param>
         /// <returns>The name of the specified animation.</returns>
-        public static String GetAnimationName(SpriteAnimationID id)
+        public static String GetAnimationName(SpriteAnimationId id)
         {
             return id.animationName;
         }
@@ -69,7 +69,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// </summary>
         /// <param name="id">The identifier of the animation to evaluate.</param>
         /// <returns>The name of the specified animation.</returns>
-        public static String GetAnimationNameRef(ref SpriteAnimationID id)
+        public static String GetAnimationNameRef(ref SpriteAnimationId id)
         {
             return id.animationName;
         }
@@ -79,7 +79,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// </summary>
         /// <param name="id">The identifier of the animation to evaluate.</param>
         /// <returns>The name of the specified animation within its sprite's animation list.</returns>
-        public static Int32 GetAnimationIndex(SpriteAnimationID id)
+        public static Int32 GetAnimationIndex(SpriteAnimationId id)
         {
             return id.animationIndex;
         }
@@ -89,7 +89,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// </summary>
         /// <param name="id">The identifier of the animation to evaluate.</param>
         /// <returns>The name of the specified animation within its sprite's animation list.</returns>
-        public static Int32 GetAnimationIndexRef(ref SpriteAnimationID id)
+        public static Int32 GetAnimationIndexRef(ref SpriteAnimationId id)
         {
             return id.animationIndex;
         }
@@ -97,9 +97,9 @@ namespace Sedulous.Graphics.Graphics2D
         /// <summary>
         /// Gets an invalid animation identifier.
         /// </summary>
-        public static SpriteAnimationID Invalid
+        public static SpriteAnimationId Invalid
         {
-            get { return new SpriteAnimationID(); }
+            get { return new SpriteAnimationId(); }
         }
 
         /// <inheritdoc/>
@@ -109,7 +109,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <summary>
         /// Gets the asset identifier of the sprite that contains the animation.
         /// </summary>
-        public AssetID SpriteAssetID => spriteAssetID;
+        public AssetId SpriteAssetId => spriteAssetID;
 
         /// <summary>
         /// Gets a value indicating whether this is a valid sprite animation identifier.
@@ -120,7 +120,7 @@ namespace Sedulous.Graphics.Graphics2D
         }
 
         // Property values.
-        private readonly AssetID spriteAssetID;
+        private readonly AssetId spriteAssetID;
         private readonly String animationName;
         private readonly Int32 animationIndex;
     }

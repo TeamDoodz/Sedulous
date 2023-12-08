@@ -4,20 +4,20 @@ using Sedulous.Core;
 
 namespace Sedulous.Content
 {
-    partial struct AssetID
+    partial struct AssetId
     {        
         /// <summary>
-        /// Converts the string representation of an asset identifier to an instance of the <see cref="AssetID"/> structure.
+        /// Converts the string representation of an asset identifier to an instance of the <see cref="AssetId"/> structure.
         /// </summary>
         /// <param name="manifests">The content manifest registry that contains the currently-loaded content manifests.</param>
         /// <param name="s">A string containing the asset identifier to convert.</param>
-        /// <returns>An instance of the <see cref="AssetID"/> structure that is equivalent to the specified string.</returns>
-        public static AssetID Parse(ContentManifestRegistry manifests, String s)
+        /// <returns>An instance of the <see cref="AssetId"/> structure that is equivalent to the specified string.</returns>
+        public static AssetId Parse(ContentManifestRegistry manifests, String s)
         {
             Contract.Require(manifests, nameof(manifests));
             Contract.Require(s, nameof(s));
             
-            if (!TryParseInternal(manifests, s, out AssetID value))
+            if (!TryParseInternal(manifests, s, out AssetId value))
             {
                 throw new FormatException();
             }
@@ -25,13 +25,13 @@ namespace Sedulous.Content
         }
 
         /// <summary>
-        /// Converts the string representation of an asset identifier to an instance of the <see cref="AssetID"/> structure.
+        /// Converts the string representation of an asset identifier to an instance of the <see cref="AssetId"/> structure.
         /// </summary>
         /// <param name="manifests">The content manifest registry that contains the currently-loaded content manifests.</param>
         /// <param name="s">A string containing the asset identifier to convert.</param>
-        /// <param name="value">An instance of the <see cref="AssetID"/> structure that is equivalent to the specified string.</param>
+        /// <param name="value">An instance of the <see cref="AssetId"/> structure that is equivalent to the specified string.</param>
         /// <returns><see langword="true"/> if the string was successfully parsed; otherwise, <see langword="false"/>.</returns>
-        public static Boolean TryParse(ContentManifestRegistry manifests, String s, out AssetID value)
+        public static Boolean TryParse(ContentManifestRegistry manifests, String s, out AssetId value)
         {
             Contract.Require(manifests, nameof(manifests));
             Contract.Require(s, nameof(s));
@@ -40,25 +40,25 @@ namespace Sedulous.Content
         }
 
         /// <summary>
-        /// Converts the string representation of a <see cref="AssetID"/> to an object instance.
+        /// Converts the string representation of a <see cref="AssetId"/> to an object instance.
         /// A return value indicates whether the conversion succeeded.
         /// </summary>
         /// <param name="s">The string to convert.</param>
         /// <param name="v">The converted value.</param>
         /// <returns><see langword="true"/> if the conversion succeeded; otherwise, <see langword="false"/>.</returns>
-        public static Boolean TryParse(String s, out AssetID v)
+        public static Boolean TryParse(String s, out AssetId v)
         {
             return TryParse(s, NumberStyles.Integer, NumberFormatInfo.CurrentInfo, out v);
         }
         
         /// <summary>
-        /// Converts the string representation of a <see cref="AssetID"/> to an object instance.
+        /// Converts the string representation of a <see cref="AssetId"/> to an object instance.
         /// </summary>
         /// <param name="s">The string to convert.</param>
         /// <returns>The converted value.</returns>
-        public static AssetID Parse(String s)
+        public static AssetId Parse(String s)
         {
-            var v = default(AssetID);
+            var v = default(AssetId);
             if (!TryParse(s, NumberStyles.Integer, NumberFormatInfo.CurrentInfo, out v))
                 throw new FormatException();
             
@@ -66,7 +66,7 @@ namespace Sedulous.Content
         }
         
         /// <summary>
-        /// Converts the string representation of a <see cref="AssetID"/> to an object instance.
+        /// Converts the string representation of a <see cref="AssetId"/> to an object instance.
         /// A return value indicates whether the conversion succeeded.
         /// </summary>
         /// <param name="s">The string to convert.</param>
@@ -74,21 +74,21 @@ namespace Sedulous.Content
         /// <param name="provider">A format provider that provides culture-specific formatting information.</param>
         /// <param name="v">The converted value.</param>
         /// <returns><see langword="true"/> if the conversion succeeded; otherwise, <see langword="false"/>.</returns>
-        public static Boolean TryParse(String s, NumberStyles style, IFormatProvider provider, out AssetID v)
+        public static Boolean TryParse(String s, NumberStyles style, IFormatProvider provider, out AssetId v)
         {
             return TryParseInternal(FrameworkContext.DemandCurrent().GetContent().Manifests, s, out v);
         }
         
         /// <summary>
-        /// Converts the string representation of a <see cref="AssetID"/> to an object instance.
+        /// Converts the string representation of a <see cref="AssetId"/> to an object instance.
         /// </summary>
         /// <param name="s">The string to convert.</param>
         /// <param name="style">A set of <see cref="NumberStyles"/> values indicating which elements are present in <paramref name="s"/>.</param>
         /// <param name="provider">A format provider that provides culture-specific formatting information.</param>
         /// <returns>The converted value.</returns>
-        public static AssetID Parse(String s, NumberStyles style, IFormatProvider provider)
+        public static AssetId Parse(String s, NumberStyles style, IFormatProvider provider)
         {
-            var v = default(AssetID);
+            var v = default(AssetId);
             if (!TryParse(s, style, provider, out v))
                 throw new FormatException();
             
@@ -96,22 +96,22 @@ namespace Sedulous.Content
         }
         
         /// <summary>
-        /// Converts the string representation of an asset identifier to an instance of the <see cref="AssetID"/> structure.
+        /// Converts the string representation of an asset identifier to an instance of the <see cref="AssetId"/> structure.
         /// </summary>
         /// <param name="manifests">The content manifest registry that contains the currently-loaded content manifests.</param>
         /// <param name="s">A string containing the asset identifier to convert.</param>
-        /// <param name="value">An instance of the <see cref="AssetID"/> structure that is equivalent to the specified string.</param>
+        /// <param name="value">An instance of the <see cref="AssetId"/> structure that is equivalent to the specified string.</param>
         /// <returns><see langword="true"/> if the string was successfully parsed; otherwise, <see langword="false"/>.</returns>
-        private static Boolean TryParseInternal(ContentManifestRegistry manifests, String s, out AssetID value)
+        private static Boolean TryParseInternal(ContentManifestRegistry manifests, String s, out AssetId value)
         {
-            value = default(AssetID);
+            value = default(AssetId);
 
             if (!s.StartsWith("#"))
                 return false;
 
             if (s == "#INVALID")
             {
-                value = AssetID.Invalid;
+                value = AssetId.Invalid;
                 return true;
             }
 
@@ -133,7 +133,7 @@ namespace Sedulous.Content
 
             var manifestIndex = manifestGroup.IndexOf(manifestAsset);
 
-            value = new AssetID(manifest.Name, manifestGroup.Name, manifestAsset.Name, manifestAsset.AbsolutePath, manifestIndex);
+            value = new AssetId(manifest.Name, manifestGroup.Name, manifestAsset.Name, manifestAsset.AbsolutePath, manifestIndex);
             return true;
         }
     }

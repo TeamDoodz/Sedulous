@@ -2,7 +2,7 @@ using System;
 
 namespace Sedulous.Graphics.Graphics2D
 {
-    partial struct SpriteAnimationID
+    partial struct SpriteAnimationId
     {
         /// <inheritdoc/>
         public override Int32 GetHashCode()
@@ -23,7 +23,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="v1">The first value to compare.</param>
         /// <param name="v2">The second value to compare.</param>
         /// <returns><see langword="true"/> if the two values are equal; otherwise, <see langword="false"/>.</returns>
-        public static Boolean operator ==(SpriteAnimationID v1, SpriteAnimationID v2)
+        public static Boolean operator ==(SpriteAnimationId v1, SpriteAnimationId v2)
         {
             return v1.Equals(v2);
         }
@@ -34,7 +34,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="v1">The first value to compare.</param>
         /// <param name="v2">The second value to compare.</param>
         /// <returns><see langword="true"/> if the two values are unequal; otherwise, <see langword="false"/>.</returns>
-        public static Boolean operator !=(SpriteAnimationID v1, SpriteAnimationID v2)
+        public static Boolean operator !=(SpriteAnimationId v1, SpriteAnimationId v2)
         {
             return !v1.Equals(v2);
         }
@@ -42,11 +42,11 @@ namespace Sedulous.Graphics.Graphics2D
         /// <inheritdoc/>
         public override Boolean Equals(Object other)
         {
-            return (other is SpriteAnimationID x) ? Equals(x) : false;
+            return (other is SpriteAnimationId x) ? Equals(x) : false;
         }
         
         /// <inheritdoc/>
-        public Boolean Equals(SpriteAnimationID other)
+        public Boolean Equals(SpriteAnimationId other)
         {
             return
                 this.spriteAssetID == other.spriteAssetID &&

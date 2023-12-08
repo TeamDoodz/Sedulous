@@ -1,13 +1,13 @@
 ﻿using Sedulous.Audio;
-using Sedulous.BASS.Audio;
+using Sedulous.Bass.Audio;
 using Sedulous.Core;
 
-namespace Sedulous.BASS
+namespace Sedulous.Bass
 {
     /// <summary>
     /// Represents an Sedulous plugin which registers BASS as the audio subsystem implementation.
     /// </summary>
-    public class BASSAudioPlugin : FrameworkPlugin
+    public class BassAudioPlugin : FrameworkPlugin
     {
         /// <inheritdoc/>
         public override void Register(FrameworkConfiguration configuration)
@@ -20,10 +20,10 @@ namespace Sedulous.BASS
         /// <inheritdoc/>
         public override void Configure(FrameworkContext context, FrameworkFactory factory)
         {
-            factory.SetFactoryMethod<SongPlayerFactory>((uv) => new BASSSongPlayer(uv));
-            factory.SetFactoryMethod<SoundEffectPlayerFactory>((uv) => new BASSSoundEffectPlayer(uv));
+            factory.SetFactoryMethod<SongPlayerFactory>((uv) => new BassSongPlayer(uv));
+            factory.SetFactoryMethod<SoundEffectPlayerFactory>((uv) => new BassSoundEffectPlayer(uv));
 
-            factory.SetFactoryMethod<FrameworkAudioFactory>((uv, configuration) => new BASSAudioSubsystem(uv));
+            factory.SetFactoryMethod<FrameworkAudioFactory>((uv, configuration) => new BassAudioSubsystem(uv));
 
             base.Configure(context, factory);
         }
@@ -33,15 +33,15 @@ namespace Sedulous.BASS
         {
             var importers = context.GetContent().Importers;
             {
-                importers.RegisterImporter<BASSMediaImporter>(".mp3");
-                importers.RegisterImporter<BASSMediaImporter>(".ogg");
-                importers.RegisterImporter<BASSMediaImporter>(".wav");
+                importers.RegisterImporter<BassMediaImporter>(".mp3");
+                importers.RegisterImporter<BassMediaImporter>(".ogg");
+                importers.RegisterImporter<BassMediaImporter>(".wav");
             }
 
             var processors = context.GetContent().Processors;
             {
-                processors.RegisterProcessor<BASSSongProcessor>();
-                processors.RegisterProcessor<BASSSoundEffectProcessor>();
+                processors.RegisterProcessor<BassSongProcessor>();
+                processors.RegisterProcessor<BassSoundEffectProcessor>();
             }
 
             base.Initialize(context, factory);

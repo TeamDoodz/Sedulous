@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Sedulous.FMOD.Native
+namespace Sedulous.Fmod.Native
 {
 #pragma warning disable 1591
     [StructLayout(LayoutKind.Sequential)]

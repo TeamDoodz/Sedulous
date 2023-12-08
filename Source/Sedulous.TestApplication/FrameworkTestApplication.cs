@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using Sedulous.BASS;
+using Sedulous.Bass;
 using Sedulous.Content;
 using Sedulous.Core;
-using Sedulous.FMOD;
+using Sedulous.Fmod;
 using Sedulous.Graphics;
 using Sedulous.Input;
 using Sedulous.OpenGL;
-using Sedulous.SDL2;
-using Sedulous.SDL2.Messages;
-using Sedulous.SDL2.Native;
+using Sedulous.Sdl2;
+using Sedulous.Sdl2.Messages;
+using Sedulous.Sdl2.Native;
 using Sedulous.TestFramework;
 using Sedulous.TestFramework.Graphics;
-using static Sedulous.SDL2.Native.SDL_EventType;
-using static Sedulous.SDL2.Native.SDL_Keymod;
+using static Sedulous.Sdl2.Native.SDL_EventType;
+using static Sedulous.Sdl2.Native.SDL_Keymod;
 
 namespace Sedulous.TestApplication
 {
@@ -45,9 +45,9 @@ namespace Sedulous.TestApplication
             switch (audioImplementation)
             {
                 case AudioImplementation.BASS:
-                    return WithPlugin(new BASSAudioPlugin());
+                    return WithPlugin(new BassAudioPlugin());
                 case AudioImplementation.FMOD:
-                    return WithPlugin(new FMODAudioPlugin());
+                    return WithPlugin(new FmodAudioPlugin());
                 default:
                     throw new ArgumentOutOfRangeException(nameof(audioImplementation));
             }
@@ -215,13 +215,13 @@ namespace Sedulous.TestApplication
         /// <inheritdoc/>
         public void SpoofKeyDown(Scancode scancode, Key key, Boolean ctrl, Boolean alt, Boolean shift)
         {
-            var data = FrameworkContext.Messages.CreateMessageData<SDL2EventMessageData>();
+            var data = FrameworkContext.Messages.CreateMessageData<Sdl2EventMessageData>();
             data.Event = new SDL_Event()
             {
                 key = new SDL_KeyboardEvent()
                 {
                     type = (uint)SDL_KEYDOWN,
-                    windowID = (uint)FrameworkContext.GetPlatform().Windows.GetPrimary().ID,
+                    windowID = (uint)FrameworkContext.GetPlatform().Windows.GetPrimary().Id,
                     keysym = new SDL_Keysym()
                     {
                         keycode = (SDL_Keycode)key,
@@ -233,19 +233,19 @@ namespace Sedulous.TestApplication
                     },
                 }
             };
-            FrameworkContext.Messages.Publish(SDL2FrameworkMessages.SDLEvent, data);
+            FrameworkContext.Messages.Publish(Sdl2FrameworkMessages.SdlEvent, data);
         }
 
         /// <inheritdoc/>
         public void SpoofKeyUp(Scancode scancode, Key key, Boolean ctrl, Boolean alt, Boolean shift)
         {
-            var data = FrameworkContext.Messages.CreateMessageData<SDL2EventMessageData>();
+            var data = FrameworkContext.Messages.CreateMessageData<Sdl2EventMessageData>();
             data.Event = new SDL_Event()
             {
                 key = new SDL_KeyboardEvent()
                 {
                     type = (uint)SDL_KEYUP,
-                    windowID = (uint)FrameworkContext.GetPlatform().Windows.GetPrimary().ID,
+                    windowID = (uint)FrameworkContext.GetPlatform().Windows.GetPrimary().Id,
                     keysym = new SDL_Keysym()
                     {
                         keycode = (SDL_Keycode)key,
@@ -257,7 +257,7 @@ namespace Sedulous.TestApplication
                     },
                 }
             };
-            FrameworkContext.Messages.Publish(SDL2FrameworkMessages.SDLEvent, data);
+            FrameworkContext.Messages.Publish(Sdl2FrameworkMessages.SdlEvent, data);
         }
 
         /// <inheritdoc/>
@@ -270,7 +270,7 @@ namespace Sedulous.TestApplication
         /// <inheritdoc/>
         protected override FrameworkContext OnCreatingFrameworkContext()
         {
-            var configuration = new SDL2FrameworkConfiguration();
+            var configuration = new Sdl2FrameworkConfiguration();
             configuration.Headless = headless;
             configuration.EnableServiceMode = serviceMode;
             configuration.IsHardwareInputDisabled = true;
@@ -288,11 +288,11 @@ namespace Sedulous.TestApplication
                 plugins.Add(new OpenGLGraphicsPlugin());
             }
 
-            var needsAudioSubsystem = !(plugins?.Any(x => x is BASSAudioPlugin || x is FMODAudioPlugin) ?? false);
+            var needsAudioSubsystem = !(plugins?.Any(x => x is BassAudioPlugin || x is FmodAudioPlugin) ?? false);
             if (needsAudioSubsystem)
             {
                 plugins = plugins ?? new List<FrameworkPlugin>();
-                plugins.Add(new BASSAudioPlugin());
+                plugins.Add(new BassAudioPlugin());
             }
 
             foreach (var plugin in plugins)
@@ -300,7 +300,7 @@ namespace Sedulous.TestApplication
 
             configurer?.Invoke(configuration);
 
-            return new SDL2FrameworkContext(this, configuration);
+            return new Sdl2FrameworkContext(this, configuration);
         }
 
         /// <inheritdoc/>
@@ -335,8 +335,8 @@ namespace Sedulous.TestApplication
             {
                 // HACK: AMD drivers produce weird rasterization artifacts when rendering
                 // to a NPOT render buffer??? So we have to fix it with this stupid hack???
-                var width = MathUtil.FindNextPowerOfTwo(window.DrawableSize.Width);
-                var height = MathUtil.FindNextPowerOfTwo(window.DrawableSize.Height);
+                var width = MathUtility.FindNextPowerOfTwo(window.DrawableSize.Width);
+                var height = MathUtility.FindNextPowerOfTwo(window.DrawableSize.Height);
 
                 rtargetColorBuffer = Texture2D.CreateRenderBuffer(RenderBufferFormat.Color, width, height);
                 rtargetDepthStencilBuffer = Texture2D.CreateRenderBuffer(RenderBufferFormat.Depth24Stencil8, width, height);

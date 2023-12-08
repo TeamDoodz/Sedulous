@@ -304,7 +304,7 @@ namespace Sedulous.Presentation.Controls.Primitives
             switch (Placement)
             {
                 case TickBarPlacement.Left:
-                    if (MathUtil.AreApproximatelyEqual(ReservedSpace, size.Height))
+                    if (MathUtility.AreApproximatelyEqual(ReservedSpace, size.Height))
                         return;
                     size.Height -= ReservedSpace;
                     tickLength = -size.Width;
@@ -314,7 +314,7 @@ namespace Sedulous.Presentation.Controls.Primitives
                     break;
 
                 case TickBarPlacement.Top:
-                    if (MathUtil.AreApproximatelyEqual(ReservedSpace, size.Width))
+                    if (MathUtility.AreApproximatelyEqual(ReservedSpace, size.Width))
                         return;
                     size.Width -= ReservedSpace;
                     tickLength = -size.Height;
@@ -324,7 +324,7 @@ namespace Sedulous.Presentation.Controls.Primitives
                     break;
 
                 case TickBarPlacement.Right:
-                    if (MathUtil.AreApproximatelyEqual(ReservedSpace, size.Height))
+                    if (MathUtility.AreApproximatelyEqual(ReservedSpace, size.Height))
                         return;
                     size.Height -= ReservedSpace;
                     tickLength = size.Width;
@@ -334,7 +334,7 @@ namespace Sedulous.Presentation.Controls.Primitives
                     break;
 
                 case TickBarPlacement.Bottom:
-                    if (MathUtil.AreApproximatelyEqual(ReservedSpace, size.Width))
+                    if (MathUtility.AreApproximatelyEqual(ReservedSpace, size.Width))
                         return;
                     size.Width -= ReservedSpace;
                     tickLength = size.Height;
@@ -358,7 +358,7 @@ namespace Sedulous.Presentation.Controls.Primitives
             if (isVertical)
             {
                 var minFrequency = range / size.Height;
-                if (minFrequency > frequency && MathUtil.IsApproximatelyGreaterThan(frequency, 0.0))
+                if (minFrequency > frequency && MathUtility.IsApproximatelyGreaterThan(frequency, 0.0))
                     frequency = minFrequency;
 
                 // Draw end ticks
@@ -366,7 +366,7 @@ namespace Sedulous.Presentation.Controls.Primitives
                 DrawBlank(dc, NormalizeRect(tickPosEnd.X, tickPosEnd.Y, tickLength * TickLengthMajor, 1), tickColor);
 
                 // Draw minor ticks
-                for (var f = frequency; MathUtil.IsApproximatelyLessThan(f, range); f += frequency)
+                for (var f = frequency; MathUtility.IsApproximatelyLessThan(f, range); f += frequency)
                 {
                     var x = tickPosStart.X;
                     var y = f * conversion + tickPosStart.Y;
@@ -378,7 +378,7 @@ namespace Sedulous.Presentation.Controls.Primitives
             else
             {
                 var minFrequency = range / size.Width;
-                if (minFrequency > frequency && MathUtil.IsApproximatelyGreaterThan(frequency, 0.0))
+                if (minFrequency > frequency && MathUtility.IsApproximatelyGreaterThan(frequency, 0.0))
                     frequency = minFrequency;
 
                 // Draw end ticks
@@ -386,7 +386,7 @@ namespace Sedulous.Presentation.Controls.Primitives
                 DrawBlank(dc, NormalizeRect(tickPosEnd.X, tickPosEnd.Y, 1, tickLength * TickLengthMajor), tickColor);
 
                 // Draw minor ticks
-                for (var f = frequency; MathUtil.IsApproximatelyLessThan(f, range); f += frequency)
+                for (var f = frequency; MathUtility.IsApproximatelyLessThan(f, range); f += frequency)
                 {
                     var x = f * conversion + tickPosStart.X;
                     var y = tickPosStart.Y;

@@ -16,7 +16,7 @@ namespace Sedulous.Presentation
         /// </summary>
         /// <param name="assetID">The asset's identifier.</param>
         /// <param name="assetSource">The asset's source.</param>
-        public SourcedAssetID(AssetID assetID, AssetSource assetSource)
+        public SourcedAssetID(AssetId assetID, AssetSource assetSource)
         {
             this.assetID = assetID;
             this.assetSource = assetSource;
@@ -28,7 +28,7 @@ namespace Sedulous.Presentation
         /// <summary>
         /// Gets the asset's identifier.
         /// </summary>
-        public AssetID AssetID
+        public AssetId AssetID
         {
             get { return assetID; }
         }
@@ -42,7 +42,7 @@ namespace Sedulous.Presentation
         }
 
         // Property values.
-        private readonly AssetID assetID;
+        private readonly AssetId assetID;
         private readonly AssetSource assetSource;
     }
 }

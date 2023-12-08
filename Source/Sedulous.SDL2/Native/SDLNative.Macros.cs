@@ -1,7 +1,7 @@
 ﻿using System;
-using static Sedulous.SDL2.Native.SDL_PixelFormatEnum;
+using static Sedulous.Sdl2.Native.SDL_PixelFormatEnum;
 
-namespace Sedulous.SDL2.Native
+namespace Sedulous.Sdl2.Native
 {
 #pragma warning disable 1591
     /// <summary>

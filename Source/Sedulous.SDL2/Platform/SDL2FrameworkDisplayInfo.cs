@@ -4,25 +4,25 @@ using System.Collections.Generic;
 using System.Linq;
 using Sedulous.Core;
 using Sedulous.Platform;
-using static Sedulous.SDL2.Native.SDLNative;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2.Platform
+namespace Sedulous.Sdl2.Platform
 {
     /// <summary>
     /// Represents the SDL2 implementation of the <see cref="IFrameworkDisplayInfo"/> interface.
     /// </summary>
-    public sealed class SDL2FrameworkDisplayInfo : IFrameworkDisplayInfo
+    public sealed class Sdl2FrameworkDisplayInfo : IFrameworkDisplayInfo
     {
         /// <summary>
         /// Initializes a new instance of the OpenGLSedulousDisplayInfo class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
-        public SDL2FrameworkDisplayInfo(FrameworkContext context)
+        public Sdl2FrameworkDisplayInfo(FrameworkContext context)
         {
             Contract.Require(context, nameof(context));
 
             this.displays = Enumerable.Range(0, SDL_GetNumVideoDisplays())
-                .Select(x => new SDL2FrameworkDisplay(context, x))
+                .Select(x => new Sdl2FrameworkDisplay(context, x))
                 .ToList<IFrameworkDisplay>();
         }
 
@@ -33,7 +33,7 @@ namespace Sedulous.SDL2.Platform
         public void Update(FrameworkTime time)
         {
             foreach (var display in displays)
-                ((SDL2FrameworkDisplay)display).Update(time);
+                ((Sdl2FrameworkDisplay)display).Update(time);
         }
 
         /// <inheritdoc/>

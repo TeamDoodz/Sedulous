@@ -1,12 +1,12 @@
 ﻿using System;
-using static Sedulous.BASS.Native.BASSNative;
+using static Sedulous.Bass.Native.BASSNative;
 
-namespace Sedulous.BASS.Audio
+namespace Sedulous.Bass.Audio
 {
     /// <summary>
     /// Contains methods for manipulating BASS resources.
     /// </summary>
-    public static class BASSUtil
+    public static class BassUtility
     {
         /// <summary>
         /// Gets a value indicating whether the specified value is a valid resource handle.
@@ -38,11 +38,11 @@ namespace Sedulous.BASS.Audio
         {
             var length = BASS_ChannelGetLength(handle, 0);
             if (!IsValidValue(length))
-                throw new BASSException();
+                throw new BassException();
 
             var seconds = BASS_ChannelBytes2Seconds(handle, length);
             if (seconds < 0)
-                throw new BASSException();
+                throw new BassException();
 
             return seconds;
         }
@@ -56,11 +56,11 @@ namespace Sedulous.BASS.Audio
         {
             var position = BASS_ChannelGetPosition(handle, 0);
             if (!IsValidValue(position))
-                throw new BASSException();
+                throw new BassException();
 
             var seconds = BASS_ChannelBytes2Seconds(handle, position);
             if (seconds < 0)
-                throw new BASSException();
+                throw new BassException();
 
             return seconds;
         }
@@ -94,10 +94,10 @@ namespace Sedulous.BASS.Audio
         {
             var positionInBytes = BASS_ChannelSeconds2Bytes(handle, position);
             if (!IsValidValue(positionInBytes))
-                throw new BASSException();
+                throw new BassException();
 
             if (!BASS_ChannelSetPosition(handle, positionInBytes, 0))
-                throw new BASSException();
+                throw new BassException();
         }
 
         /// <summary>
@@ -108,8 +108,8 @@ namespace Sedulous.BASS.Audio
         public static Boolean GetIsLooping(UInt32 handle)
         {
             var flags = BASS_ChannelFlags(handle, 0, 0);
-            if (!BASSUtil.IsValidValue(flags))
-                throw new BASSException();
+            if (!BassUtility.IsValidValue(flags))
+                throw new BassException();
 
             return (flags & BASS_SAMPLE_LOOP) == BASS_SAMPLE_LOOP;
         }
@@ -126,7 +126,7 @@ namespace Sedulous.BASS.Audio
                     BASS_ChannelFlags(handle, 0, BASS_SAMPLE_LOOP);
 
             if (!IsValidValue(flags))
-                throw new BASSException();
+                throw new BassException();
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Sedulous.BASS.Audio
             {
                 Single value;
                 if (!BASS_ChannelGetAttribute(handle, BASS_ATTRIB_VOL, &value))
-                    throw new BASSException();
+                    throw new BassException();
                 return value;
             }
         }
@@ -155,12 +155,12 @@ namespace Sedulous.BASS.Audio
             if (BASS_ChannelIsSliding(handle, BASS_ATTRIB_VOL))
             {
                 if (!BASS_ChannelSlideAttribute(handle, BASS_ATTRIB_VOL, volume, 0))
-                    throw new BASSException();
+                    throw new BassException();
             }
             else
             {
                 if (!BASS_ChannelSetAttribute(handle, BASS_ATTRIB_VOL, volume))
-                    throw new BASSException();
+                    throw new BassException();
             }
         }
 
@@ -175,7 +175,7 @@ namespace Sedulous.BASS.Audio
             {
                 Single value;
                 if (!BASS_ChannelGetAttribute(handle, BASS_ATTRIB_PAN, &value))
-                    throw new BASSException();
+                    throw new BassException();
                 return value;
             }
         }
@@ -190,12 +190,12 @@ namespace Sedulous.BASS.Audio
             if (BASS_ChannelIsSliding(handle, BASS_ATTRIB_PAN))
             {
                 if (!BASS_ChannelSlideAttribute(handle, BASS_ATTRIB_PAN, pan, 0))
-                    throw new BASSException();
+                    throw new BassException();
             }
             else
             {
                 if (!BASS_ChannelSetAttribute(handle, BASS_ATTRIB_PAN, pan))
-                    throw new BASSException();
+                    throw new BassException();
             }
         }
 
@@ -208,7 +208,7 @@ namespace Sedulous.BASS.Audio
         public static void SlideVolume(UInt32 handle, Single volume, TimeSpan time)
         {
             if (!BASS_ChannelSlideAttribute(handle, BASS_ATTRIB_VOL, volume, (uint)time.TotalMilliseconds))
-                throw new BASSException();
+                throw new BassException();
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Sedulous.BASS.Audio
         public static void SlidePan(UInt32 handle, Single pan, TimeSpan time)
         {
             if (!BASS_ChannelSlideAttribute(handle, BASS_ATTRIB_PAN, pan, (uint)time.TotalMilliseconds))
-                throw new BASSException();
+                throw new BassException();
         }
 
         /// <summary>

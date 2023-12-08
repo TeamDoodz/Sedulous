@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using Sedulous.Core;
 using System.Text;
 
-namespace Sedulous.FMOD.Native
+namespace Sedulous.Fmod.Native
 {
 #pragma warning disable 1591
     public static unsafe partial class FMODNative

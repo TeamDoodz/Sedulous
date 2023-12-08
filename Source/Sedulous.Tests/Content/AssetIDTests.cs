@@ -18,7 +18,7 @@ namespace Sedulous.Tests.Content
                 {
                     content.FrameworkContext.GetContent().Manifests.Load(Path.Combine("Resources", "Content", "Manifests", "Test.manifest"));
                     
-                    var id = content.FrameworkContext.GetContent().Manifests["Test"]["Textures"]["Triangle"].CreateAssetID();
+                    var id = content.FrameworkContext.GetContent().Manifests["Test"]["Textures"]["Triangle"].CreateAssetId();
                     var json = JsonConvert.SerializeObject(id, 
                         FrameworkJsonSerializerSettings.Instance);
 
@@ -37,11 +37,11 @@ namespace Sedulous.Tests.Content
                 {
                     content.FrameworkContext.GetContent().Manifests.Load(Path.Combine("Resources", "Content", "Manifests", "Test.manifest"));
                     
-                    var id = JsonConvert.DeserializeObject<AssetID>(@"""#Test:Textures:Triangle""", 
+                    var id = JsonConvert.DeserializeObject<AssetId>(@"""#Test:Textures:Triangle""", 
                         FrameworkJsonSerializerSettings.Instance);
 
                     TheResultingValue(id)
-                        .ShouldBe(AssetID.Parse("#Test:Textures:Triangle"));
+                        .ShouldBe(AssetId.Parse("#Test:Textures:Triangle"));
                 })
                 .RunForOneFrame();
         }
@@ -55,11 +55,11 @@ namespace Sedulous.Tests.Content
                 {
                     content.FrameworkContext.GetContent().Manifests.Load(Path.Combine("Resources", "Content", "Manifests", "TestJson.jsmanifest"));
 
-                    var id = JsonConvert.DeserializeObject<AssetID>(@"""#Test:Textures:Triangle""",
+                    var id = JsonConvert.DeserializeObject<AssetId>(@"""#Test:Textures:Triangle""",
                         FrameworkJsonSerializerSettings.Instance);
 
                     TheResultingValue(id)
-                        .ShouldBe(AssetID.Parse("#Test:Textures:Triangle"));
+                        .ShouldBe(AssetId.Parse("#Test:Textures:Triangle"));
                 })
                 .RunForOneFrame();
         }

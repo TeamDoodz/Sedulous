@@ -24,7 +24,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="left">The distance in pixels between the left edge of the image and the left edge of the image's center segment.</param>
         /// <param name="right">The distance in pixels between the right edge of the image and the right edge of the image's center segment.</param>
         /// <returns>The new instance of <see cref="StretchableImage3"/> that was created.</returns>
-        public static StretchableImage3 Create(AssetID texture, Int32 left, Int32 right)
+        public static StretchableImage3 Create(AssetId texture, Int32 left, Int32 right)
         {
             return Create(texture, 0, 0, 0, 0, left, right);
         }
@@ -40,10 +40,10 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="left">The distance in pixels between the left edge of the image and the left edge of the image's center segment.</param>
         /// <param name="right">The distance in pixels between the right edge of the image and the right edge of the image's center segment.</param>
         /// <returns>The new instance of <see cref="StretchableImage3"/> that was created.</returns>
-        public static StretchableImage3 Create(AssetID texture, Int32 x, Int32 y, Int32 width, Int32 height, Int32 left, Int32 right)
+        public static StretchableImage3 Create(AssetId texture, Int32 x, Int32 y, Int32 width, Int32 height, Int32 left, Int32 right)
         {
             var img = new StretchableImage3();
-            img.TextureID = texture;
+            img.TextureId = texture;
             img.TextureRegion = new Rectangle(x, y, width, height);
             img.Left = left;
             img.Right = right;
@@ -58,7 +58,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="left">The distance in pixels between the left edge of the image and the left edge of the image's center segment.</param>
         /// <param name="right">The distance in pixels between the right edge of the image and the right edge of the image's center segment.</param>
         /// <returns>The new instance of <see cref="StretchableImage3"/> that was created.</returns>
-        public static StretchableImage3 Create(AssetID texture, Rectangle textureRegion, Int32 left, Int32 right)
+        public static StretchableImage3 Create(AssetId texture, Rectangle textureRegion, Int32 left, Int32 right)
         {
             return Create(texture, textureRegion.X, textureRegion.Y, textureRegion.Width, textureRegion.Height, left, right);
         }

@@ -1,9 +1,9 @@
-﻿namespace Sedulous.FMOD
+﻿namespace Sedulous.Fmod
 {
     /// <summary>
-    /// Represents an implementation of the <see cref="FMODPlatformSpecificImplementationDetails"/> class which does nothing.
+    /// Represents an implementation of the <see cref="FmodPlatformSpecificImplementationDetails"/> class which does nothing.
     /// </summary>
-    public class FMODGenericPlatformImplementationDetails : FMODPlatformSpecificImplementationDetails
+    public class FmodGenericPlatformImplementationDetails : FmodPlatformSpecificImplementationDetails
     {
         /// <inheritdoc/>
         public override void OnInitialized() { }

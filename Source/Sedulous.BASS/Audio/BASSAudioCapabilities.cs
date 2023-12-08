@@ -1,10 +1,10 @@
 ﻿using System;
 using Sedulous.Audio;
 
-namespace Sedulous.BASS.Audio
+namespace Sedulous.Bass.Audio
 {
     /// <inheritdoc/>
-    public sealed class BASSAudioCapabilities : AudioCapabilities
+    public sealed class BassAudioCapabilities : AudioCapabilities
     {
         /// <inheritdoc/>
         public override Boolean SupportsPitchShifting { get; } = false;

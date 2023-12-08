@@ -5,7 +5,7 @@ using Sedulous.Core;
 
 namespace Sedulous.Graphics.Graphics2D
 {
-    partial struct SpriteAnimationID
+    partial struct SpriteAnimationId
     {
         /// <summary>
         /// Converts the string representation of a sprite animation identifier to an instance of the SpriteAnimationID structure.
@@ -13,12 +13,12 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="manifests">The content manifest registry that contains the currently-loaded content manifests.</param>
         /// <param name="s">A string containing the sprite animation identifier to convert.</param>
         /// <returns>An instance of the SpriteAnimationID structure that is equivalent to the specified string.</returns>
-        public static SpriteAnimationID Parse(ContentManifestRegistry manifests, String s)
+        public static SpriteAnimationId Parse(ContentManifestRegistry manifests, String s)
         {
             Contract.Require(manifests, nameof(manifests));
             Contract.Require(s, nameof(s));
             
-            if (!TryParseInternal(manifests, s, out SpriteAnimationID value))
+            if (!TryParseInternal(manifests, s, out SpriteAnimationId value))
             {
                 throw new FormatException();
             }
@@ -32,7 +32,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="s">A string containing the sprite animation identifier to convert.</param>
         /// <param name="value">An instance of the SpriteAnimationID structure that is equivalent to the specified string.</param>
         /// <returns><see langword="true"/> if the string was successfully parsed; otherwise, <see langword="false"/>.</returns>
-        public static Boolean TryParse(ContentManifestRegistry manifests, String s, out SpriteAnimationID value)
+        public static Boolean TryParse(ContentManifestRegistry manifests, String s, out SpriteAnimationId value)
         {
             Contract.Require(manifests, nameof(manifests));
             Contract.Require(s, nameof(s));
@@ -41,25 +41,25 @@ namespace Sedulous.Graphics.Graphics2D
         }
 
         /// <summary>
-        /// Converts the string representation of a <see cref="SpriteAnimationID"/> to an object instance.
+        /// Converts the string representation of a <see cref="SpriteAnimationId"/> to an object instance.
         /// A return value indicates whether the conversion succeeded.
         /// </summary>
         /// <param name="s">The string to convert.</param>
         /// <param name="v">The converted value.</param>
         /// <returns><see langword="true"/> if the conversion succeeded; otherwise, <see langword="false"/>.</returns>
-        public static Boolean TryParse(String s, out SpriteAnimationID v)
+        public static Boolean TryParse(String s, out SpriteAnimationId v)
         {
             return TryParse(s, NumberStyles.Integer, NumberFormatInfo.CurrentInfo, out v);
         }
         
         /// <summary>
-        /// Converts the string representation of a <see cref="SpriteAnimationID"/> to an object instance.
+        /// Converts the string representation of a <see cref="SpriteAnimationId"/> to an object instance.
         /// </summary>
         /// <param name="s">The string to convert.</param>
         /// <returns>The converted value.</returns>
-        public static SpriteAnimationID Parse(String s)
+        public static SpriteAnimationId Parse(String s)
         {
-            var v = default(SpriteAnimationID);
+            var v = default(SpriteAnimationId);
             if (!TryParse(s, NumberStyles.Integer, NumberFormatInfo.CurrentInfo, out v))
                 throw new FormatException();
             
@@ -67,7 +67,7 @@ namespace Sedulous.Graphics.Graphics2D
         }
         
         /// <summary>
-        /// Converts the string representation of a <see cref="SpriteAnimationID"/> to an object instance.
+        /// Converts the string representation of a <see cref="SpriteAnimationId"/> to an object instance.
         /// A return value indicates whether the conversion succeeded.
         /// </summary>
         /// <param name="s">The string to convert.</param>
@@ -75,7 +75,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="provider">A format provider that provides culture-specific formatting information.</param>
         /// <param name="v">The converted value.</param>
         /// <returns><see langword="true"/> if the conversion succeeded; otherwise, <see langword="false"/>.</returns>
-        public static Boolean TryParse(String s, NumberStyles style, IFormatProvider provider, out SpriteAnimationID v)
+        public static Boolean TryParse(String s, NumberStyles style, IFormatProvider provider, out SpriteAnimationId v)
         {
             Contract.Require(s, nameof(s));
 
@@ -84,15 +84,15 @@ namespace Sedulous.Graphics.Graphics2D
         }
         
         /// <summary>
-        /// Converts the string representation of a <see cref="SpriteAnimationID"/> to an object instance.
+        /// Converts the string representation of a <see cref="SpriteAnimationId"/> to an object instance.
         /// </summary>
         /// <param name="s">The string to convert.</param>
         /// <param name="style">A set of <see cref="NumberStyles"/> values indicating which elements are present in <paramref name="s"/>.</param>
         /// <param name="provider">A format provider that provides culture-specific formatting information.</param>
         /// <returns>The converted value.</returns>
-        public static SpriteAnimationID Parse(String s, NumberStyles style, IFormatProvider provider)
+        public static SpriteAnimationId Parse(String s, NumberStyles style, IFormatProvider provider)
         {
-            var v = default(SpriteAnimationID);
+            var v = default(SpriteAnimationId);
             if (!TryParse(s, style, provider, out v))
                 throw new FormatException();
             
@@ -106,16 +106,16 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="s">A string containing the asset identifier to convert.</param>
         /// <param name="value">An instance of the SpriteAnimationID structure that is equivalent to the specified string.</param>
         /// <returns><see langword="true"/> if the string was successfully parsed; otherwise, <see langword="false"/>.</returns>
-        private static Boolean TryParseInternal(ContentManifestRegistry manifests, String s, out SpriteAnimationID value)
+        private static Boolean TryParseInternal(ContentManifestRegistry manifests, String s, out SpriteAnimationId value)
         {
-            value = default(SpriteAnimationID);
+            value = default(SpriteAnimationId);
 
             var delimiterIndex = s.LastIndexOf(':');
             if (delimiterIndex < 0)
                 return false;
 
-            var assetID = AssetID.Invalid;
-            if (!AssetID.TryParse(manifests, s.Substring(0, delimiterIndex), out assetID))
+            var assetID = AssetId.Invalid;
+            if (!AssetId.TryParse(manifests, s.Substring(0, delimiterIndex), out assetID))
                 return false;
 
             var animation = s.Substring(delimiterIndex + 1);
@@ -126,8 +126,8 @@ namespace Sedulous.Graphics.Graphics2D
             var animationIndexIsValid = Int32.TryParse(animation, out animationIndex);
 
             value = animationIndexIsValid ?
-                new SpriteAnimationID(assetID, animationIndex) :
-                new SpriteAnimationID(assetID, animation);
+                new SpriteAnimationId(assetID, animationIndex) :
+                new SpriteAnimationId(assetID, animation);
 
             return true;
         }

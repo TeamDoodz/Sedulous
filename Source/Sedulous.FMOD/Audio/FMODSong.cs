@@ -3,31 +3,31 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Sedulous.Audio;
 using Sedulous.Core;
-using Sedulous.FMOD.Native;
-using static Sedulous.FMOD.Native.FMOD_MODE;
-using static Sedulous.FMOD.Native.FMOD_RESULT;
-using static Sedulous.FMOD.Native.FMOD_TAGDATATYPE;
-using static Sedulous.FMOD.Native.FMODNative;
+using Sedulous.Fmod.Native;
+using static Sedulous.Fmod.Native.FMOD_MODE;
+using static Sedulous.Fmod.Native.FMOD_RESULT;
+using static Sedulous.Fmod.Native.FMOD_TAGDATATYPE;
+using static Sedulous.Fmod.Native.FMODNative;
 
-namespace Sedulous.FMOD.Audio
+namespace Sedulous.Fmod.Audio
 {
     /// <summary>
     /// Represents the FMOD implementation of the <see cref="Song"/> class.
     /// </summary>
-    public sealed unsafe class FMODSong : Song
+    public sealed unsafe class FmodSong : Song
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FMODSong"/> class.
+        /// Initializes a new instance of the <see cref="FmodSong"/> class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
         /// <param name="file">The path to the file from which to stream the song.</param>
-        public FMODSong(FrameworkContext context, String file)
+        public FmodSong(FrameworkContext context, String file)
             : base(context)
         {
             Contract.RequireNotEmpty(file, nameof(file));
 
             var result = default(FMOD_RESULT);
-            var system = ((FMODAudioSubsystem)context.GetAudio()).System;
+            var system = ((FmodAudioSubsystem)context.GetAudio()).System;
 
             // Load song as a sound
             fixed (FMOD_SOUND** psound = &sound)
@@ -37,7 +37,7 @@ namespace Sedulous.FMOD.Audio
                                 
                 result = FMOD_System_CreateStream(system, file, FMOD_LOOP_NORMAL | FMOD_2D | FMOD_3D_WORLDRELATIVE | FMOD_3D_INVERSEROLLOFF, &exinfo, psound);
                 if (result != FMOD_OK)
-                    throw new FMODException(result);
+                    throw new FmodException(result);
             }
 
             this.duration = GetDuration(sound);
@@ -67,14 +67,14 @@ namespace Sedulous.FMOD.Audio
         /// <summary>
         /// Gets the FMOD channel group for this object.
         /// </summary>
-        internal FMOD_CHANNELGROUP* ChannelGroup => ((FMODAudioSubsystem)FrameworkContext.GetAudio()).ChannelGroupSongs;
+        internal FMOD_CHANNELGROUP* ChannelGroup => ((FmodAudioSubsystem)FrameworkContext.GetAudio()).ChannelGroupSongs;
 
         /// <inheritdoc/>
         protected override void Dispose(Boolean disposing)
         {
             var result = FMOD_Sound_Release(sound);
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
             base.Dispose(disposing);
         }
@@ -87,7 +87,7 @@ namespace Sedulous.FMOD.Audio
             var durationInMilliseconds = 0u;
             var result = FMOD_Sound_GetLength(sound, &durationInMilliseconds, FMOD_TIMEUNIT.FMOD_TIMEUNIT_MS);
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
             return TimeSpan.FromMilliseconds(durationInMilliseconds);
         }
@@ -102,7 +102,7 @@ namespace Sedulous.FMOD.Audio
 
             result = FMOD_Sound_GetNumTags(sound, &numtags, null);
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
             var tags = new SongTagCollection();
 
@@ -138,7 +138,7 @@ namespace Sedulous.FMOD.Audio
 
             result = FMOD_Sound_GetTag(sound, null, index, &tag);
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
             var tagname = Marshal.PtrToStringAnsi(tag.name);
             var tagvalue = String.Empty;

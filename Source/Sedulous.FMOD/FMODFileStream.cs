@@ -3,21 +3,21 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Sedulous.Core;
-using Sedulous.FMOD.Native;
-using static Sedulous.FMOD.Native.FMOD_RESULT;
+using Sedulous.Fmod.Native;
+using static Sedulous.Fmod.Native.FMOD_RESULT;
 
-namespace Sedulous.FMOD
+namespace Sedulous.Fmod
 {
     /// <summary>
     /// Represents a file which is being loaded by native FMOD code.
     /// </summary>
-    public sealed unsafe class FMODFileStream : IDisposable
+    public sealed unsafe class FmodFileStream : IDisposable
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FMODFileStream"/> class.
+        /// Initializes a new instance of the <see cref="FmodFileStream"/> class.
         /// </summary>
         /// <param name="stream">The file stream from which to read data.</param>
-        public FMODFileStream(Stream stream)
+        public FmodFileStream(Stream stream)
         {
             Contract.Require(stream, nameof(stream));
 

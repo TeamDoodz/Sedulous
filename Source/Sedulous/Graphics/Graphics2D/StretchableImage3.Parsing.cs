@@ -44,7 +44,7 @@ namespace Sedulous.Graphics.Graphics2D
 
             var components = s.Split((Char[])null, StringSplitOptions.RemoveEmptyEntries);
 
-            var texture = AssetID.Invalid;
+            var texture = AssetId.Invalid;
             var x = 0;
             var y = 0;
             var width = 0;
@@ -63,7 +63,7 @@ namespace Sedulous.Graphics.Graphics2D
                 case 8:
                 case 9:
                 case 10:
-                    if (!AssetID.TryParse(components[0], out texture))
+                    if (!AssetId.TryParse(components[0], out texture))
                         return false;
                     if (!Int32.TryParse(components[1], out x))
                         return false;

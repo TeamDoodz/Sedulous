@@ -1,6 +1,6 @@
 using System;
 
-namespace Sedulous.FMOD.Native
+namespace Sedulous.Fmod.Native
 {
 #pragma warning disable 1591
     [Flags]

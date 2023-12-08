@@ -8,37 +8,37 @@ using Sedulous.Core;
 using Sedulous.Graphics;
 using Sedulous.OpenGL;
 using Sedulous.Platform;
-using Sedulous.SDL2.Messages;
-using Sedulous.SDL2.Native;
-using Sedulous.SDL2.Platform;
-using Sedulous.SDL2.Platform.Surface;
+using Sedulous.Sdl2.Messages;
+using Sedulous.Sdl2.Native;
+using Sedulous.Sdl2.Platform;
+using Sedulous.Sdl2.Platform.Surface;
 using Sedulous.UI;
-using static Sedulous.SDL2.Native.SDL_EventType;
-using static Sedulous.SDL2.Native.SDL_Hint;
-using static Sedulous.SDL2.Native.SDL_Init;
-using static Sedulous.SDL2.Native.SDL_WindowEventID;
-using static Sedulous.SDL2.Native.SDLNative;
+using static Sedulous.Sdl2.Native.SDL_EventType;
+using static Sedulous.Sdl2.Native.SDL_Hint;
+using static Sedulous.Sdl2.Native.SDL_Init;
+using static Sedulous.Sdl2.Native.SDL_WindowEventID;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2
+namespace Sedulous.Sdl2
 {
     /// <summary>
     /// Represents the base class for Sedulous implementations which use SDL2.
     /// </summary>
     [CLSCompliant(true)]
-    public class SDL2FrameworkContext : FrameworkContext
+    public class Sdl2FrameworkContext : FrameworkContext
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SDL2FrameworkContext"/> class.
+        /// Initializes a new instance of the <see cref="Sdl2FrameworkContext"/> class.
         /// </summary>
         /// <param name="host">The object that is hosting the Sedulous context.</param>
         /// <param name="configuration">The Sedulous Framework configuration settings for this context.</param>
-        public SDL2FrameworkContext(IFrameworkHost host, SDL2FrameworkConfiguration configuration)
+        public Sdl2FrameworkContext(IFrameworkHost host, Sdl2FrameworkConfiguration configuration)
             : base(host, configuration)
         {
             Contract.Require(configuration, nameof(configuration));
 
             if (!InitSDL(configuration))
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
 
             this.configuration = configuration;
         }
@@ -48,9 +48,9 @@ namespace Sedulous.SDL2
         {
             ConfigurePlugins(configuration);
             this.onWindowDrawing = (context, time, window) =>
-                ((SDL2FrameworkContext)context).OnWindowDrawing(time, window);
+                ((Sdl2FrameworkContext)context).OnWindowDrawing(time, window);
             this.onWindowDrawn = (context, time, window) =>
-                ((SDL2FrameworkContext)context).OnWindowDrawn(time, window);
+                ((Sdl2FrameworkContext)context).OnWindowDrawn(time, window);
 
             eventFilter = new SDL_EventFilter(SDLEventFilter);
             eventFilterPtr = Marshal.GetFunctionPointerForDelegate(eventFilter);
@@ -90,20 +90,20 @@ namespace Sedulous.SDL2
             Factory.SetFactoryMethod<Surface2DFromSourceFactory>((uv, source, options) => new SDL2Surface2D(uv, source, options));
             Factory.SetFactoryMethod<Surface2DFromNativeSurfaceFactory>((uv, surface, options) => new SDL2Surface2D(uv, surface, options));
             Factory.SetFactoryMethod<Surface3DFactory>((uv, width, height, depth, bytesPerPixel, options) => new SDL2Surface3D(uv, width, height, depth, bytesPerPixel, options));
-            Factory.SetFactoryMethod<CursorFactory>((uv, surface, hx, hv) => new SDL2Cursor(uv, surface, hx, hv));
+            Factory.SetFactoryMethod<CursorFactory>((uv, surface, hx, hv) => new Sdl2Cursor(uv, surface, hx, hv));
 
             // Platform services
-            var msgboxService = new SDL2MessageBoxService();
+            var msgboxService = new Sdl2MessageBoxService();
             Factory.SetFactoryMethod<MessageBoxServiceFactory>(() => msgboxService);
 
-            var clipboardService = new SDL2ClipboardService();
+            var clipboardService = new Sdl2ClipboardService();
             Factory.SetFactoryMethod<ClipboardServiceFactory>(() => clipboardService);
 
-            var powerManagementService = new SDL2PowerManagementService();
+            var powerManagementService = new Sdl2PowerManagementService();
             Factory.SetFactoryMethod<PowerManagementServiceFactory>(() => powerManagementService);
 
             // Graphics API services
-            Factory.SetFactoryMethod<OpenGLEnvironmentFactory>((uv) => new SDL2OpenGLEnvironment(uv));
+            Factory.SetFactoryMethod<OpenGLEnvironmentFactory>((uv) => new Sdl2OpenGLEnvironment(uv));
         }
 
         /// <inheritdoc/>
@@ -120,7 +120,7 @@ namespace Sedulous.SDL2
             Contract.Require(time, nameof(time));
             Contract.EnsureNotDisposed(this, Disposed);
 
-            var sdlinput = GetInput() as SDL2FrameworkInput;
+            var sdlinput = GetInput() as Sdl2FrameworkInput;
             if (sdlinput != null)
                 sdlinput.ResetDeviceStates();
 
@@ -201,7 +201,7 @@ namespace Sedulous.SDL2
             }
             else
             {
-                var platform = new SDL2PlatformSubsystem(this, configuration);
+                var platform = new Sdl2PlatformSubsystem(this, configuration);
                 PumpEvents();
                 return platform;
             }
@@ -223,7 +223,7 @@ namespace Sedulous.SDL2
 
             content.Processors.RegisterProcessor<SDL2Surface2DProcessor>();
             content.Processors.RegisterProcessor<SDL2Surface3DProcessor>();
-            content.Processors.RegisterProcessor<SDL2CursorProcessor>();
+            content.Processors.RegisterProcessor<Sdl2CursorProcessor>();
 
             return content;
         }
@@ -241,7 +241,7 @@ namespace Sedulous.SDL2
             var graphicsFactory = Factory.TryGetFactoryMethod<FrameworkGraphicsFactory>();
             if (graphicsFactory == null)
             {
-                throw new InvalidOperationException(SDL2Strings.MissingGraphicsFactory);
+                throw new InvalidOperationException(Sdl2Strings.MissingGraphicsFactory);
             }
 
             var graphics = graphicsFactory(this, configuration);
@@ -262,7 +262,7 @@ namespace Sedulous.SDL2
             var audioFactory = Factory.TryGetFactoryMethod<FrameworkAudioFactory>();
             if (audioFactory == null)
             {
-                throw new InvalidOperationException(SDL2Strings.MissingAudioFactory);
+                throw new InvalidOperationException(Sdl2Strings.MissingAudioFactory);
             }
 
             var audio = audioFactory(this, configuration);
@@ -279,7 +279,7 @@ namespace Sedulous.SDL2
             if (IsRunningInServiceMode)
                 return new DummyInputSubsystem(this);
 
-            return new SDL2FrameworkInput(this);
+            return new Sdl2FrameworkInput(this);
         }
 
         /// <summary>
@@ -306,7 +306,7 @@ namespace Sedulous.SDL2
             if (Platform == FrameworkPlatform.Windows)
             {
                 if (!SDL_SetHint(SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1"))
-                    throw new SDL2Exception();
+                    throw new Sdl2Exception();
             }
 
             return SDL_Init(sdlFlags) == 0;
@@ -329,8 +329,8 @@ namespace Sedulous.SDL2
                     case SDL_WINDOWEVENT:
                         if (@event.window.@event == SDL_WINDOWEVENT_CLOSE)
                         {
-                            var glWindowInfo = (SDL2FrameworkWindowInfo)GetPlatform().Windows;
-                            if (glWindowInfo.DestroyByID((int)@event.window.windowID))
+                            var glWindowInfo = (Sdl2FrameworkWindowInfo)GetPlatform().Windows;
+                            if (glWindowInfo.DestroyById((int)@event.window.windowID))
                             {
                                 Messages.Publish(FrameworkMessages.Quit, null);
                                 return true;
@@ -364,9 +364,9 @@ namespace Sedulous.SDL2
                 }
 
                 // Publish any SDL events to the message queue.
-                var data = Messages.CreateMessageData<SDL2EventMessageData>();
+                var data = Messages.CreateMessageData<Sdl2EventMessageData>();
                 data.Event = @event;
-                Messages.Publish(SDL2FrameworkMessages.SDLEvent, data);
+                Messages.Publish(Sdl2FrameworkMessages.SdlEvent, data);
             }
             return !Disposed;
         }

@@ -20,7 +20,7 @@ namespace Sedulous
     /// Represents an application running on top of the Sedulous Framework.
     /// </summary>
     public abstract partial class FrameworkApplication :
-        IMessageSubscriber<FrameworkMessageID>,
+        IMessageSubscriber<FrameworkMessageId>,
         IFrameworkComponent,
         IFrameworkHost,
         IDisposable
@@ -52,7 +52,7 @@ namespace Sedulous
         }
 
         /// <inheritdoc/>
-        void IMessageSubscriber<FrameworkMessageID>.ReceiveMessage(FrameworkMessageID type, MessageData data)
+        void IMessageSubscriber<FrameworkMessageId>.ReceiveMessage(FrameworkMessageId type, MessageData data)
         {
             OnReceivedMessage(type, data);
         }
@@ -424,7 +424,7 @@ namespace Sedulous
         /// </summary>
         /// <param name="type">The message type.</param>
         /// <param name="data">The message data.</param>
-        protected virtual void OnReceivedMessage(FrameworkMessageID type, MessageData data)
+        protected virtual void OnReceivedMessage(FrameworkMessageId type, MessageData data)
         {
             if (type == FrameworkMessages.ApplicationTerminating)
             {

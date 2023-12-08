@@ -57,7 +57,7 @@ namespace Sedulous.Core.Data
 
             var registry = DataObjectRegistries.Get<T>();
             var obj = registry.GetObject(globalID);
-            return (obj == null) ? (ushort)0 : obj.LocalID;
+            return (obj == null) ? (ushort)0 : obj.LocalId;
         }
     }
 }

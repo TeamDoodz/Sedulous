@@ -16,7 +16,7 @@ namespace Sedulous.Presentation
         /// </summary>
         /// <param name="asset">The asset identifier of the resource.</param>
         /// <param name="source">An <see cref="AssetSource"/> value describing how to load the resource.</param>
-        public SourcedResource(AssetID asset, AssetSource source)
+        public SourcedResource(AssetId asset, AssetSource source)
         {
             this.Resource = new FrameworkResource<T>();
             this.Asset = asset;
@@ -68,9 +68,9 @@ namespace Sedulous.Presentation
         public Boolean IsLoaded => Resource != null && Resource.Value != null;
         
         /// <summary>
-        /// Gets the <see cref="AssetID"/> that identifies this resource.
+        /// Gets the <see cref="AssetId"/> that identifies this resource.
         /// </summary>
-        public AssetID Asset { get; }
+        public AssetId Asset { get; }
 
         /// <summary>
         /// Gets a <see cref="AssetSource"/> value indicating how to load the asset.

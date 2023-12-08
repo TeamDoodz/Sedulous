@@ -24,10 +24,10 @@ namespace Sedulous
             readers[typeof(Color?)] = ReadJson_NullableColor;
             readers[typeof(Matrix)] = ReadJson_Matrix;
             readers[typeof(Matrix?)] = ReadJson_NullableMatrix;
-            readers[typeof(AssetID)] = ReadJson_AssetID;
-            readers[typeof(AssetID?)] = ReadJson_NullableAssetID;
-            readers[typeof(SpriteAnimationID)] = ReadJson_SpriteAnimationID;
-            readers[typeof(SpriteAnimationID?)] = ReadJson_NullableSpriteAnimationID;
+            readers[typeof(AssetId)] = ReadJson_AssetID;
+            readers[typeof(AssetId?)] = ReadJson_NullableAssetID;
+            readers[typeof(SpriteAnimationId)] = ReadJson_SpriteAnimationID;
+            readers[typeof(SpriteAnimationId?)] = ReadJson_NullableSpriteAnimationID;
 
             writers = new Dictionary<Type, WriteJsonDelegate>();
             writers[typeof(Radians)] = WriteJson_Radians;
@@ -36,10 +36,10 @@ namespace Sedulous
             writers[typeof(Color?)] = WriteJson_NullableColor;
             writers[typeof(Matrix)] = WriteJson_Matrix;
             writers[typeof(Matrix?)] = WriteJson_NullableMatrix;
-            writers[typeof(AssetID)] = WriteJson_AssetID;
-            writers[typeof(AssetID?)] = WriteJson_NullableAssetID;
-            writers[typeof(SpriteAnimationID)] = WriteJson_SpriteAnimationID;
-            writers[typeof(SpriteAnimationID?)] = WriteJson_NullableSpriteAnimationID;
+            writers[typeof(AssetId)] = WriteJson_AssetID;
+            writers[typeof(AssetId?)] = WriteJson_NullableAssetID;
+            writers[typeof(SpriteAnimationId)] = WriteJson_SpriteAnimationID;
+            writers[typeof(SpriteAnimationId?)] = WriteJson_NullableSpriteAnimationID;
         }
 
         /// <inheritdoc/>
@@ -135,12 +135,12 @@ namespace Sedulous
         }
 
         /// <summary>
-        /// Reads a <see cref="AssetID"/> value.
+        /// Reads a <see cref="AssetId"/> value.
         /// </summary>
         private static Object ReadJson_AssetID(JsonReader reader, Type objectType, Object existingValue, JsonSerializer serializer)
         {
             var value = (String)serializer.Deserialize(reader, typeof(String));
-            return AssetID.Parse(value);
+            return AssetId.Parse(value);
         }
 
         /// <summary>
@@ -155,12 +155,12 @@ namespace Sedulous
         }
 
         /// <summary>
-        /// Reads a <see cref="SpriteAnimationID"/> value.
+        /// Reads a <see cref="SpriteAnimationId"/> value.
         /// </summary>
         private static Object ReadJson_SpriteAnimationID(JsonReader reader, Type objectType, Object existingValue, JsonSerializer serializer)
         {
             var value = (String)serializer.Deserialize(reader, typeof(String));
-            return SpriteAnimationID.Parse(value);
+            return SpriteAnimationId.Parse(value);
         }
 
         /// <summary>
@@ -256,11 +256,11 @@ namespace Sedulous
         }
 
         /// <summary>
-        /// Writes a <see cref="AssetID"/> value.
+        /// Writes a <see cref="AssetId"/> value.
         /// </summary>
         private static void WriteJson_AssetID(JsonWriter writer, Object value, JsonSerializer serializer)
         {
-            var id = (AssetID)value;
+            var id = (AssetId)value;
             serializer.Serialize(writer, id.ToString());
         }
 
@@ -269,18 +269,18 @@ namespace Sedulous
         /// </summary>
         private static void WriteJson_NullableAssetID(JsonWriter writer, Object value, JsonSerializer serializer)
         {
-            if (value == null || !((AssetID?)value).HasValue)
+            if (value == null || !((AssetId?)value).HasValue)
                 serializer.Serialize(writer, null);
             else
                 WriteJson_AssetID(writer, value, serializer);
         }
 
         /// <summary>
-        /// Writes a <see cref="SpriteAnimationID"/> value.
+        /// Writes a <see cref="SpriteAnimationId"/> value.
         /// </summary>
         private static void WriteJson_SpriteAnimationID(JsonWriter writer, Object value, JsonSerializer serializer)
         {
-            var id = (SpriteAnimationID)value;
+            var id = (SpriteAnimationId)value;
             serializer.Serialize(writer, id.ToString());
         }
 
@@ -289,7 +289,7 @@ namespace Sedulous
         /// </summary>
         private static void WriteJson_NullableSpriteAnimationID(JsonWriter writer, Object value, JsonSerializer serializer)
         {
-            if (value == null || !((SpriteAnimationID?)value).HasValue)
+            if (value == null || !((SpriteAnimationId?)value).HasValue)
                 serializer.Serialize(writer, null);
             else
                 WriteJson_SpriteAnimationID(writer, value, serializer);

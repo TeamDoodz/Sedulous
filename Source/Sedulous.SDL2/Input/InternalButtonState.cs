@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sedulous.SDL2.Input
+namespace Sedulous.Sdl2.Input
 {
     /// <summary>
     /// An internal representation of the state of a button on an input device.

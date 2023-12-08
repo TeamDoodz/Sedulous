@@ -855,12 +855,12 @@ namespace Sedulous.Presentation.Controls
             var newViewportHeight = ViewportHeight;
 
             var scrollChanged =
-                !MathUtil.AreApproximatelyEqual(oldHorizontalOffset, newHorizontalOffset) ||
-                !MathUtil.AreApproximatelyEqual(oldVerticalOffset, newVerticalOffset) ||
-                !MathUtil.AreApproximatelyEqual(oldExtentWidth, newExtentWidth) ||
-                !MathUtil.AreApproximatelyEqual(oldExtentHeight, newExtentHeight) ||
-                !MathUtil.AreApproximatelyEqual(oldViewportWidth, newViewportWidth) ||
-                !MathUtil.AreApproximatelyEqual(oldViewportHeight, newViewportHeight);
+                !MathUtility.AreApproximatelyEqual(oldHorizontalOffset, newHorizontalOffset) ||
+                !MathUtility.AreApproximatelyEqual(oldVerticalOffset, newVerticalOffset) ||
+                !MathUtility.AreApproximatelyEqual(oldExtentWidth, newExtentWidth) ||
+                !MathUtility.AreApproximatelyEqual(oldExtentHeight, newExtentHeight) ||
+                !MathUtility.AreApproximatelyEqual(oldViewportWidth, newViewportWidth) ||
+                !MathUtility.AreApproximatelyEqual(oldViewportHeight, newViewportHeight);
 
             if (scrollChanged)
             {
@@ -1031,12 +1031,12 @@ namespace Sedulous.Presentation.Controls
             var minY = 0.0;
 
             var requesterIsToLeft =
-                MathUtil.IsApproximatelyLessThan(boundsRequester.Left, boundsViewport.Left) &&
-                MathUtil.IsApproximatelyLessThan(boundsRequester.Right, boundsViewport.Right);
+                MathUtility.IsApproximatelyLessThan(boundsRequester.Left, boundsViewport.Left) &&
+                MathUtility.IsApproximatelyLessThan(boundsRequester.Right, boundsViewport.Right);
 
             var requesterIsToRight =
-                MathUtil.IsApproximatelyGreaterThan(boundsRequester.Left, boundsViewport.Left) &&
-                MathUtil.IsApproximatelyGreaterThan(boundsRequester.Right, boundsViewport.Right);
+                MathUtility.IsApproximatelyGreaterThan(boundsRequester.Left, boundsViewport.Left) &&
+                MathUtility.IsApproximatelyGreaterThan(boundsRequester.Right, boundsViewport.Right);
 
             var requesterIsWider =
                 boundsRequester.Width > boundsViewport.Width;
@@ -1058,12 +1058,12 @@ namespace Sedulous.Presentation.Controls
             }
 
             var requesterIsAbove =
-                MathUtil.IsApproximatelyLessThan(boundsRequester.Top, boundsViewport.Top) &&
-                MathUtil.IsApproximatelyLessThan(boundsRequester.Bottom, boundsViewport.Bottom);
+                MathUtility.IsApproximatelyLessThan(boundsRequester.Top, boundsViewport.Top) &&
+                MathUtility.IsApproximatelyLessThan(boundsRequester.Bottom, boundsViewport.Bottom);
 
             var requesterIsBelow =
-                MathUtil.IsApproximatelyGreaterThan(boundsRequester.Top, boundsViewport.Top) &&
-                MathUtil.IsApproximatelyGreaterThan(boundsRequester.Bottom, boundsViewport.Bottom);
+                MathUtility.IsApproximatelyGreaterThan(boundsRequester.Top, boundsViewport.Top) &&
+                MathUtility.IsApproximatelyGreaterThan(boundsRequester.Bottom, boundsViewport.Bottom);
 
             var requesterIsTaller =
                 boundsRequester.Height > boundsViewport.Height;

@@ -518,14 +518,14 @@ namespace Sedulous.Presentation.Controls
                 var prev = min;
                 var next = max;
 
-                if (MathUtil.IsApproximatelyGreaterThan(TickFrequency, 0.0))
+                if (MathUtility.IsApproximatelyGreaterThan(TickFrequency, 0.0))
                 {
                     var frequency = TickFrequency;
                     prev = min + (Math.Round(((value - min) / frequency)) * frequency);
                     next = Math.Min(max, prev + frequency);
                 }
 
-                value = MathUtil.IsApproximatelyGreaterThanOrEqual(value, (prev + next) * 0.5) ? next : prev;
+                value = MathUtility.IsApproximatelyGreaterThanOrEqual(value, (prev + next) * 0.5) ? next : prev;
             }
             return value;
         }
@@ -538,7 +538,7 @@ namespace Sedulous.Presentation.Controls
             var snapped = SnapToTick(value);
             if (snapped != Value)
             {
-                Value = MathUtil.Clamp(snapped, Minimum, Maximum);
+                Value = MathUtility.Clamp(snapped, Minimum, Maximum);
             }
         }
 
@@ -547,7 +547,7 @@ namespace Sedulous.Presentation.Controls
         /// </summary>
         private void SetValueToNextTick(Double delta)
         {
-            if (MathUtil.IsApproximatelyZero(delta))
+            if (MathUtility.IsApproximatelyZero(delta))
                 return;
 
             var dir = Math.Sign(delta);
@@ -556,10 +556,10 @@ namespace Sedulous.Presentation.Controls
             var max = Maximum;
             var frequency = TickFrequency;
 
-            var next = SnapToTick(MathUtil.Clamp(val + delta, min, max));
+            var next = SnapToTick(MathUtility.Clamp(val + delta, min, max));
             if (next == val && !(dir > 0 && val == max) && !(dir < 0 && val == min))
             {
-                if (MathUtil.IsApproximatelyGreaterThan(frequency, 0.0))
+                if (MathUtility.IsApproximatelyGreaterThan(frequency, 0.0))
                 {
                     var tickIndex = Math.Round((val - min) / frequency) + dir;                    
                     next = min + tickIndex * frequency;

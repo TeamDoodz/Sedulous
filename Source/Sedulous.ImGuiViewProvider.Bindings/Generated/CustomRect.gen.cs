@@ -7,7 +7,7 @@ namespace Sedulous.ImGuiViewProvider.Bindings
 {
     public unsafe partial struct CustomRect
     {
-        public uint ID;
+        public uint Id;
         public ushort Width;
         public ushort Height;
         public ushort X;
@@ -24,7 +24,7 @@ namespace Sedulous.ImGuiViewProvider.Bindings
         public static implicit operator CustomRectPtr(CustomRect* nativePtr) => new CustomRectPtr(nativePtr);
         public static implicit operator CustomRect* (CustomRectPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator CustomRectPtr(IntPtr nativePtr) => new CustomRectPtr(nativePtr);
-        public ref uint ID => ref Unsafe.AsRef<uint>(&NativePtr->ID);
+        public ref uint Id => ref Unsafe.AsRef<uint>(&NativePtr->Id);
         public ref ushort Width => ref Unsafe.AsRef<ushort>(&NativePtr->Width);
         public ref ushort Height => ref Unsafe.AsRef<ushort>(&NativePtr->Height);
         public ref ushort X => ref Unsafe.AsRef<ushort>(&NativePtr->X);

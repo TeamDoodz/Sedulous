@@ -278,7 +278,7 @@ namespace Sedulous.Graphics.Graphics3D
                     easeInElasped = easeInDuration;
 
                 var t = (Single)(easeInElasped / easeInDuration);
-                BlendingWeight = MathUtil.Clamp(easeInFunction(t), 0f, 1f);
+                BlendingWeight = MathUtility.Clamp(easeInFunction(t), 0f, 1f);
             }
 
             if (!IsStopping)
@@ -291,7 +291,7 @@ namespace Sedulous.Graphics.Graphics3D
                     easeOutElapsed = easeOutDuration;
 
                 var t = 1f - (Single)(easeOutElapsed / easeOutDuration);
-                BlendingWeight = MathUtil.Clamp(easeOutFunction(t), 0f, 1f);
+                BlendingWeight = MathUtility.Clamp(easeOutFunction(t), 0f, 1f);
             }
 
             return easeOutElapsed >= easeOutDuration;

@@ -5,7 +5,7 @@ using System.Linq;
 using Sedulous.Content;
 using Sedulous.Platform;
 
-namespace Sedulous.SDL2.Platform.Surface
+namespace Sedulous.Sdl2.Platform.Surface
 {
     /// <summary>
     /// Loads 3D surface assets.
@@ -48,7 +48,7 @@ namespace Sedulous.SDL2.Platform.Surface
             var layerWidth = layerHeight;
             var layerCount = input.Width / layerWidth;
             if (input.Width % layerWidth != 0)
-                throw new InvalidDataException(SDL2Strings.SurfaceMustHaveSquareLayers);
+                throw new InvalidDataException(Sdl2Strings.SurfaceMustHaveSquareLayers);
 
             // Create surfaces for each of our layers.
             using (var mainSurface = Surface2D.Create(input))

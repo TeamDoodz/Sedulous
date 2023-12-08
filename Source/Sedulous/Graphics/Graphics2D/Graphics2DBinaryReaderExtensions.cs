@@ -15,12 +15,12 @@ namespace Sedulous.Graphics.Graphics2D
         /// belonging to the current Framework context.
         /// </summary>
         /// <param name="reader">The <see cref="BinaryReader"/> which to read the sprite animation identifier.</param>
-        /// <returns>The <see cref="SpriteAnimationID"/> that was read from the stream.</returns>
-        public static SpriteAnimationID ReadSpriteAnimationID(this BinaryReader reader)
+        /// <returns>The <see cref="SpriteAnimationId"/> that was read from the stream.</returns>
+        public static SpriteAnimationId ReadSpriteAnimationId(this BinaryReader reader)
         {
             Contract.Require(reader, nameof(reader));
 
-            return ReadSpriteAnimationID(reader, FrameworkContext.DemandCurrent().GetContent().Manifests);
+            return ReadSpriteAnimationId(reader, FrameworkContext.DemandCurrent().GetContent().Manifests);
         }
 
         /// <summary>
@@ -29,11 +29,11 @@ namespace Sedulous.Graphics.Graphics2D
         /// </summary>
         /// <param name="reader">The <see cref="BinaryReader"/> from which to read the sprite animation identifier.</param>
         /// <returns>The <see cref="Nullable{SpriteAnimationID}"/> identifier that was read from the stream.</returns>
-        public static SpriteAnimationID? ReadNullableSpriteAnimationID(this BinaryReader reader)
+        public static SpriteAnimationId? ReadNullableSpriteAnimationId(this BinaryReader reader)
         {
             Contract.Require(reader, nameof(reader));
 
-            return ReadNullableSpriteAnimationID(reader, FrameworkContext.DemandCurrent().GetContent().Manifests);
+            return ReadNullableSpriteAnimationId(reader, FrameworkContext.DemandCurrent().GetContent().Manifests);
         }
 
         /// <summary>
@@ -41,8 +41,8 @@ namespace Sedulous.Graphics.Graphics2D
         /// </summary>
         /// <param name="reader">The <see cref="BinaryReader"/> from which to read the sprite animation identifier.</param>
         /// <param name="manifests">The <see cref="ContentManifestRegistry"/> that contains the application's loaded manifests.</param>
-        /// <returns>The <see cref="SpriteAnimationID"/> that was read from the stream.</returns>
-        public static SpriteAnimationID ReadSpriteAnimationID(this BinaryReader reader, ContentManifestRegistry manifests)
+        /// <returns>The <see cref="SpriteAnimationId"/> that was read from the stream.</returns>
+        public static SpriteAnimationId ReadSpriteAnimationId(this BinaryReader reader, ContentManifestRegistry manifests)
         {
             Contract.Require(reader, nameof(reader));
             Contract.Require(manifests, nameof(manifests));
@@ -50,15 +50,15 @@ namespace Sedulous.Graphics.Graphics2D
             var valid = reader.ReadBoolean();
             if (valid)
             {
-                var spriteAssetID = reader.ReadAssetID();
+                var spriteAssetID = reader.ReadAssetId();
                 var animationName = reader.ReadString();
                 var animationIndex = reader.ReadInt32();
 
                 return String.IsNullOrEmpty(animationName) ? 
-                    new SpriteAnimationID(spriteAssetID, animationIndex) :
-                    new SpriteAnimationID(spriteAssetID, animationName);
+                    new SpriteAnimationId(spriteAssetID, animationIndex) :
+                    new SpriteAnimationId(spriteAssetID, animationName);
             }
-            return SpriteAnimationID.Invalid;
+            return SpriteAnimationId.Invalid;
         }
 
         /// <summary>
@@ -66,8 +66,8 @@ namespace Sedulous.Graphics.Graphics2D
         /// </summary>
         /// <param name="reader">The <see cref="BinaryReader"/> from which to read the sprite animation identifier.</param>
         /// <param name="manifests">The <see cref="ContentManifestRegistry"/> that contains the application's loaded manifests.</param>
-        /// <returns>The <see cref="SpriteAnimationID"/> that was read from the stream.</returns>
-        public static SpriteAnimationID? ReadNullableSpriteAnimationID(this BinaryReader reader, ContentManifestRegistry manifests)
+        /// <returns>The <see cref="SpriteAnimationId"/> that was read from the stream.</returns>
+        public static SpriteAnimationId? ReadNullableSpriteAnimationId(this BinaryReader reader, ContentManifestRegistry manifests)
         {
             Contract.Require(reader, nameof(reader));
             Contract.Require(manifests, nameof(manifests));
@@ -75,7 +75,7 @@ namespace Sedulous.Graphics.Graphics2D
             var hasValue = reader.ReadBoolean();
             if (hasValue)
             {
-                return reader.ReadSpriteAnimationID(manifests);
+                return reader.ReadSpriteAnimationId(manifests);
             }
             return null;
         }

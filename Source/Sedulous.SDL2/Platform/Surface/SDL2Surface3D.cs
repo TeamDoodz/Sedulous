@@ -5,7 +5,7 @@ using System.Linq;
 using Sedulous.Core;
 using Sedulous.Platform;
 
-namespace Sedulous.SDL2.Platform.Surface
+namespace Sedulous.Sdl2.Platform.Surface
 {
     /// <summary>
     /// Represents the SDL2 implementation of the <see cref="Surface3D"/> class.
@@ -149,7 +149,7 @@ namespace Sedulous.SDL2.Platform.Surface
         {
             Contract.EnsureNotDisposed(this, Disposed);
             Contract.Require(stream, nameof(stream));
-            Contract.Ensure(IsComplete, SDL2Strings.SurfaceIsNotComplete);
+            Contract.Ensure(IsComplete, Sdl2Strings.SurfaceIsNotComplete);
 
             EnsureAllLayersMatchSrgbEncoding();
 
@@ -173,7 +173,7 @@ namespace Sedulous.SDL2.Platform.Surface
         {
             Contract.EnsureNotDisposed(this, Disposed);
             Contract.Require(stream, nameof(stream));
-            Contract.Ensure(IsComplete, SDL2Strings.SurfaceIsNotComplete);
+            Contract.Ensure(IsComplete, Sdl2Strings.SurfaceIsNotComplete);
 
             EnsureAllLayersMatchSrgbEncoding();
 

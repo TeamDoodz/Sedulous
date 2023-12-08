@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace Sedulous.SDL2.Native
+namespace Sedulous.Sdl2.Native
 {
 #pragma warning disable 1591
     /// <summary>

@@ -13,13 +13,13 @@ namespace Sedulous.Content
         /// belonging to the current Framework context.
         /// </summary>
         /// <param name="reader">The binary reader from which to read the asset identifier.</param>
-        /// <returns>An instance of the <see cref="AssetID"/> structure representing the 
+        /// <returns>An instance of the <see cref="AssetId"/> structure representing the 
         /// asset identifier that was read from the stream.</returns>
-        public static AssetID ReadAssetID(this BinaryReader reader)
+        public static AssetId ReadAssetId(this BinaryReader reader)
         {
             Contract.Require(reader, nameof(reader));
 
-            return ReadAssetID(reader, FrameworkContext.DemandCurrent().GetContent().Manifests);
+            return ReadAssetId(reader, FrameworkContext.DemandCurrent().GetContent().Manifests);
         }
 
         /// <summary>
@@ -29,11 +29,11 @@ namespace Sedulous.Content
         /// <param name="reader">The binary reader from which to read the asset identifier.</param>
         /// <returns>An instance of the <see cref="System.Nullable{AssetID}"/> structure representing the 
         /// asset identifier that was read from the stream.</returns>
-        public static AssetID? ReadNullableAssetID(this BinaryReader reader)
+        public static AssetId? ReadNullableAssetId(this BinaryReader reader)
         {
             Contract.Require(reader, nameof(reader));
 
-            return ReadNullableAssetID(reader, FrameworkContext.DemandCurrent().GetContent().Manifests);
+            return ReadNullableAssetId(reader, FrameworkContext.DemandCurrent().GetContent().Manifests);
         }
 
         /// <summary>
@@ -41,9 +41,9 @@ namespace Sedulous.Content
         /// </summary>
         /// <param name="reader">The binary reader from which to read the asset identifier.</param>
         /// <param name="manifests">The registry that contains the application's loaded manifests.</param>
-        /// <returns>An instance of the <see cref="AssetID"/> structure representing the
+        /// <returns>An instance of the <see cref="AssetId"/> structure representing the
         /// asset identifier that was read from the stream.</returns>
-        public static AssetID ReadAssetID(this BinaryReader reader, ContentManifestRegistry manifests)
+        public static AssetId ReadAssetId(this BinaryReader reader, ContentManifestRegistry manifests)
         {
             Contract.Require(reader, nameof(reader));
             Contract.Require(manifests, nameof(manifests));
@@ -57,19 +57,19 @@ namespace Sedulous.Content
 
                 var manifest = manifests[manifestName];
                 if (manifest == null)
-                    return AssetID.Invalid;
+                    return AssetId.Invalid;
 
                 var manifestGroup = manifest[manifestGroupName];
                 if (manifestGroup == null)
-                    return AssetID.Invalid;
+                    return AssetId.Invalid;
 
                 var asset = manifestGroup[assetName];
                 if (asset == null)
-                    return AssetID.Invalid;
+                    return AssetId.Invalid;
 
-                return asset.CreateAssetID();
+                return asset.CreateAssetId();
             }
-            return AssetID.Invalid;
+            return AssetId.Invalid;
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Sedulous.Content
         /// <param name="manifests">The registry that contains the application's loaded manifests.</param>
         /// <returns>An instance of the <see cref="System.Nullable{AssetID}"/> structure representing the
         /// asset identifier that was read from the stream.</returns>
-        public static AssetID? ReadNullableAssetID(this BinaryReader reader, ContentManifestRegistry manifests)
+        public static AssetId? ReadNullableAssetId(this BinaryReader reader, ContentManifestRegistry manifests)
         {
             Contract.Require(reader, nameof(reader));
             Contract.Require(manifests, nameof(manifests));
@@ -87,7 +87,7 @@ namespace Sedulous.Content
             var hasValue = reader.ReadBoolean();
             if (hasValue)
             {
-                return reader.ReadAssetID(manifests);
+                return reader.ReadAssetId(manifests);
             }
             return null;
         }

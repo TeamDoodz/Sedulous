@@ -3,16 +3,16 @@ using Sedulous.Core;
 using System.IO;
 using System.Reflection;
 using System;
-using Sedulous.FMOD.Audio;
+using Sedulous.Fmod.Audio;
 using System.Linq;
 using Sedulous.Content;
 
-namespace Sedulous.FMOD
+namespace Sedulous.Fmod
 {
     /// <summary>
     /// Represents an Sedulous plugin which registers FMOD as the audio subsystem implementation.
     /// </summary>
-    public class FMODAudioPlugin : FrameworkPlugin
+    public class FmodAudioPlugin : FrameworkPlugin
     {
         /// <inheritdoc/>
         public override void Register(FrameworkConfiguration configuration)
@@ -25,20 +25,20 @@ namespace Sedulous.FMOD
         /// <inheritdoc/>
         public override void Configure(FrameworkContext context, FrameworkFactory factory)
         {
-            factory.SetFactoryMethod<SongPlayerFactory>((uv) => new FMODSongPlayer(uv));
-            factory.SetFactoryMethod<SoundEffectPlayerFactory>((uv) => new FMODSoundEffectPlayer(uv));
+            factory.SetFactoryMethod<SongPlayerFactory>((uv) => new FmodSongPlayer(uv));
+            factory.SetFactoryMethod<SoundEffectPlayerFactory>((uv) => new FmodSoundEffectPlayer(uv));
 
             try
             {
                 if (FrameworkPlatformInfo.CurrentPlatform == FrameworkPlatform.Android)
                 {
                     var shim = Assembly.Load("Sedulous.Shims.Android.FMOD.dll");
-                    var type = shim.GetTypes().Where(x => x.IsClass && !x.IsAbstract && typeof(FMODPlatformSpecificImplementationDetails).IsAssignableFrom(x)).SingleOrDefault();
+                    var type = shim.GetTypes().Where(x => x.IsClass && !x.IsAbstract && typeof(FmodPlatformSpecificImplementationDetails).IsAssignableFrom(x)).SingleOrDefault();
                     if (type == null)
-                        throw new InvalidOperationException(FMODStrings.CannotFindPlatformShimClass);
+                        throw new InvalidOperationException(FmodStrings.CannotFindPlatformShimClass);
 
                     factory.SetFactoryMethod<FMODPlatformSpecificImplementationDetailsFactory>(
-                        (uv) => (FMODPlatformSpecificImplementationDetails)Activator.CreateInstance(type));
+                        (uv) => (FmodPlatformSpecificImplementationDetails)Activator.CreateInstance(type));
                 }
             }
             catch (FileNotFoundException e)
@@ -46,7 +46,7 @@ namespace Sedulous.FMOD
                 throw new Exception(FrameworkStrings.MissingCompatibilityShim.Format(e.FileName));
             }
 
-            factory.SetFactoryMethod<FrameworkAudioFactory>((uv, configuration) => new FMODAudioSubsystem(uv, configuration));
+            factory.SetFactoryMethod<FrameworkAudioFactory>((uv, configuration) => new FmodAudioSubsystem(uv, configuration));
 
             base.Configure(context, factory);
         }
@@ -56,24 +56,24 @@ namespace Sedulous.FMOD
         {
             var importers = context.GetContent().Importers;
             {
-                importers.RegisterImporter<FMODMediaImporter>(".aif");
-                importers.RegisterImporter<FMODMediaImporter>(".aiff");
-                importers.RegisterImporter<FMODMediaImporter>(".flac");
-                importers.RegisterImporter<FMODMediaImporter>(".it");
-                importers.RegisterImporter<FMODMediaImporter>(".m3u");
-                importers.RegisterImporter<FMODMediaImporter>(".mid");
-                importers.RegisterImporter<FMODMediaImporter>(".mod");
-                importers.RegisterImporter<FMODMediaImporter>(".mp2");
-                importers.RegisterImporter<FMODMediaImporter>(".mp3");
-                importers.RegisterImporter<FMODMediaImporter>(".ogg");
-                importers.RegisterImporter<FMODMediaImporter>(".s3m");
-                importers.RegisterImporter<FMODMediaImporter>(".wav");
+                importers.RegisterImporter<FmodMediaImporter>(".aif");
+                importers.RegisterImporter<FmodMediaImporter>(".aiff");
+                importers.RegisterImporter<FmodMediaImporter>(".flac");
+                importers.RegisterImporter<FmodMediaImporter>(".it");
+                importers.RegisterImporter<FmodMediaImporter>(".m3u");
+                importers.RegisterImporter<FmodMediaImporter>(".mid");
+                importers.RegisterImporter<FmodMediaImporter>(".mod");
+                importers.RegisterImporter<FmodMediaImporter>(".mp2");
+                importers.RegisterImporter<FmodMediaImporter>(".mp3");
+                importers.RegisterImporter<FmodMediaImporter>(".ogg");
+                importers.RegisterImporter<FmodMediaImporter>(".s3m");
+                importers.RegisterImporter<FmodMediaImporter>(".wav");
             }
 
             var processors = context.GetContent().Processors;
             {
-                processors.RegisterProcessor<FMODSongProcessor>();
-                processors.RegisterProcessor<FMODSoundEffectProcessor>();
+                processors.RegisterProcessor<FmodSongProcessor>();
+                processors.RegisterProcessor<FmodSoundEffectProcessor>();
             }
 
             base.Initialize(context, factory);

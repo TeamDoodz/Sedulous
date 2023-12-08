@@ -1,25 +1,25 @@
 ﻿using System;
 using Sedulous.Core;
 using Sedulous.Platform;
-using Sedulous.SDL2.Native;
-using Sedulous.SDL2.Platform.Surface;
-using static Sedulous.SDL2.Native.SDLNative;
+using Sedulous.Sdl2.Native;
+using Sedulous.Sdl2.Platform.Surface;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2
+namespace Sedulous.Sdl2
 {
     /// <summary>
     /// Represents the SDL2 implementation of the <see cref="Cursor"/> class.
     /// </summary>
-    public unsafe sealed class SDL2Cursor : Cursor
+    public unsafe sealed class Sdl2Cursor : Cursor
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SDL2Cursor"/> class.
+        /// Initializes a new instance of the <see cref="Sdl2Cursor"/> class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
         /// <param name="surface">The surface that contains the cursor image.</param>
         /// <param name="hx">The x-coordinate of the cursor's hotspot.</param>
         /// <param name="hy">The y-coordinate of the cursor's hotspot.</param>
-        public SDL2Cursor(FrameworkContext context, Surface2D surface, Int32 hx, Int32 hy)
+        public Sdl2Cursor(FrameworkContext context, Surface2D surface, Int32 hx, Int32 hy)
             : base(context)
         {
             Contract.Require(surface, nameof(surface));

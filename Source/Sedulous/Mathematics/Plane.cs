@@ -147,7 +147,7 @@ namespace Sedulous
         public static Plane Normalize(Plane plane)
         {
             var length = plane.Normal.X * plane.Normal.X + plane.Normal.Y * plane.Normal.Y + plane.Normal.Z * plane.Normal.Z;
-            if (MathUtil.IsApproximatelyZero(1f - length))
+            if (MathUtility.IsApproximatelyZero(1f - length))
                 return plane;
 
             var lengthInv = 1.0f / (Single)Math.Sqrt(length);
@@ -171,7 +171,7 @@ namespace Sedulous
         public static void Normalize(ref Plane plane, out Plane result)
         {
             var length = plane.Normal.X * plane.Normal.X + plane.Normal.Y * plane.Normal.Y + plane.Normal.Z * plane.Normal.Z;
-            if (MathUtil.IsApproximatelyZero(1f - length))
+            if (MathUtility.IsApproximatelyZero(1f - length))
             {
                 result = plane;
                 return;

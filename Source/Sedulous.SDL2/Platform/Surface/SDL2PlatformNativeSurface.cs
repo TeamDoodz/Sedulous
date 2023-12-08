@@ -2,11 +2,11 @@
 using System.Runtime.CompilerServices;
 using Sedulous.Core;
 using Sedulous.Platform;
-using Sedulous.SDL2.Native;
-using static Sedulous.SDL2.Native.SDL_BlendMode;
-using static Sedulous.SDL2.Native.SDLNative;
+using Sedulous.Sdl2.Native;
+using static Sedulous.Sdl2.Native.SDL_BlendMode;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2.Platform.Surface
+namespace Sedulous.Sdl2.Platform.Surface
 {
     /// <summary>
     /// Represents an SDL native surface.
@@ -21,10 +21,10 @@ namespace Sedulous.SDL2.Platform.Surface
         public SDL2PlatformNativeSurface(Int32 width, Int32 height)
         {
             if ((this.ptr = SDL_CreateRGBSurface(0, width, height, 32, rmask, gmask, bmask, amask)) == null)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
             
             if (SDL_SetSurfaceBlendMode(this.ptr, SDL_BLENDMODE_NONE) < 0)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
         }
 
         /// <summary>
@@ -38,13 +38,13 @@ namespace Sedulous.SDL2.Platform.Surface
 
             var dst = SDL_CreateRGBSurface(0, src->w, src->h, 32, rmask, gmask, bmask, amask);
             if (dst == null)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
 
             if (SDL_SetSurfaceBlendMode(dst, SDL_BLENDMODE_NONE) < 0)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
 
             if (SDL_BlitSurface(src, null, dst, null) < 0)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
 
             this.ptr = dst;
         }
@@ -61,10 +61,10 @@ namespace Sedulous.SDL2.Platform.Surface
             var height = source.Height;
 
             if ((this.ptr = SDL_CreateRGBSurface(0, width, height, 32, rmask, gmask, bmask, amask)) == null)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
             
             if (SDL_SetSurfaceBlendMode(this.ptr, SDL_BLENDMODE_NONE) < 0)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
 
             var pDstData = (byte*)ptr->pixels;
             var pSrcData = (byte*)source.Data;
@@ -194,7 +194,7 @@ namespace Sedulous.SDL2.Platform.Surface
                 throw new ArgumentOutOfRangeException("region");
 
             if (data.Length < region.Width * region.Height)
-                throw new ArgumentException(SDL2Strings.BufferIsTooSmall.Format("data"));
+                throw new ArgumentException(Sdl2Strings.BufferIsTooSmall.Format("data"));
 
             fixed (Color* pDst1 = data)
             {
@@ -225,7 +225,7 @@ namespace Sedulous.SDL2.Platform.Surface
                 throw new ArgumentOutOfRangeException("region");
 
             if (data.Length < region.Width * region.Height)
-                throw new ArgumentException(SDL2Strings.BufferIsTooSmall.Format("data"));
+                throw new ArgumentException(Sdl2Strings.BufferIsTooSmall.Format("data"));
 
             fixed (Color* pSrc1 = data)
             {
@@ -274,7 +274,7 @@ namespace Sedulous.SDL2.Platform.Surface
             var copy = new SDL2PlatformNativeSurface(Width, Height);
 
             if (SDL_BlitSurface(ptr, null, copy.ptr, null) < 0)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
 
             copy.isReadyForTextureExport = isReadyForTextureExport;
             copy.isFlippedVertically = isFlippedVertically;

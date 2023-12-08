@@ -2,21 +2,21 @@
 using Sedulous.Audio;
 using Sedulous.Content;
 
-namespace Sedulous.FMOD.Audio
+namespace Sedulous.Fmod.Audio
 {
     /// <summary>
     /// Loads song assets.
     /// </summary>
     //[ContentProcessor]
-    public sealed class FMODSongProcessor : ContentProcessor<FMODMediaDescription, Song>
+    public sealed class FmodSongProcessor : ContentProcessor<FmodMediaDescription, Song>
     {
         /// <inheritdoc/>
-        public override Song Process(ContentManager manager, IContentProcessorMetadata metadata, FMODMediaDescription input)
+        public override Song Process(ContentManager manager, IContentProcessorMetadata metadata, FmodMediaDescription input)
         {
             if (!input.IsFilename)
                 throw new NotSupportedException();
 
-            return new FMODSong(manager.FrameworkContext, (String)input.Data);
+            return new FmodSong(manager.FrameworkContext, (String)input.Data);
         }
     }
 }

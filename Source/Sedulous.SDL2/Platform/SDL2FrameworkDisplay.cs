@@ -4,22 +4,22 @@ using System.Linq;
 using Sedulous.Core;
 using Sedulous.Messages;
 using Sedulous.Platform;
-using Sedulous.SDL2.Native;
-using static Sedulous.SDL2.Native.SDLNative;
+using Sedulous.Sdl2.Native;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2.Platform
+namespace Sedulous.Sdl2.Platform
 {
     /// <summary>
     /// Represents the SDL2 implementation of the <see cref="IFrameworkDisplay"/> interface.
     /// </summary>
-    public sealed unsafe class SDL2FrameworkDisplay : IFrameworkDisplay
+    public sealed unsafe class Sdl2FrameworkDisplay : IFrameworkDisplay
     {
         /// <summary>
         /// Initializes a new instance of the OpenGLSedulousDisplay class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
         /// <param name="displayIndex">The SDL2 display index that this object represents.</param>
-        public SDL2FrameworkDisplay(FrameworkContext context, Int32 displayIndex)
+        public Sdl2FrameworkDisplay(FrameworkContext context, Int32 displayIndex)
         {
             Contract.Require(context, nameof(context));
 
@@ -34,7 +34,7 @@ namespace Sedulous.SDL2.Platform
 
             SDL_DisplayMode sdlDesktopDisplayMode;
             if (SDL_GetDesktopDisplayMode(displayIndex, &sdlDesktopDisplayMode) < 0)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
 
             this.desktopDisplayMode = CreateDisplayModeFromSDL(sdlDesktopDisplayMode);
 

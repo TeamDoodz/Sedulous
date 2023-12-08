@@ -2,27 +2,27 @@
 using Sedulous.Core;
 using Sedulous.Core.Messages;
 using Sedulous.Input;
-using Sedulous.SDL2.Messages;
-using Sedulous.SDL2.Native;
-using static Sedulous.SDL2.Native.SDL_EventType;
-using static Sedulous.SDL2.Native.SDL_GameControllerAxis;
-using static Sedulous.SDL2.Native.SDLNative;
+using Sedulous.Sdl2.Messages;
+using Sedulous.Sdl2.Native;
+using static Sedulous.Sdl2.Native.SDL_EventType;
+using static Sedulous.Sdl2.Native.SDL_GameControllerAxis;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2.Input
+namespace Sedulous.Sdl2.Input
 {
     /// <summary>
     /// Represents the SDL2 implementation of the <see cref="GamePadDevice"/> class.
     /// </summary>
-    public sealed class SDL2GamePadDevice : GamePadDevice,
-        IMessageSubscriber<FrameworkMessageID>
+    public sealed class Sdl2GamePadDevice : GamePadDevice,
+        IMessageSubscriber<FrameworkMessageId>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SDL2GamePadDevice"/> class.
+        /// Initializes a new instance of the <see cref="Sdl2GamePadDevice"/> class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
         /// <param name="joystickIndex">The index of the SDL2 joystick device.</param>
         /// <param name="playerIndex">The index of the player that owns the device.</param>
-        public SDL2GamePadDevice(FrameworkContext context, Int32 joystickIndex, Int32 playerIndex)
+        public Sdl2GamePadDevice(FrameworkContext context, Int32 joystickIndex, Int32 playerIndex)
             : base(context)
         {
             this.timeLastPressAxis = new Double[Enum.GetValues(typeof(GamePadAxis)).Length];
@@ -33,7 +33,7 @@ namespace Sedulous.SDL2.Input
 
             if ((this.controller = SDL_GameControllerOpen(joystickIndex)) == IntPtr.Zero)
             {
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
             }
 
             this.name = SDL_GameControllerNameForIndex(joystickIndex);
@@ -44,11 +44,11 @@ namespace Sedulous.SDL2.Input
 
             if ((this.instanceID = SDL_JoystickInstanceID(joystick)) < 0)
             {
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
             }
 
             context.Messages.Subscribe(this,
-                SDL2FrameworkMessages.SDLEvent);
+                Sdl2FrameworkMessages.SdlEvent);
         }
 
         /// <summary>
@@ -56,12 +56,12 @@ namespace Sedulous.SDL2.Input
         /// </summary>
         /// <param name="type">The type of message that was received.</param>
         /// <param name="data">The data for the message that was received.</param>
-        void IMessageSubscriber<FrameworkMessageID>.ReceiveMessage(FrameworkMessageID type, MessageData data)
+        void IMessageSubscriber<FrameworkMessageId>.ReceiveMessage(FrameworkMessageId type, MessageData data)
         {
-            if (type != SDL2FrameworkMessages.SDLEvent)
+            if (type != Sdl2FrameworkMessages.SdlEvent)
                 return;
             
-            var evt = ((SDL2EventMessageData)data).Event;
+            var evt = ((Sdl2EventMessageData)data).Event;
             switch (evt.type)
             {
                 case SDL_CONTROLLERBUTTONDOWN:
@@ -789,7 +789,7 @@ namespace Sedulous.SDL2.Input
         /// </summary>
         private void Register()
         {
-            var input = (SDL2FrameworkInput)FrameworkContext.GetInput();
+            var input = (Sdl2FrameworkInput)FrameworkContext.GetInput();
             if (input.RegisterGamePadDevice(this))
                 isRegistered = true;
         }

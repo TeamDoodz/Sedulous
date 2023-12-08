@@ -505,8 +505,8 @@ namespace Sedulous.Presentation
                     this.renderSize = ArrangeCore(finalRect, options);
                     this.renderSize = PerformLayoutRounding(this.renderSize);
 
-                    var renderWidthChanged = !MathUtil.AreApproximatelyEqual(oldRenderSize.Width, renderSize.Width);
-                    var renderHeightChanged = !MathUtil.AreApproximatelyEqual(oldRenderSize.Height, renderSize.Height);
+                    var renderWidthChanged = !MathUtility.AreApproximatelyEqual(oldRenderSize.Width, renderSize.Width);
+                    var renderHeightChanged = !MathUtility.AreApproximatelyEqual(oldRenderSize.Height, renderSize.Height);
                     if ((renderHeightChanged || renderWidthChanged) && !isRenderSizeChangedPending)
                     {
                         isRenderSizeChangedPending = true;
@@ -2358,7 +2358,7 @@ namespace Sedulous.Presentation
         /// <param name="source">An <see cref="AssetSource"/> value which identifies the
         /// content manager from which to load the asset.</param>
         /// <returns>The asset that was loaded.</returns>
-        protected TOutput LoadContent<TOutput>(AssetID asset, AssetSource source)
+        protected TOutput LoadContent<TOutput>(AssetId asset, AssetSource source)
         {
             return (source == AssetSource.Global) ?
                 LoadGlobalContent<TOutput>(asset) :
@@ -2371,7 +2371,7 @@ namespace Sedulous.Presentation
         /// <typeparam name="TOutput">The type of object being loaded.</typeparam>
         /// <param name="asset">The identifier of the asset to load.</param>
         /// <returns>The asset that was loaded.</returns>
-        protected TOutput LoadGlobalContent<TOutput>(AssetID asset)
+        protected TOutput LoadGlobalContent<TOutput>(AssetId asset)
         {
             return (View == null) ? default(TOutput) : View.LoadLocalContent<TOutput>(asset);
         }
@@ -2382,7 +2382,7 @@ namespace Sedulous.Presentation
         /// <typeparam name="TOutput">The type of object being loaded.</typeparam>
         /// <param name="asset">The identifier of the asset to load.</param>
         /// <returns>The asset that was loaded.</returns>
-        protected TOutput LoadLocalContent<TOutput>(AssetID asset)
+        protected TOutput LoadLocalContent<TOutput>(AssetId asset)
         {
             return (View == null) ? default(TOutput) : View.LoadLocalContent<TOutput>(asset);
         }
@@ -2394,7 +2394,7 @@ namespace Sedulous.Presentation
         /// <param name="source">An <see cref="AssetSource"/> value which identifies the
         /// content manager from which to load the asset.</param>
         /// <returns>The asset that was loaded.</returns>
-        protected SpriteAnimation LoadContent(SpriteAnimationID animation, AssetSource source)
+        protected SpriteAnimation LoadContent(SpriteAnimationId animation, AssetSource source)
         {
             return (source == AssetSource.Global) ?
                 LoadGlobalContent(animation) :
@@ -2406,7 +2406,7 @@ namespace Sedulous.Presentation
         /// </summary>
         /// <param name="animation">The identifier of the animation to load.</param>
         /// <returns>The animation that was loaded.</returns>
-        protected SpriteAnimation LoadGlobalContent(SpriteAnimationID animation)
+        protected SpriteAnimation LoadGlobalContent(SpriteAnimationId animation)
         {
             return (View == null) ? default(SpriteAnimation) : View.LoadGlobalContent(animation);
         }
@@ -2416,7 +2416,7 @@ namespace Sedulous.Presentation
         /// </summary>
         /// <param name="animation">The identifier of the animation to load.</param>
         /// <returns>The animation that was loaded.</returns>
-        protected SpriteAnimation LoadLocalContent(SpriteAnimationID animation)
+        protected SpriteAnimation LoadLocalContent(SpriteAnimationId animation)
         {
             return (View == null) ? default(SpriteAnimation) : View.LoadLocalContent(animation);
         }
@@ -2449,7 +2449,7 @@ namespace Sedulous.Presentation
         /// <typeparam name="TResource">The type of resource to load.</typeparam>
         /// <param name="resource">The resource to load.</param>
         /// <param name="asset">The asset identifier that specifies which resource to load.</param>
-        protected void LoadGlobalResource<TResource>(FrameworkResource<TResource> resource, AssetID asset) where TResource : class
+        protected void LoadGlobalResource<TResource>(FrameworkResource<TResource> resource, AssetId asset) where TResource : class
         {
             if (View != null)
                 View.LoadGlobalResource(resource, asset);
@@ -2461,7 +2461,7 @@ namespace Sedulous.Presentation
         /// <typeparam name="TResources">The type of resource to load.</typeparam>
         /// <param name="resource">The resource to load.</param>
         /// <param name="asset">The asset identifier that specifies which resource to load.</param>
-        protected void LoadLocalResource<TResources>(FrameworkResource<TResources> resource, AssetID asset) where TResources : class
+        protected void LoadLocalResource<TResources>(FrameworkResource<TResources> resource, AssetId asset) where TResources : class
         {
             if (View != null)
                 View.LoadLocalResource(resource, asset);

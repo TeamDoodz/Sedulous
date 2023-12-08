@@ -57,7 +57,7 @@ namespace Sedulous.Presentation
                 s = s.Substring(0, s.Length - " global".Length);
             }
 
-            var asset = (AssetID)ObjectResolver.FromString(s.Trim(), typeof(AssetID), provider);
+            var asset = (AssetId)ObjectResolver.FromString(s.Trim(), typeof(AssetId), provider);
             v = new SourcedResource<T>(asset, source);
 
             return true;

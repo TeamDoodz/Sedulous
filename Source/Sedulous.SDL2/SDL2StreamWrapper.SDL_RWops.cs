@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Sedulous.SDL2
+namespace Sedulous.Sdl2
 {
-    public sealed unsafe partial class SDL2StreamWrapper
+    public sealed unsafe partial class Sdl2StreamWrapper
     {
         /// <summary>
         /// Represents the method which is called to retrieve the size of an SDL_RWops stream.

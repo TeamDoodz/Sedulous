@@ -1,9 +1,9 @@
 ﻿using System;
 using Sedulous.Core;
 using Sedulous.Input;
-using static Sedulous.SDL2.Native.SDLNative;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2.Input
+namespace Sedulous.Sdl2.Input
 {
     /// <summary>
     /// Manages the Sedulous context's connected touch devices.
@@ -18,11 +18,11 @@ namespace Sedulous.SDL2.Input
             : base(context)
         {
             var count = SDL_GetNumTouchDevices();
-            devices = new SDL2TouchDevice[count];
+            devices = new Sdl2TouchDevice[count];
 
             for (int i = 0; i < count; i++)
             {
-                devices[i] = new SDL2TouchDevice(context, i);
+                devices[i] = new Sdl2TouchDevice(context, i);
             }
         }
 
@@ -83,6 +83,6 @@ namespace Sedulous.SDL2.Input
         }
 
         // Connected touch devices.
-        private SDL2TouchDevice[] devices;
+        private Sdl2TouchDevice[] devices;
     }
 }

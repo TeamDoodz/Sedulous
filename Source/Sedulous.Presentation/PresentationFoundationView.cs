@@ -646,7 +646,7 @@ namespace Sedulous.Presentation
         /// <typeparam name="TResource">The type of resource to load.</typeparam>
         /// <param name="resource">The resource to load.</param>
         /// <param name="asset">The asset identifier that specifies which resource to load.</param>
-        public void LoadGlobalResource<TResource>(FrameworkResource<TResource> resource, AssetID asset) where TResource : class
+        public void LoadGlobalResource<TResource>(FrameworkResource<TResource> resource, AssetId asset) where TResource : class
         {
             Contract.EnsureNotDisposed(this, Disposed);
 
@@ -662,7 +662,7 @@ namespace Sedulous.Presentation
         /// <typeparam name="TResource">The type of resource to load.</typeparam>
         /// <param name="resource">The resource to load.</param>
         /// <param name="asset">The asset identifier that specifies which resource to load.</param>
-        public void LoadLocalResource<TResource>(FrameworkResource<TResource> resource, AssetID asset) where TResource : class
+        public void LoadLocalResource<TResource>(FrameworkResource<TResource> resource, AssetId asset) where TResource : class
         {
             Contract.EnsureNotDisposed(this, Disposed);
 
@@ -787,7 +787,7 @@ namespace Sedulous.Presentation
         /// <param name="id">The identifier of the resource to load.</param>
         /// <param name="source">The source from which to load the asset.</param>
         /// <returns>The resource that was loaded, or <see langword="null"/> if the resource could not be loaded.</returns>
-        public TResource LoadResource<TResource>(AssetID id, AssetSource source) where TResource : class
+        public TResource LoadResource<TResource>(AssetId id, AssetSource source) where TResource : class
         {
             Contract.EnsureNotDisposed(this, Disposed);
 

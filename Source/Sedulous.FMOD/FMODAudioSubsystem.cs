@@ -4,34 +4,34 @@ using System.Text;
 using Sedulous.Audio;
 using Sedulous.Core;
 using Sedulous.Core.Messages;
-using Sedulous.FMOD.Audio;
-using Sedulous.FMOD.Native;
+using Sedulous.Fmod.Audio;
+using Sedulous.Fmod.Native;
 using Sedulous.Platform;
-using static Sedulous.FMOD.Native.FMOD_DEBUG_FLAGS;
-using static Sedulous.FMOD.Native.FMOD_DEBUG_MODE;
-using static Sedulous.FMOD.Native.FMOD_INITFLAGS;
-using static Sedulous.FMOD.Native.FMOD_RESULT;
-using static Sedulous.FMOD.Native.FMODNative;
+using static Sedulous.Fmod.Native.FMOD_DEBUG_FLAGS;
+using static Sedulous.Fmod.Native.FMOD_DEBUG_MODE;
+using static Sedulous.Fmod.Native.FMOD_INITFLAGS;
+using static Sedulous.Fmod.Native.FMOD_RESULT;
+using static Sedulous.Fmod.Native.FMODNative;
 
-namespace Sedulous.FMOD
+namespace Sedulous.Fmod
 {
     /// <summary>
     /// Represents the FMOD implementation of the Sedulous audio subsystem.
     /// </summary>
-    public sealed unsafe partial class FMODAudioSubsystem : FrameworkResource, IAudioSubsystem, IMessageSubscriber<FrameworkMessageID>
+    public sealed unsafe partial class FmodAudioSubsystem : FrameworkResource, IAudioSubsystem, IMessageSubscriber<FrameworkMessageId>
     {
         /// <summary>
         /// Initializes a new instance of the FMODSedulousAudio class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
         /// <param name="configuration">The Sedulous configuration.</param>
-        public FMODAudioSubsystem(FrameworkContext context, FrameworkConfiguration configuration)
+        public FmodAudioSubsystem(FrameworkContext context, FrameworkConfiguration configuration)
             : base(context)
         {
-            platformSpecificImpl = FMODPlatformSpecificImplementationDetails.Create();
+            platformSpecificImpl = FmodPlatformSpecificImplementationDetails.Create();
             platformSpecificImpl.OnInitialized();
 
-            this.Capabilities = new FMODAudioCapabilities();
+            this.Capabilities = new FmodAudioCapabilities();
 
             InitializeLogging(configuration);
 
@@ -40,34 +40,34 @@ namespace Sedulous.FMOD
             {
                 result = FMOD_System_Create(psystem);
                 if (result != FMOD_OK)
-                    throw new FMODException(result);
+                    throw new FmodException(result);
             }
 
             var version = 0u;
             result = FMOD_System_GetVersion(system, &version);
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
             
             if (version < FMOD_VERSION)
-                throw new Exception(FMODStrings.FMODVersionMismatch.Format(FMOD_VERSION, version));
+                throw new Exception(FmodStrings.FMODVersionMismatch.Format(FMOD_VERSION, version));
 
             var extradriverdata = default(void*);
             result = FMOD_System_Init(system, 256, FMOD_INIT_NORMAL, extradriverdata);
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
             fixed (FMOD_CHANNELGROUP** pcgroupSongs = &cgroupSongs)
             {
                 result = FMOD_System_CreateChannelGroup(system, "Songs", pcgroupSongs);
                 if (result != FMOD_OK)
-                    throw new FMODException(result);
+                    throw new FmodException(result);
             }
 
             fixed (FMOD_CHANNELGROUP** pcgroupSoundEffects = &cgroupSoundEffects)
             {
                 result = FMOD_System_CreateChannelGroup(system, "Sound Effects", pcgroupSoundEffects);
                 if (result != FMOD_OK)
-                    throw new FMODException(result);
+                    throw new FmodException(result);
             }
 
             UpdateFileSource();
@@ -78,7 +78,7 @@ namespace Sedulous.FMOD
             
             result = FMOD_System_SetCallback(system, systemDeviceCallbackFMOD, FMOD_SYSTEM_CALLBACK_TYPE.DEVICELISTCHANGED | FMOD_SYSTEM_CALLBACK_TYPE.DEVICELOST);
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
             context.Messages.Subscribe(this, FrameworkMessages.ApplicationCreated);
             context.Messages.Subscribe(this, FrameworkMessages.ApplicationTerminating);
@@ -88,7 +88,7 @@ namespace Sedulous.FMOD
         }
 
         /// <inheritdoc/>
-        void IMessageSubscriber<FrameworkMessageID>.ReceiveMessage(FrameworkMessageID type, MessageData data)
+        void IMessageSubscriber<FrameworkMessageId>.ReceiveMessage(FrameworkMessageId type, MessageData data)
         {
             if (type == FrameworkMessages.ApplicationCreated)
             {
@@ -161,7 +161,7 @@ namespace Sedulous.FMOD
 
             result = FMOD_System_Update(system);
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
             
             Updating?.Invoke(this, time);
         }
@@ -175,7 +175,7 @@ namespace Sedulous.FMOD
 
             result = FMOD_System_MixerSuspend(system);
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
             suspended = true;
         }
@@ -189,7 +189,7 @@ namespace Sedulous.FMOD
 
             result = FMOD_System_MixerResume(system);
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
             suspended = false;
         }
@@ -209,7 +209,7 @@ namespace Sedulous.FMOD
                 }
                 else
                 {
-                    if (val is FMODAudioDevice device)
+                    if (val is FmodAudioDevice device)
                     {
                         FrameworkContext.ValidateResource(device);
 
@@ -218,20 +218,20 @@ namespace Sedulous.FMOD
 
                         result = FMOD_System_GetDriver(system, &olddriver);
                         if (result != FMOD_OK)
-                            throw new FMODException(result);
+                            throw new FmodException(result);
 
-                        result = FMOD_System_SetDriver(system, device.ID);
+                        result = FMOD_System_SetDriver(system, device.Id);
                         if (result == FMOD_ERR_OUTPUT_INIT)
                         {
                             result = FMOD_System_SetDriver(system, olddriver);
                             if (result != FMOD_OK)
-                                throw new FMODException(result);
+                                throw new FmodException(result);
 
                             return;
                         }
 
                         if (result != FMOD_OK)
-                            throw new FMODException(result);
+                            throw new FmodException(result);
 
                         playbackDevice = device;
                     }
@@ -251,7 +251,7 @@ namespace Sedulous.FMOD
             {
                 Contract.EnsureNotDisposed(this, Disposed);
 
-                var audioMasterVolumeClamped = MathUtil.Clamp(value, 0f, 1f);
+                var audioMasterVolumeClamped = MathUtility.Clamp(value, 0f, 1f);
                 if (audioMasterVolumeClamped != audioMasterVolume)
                 {
                     audioMasterVolume = audioMasterVolumeClamped;
@@ -270,7 +270,7 @@ namespace Sedulous.FMOD
             {
                 Contract.EnsureNotDisposed(this, Disposed);
 
-                var songsMasterVolumeClamped = MathUtil.Clamp(value, 0f, 1f);
+                var songsMasterVolumeClamped = MathUtility.Clamp(value, 0f, 1f);
                 if (songsMasterVolumeClamped != songsMasterVolume)
                 {
                     songsMasterVolume = songsMasterVolumeClamped;
@@ -288,7 +288,7 @@ namespace Sedulous.FMOD
             {
                 Contract.EnsureNotDisposed(this, Disposed);
 
-                var soundEffectsMasterVolumeClamped = MathUtil.Clamp(value, 0f, 1f);
+                var soundEffectsMasterVolumeClamped = MathUtility.Clamp(value, 0f, 1f);
                 if (soundEffectsMasterVolumeClamped != soundEffectsMasterVolume)
                 {
                     soundEffectsMasterVolume = soundEffectsMasterVolumeClamped;
@@ -375,15 +375,15 @@ namespace Sedulous.FMOD
 
             result = FMOD_ChannelGroup_Release(cgroupSongs);
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
             result = FMOD_ChannelGroup_Release(cgroupSoundEffects);
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
             result = FMOD_System_Release(system);
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
             if (disposing && !FrameworkContext.Disposed)
             {
@@ -412,7 +412,7 @@ namespace Sedulous.FMOD
                     break;
             }
             
-            if (FrameworkContext.RequestCurrent()?.GetAudio() is FMODAudioSubsystem audio)
+            if (FrameworkContext.RequestCurrent()?.GetAudio() is FmodAudioSubsystem audio)
                 audio.debugCallback?.Invoke(audio.FrameworkContext, messageLevel, messageString);
 
             return FMOD_OK;
@@ -452,7 +452,7 @@ namespace Sedulous.FMOD
             if (result == FMOD_ERR_UNSUPPORTED)
                 return;
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
         }
 
         /// <summary>
@@ -464,7 +464,7 @@ namespace Sedulous.FMOD
 
             var result = FMOD_ChannelGroup_SetVolume(cgroupSongs, volumeSongs);
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
         }
 
         /// <summary>
@@ -476,7 +476,7 @@ namespace Sedulous.FMOD
 
             var result = FMOD_ChannelGroup_SetVolume(cgroupSoundEffects, volumeSoundEffects);
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
         }
 
         /// <summary>
@@ -487,7 +487,7 @@ namespace Sedulous.FMOD
             var numdrivers = 0;
             var result = FMOD_System_GetNumDrivers(system, &numdrivers);
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
             
             if (numdrivers != knownAudioDevices.Count)
             {
@@ -503,9 +503,9 @@ namespace Sedulous.FMOD
                 {
                     result = FMOD_System_GetDriverInfo(system, i, namebuf, namelen, null, null, null, null);
                     if (result != FMOD_OK)
-                        throw new FMODException(result);
+                        throw new FmodException(result);
 
-                    var device = new FMODAudioDevice(FrameworkContext, i, namebuf.ToString())
+                    var device = new FmodAudioDevice(FrameworkContext, i, namebuf.ToString())
                     {
                         IsValid = true,
                         IsDefault = i == 0
@@ -532,24 +532,24 @@ namespace Sedulous.FMOD
             {
                 result = FMOD_System_SetFileSystem(system, null, null, null, null, null, null, -1);
                 if (result != FMOD_OK)
-                    throw new FMODException(result);
+                    throw new FmodException(result);
             }
             else
             {
                 result = FMOD_System_SetFileSystem(system,
-                    new FMOD_FILE_OPEN_CALLBACK(FMODFileSystem.UserOpen),
-                    new FMOD_FILE_CLOSE_CALLBACK(FMODFileSystem.UserClose),
-                    new FMOD_FILE_READ_CALLBACK(FMODFileSystem.UserRead),
-                    new FMOD_FILE_SEEK_CALLBACK(FMODFileSystem.UserSeek), null, null, -1);
+                    new FMOD_FILE_OPEN_CALLBACK(FmodFileSystem.UserOpen),
+                    new FMOD_FILE_CLOSE_CALLBACK(FmodFileSystem.UserClose),
+                    new FMOD_FILE_READ_CALLBACK(FmodFileSystem.UserRead),
+                    new FMOD_FILE_SEEK_CALLBACK(FmodFileSystem.UserSeek), null, null, -1);
                 if (result != FMOD_OK)
-                    throw new FMODException(result);
+                    throw new FmodException(result);
             }
         }
 
         /// <summary>
         /// Gets the default audio device.
         /// </summary>
-        private FMODAudioDevice GetDefaultDevice()
+        private FmodAudioDevice GetDefaultDevice()
         {
             return knownAudioDevices.Count == 0 ? null : knownAudioDevices[0];
         }
@@ -573,8 +573,8 @@ namespace Sedulous.FMOD
         private Boolean awaitingResume;
 
         // Audio device cache.
-        private FMODAudioDevice playbackDevice;
-        private List<FMODAudioDevice> knownAudioDevices = new List<FMODAudioDevice>();
+        private FmodAudioDevice playbackDevice;
+        private List<FmodAudioDevice> knownAudioDevices = new List<FmodAudioDevice>();
         
         // Debug output callbacks.
         private DebugCallback debugCallback;
@@ -584,6 +584,6 @@ namespace Sedulous.FMOD
         private FMOD_SYSTEM_CALLBACK systemDeviceCallbackFMOD;
         
         // Platform-specific details.
-        private readonly FMODPlatformSpecificImplementationDetails platformSpecificImpl;
+        private readonly FmodPlatformSpecificImplementationDetails platformSpecificImpl;
     }
 }

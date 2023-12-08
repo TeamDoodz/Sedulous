@@ -2,21 +2,21 @@
 using Sedulous.Audio;
 using Sedulous.Core;
 
-namespace Sedulous.FMOD.Audio
+namespace Sedulous.Fmod.Audio
 {
     /// <summary>
     /// Represents the BASS implementation of the <see cref="SoundEffectPlayer"/> class.
     /// </summary>
-    public sealed unsafe class FMODSoundEffectPlayer : SoundEffectPlayer
+    public sealed unsafe class FmodSoundEffectPlayer : SoundEffectPlayer
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FMODSoundEffectPlayer"/> class.
+        /// Initializes a new instance of the <see cref="FmodSoundEffectPlayer"/> class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
-        public FMODSoundEffectPlayer(FrameworkContext context)
+        public FmodSoundEffectPlayer(FrameworkContext context)
             : base(context)
         {
-            this.channelPlayer = new FMODChannelPlayer(context);
+            this.channelPlayer = new FmodChannelPlayer(context);
         }
 
         /// <inheritdoc/>
@@ -34,8 +34,8 @@ namespace Sedulous.FMOD.Audio
             Contract.Require(soundEffect, nameof(soundEffect));
 
             FrameworkContext.ValidateResource(soundEffect);
-            var sound = ((FMODSoundEffect)soundEffect).Sound;
-            var channelgroup = ((FMODSoundEffect)soundEffect).ChannelGroup;
+            var sound = ((FmodSoundEffect)soundEffect).Sound;
+            var channelgroup = ((FmodSoundEffect)soundEffect).ChannelGroup;
 
             return channelPlayer.Play(sound, channelgroup, soundEffect.Duration, loop);
         }
@@ -47,8 +47,8 @@ namespace Sedulous.FMOD.Audio
             Contract.Require(soundEffect, nameof(soundEffect));
 
             FrameworkContext.ValidateResource(soundEffect);
-            var sound = ((FMODSoundEffect)soundEffect).Sound;
-            var channelgroup = ((FMODSoundEffect)soundEffect).ChannelGroup;
+            var sound = ((FmodSoundEffect)soundEffect).Sound;
+            var channelgroup = ((FmodSoundEffect)soundEffect).ChannelGroup;
 
             return channelPlayer.Play(sound, channelgroup, soundEffect.Duration, volume, pitch, pan, loop);
         }
@@ -157,6 +157,6 @@ namespace Sedulous.FMOD.Audio
         }
 
         // State values.
-        private readonly FMODChannelPlayer channelPlayer;
+        private readonly FmodChannelPlayer channelPlayer;
     }
 }

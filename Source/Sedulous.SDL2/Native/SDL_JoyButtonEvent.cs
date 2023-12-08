@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using SDL_JoystickID = System.Int32;
 
-namespace Sedulous.SDL2.Native
+namespace Sedulous.Sdl2.Native
 {
 #pragma warning disable 1591
     [StructLayout(LayoutKind.Sequential)]

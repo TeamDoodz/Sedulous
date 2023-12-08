@@ -1,12 +1,12 @@
 ﻿using Android.App;
 using System;
 
-namespace Sedulous.FMOD
+namespace Sedulous.Fmod
 {
     /// <summary>
     /// Represents Android-specific implementation details for FMOD.
     /// </summary>
-    public sealed class FMODAndroidSpecificImplementationDetails : FMODPlatformSpecificImplementationDetails
+    public sealed class FMODAndroidSpecificImplementationDetails : FmodPlatformSpecificImplementationDetails
     {
         private Boolean initialized = false;
 

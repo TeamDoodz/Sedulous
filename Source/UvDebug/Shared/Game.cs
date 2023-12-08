@@ -4,11 +4,11 @@ using System.Linq;
 using System.Reflection;
 using Sedulous;
 using Sedulous.Audio;
-using Sedulous.BASS;
+using Sedulous.Bass;
 using Sedulous.Content;
 using Sedulous.Core;
 using Sedulous.Core.Text;
-using Sedulous.FMOD;
+using Sedulous.Fmod;
 using Sedulous.FreeType2;
 using Sedulous.Graphics;
 using Sedulous.OpenGL;
@@ -16,7 +16,7 @@ using Sedulous.OpenGL.Bindings;
 using Sedulous.Platform;
 using Sedulous.Presentation;
 using Sedulous.Presentation.Styles;
-using Sedulous.SDL2;
+using Sedulous.Sdl2;
 using UvDebug.Input;
 using UvDebug.UI;
 
@@ -24,8 +24,8 @@ namespace UvDebug
 {
     public static class GlobalSongID
     {
-        public static AssetID DeepHaze;
-        public static AssetID Sample;
+        public static AssetId DeepHaze;
+        public static AssetId Sample;
     }
 
     /// <summary>
@@ -54,13 +54,13 @@ namespace UvDebug
             graphicsConfig.SrgbBuffersEnabled = false;
             graphicsConfig.SrgbDefaultForTexture2D = false;
 
-            var contextConfig = new SDL2FrameworkConfiguration();
+            var contextConfig = new Sdl2FrameworkConfiguration();
             contextConfig.SupportsHighDensityDisplayModes = true;
             contextConfig.EnableServiceMode = ShouldRunInServiceMode();
             contextConfig.WatchViewFilesForChanges = ShouldDynamicallyReloadContent();
             contextConfig.Plugins.Add(new OpenGLGraphicsPlugin(graphicsConfig));
             //contextConfig.Plugins.Add(new BASSAudioPlugin());
-            contextConfig.Plugins.Add(new FMODAudioPlugin());
+            contextConfig.Plugins.Add(new FmodAudioPlugin());
             contextConfig.Plugins.Add(new FreeTypeFontPlugin());
             contextConfig.Plugins.Add(new PresentationFoundationPlugin());
             PopulateConfiguration(contextConfig);
@@ -74,7 +74,7 @@ namespace UvDebug
             };
 #endif
 
-            return new SDL2FrameworkContext(this, contextConfig);
+            return new Sdl2FrameworkContext(this, contextConfig);
         }
 
         /// <summary>

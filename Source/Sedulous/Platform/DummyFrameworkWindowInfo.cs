@@ -15,7 +15,7 @@ namespace Sedulous.Platform
         }
 
         /// <inheritdoc/>
-        public IFrameworkWindow GetByID(Int32 id)
+        public IFrameworkWindow GetById(Int32 id)
         {
             return null;
         }
@@ -51,7 +51,7 @@ namespace Sedulous.Platform
         }
 
         /// <inheritdoc/>
-        public Boolean DestroyByID(Int32 id)
+        public Boolean DestroyById(Int32 id)
         {
             return true;
         }

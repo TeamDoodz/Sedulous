@@ -81,7 +81,7 @@ namespace Sedulous.ImGuiViewProvider
         /// Registers the specified TTF asset for use.
         /// </summary>
         /// <returns>An <see cref="ImFontPtr"/> structure which represents the registered font.</returns>
-        public ImFontPtr RegisterFromAssetTTF(ContentManager content, AssetID asset, Single sizeInPixels)
+        public ImFontPtr RegisterFromAssetTTF(ContentManager content, AssetId asset, Single sizeInPixels)
         {
             Contract.Require(content, nameof(content));
 

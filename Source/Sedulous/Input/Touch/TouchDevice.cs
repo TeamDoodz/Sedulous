@@ -9,59 +9,59 @@ namespace Sedulous.Input
     /// Represents the method that is called when a touch input begins.
     /// </summary>
     /// <param name="device">The <see cref="TouchDevice"/> that raised the event.</param>
-    /// <param name="touchID">The unique identifier of the touch input.</param>
-    /// <param name="fingerID">The unique identifier of the finger which caused the touch.</param>
+    /// <param name="touchId">The unique identifier of the touch input.</param>
+    /// <param name="fingerId">The unique identifier of the finger which caused the touch.</param>
     /// <param name="x">The normalized x-coordinate of the touch.</param>
     /// <param name="y">The normalized y-coordinate of the touch.</param>
     /// <param name="pressure">The normalized pressure of the touch.</param>
     public delegate void TouchDownEventHandler(TouchDevice device,
-        Int64 touchID, Int64 fingerID, Single x, Single y, Single pressure);
+        Int64 touchId, Int64 fingerId, Single x, Single y, Single pressure);
 
     /// <summary>
     /// Represents the method that is called when a touch input ends.
     /// </summary>
     /// <param name="device">The <see cref="TouchDevice"/> that raised the event.</param>
-    /// <param name="touchID">The unique identifier of the touch input.</param>
-    /// <param name="fingerID">The unique identifier of the finger which caused the touch.</param>
+    /// <param name="touchId">The unique identifier of the touch input.</param>
+    /// <param name="fingerId">The unique identifier of the finger which caused the touch.</param>
     public delegate void TouchUpEventHandler(TouchDevice device,
-        Int64 touchID, Int64 fingerID);
+        Int64 touchId, Int64 fingerId);
 
     /// <summary>
     /// Represents the method that is called when a touch input moves.
     /// </summary>
     /// <param name="device">The <see cref="TouchDevice"/> that raised the event.</param>
-    /// <param name="touchID">The unique identifier of the touch input.</param>
-    /// <param name="fingerID">The unique identifier of the finger which caused the touch.</param>
+    /// <param name="touchId">The unique identifier of the touch input.</param>
+    /// <param name="fingerId">The unique identifier of the finger which caused the touch.</param>
     /// <param name="x">The normalized x-coordinate of the touch.</param>
     /// <param name="y">The normalized y-coordinate of the touch.</param>
     /// <param name="dx">The distance that the touch has moved along the x-axis in normalized coordinates.</param>
     /// <param name="dy">The distance that the touch has moved along the y-axis in normalized coordinates.</param>
     /// <param name="pressure">The normalized pressure of the touch.</param>
     public delegate void TouchMotionEventHandler(TouchDevice device, 
-        Int64 touchID, Int64 fingerID, Single x, Single y, Single dx, Single dy, Single pressure);
+        Int64 touchId, Int64 fingerId, Single x, Single y, Single dx, Single dy, Single pressure);
 
     /// <summary>
     /// Represents the method that is called when a touch is interpreted as a tap.
     /// </summary>
     /// <param name="device">The <see cref="TouchDevice"/> that raised the event.</param>
-    /// <param name="touchID">The unique identifier of the touch which caused the tap.</param>
-    /// <param name="fingerID">The unique identifier of the finger which caused the tap.</param>
+    /// <param name="touchId">The unique identifier of the touch which caused the tap.</param>
+    /// <param name="fingerId">The unique identifier of the finger which caused the tap.</param>
     /// <param name="x">The normalized x-coordinate of the tap.</param>
     /// <param name="y">The normalized y-coordinate of the tap.</param>
     public delegate void TouchTapEventHandler(TouchDevice device,
-        Int64 touchID, Int64 fingerID, Single x, Single y);
+        Int64 touchId, Int64 fingerId, Single x, Single y);
 
     /// <summary>
     /// Represents the method that is called when a touch becomes a long press.
     /// </summary>
     /// <param name="device">The <see cref="TouchDevice"/> that raised the event.</param>
-    /// <param name="touchID">The unique identifier of the touch input.</param>
-    /// <param name="fingerID">The unique identifier of the finger which caused the touch.</param>
+    /// <param name="touchId">The unique identifier of the touch input.</param>
+    /// <param name="fingerId">The unique identifier of the finger which caused the touch.</param>
     /// <param name="x">The normalized x-coordinate of the touch.</param>
     /// <param name="y">The normalized y-coordinate of the touch.</param>
     /// <param name="pressure">The normalized pressure of the touch.</param>
     public delegate void TouchLongPressEventHandler(TouchDevice device,
-        Int64 touchID, Int64 fingerID, Single x, Single y, Single pressure);
+        Int64 touchId, Int64 fingerId, Single x, Single y, Single pressure);
 
     /// <summary>
     /// Represents the method that is called when a multiple-finger touch gesture is performed.
@@ -79,21 +79,21 @@ namespace Sedulous.Input
     /// Represents the method that is called when a $1 gesture is recorded.
     /// </summary>
     /// <param name="device">The <see cref="TouchDevice"/> that raised the event.</param>
-    /// <param name="gestureID">The unique identifier of the recorded gesture.</param>
+    /// <param name="gestureId">The unique identifier of the recorded gesture.</param>
     public delegate void DollarGestureRecordedEventHandler(TouchDevice device,
-        Int64 gestureID);
+        Int64 gestureId);
 
     /// <summary>
     /// Represents the method that is called when a $1 gesture is performed.
     /// </summary>
     /// <param name="device">The <see cref="TouchDevice"/> that raised the event.</param>
-    /// <param name="gestureID">The unique identifier of the gesture which was performed.</param>
+    /// <param name="gestureId">The unique identifier of the gesture which was performed.</param>
     /// <param name="x">The normalized x-coordinate of the gesture's centroid.</param>
     /// <param name="y">The normalized y-coordinate of the gesture's centroid.</param>
     /// <param name="error">The difference between the gesture template and the actual performed gesture; lower is better.</param>
     /// <param name="fingers">The number of fingers used to perform the gesture.</param>
     public delegate void DollarGestureEventHandler(TouchDevice device,
-        Int64 gestureID, Single x, Single y, Single error, Int32 fingers);
+        Int64 gestureId, Single x, Single y, Single error, Int32 fingers);
 
     /// <summary>
     /// Represents a touch input device.
@@ -336,64 +336,64 @@ namespace Sedulous.Input
         /// <summary>
         /// Raises the <see cref="TouchDown"/> event.
         /// </summary>
-        /// <param name="touchID">The unique identifier of the touch input.</param>
-        /// <param name="fingerID">The unique identifier of the finger which caused the touch.</param>
+        /// <param name="touchId">The unique identifier of the touch input.</param>
+        /// <param name="fingerId">The unique identifier of the finger which caused the touch.</param>
         /// <param name="x">The normalized x-coordinate of the touch.</param>
         /// <param name="y">The normalized y-coordinate of the touch.</param>
         /// <param name="pressure">The normalized pressure of the touch.</param>
-        protected virtual void OnTouchDown(Int64 touchID, Int64 fingerID, Single x, Single y, Single pressure)
+        protected virtual void OnTouchDown(Int64 touchId, Int64 fingerId, Single x, Single y, Single pressure)
         {
-            TouchDown?.Invoke(this, touchID, fingerID, x, y, pressure);
+            TouchDown?.Invoke(this, touchId, fingerId, x, y, pressure);
         }
 
         /// <summary>
         /// Raises the <see cref="TouchUp"/> event.
         /// </summary>
-        /// <param name="touchID">The unique identifier of the touch input.</param>
-        /// <param name="fingerID">The unique identifier of the finger which caused the touch.</param>
-        protected virtual void OnTouchUp(Int64 touchID, Int64 fingerID)
+        /// <param name="touchId">The unique identifier of the touch input.</param>
+        /// <param name="fingerId">The unique identifier of the finger which caused the touch.</param>
+        protected virtual void OnTouchUp(Int64 touchId, Int64 fingerId)
         {
-            TouchUp?.Invoke(this, touchID, fingerID);
+            TouchUp?.Invoke(this, touchId, fingerId);
         }
 
         /// <summary>
         /// Raises the <see cref="TouchMotion"/> event.
         /// </summary>
-        /// <param name="touchID">The unique identifier of the touch input.</param>
-        /// <param name="fingerID">The unique identifier of the finger which caused the touch.</param>
+        /// <param name="touchId">The unique identifier of the touch input.</param>
+        /// <param name="fingerId">The unique identifier of the finger which caused the touch.</param>
         /// <param name="x">The normalized x-coordinate of the touch.</param>
         /// <param name="y">The normalized y-coordinate of the touch.</param>
         /// <param name="dx">The distance that the touch has moved along the x-axis in normalized coordinates.</param>
         /// <param name="dy">The distance that the touch has moved along the y-axis in normalized coordinates.</param>
         /// <param name="pressure">The normalized pressure of the touch.</param>
-        protected virtual void OnTouchMotion(Int64 touchID, Int64 fingerID, Single x, Single y, Single dx, Single dy, Single pressure)
+        protected virtual void OnTouchMotion(Int64 touchId, Int64 fingerId, Single x, Single y, Single dx, Single dy, Single pressure)
         {
-            TouchMotion?.Invoke(this, touchID, fingerID, x, y, dx, dy, pressure);
+            TouchMotion?.Invoke(this, touchId, fingerId, x, y, dx, dy, pressure);
         }
 
         /// <summary>
         /// Raises the <see cref="Tap"/> event.
         /// </summary>
-        /// <param name="touchID">The unique identifier of the touch which caused the tap.</param>
-        /// <param name="fingerID">The unique identifier of the finger which caused the tap.</param>
+        /// <param name="touchId">The unique identifier of the touch which caused the tap.</param>
+        /// <param name="fingerId">The unique identifier of the finger which caused the tap.</param>
         /// <param name="x">The normalized x-coordinate of the tap.</param>
         /// <param name="y">The normalized y-coordinate of the tap.</param>
-        protected virtual void OnTap(Int64 touchID, Int64 fingerID, Single x, Single y)
+        protected virtual void OnTap(Int64 touchId, Int64 fingerId, Single x, Single y)
         {
-            Tap?.Invoke(this, touchID, fingerID, x, y);
+            Tap?.Invoke(this, touchId, fingerId, x, y);
         }
 
         /// <summary>
         /// Raises the <see cref="LongPress"/> event.
         /// </summary>
-        /// <param name="touchID">The unique identifier of the touch input.</param>
-        /// <param name="fingerID">The unique identifier of the finger which caused the touch.</param>
+        /// <param name="touchId">The unique identifier of the touch input.</param>
+        /// <param name="fingerId">The unique identifier of the finger which caused the touch.</param>
         /// <param name="x">The normalized x-coordinate of the touch.</param>
         /// <param name="y">The normalized y-coordinate of the touch.</param>
         /// <param name="pressure">The normalized pressure of the touch.</param>
-        protected virtual void OnLongPress(Int64 touchID, Int64 fingerID, Single x, Single y, Single pressure)
+        protected virtual void OnLongPress(Int64 touchId, Int64 fingerId, Single x, Single y, Single pressure)
         {
-            LongPress?.Invoke(this, touchID, fingerID, x, y, pressure);
+            LongPress?.Invoke(this, touchId, fingerId, x, y, pressure);
         }
 
         /// <summary>
@@ -412,23 +412,23 @@ namespace Sedulous.Input
         /// <summary>
         /// Raises the <see cref="DollarGestureRecorded"/> event.
         /// </summary>
-        /// <param name="gestureID">The unique identifier of the recorded gesture.</param>
-        protected virtual void OnDollarGestureRecorded(Int64 gestureID)
+        /// <param name="gestureId">The unique identifier of the recorded gesture.</param>
+        protected virtual void OnDollarGestureRecorded(Int64 gestureId)
         {
-            DollarGestureRecorded?.Invoke(this, gestureID);
+            DollarGestureRecorded?.Invoke(this, gestureId);
         }
 
         /// <summary>
         /// Raises the <see cref="DollarGesture"/> event.
         /// </summary>
-        /// <param name="gestureID">The unique identifier of the gesture which was performed.</param>
+        /// <param name="gestureId">The unique identifier of the gesture which was performed.</param>
         /// <param name="x">The normalized x-coordinate of the gesture's centroid.</param>
         /// <param name="y">The normalized y-coordinate of the gesture's centroid.</param>
         /// <param name="error">The difference between the gesture template and the actual performed gesture; lower is better.</param>
         /// <param name="fingers">The number of fingers used to perform the gesture.</param>
-        protected virtual void OnDollarGesture(Int64 gestureID, Single x, Single y, Single error, Int32 fingers)
+        protected virtual void OnDollarGesture(Int64 gestureId, Single x, Single y, Single error, Int32 fingers)
         {
-            DollarGesture?.Invoke(this, gestureID, x, y, error, fingers);
+            DollarGesture?.Invoke(this, gestureId, x, y, error, fingers);
         }
 
         /// <summary>

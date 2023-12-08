@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using Sedulous.Core;
 using Sedulous.Core.Native;
 
-namespace Sedulous.SDL2.Native
+namespace Sedulous.Sdl2.Native
 {
 #pragma warning disable 1591
     [SuppressUnmanagedCodeSecurity]

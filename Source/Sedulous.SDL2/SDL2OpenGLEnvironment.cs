@@ -2,24 +2,24 @@
 using Sedulous.Core;
 using Sedulous.OpenGL;
 using Sedulous.Platform;
-using Sedulous.SDL2.Platform;
-using static Sedulous.SDL2.Native.SDL_GLattr;
-using static Sedulous.SDL2.Native.SDL_GLcontextFlag;
-using static Sedulous.SDL2.Native.SDL_GLprofile;
-using static Sedulous.SDL2.Native.SDLNative;
+using Sedulous.Sdl2.Platform;
+using static Sedulous.Sdl2.Native.SDL_GLattr;
+using static Sedulous.Sdl2.Native.SDL_GLcontextFlag;
+using static Sedulous.Sdl2.Native.SDL_GLprofile;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2
+namespace Sedulous.Sdl2
 {
     /// <summary>
     /// Represents an implementation of the <see cref="OpenGLEnvironment"/> class which is implemented using SDL2.
     /// </summary>
-    public sealed class SDL2OpenGLEnvironment : OpenGLEnvironment
+    public sealed class Sdl2OpenGLEnvironment : OpenGLEnvironment
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SDL2OpenGLEnvironment"/> class.
+        /// Initializes a new instance of the <see cref="Sdl2OpenGLEnvironment"/> class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
-        public SDL2OpenGLEnvironment(FrameworkContext context)
+        public Sdl2OpenGLEnvironment(FrameworkContext context)
             : base(context)
         { }
 
@@ -33,7 +33,7 @@ namespace Sedulous.SDL2
         /// <inheritdoc/>
         public override IntPtr CreateOpenGLContext()
         {
-            var masterWindowPtr = ((SDL2FrameworkWindowInfo)FrameworkContext.GetPlatform().Windows).GetMasterPointer();
+            var masterWindowPtr = ((Sdl2FrameworkWindowInfo)FrameworkContext.GetPlatform().Windows).GetMasterPointer();
             return SDL_GL_CreateContext(masterWindowPtr);
         }
 
@@ -46,21 +46,21 @@ namespace Sedulous.SDL2
         /// <inheritdoc/>
         public override void DesignateCurrentWindow(IFrameworkWindow window, IntPtr openGLContext)
         {
-            var windowInfo = ((SDL2FrameworkWindowInfoOpenGL)FrameworkContext.GetPlatform().Windows);
+            var windowInfo = ((Sdl2FrameworkWindowInfoOpenGL)FrameworkContext.GetPlatform().Windows);
             windowInfo.DesignateCurrent(window, openGLContext);
         }
 
         /// <inheritdoc/>
         public override void DrawFramebuffer(FrameworkTime time)
         {
-            var oglwin = (SDL2FrameworkWindow)FrameworkContext.GetPlatform().Windows.GetCurrent();
+            var oglwin = (Sdl2FrameworkWindow)FrameworkContext.GetPlatform().Windows.GetCurrent();
             oglwin.Draw(time);
         }
 
         /// <inheritdoc/>
         public override void SwapFramebuffers()
         {
-            var oglwin = (SDL2FrameworkWindow)FrameworkContext.GetPlatform().Windows.GetCurrent();
+            var oglwin = (Sdl2FrameworkWindow)FrameworkContext.GetPlatform().Windows.GetCurrent();
             SDL_GL_SwapWindow((IntPtr)oglwin);
         }
 
@@ -73,7 +73,7 @@ namespace Sedulous.SDL2
         /// <inheritdoc/>
         public override void ThrowPlatformErrorException()
         {
-            throw new SDL2Exception();
+            throw new Sdl2Exception();
         }
 
         /// <inheritdoc/>

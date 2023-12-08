@@ -2,21 +2,21 @@
 using Sedulous.Audio;
 using Sedulous.Core;
 
-namespace Sedulous.FMOD.Audio
+namespace Sedulous.Fmod.Audio
 {
     /// <summary>
     /// Represents the FMOD implementation of the <see cref="SongPlayer"/> class.
     /// </summary>
-    public sealed unsafe class FMODSongPlayer : SongPlayer
+    public sealed unsafe class FmodSongPlayer : SongPlayer
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FMODSongPlayer"/> class.
+        /// Initializes a new instance of the <see cref="FmodSongPlayer"/> class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
-        public FMODSongPlayer(FrameworkContext context)
+        public FmodSongPlayer(FrameworkContext context)
             : base(context)
         {
-            this.channelPlayer = new FMODChannelPlayer(context);
+            this.channelPlayer = new FmodChannelPlayer(context);
         }
 
         /// <inheritdoc/>
@@ -34,8 +34,8 @@ namespace Sedulous.FMOD.Audio
             Contract.Require(song, nameof(song));
 
             FrameworkContext.ValidateResource(song);
-            var sound = ((FMODSong)song).Sound;
-            var channelgroup = ((FMODSong)song).ChannelGroup;
+            var sound = ((FmodSong)song).Sound;
+            var channelgroup = ((FmodSong)song).ChannelGroup;
 
             if (channelPlayer.Play(sound, channelgroup, song.Duration, loop))
             {
@@ -53,8 +53,8 @@ namespace Sedulous.FMOD.Audio
             Contract.Require(song, nameof(song));
 
             FrameworkContext.ValidateResource(song);
-            var sound = ((FMODSong)song).Sound;
-            var channelgroup = ((FMODSong)song).ChannelGroup;
+            var sound = ((FmodSong)song).Sound;
+            var channelgroup = ((FmodSong)song).ChannelGroup;
 
             if (channelPlayer.Play(sound, channelgroup, song.Duration, loopStart, loopLength))
             {
@@ -72,8 +72,8 @@ namespace Sedulous.FMOD.Audio
             Contract.Require(song, nameof(song));
 
             FrameworkContext.ValidateResource(song);
-            var sound = ((FMODSong)song).Sound;
-            var channelgroup = ((FMODSong)song).ChannelGroup;
+            var sound = ((FmodSong)song).Sound;
+            var channelgroup = ((FmodSong)song).ChannelGroup;
 
             if (channelPlayer.Play(sound, channelgroup, song.Duration, volume, pitch, pan, loop))
             {
@@ -91,8 +91,8 @@ namespace Sedulous.FMOD.Audio
             Contract.Require(song, nameof(song));
 
             FrameworkContext.ValidateResource(song);
-            var sound = ((FMODSong)song).Sound;
-            var channelgroup = ((FMODSong)song).ChannelGroup;
+            var sound = ((FmodSong)song).Sound;
+            var channelgroup = ((FmodSong)song).ChannelGroup;
 
             if (channelPlayer.Play(sound, channelgroup, song.Duration, volume, pitch, pan, loopStart, loopLength))
             {
@@ -217,6 +217,6 @@ namespace Sedulous.FMOD.Audio
         }
         
         // State values.
-        private readonly FMODChannelPlayer channelPlayer;
+        private readonly FmodChannelPlayer channelPlayer;
     }
 }

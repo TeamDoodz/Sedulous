@@ -2,24 +2,24 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Sedulous.Audio;
-using Sedulous.BASS.Native;
+using Sedulous.Bass.Native;
 using Sedulous.Core;
 using Sedulous.Platform;
-using static Sedulous.BASS.Native.BASSNative;
+using static Sedulous.Bass.Native.BASSNative;
 
-namespace Sedulous.BASS.Audio
+namespace Sedulous.Bass.Audio
 {
     /// <summary>
     /// Represents the BASS implementation of the Song class.
     /// </summary>
-    public sealed partial class BASSSong : Song
+    public sealed partial class BassSong : Song
     {
         /// <summary>
         /// Initializes a new instance of the BASSSong class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
         /// <param name="file">The path to the file from which to stream the song.</param>
-        public BASSSong(FrameworkContext context, String file)
+        public BassSong(FrameworkContext context, String file)
             : base(context)
         {
             Contract.RequireNotEmpty(file, nameof(file));
@@ -32,7 +32,7 @@ namespace Sedulous.BASS.Audio
             this.duration = GetDuration(stream);
 
             if (!BASS_StreamFree(stream))
-                throw new BASSException();
+                throw new BassException();
         }
 
         /// <summary>
@@ -45,15 +45,15 @@ namespace Sedulous.BASS.Audio
             if (FileSystemService.Source == null)
             {
                 var stream = BASS_StreamCreateFile(file, flags);
-                if (!BASSUtil.IsValidHandle(stream))
-                    throw new BASSException();
+                if (!BassUtility.IsValidHandle(stream))
+                    throw new BassException();
 
                 return stream;
             }
             else
             {
                 if (instanceManager == null)
-                    instanceManager = new BASSSongInstanceManager(file);
+                    instanceManager = new BassSongInstanceManager(file);
 
                 return instanceManager.CreateInstance(flags);
             }
@@ -89,7 +89,7 @@ namespace Sedulous.BASS.Audio
         /// </summary>
         private static TimeSpan GetDuration(UInt32 stream)
         {
-            return TimeSpan.FromSeconds(BASSUtil.GetDurationInSeconds(stream));
+            return TimeSpan.FromSeconds(BassUtility.GetDurationInSeconds(stream));
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Sedulous.BASS.Audio
             {
                 error = BASS_ErrorGetCode();
                 if (error != BASS_ERROR_NOTAVAIL)
-                    throw new BASSException(error);
+                    throw new BassException(error);
 
                 return false;
             }
@@ -163,7 +163,7 @@ namespace Sedulous.BASS.Audio
             {
                 var error = BASS_ErrorGetCode();
                 if (error != BASS_ERROR_NOTAVAIL)
-                    throw new BASSException(error);
+                    throw new BassException(error);
 
                 return false;
             }
@@ -198,6 +198,6 @@ namespace Sedulous.BASS.Audio
         private readonly TimeSpan duration;
 
         // The instance manager used when we can't read files directly from the file system using BASS.
-        private BASSSongInstanceManager instanceManager;
+        private BassSongInstanceManager instanceManager;
     }
 }

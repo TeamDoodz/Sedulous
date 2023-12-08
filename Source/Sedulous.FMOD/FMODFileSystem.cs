@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
-using Sedulous.FMOD.Native;
+using Sedulous.Fmod.Native;
 using Sedulous.Platform;
-using static Sedulous.FMOD.Native.FMOD_RESULT;
+using static Sedulous.Fmod.Native.FMOD_RESULT;
 
-namespace Sedulous.FMOD
+namespace Sedulous.Fmod
 {
 #pragma warning disable 1591
     /// <summary>
     /// Contains methods which implement the FMOD file system when using a file source.
     /// </summary>
-    public static unsafe class FMODFileSystem
+    public static unsafe class FmodFileSystem
     {
         public static FMOD_RESULT UserOpen(String name, UInt32* filesize, void** handle, void* userdata)
         {
@@ -27,7 +27,7 @@ namespace Sedulous.FMOD
                 }
                 catch (FileNotFoundException) { return FMOD_ERR_FILE_NOTFOUND; }
 
-                var fmodstream = new FMODFileStream(iostream);
+                var fmodstream = new FmodFileStream(iostream);
                 var handlenum = Interlocked.Increment(ref nexthandle);
                 var handlemem = Marshal.AllocHGlobal(sizeof(Int64)); ;
                 *(Int64*)handlemem = handlenum;
@@ -49,7 +49,7 @@ namespace Sedulous.FMOD
 
         public static FMOD_RESULT UserClose(void* handle, void* userdata)
         {
-            var stream = default(FMODFileStream);
+            var stream = default(FmodFileStream);
             var handlenum = *(Int64*)handle;
             var handlemem = (IntPtr)handle;
             Marshal.FreeHGlobal(handlemem);
@@ -69,7 +69,7 @@ namespace Sedulous.FMOD
 
         public static FMOD_RESULT UserRead(void* handle, void* buffer, UInt32 sizebytes, UInt32* bytesread, void* userdata)
         {
-            var stream = default(FMODFileStream);
+            var stream = default(FmodFileStream);
             var handlenum = *(Int64*)handle;
 
             lockSlim.EnterReadLock();
@@ -84,7 +84,7 @@ namespace Sedulous.FMOD
 
         public static FMOD_RESULT UserSeek(void* handle, UInt32 pos, void* userdata)
         {
-            var stream = default(FMODFileStream);
+            var stream = default(FmodFileStream);
             var handlenum = *(Int64*)handle;
 
             lockSlim.EnterReadLock();
@@ -98,7 +98,7 @@ namespace Sedulous.FMOD
         }
 
         private static readonly ReaderWriterLockSlim lockSlim = new ReaderWriterLockSlim();
-        private static readonly Dictionary<Int64, FMODFileStream> streams = new Dictionary<Int64, FMODFileStream>();
+        private static readonly Dictionary<Int64, FmodFileStream> streams = new Dictionary<Int64, FmodFileStream>();
         private static Int64 nexthandle;
     }
 #pragma warning restore 1591

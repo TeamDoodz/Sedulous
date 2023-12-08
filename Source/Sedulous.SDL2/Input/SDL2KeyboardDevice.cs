@@ -3,25 +3,25 @@ using System.Text;
 using Sedulous.Core;
 using Sedulous.Core.Messages;
 using Sedulous.Input;
-using Sedulous.SDL2.Messages;
-using Sedulous.SDL2.Native;
-using static Sedulous.SDL2.Native.SDL_EventType;
-using static Sedulous.SDL2.Native.SDL_Keymod;
-using static Sedulous.SDL2.Native.SDLNative;
+using Sedulous.Sdl2.Messages;
+using Sedulous.Sdl2.Native;
+using static Sedulous.Sdl2.Native.SDL_EventType;
+using static Sedulous.Sdl2.Native.SDL_Keymod;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2.Input
+namespace Sedulous.Sdl2.Input
 {
     /// <summary>
     /// Represents the SDL2 implementation of the KeyboardDevice class.
     /// </summary>
-    public sealed class SDL2KeyboardDevice : KeyboardDevice,
-        IMessageSubscriber<FrameworkMessageID>
+    public sealed class Sdl2KeyboardDevice : KeyboardDevice,
+        IMessageSubscriber<FrameworkMessageId>
     {
         /// <summary>
         /// Initializes a new instance of the SDL2KeyboardDevice class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
-        public SDL2KeyboardDevice(FrameworkContext context)
+        public Sdl2KeyboardDevice(FrameworkContext context)
             : base(context)
         {
             Int32 numkeys;
@@ -35,11 +35,11 @@ namespace Sedulous.SDL2.Input
                 FrameworkMessages.SoftwareKeyboardHidden);
 
             context.Messages.Subscribe(this,
-                SDL2FrameworkMessages.SDLEvent);
+                Sdl2FrameworkMessages.SdlEvent);
         }
 
         /// <inheritdoc/>
-        void IMessageSubscriber<FrameworkMessageID>.ReceiveMessage(FrameworkMessageID type, MessageData data)
+        void IMessageSubscriber<FrameworkMessageId>.ReceiveMessage(FrameworkMessageId type, MessageData data)
         {
             if (type == FrameworkMessages.SoftwareKeyboardShown)
             {
@@ -49,9 +49,9 @@ namespace Sedulous.SDL2.Input
             {
                 SDL_StopTextInput();
             }
-            else if (type == SDL2FrameworkMessages.SDLEvent)
+            else if (type == Sdl2FrameworkMessages.SdlEvent)
             {
-                var evt = ((SDL2EventMessageData)data).Event;
+                var evt = ((Sdl2EventMessageData)data).Event;
                 switch (evt.type)
                 {
                     case SDL_KEYDOWN:
@@ -243,7 +243,7 @@ namespace Sedulous.SDL2.Input
         /// </summary>
         private void OnKeyDown(ref SDL_KeyboardEvent evt)
         {
-            var window = FrameworkContext.GetPlatform().Windows.GetByID((int)evt.windowID);
+            var window = FrameworkContext.GetPlatform().Windows.GetById((int)evt.windowID);
             var mods   = evt.keysym.mod;
             var ctrl   = (mods & KMOD_CTRL) != 0;
             var alt    = (mods & KMOD_ALT) != 0;
@@ -264,7 +264,7 @@ namespace Sedulous.SDL2.Input
         /// </summary>
         private void OnKeyUp(ref SDL_KeyboardEvent evt)
         {
-            var window = FrameworkContext.GetPlatform().Windows.GetByID((int)evt.windowID);
+            var window = FrameworkContext.GetPlatform().Windows.GetById((int)evt.windowID);
 
             states[(int)evt.keysym.scancode].OnUp();
 
@@ -277,7 +277,7 @@ namespace Sedulous.SDL2.Input
         /// </summary>
         private unsafe void OnTextEditing(ref SDL_TextEditingEvent evt)
         {
-            var window = FrameworkContext.GetPlatform().Windows.GetByID((int)evt.windowID);
+            var window = FrameworkContext.GetPlatform().Windows.GetById((int)evt.windowID);
             fixed (byte* input = evt.text)
             {
                 if (ConvertTextInputToUtf16(input))
@@ -292,7 +292,7 @@ namespace Sedulous.SDL2.Input
         /// </summary>
         private unsafe void OnTextInput(ref SDL_TextInputEvent evt)
         {
-            var window = FrameworkContext.GetPlatform().Windows.GetByID((int)evt.windowID);
+            var window = FrameworkContext.GetPlatform().Windows.GetById((int)evt.windowID);
             fixed (byte* input = evt.text)
             {
                 if (ConvertTextInputToUtf16(input))
@@ -342,7 +342,7 @@ namespace Sedulous.SDL2.Input
         /// </summary>
         private void Register()
         {
-            var input = (SDL2FrameworkInput)FrameworkContext.GetInput();
+            var input = (Sdl2FrameworkInput)FrameworkContext.GetInput();
             if (input.RegisterKeyboardDevice(this))
                 isRegistered = true;
         }

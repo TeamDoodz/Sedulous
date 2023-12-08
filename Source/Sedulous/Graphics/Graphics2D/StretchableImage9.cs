@@ -26,7 +26,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="right">The distance in pixels between the right edge of the image and the right edge of the image's center segment.</param>
         /// <param name="bottom">The distance in pixels between the bottom edge of the image and the bottom edge of the image's center segment.</param>
         /// <returns>The new instance of <see cref="StretchableImage9"/> that was created.</returns>
-        public static StretchableImage9 Create(AssetID texture, Int32 left, Int32 top, Int32 right, Int32 bottom)
+        public static StretchableImage9 Create(AssetId texture, Int32 left, Int32 top, Int32 right, Int32 bottom)
         {
             return Create(texture, 0, 0, 0, 0, left, top, right, bottom);
         }
@@ -44,10 +44,10 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="right">The distance in pixels between the right edge of the image and the right edge of the image's center segment.</param>
         /// <param name="bottom">The distance in pixels between the bottom edge of the image and the bottom edge of the image's center segment.</param>
         /// <returns>The new instance of <see cref="StretchableImage9"/> that was created.</returns>
-        public static StretchableImage9 Create(AssetID texture, Int32 x, Int32 y, Int32 width, Int32 height, Int32 left, Int32 top, Int32 right, Int32 bottom)
+        public static StretchableImage9 Create(AssetId texture, Int32 x, Int32 y, Int32 width, Int32 height, Int32 left, Int32 top, Int32 right, Int32 bottom)
         {
             var img = new StretchableImage9();
-            img.TextureID = texture;
+            img.TextureId = texture;
             img.TextureRegion = new Rectangle(x, y, width, height);
             img.Left = left;
             img.Top = top;
@@ -66,7 +66,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="right">The distance in pixels between the right edge of the image and the right edge of the image's center segment.</param>
         /// <param name="bottom">The distance in pixels between the bottom edge of the image and the bottom edge of the image's center segment.</param>
         /// <returns>The new instance of <see cref="StretchableImage9"/> that was created.</returns>
-        public static StretchableImage9 Create(AssetID texture, Rectangle textureRegion, Int32 left, Int32 top, Int32 right, Int32 bottom)
+        public static StretchableImage9 Create(AssetId texture, Rectangle textureRegion, Int32 left, Int32 top, Int32 right, Int32 bottom)
         {
             return Create(texture, textureRegion.X, textureRegion.Y, textureRegion.Width, textureRegion.Height, left, top, right, bottom);
         }

@@ -116,16 +116,16 @@ namespace Sedulous.Presentation
                 throw new FormatException();
 
             // Parse the asset identifier
-            var spriteAnimationID = default(SpriteAnimationID);
+            var spriteAnimationID = default(SpriteAnimationId);
             var assetIDParsed = false;
 
             if (manifests == null)
             {
-                assetIDParsed = Graphics.Graphics2D.SpriteAnimationID.TryParse(parts[0], out spriteAnimationID);
+                assetIDParsed = Graphics.Graphics2D.SpriteAnimationId.TryParse(parts[0], out spriteAnimationID);
             }
             else
             {
-                assetIDParsed = Graphics.Graphics2D.SpriteAnimationID.TryParse(manifests, parts[0], out spriteAnimationID);
+                assetIDParsed = Graphics.Graphics2D.SpriteAnimationId.TryParse(manifests, parts[0], out spriteAnimationID);
             }
 
             if (!assetIDParsed)

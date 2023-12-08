@@ -16,7 +16,7 @@ namespace Sedulous.Presentation
         /// </summary>
         /// <param name="spriteAnimationID">The sprite animation's identifier.</param>
         /// <param name="spriteSource">The sprite asset's source.</param>
-        public SourcedSpriteAnimationID(SpriteAnimationID spriteAnimationID, AssetSource spriteSource)
+        public SourcedSpriteAnimationID(SpriteAnimationId spriteAnimationID, AssetSource spriteSource)
         {
             this.spriteAnimationID = spriteAnimationID;
             this.spriteSource = spriteSource;
@@ -28,7 +28,7 @@ namespace Sedulous.Presentation
         /// <summary>
         /// Gets the sprite animation's identifier.
         /// </summary>
-        public SpriteAnimationID SpriteAnimationID
+        public SpriteAnimationId SpriteAnimationID
         {
             get { return spriteAnimationID; }
         }
@@ -42,7 +42,7 @@ namespace Sedulous.Presentation
         }
         
         // Property values.
-        private readonly SpriteAnimationID spriteAnimationID;
+        private readonly SpriteAnimationId spriteAnimationID;
         private readonly AssetSource spriteSource;
     }
 }

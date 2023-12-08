@@ -2,7 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using Sedulous.Core;
 
-namespace Sedulous.SDL2.Native
+namespace Sedulous.Sdl2.Native
 {
 #pragma warning disable 1591
     public static unsafe partial class SDLNative

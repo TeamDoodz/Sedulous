@@ -3,7 +3,7 @@ using System.Security;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Sedulous.FMOD.Native
+namespace Sedulous.Fmod.Native
 {
 #pragma warning disable 1591
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

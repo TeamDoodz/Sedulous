@@ -5,36 +5,36 @@ using Sedulous.Core.Messages;
 using Sedulous.Graphics;
 using Sedulous.Messages;
 using Sedulous.Platform;
-using Sedulous.SDL2.Native;
-using Sedulous.SDL2.Platform.Surface;
-using static Sedulous.SDL2.Native.SDL_EventType;
-using static Sedulous.SDL2.Native.SDL_PixelFormatEnum;
-using static Sedulous.SDL2.Native.SDL_SysWM_Type;
-using static Sedulous.SDL2.Native.SDL_WindowEventID;
-using static Sedulous.SDL2.Native.SDL_WindowFlags;
-using static Sedulous.SDL2.Native.SDLNative;
+using Sedulous.Sdl2.Native;
+using Sedulous.Sdl2.Platform.Surface;
+using static Sedulous.Sdl2.Native.SDL_EventType;
+using static Sedulous.Sdl2.Native.SDL_PixelFormatEnum;
+using static Sedulous.Sdl2.Native.SDL_SysWM_Type;
+using static Sedulous.Sdl2.Native.SDL_WindowEventID;
+using static Sedulous.Sdl2.Native.SDL_WindowFlags;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2.Platform
+namespace Sedulous.Sdl2.Platform
 {
     /// <summary>
     /// Represents the SDL2 implementation of the <see cref="IFrameworkWindow"/> interface.
     /// </summary>    
-    public sealed unsafe partial class SDL2FrameworkWindow : FrameworkResource,
-        IMessageSubscriber<FrameworkMessageID>,
+    public sealed unsafe partial class Sdl2FrameworkWindow : FrameworkResource,
+        IMessageSubscriber<FrameworkMessageId>,
         IFrameworkWindow
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SDL2FrameworkWindow"/> class.
+        /// Initializes a new instance of the <see cref="Sdl2FrameworkWindow"/> class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
         /// <param name="ptr">The SDL2 pointer that represents the window.</param>
         /// <param name="visible">A value indicating whether this window should be visible by default.</param>
         /// <param name="native">A value indicating whether the window was created from a native pointer.</param>
-        internal SDL2FrameworkWindow(FrameworkContext context, IntPtr ptr, Boolean visible, Boolean native = false)
+        internal Sdl2FrameworkWindow(FrameworkContext context, IntPtr ptr, Boolean visible, Boolean native = false)
             : base(context)
         {
             this.ptr = ptr;
-            this.ID = (Int32)SDL_GetWindowID(ptr);
+            this.Id = (Int32)SDL_GetWindowID(ptr);
             this.Native = native;
 
             SetIcon(DefaultWindowIcon.Value);
@@ -71,19 +71,19 @@ namespace Sedulous.SDL2.Platform
         /// </summary>
         /// <param name="window">The Sedulous window to convert.</param>
         /// <returns>The window's underlying SDL2 pointer.</returns>
-        public static explicit operator IntPtr(SDL2FrameworkWindow window)
+        public static explicit operator IntPtr(Sdl2FrameworkWindow window)
         {
             return (window == null) ? IntPtr.Zero : window.ptr;
         }
 
         /// <inheritdoc/>
-        void IMessageSubscriber<FrameworkMessageID>.ReceiveMessage(FrameworkMessageID type, MessageData data)
+        void IMessageSubscriber<FrameworkMessageId>.ReceiveMessage(FrameworkMessageId type, MessageData data)
         {
-            if (type != SDL2FrameworkMessages.SDLEvent)
+            if (type != Sdl2FrameworkMessages.SdlEvent)
                 return;
 
-            var msg = (Messages.SDL2EventMessageData)data;
-            if (msg.Event.type != SDL_WINDOWEVENT || msg.Event.window.windowID != ID)
+            var msg = (Messages.Sdl2EventMessageData)data;
+            if (msg.Event.type != SDL_WINDOWEVENT || msg.Event.window.windowID != Id)
                 return;
 
             switch (msg.Event.window.@event)
@@ -220,7 +220,7 @@ namespace Sedulous.SDL2.Platform
                 case WindowMode.Windowed:
                     {
                         if (SDL_SetWindowFullscreen(ptr, 0) < 0)
-                            throw new SDL2Exception();
+                            throw new Sdl2Exception();
 
                         var x = windowedPosition?.X ?? FrameworkConfiguration.DefaultWindowPositionX;
                         var y = windowedPosition?.Y ?? FrameworkConfiguration.DefaultWindowPositionY;
@@ -254,7 +254,7 @@ namespace Sedulous.SDL2.Platform
                         }
 
                         if (SDL_SetWindowFullscreen(ptr, (uint)SDL_WINDOW_FULLSCREEN) < 0)
-                            throw new SDL2Exception();
+                            throw new Sdl2Exception();
 
                         if (FrameworkContext.Platform == FrameworkPlatform.Windows)
                             win32CachedStyle = IntPtr.Zero;
@@ -264,7 +264,7 @@ namespace Sedulous.SDL2.Platform
                 case WindowMode.FullscreenWindowed:
                     {
                         if (SDL_SetWindowFullscreen(ptr, 0) < 0)
-                            throw new SDL2Exception();
+                            throw new Sdl2Exception();
 
                         var displayBounds = Display.Bounds;
 
@@ -393,7 +393,7 @@ namespace Sedulous.SDL2.Platform
         }
 
         /// <inheritdoc/>
-        public Int32 ID { get; }
+        public Int32 Id { get; }
 
         /// <inheritdoc/>
         public String Caption
@@ -664,7 +664,7 @@ namespace Sedulous.SDL2.Platform
             {
                 Contract.EnsureNotDisposed(this, Disposed);
 
-                value = MathUtil.Clamp(value, 0.0f, 1.0f);
+                value = MathUtility.Clamp(value, 0.0f, 1.0f);
                 SDL_SetWindowOpacity(ptr, value);
             }
         }
@@ -895,7 +895,7 @@ namespace Sedulous.SDL2.Platform
                     SetWindowMode(WindowMode.Windowed);
 
                 if (SDL_SetWindowDisplayMode(ptr, &sdlMode) < 0)
-                    throw new SDL2Exception();
+                    throw new Sdl2Exception();
 
                 if (wasFullscreen)
                 {
@@ -907,7 +907,7 @@ namespace Sedulous.SDL2.Platform
                 }
 
                 if (SDL_GetWindowDisplayMode(ptr, &sdlMode) < 0)
-                    throw new SDL2Exception();
+                    throw new Sdl2Exception();
 
                 int bpp;
                 uint Rmask, Gmask, Bmask, Amask;
@@ -985,7 +985,7 @@ namespace Sedulous.SDL2.Platform
         private void HandleDpiChanged(Single? reportedScale = null)
         {
             // Inform our display that it needs to re-query DPI information.
-            ((SDL2FrameworkDisplay)Display)?.RefreshDensityInformation();
+            ((Sdl2FrameworkDisplay)Display)?.RefreshDensityInformation();
 
             // On Windows, resize the window to match the new scale.
             if (FrameworkContext.Platform == FrameworkPlatform.Windows && FrameworkContext.Properties.SupportsHighDensityDisplayModes)
@@ -1062,10 +1062,10 @@ namespace Sedulous.SDL2.Platform
         {
             SDL_DisplayMode mode;
             if (SDL_GetDesktopDisplayMode(Display.Index, &mode) < 0)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
 
             if (SDL_SetWindowDisplayMode(ptr, &mode) < 0)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
         }
 
         /// <summary>

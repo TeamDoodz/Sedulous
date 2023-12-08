@@ -1,19 +1,19 @@
 ﻿using System;
-using Sedulous.FMOD.Native;
-using static Sedulous.FMOD.Native.FMODNative;
+using Sedulous.Fmod.Native;
+using static Sedulous.Fmod.Native.FMODNative;
 
-namespace Sedulous.FMOD
+namespace Sedulous.Fmod
 {
     /// <summary>
     /// Represents an exception thrown as a result of an FMOD API error.
     /// </summary>
     [Serializable]
-    public sealed class FMODException : Exception
+    public sealed class FmodException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FMODException"/> class.
+        /// Initializes a new instance of the <see cref="FmodException"/> class.
         /// </summary>
-        public FMODException(FMOD_RESULT result)
+        public FmodException(FMOD_RESULT result)
             : base(FMOD_ErrorString(result))
         {
 

@@ -234,9 +234,9 @@ namespace Sedulous.Presentation.Controls
 
                 var cursorpos = textLayoutCommands.CursorPosition;
 
-                var textRenderingMode = TextOptions.GetTextRenderingMode(this);
-                var textScript = TextOptions.GetTextScript(this);
-                var textLanguage = TextOptions.GetTextLanguage(this);
+                var textRenderingMode = TextSettings.GetTextRenderingMode(this);
+                var textScript = TextSettings.GetTextScript(this);
+                var textLanguage = TextSettings.GetTextLanguage(this);
                 var textDirection = FlowDirection == FlowDirection.RightToLeft ? TextDirection.RightToLeft : TextDirection.LeftToRight;
 
                 var options = (textRenderingMode == TextRenderingMode.Shaped) ? TextLayoutOptions.Shape : TextLayoutOptions.None;

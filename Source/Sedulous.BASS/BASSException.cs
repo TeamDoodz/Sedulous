@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using static Sedulous.BASS.Native.BASSNative;
+using static Sedulous.Bass.Native.BASSNative;
 
-namespace Sedulous.BASS
+namespace Sedulous.Bass
 {
     /// <summary>
     /// Represents an exception thrown as a result of a BASS API error.
     /// </summary>
     [Serializable]
-    public sealed class BASSException : Exception
+    public sealed class BassException : Exception
     {
         /// <summary>
         /// Initializes a new instance of the BASSException class.
         /// </summary>
-        public BASSException()
+        public BassException()
             : base(GetExceptionMessage())
         {
 
@@ -23,7 +23,7 @@ namespace Sedulous.BASS
         /// Initializes a new instance of the BASSException class.
         /// </summary>
         /// <param name="code">The BASS error code.</param>
-        public BASSException(Int32 code)
+        public BassException(Int32 code)
             : base(GetExceptionMessage(code))
         {
 

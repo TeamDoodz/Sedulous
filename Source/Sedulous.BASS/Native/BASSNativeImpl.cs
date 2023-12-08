@@ -2,7 +2,7 @@ using System;
 using System.Security;
 using System.Runtime.InteropServices;
 
-namespace Sedulous.BASS.Native
+namespace Sedulous.Bass.Native
 {
 #pragma warning disable 1591
     [SuppressUnmanagedCodeSecurity]

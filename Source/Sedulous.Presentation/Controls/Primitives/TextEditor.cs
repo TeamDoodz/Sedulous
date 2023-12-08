@@ -2091,7 +2091,7 @@ namespace Sedulous.Presentation.Controls.Primitives
             if (owner == null || !owner.Font.IsLoaded)
                 return;
 
-            var textFlags = TextFlags.AlignTop;
+            var textFlags = Graphics.Graphics2D.Text.TextOptions.AlignTop;
             var textWrapping = GetActualTextWrapping();
             var textAlignment = GetActualTextAlignment();
 
@@ -2105,21 +2105,21 @@ namespace Sedulous.Presentation.Controls.Primitives
             switch (textAlignment)
             {
                 case TextAlignment.Left:
-                    textFlags |= TextFlags.AlignLeft;
+                    textFlags |= Graphics.Graphics2D.Text.TextOptions.AlignLeft;
                     break;
 
                 case TextAlignment.Center:
-                    textFlags |= TextFlags.AlignCenter;
+                    textFlags |= Graphics.Graphics2D.Text.TextOptions.AlignCenter;
                     break;
 
                 case TextAlignment.Right:
-                    textFlags |= TextFlags.AlignRight;
+                    textFlags |= Graphics.Graphics2D.Text.TextOptions.AlignRight;
                     break;
             }
 
-            var textRenderingMode = (owner == null) ? TextOptions.GetTextRenderingMode(this) : TextOptions.GetTextRenderingMode(owner);
-            var textLanguage = (owner == null) ? TextOptions.GetTextLanguage(this) : TextOptions.GetTextLanguage(owner);
-            var textScript = (owner == null) ? TextOptions.GetTextScript(this) : TextOptions.GetTextScript(owner);
+            var textRenderingMode = (owner == null) ? Media.TextSettings.GetTextRenderingMode(this) : Media.TextSettings.GetTextRenderingMode(owner);
+            var textLanguage = (owner == null) ? Media.TextSettings.GetTextLanguage(this) : Media.TextSettings.GetTextLanguage(owner);
+            var textScript = (owner == null) ? Media.TextSettings.GetTextScript(this) : Media.TextSettings.GetTextScript(owner);
             var textDirection = IsRightToLeft() ? TextDirection.RightToLeft : TextDirection.LeftToRight;
 
             var options = (textRenderingMode == TextRenderingMode.Shaped) ? TextLayoutOptions.Shape : TextLayoutOptions.None;

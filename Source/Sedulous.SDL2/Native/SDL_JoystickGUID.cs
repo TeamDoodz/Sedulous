@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sedulous.SDL2.Native
+namespace Sedulous.Sdl2.Native
 {
     /// <summary>
     /// Contains methods relating to the SDL_JoystickGUID native structure.

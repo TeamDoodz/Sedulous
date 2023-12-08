@@ -1,27 +1,27 @@
 ﻿using System;
 
-namespace Sedulous.BASS.Audio
+namespace Sedulous.Bass.Audio
 {
     /// <summary>
     /// Represents the intermediate description of a BASS media resource.
     /// </summary>
-    public sealed class BASSMediaDescription
+    public sealed class BassMediaDescription
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BASSMediaDescription"/> class from the specified filename.
+        /// Initializes a new instance of the <see cref="BassMediaDescription"/> class from the specified filename.
         /// </summary>
         /// <param name="filename">The media file's filename.</param>
-        internal BASSMediaDescription(String filename)
+        internal BassMediaDescription(String filename)
         {
             this.IsFilename = true;
             this.Data = filename;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BASSMediaDescription"/> class from the specified byte array.
+        /// Initializes a new instance of the <see cref="BassMediaDescription"/> class from the specified byte array.
         /// </summary>
         /// <param name="data">The media file's data.</param>
-        internal BASSMediaDescription(Byte[] data)
+        internal BassMediaDescription(Byte[] data)
         {
             this.IsFilename = false;
             this.Data = data;

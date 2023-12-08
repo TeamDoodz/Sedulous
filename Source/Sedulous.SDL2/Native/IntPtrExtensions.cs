@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sedulous.SDL2.Native
+namespace Sedulous.Sdl2.Native
 {
     /// <summary>
     /// Contains extension methods for the IntPtr structure.

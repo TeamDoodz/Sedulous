@@ -2,11 +2,11 @@
 using System.IO;
 using Sedulous.Core;
 using Sedulous.Platform;
-using Sedulous.SDL2.Native;
-using static Sedulous.SDL2.Native.SDL_BlendMode;
-using static Sedulous.SDL2.Native.SDLNative;
+using Sedulous.Sdl2.Native;
+using static Sedulous.Sdl2.Native.SDL_BlendMode;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2.Platform.Surface
+namespace Sedulous.Sdl2.Platform.Surface
 {
     /// <summary>
     /// Represents the SDL2 implementation of the <see cref="Surface2D"/> class.
@@ -101,7 +101,7 @@ namespace Sedulous.SDL2.Platform.Surface
             var colorval = color.PackedValue;
 
             if (SDL_FillRect(nativesurf.NativePtr, &rect, colorval) < 0)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
         }
 
         /// <inheritdoc/>
@@ -231,7 +231,7 @@ namespace Sedulous.SDL2.Platform.Surface
             var dstrect = new SDL_Rect() { x = 0, y = 0, w = region.Width, h = region.Height };
 
             if (SDL_BlitSurface(nativesurf.NativePtr, &srcrect, copysurf.NativePtr, &dstrect) < 0)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
 
             var options = SrgbEncoded ? SurfaceOptions.SrgbColor : SurfaceOptions.LinearColor;
             var result = new SDL2Surface2D(FrameworkContext, copysurf, options);
@@ -341,17 +341,17 @@ namespace Sedulous.SDL2.Platform.Surface
             var sdlDstRect = new SDL_Rect() { x = dstRect.X, y = dstRect.Y, w = dstRect.Width, h = dstRect.Height };
 
             if (SDL_SetSurfaceBlendMode(src.nativesurf.NativePtr, SDL_BLENDMODE_NONE) < 0)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
 
             if (srcRect.Width != dstRect.Width || srcRect.Height != dstRect.Height)
             {
                 if (SDL_BlitScaled(src.nativesurf.NativePtr, &sdlSrcRect, dst.nativesurf.NativePtr, &sdlDstRect) < 0)
-                    throw new SDL2Exception();
+                    throw new Sdl2Exception();
             }
             else
             {
                 if (SDL_BlitSurface(src.nativesurf.NativePtr, &sdlSrcRect, dst.nativesurf.NativePtr, &sdlDstRect) < 0)
-                    throw new SDL2Exception();
+                    throw new Sdl2Exception();
             }
         }
 

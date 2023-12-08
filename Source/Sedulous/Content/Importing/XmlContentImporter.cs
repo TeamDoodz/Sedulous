@@ -12,7 +12,7 @@ namespace Sedulous.Content
         /// <inheritdoc/>
         public override XDocument Import(IContentImporterMetadata metadata, Stream stream)
         {
-            return XmlUtil.Load(stream);
+            return XmlUtility.Load(stream);
         }
     }
 }

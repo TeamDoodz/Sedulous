@@ -2,7 +2,7 @@
 using System.IO;
 using Sedulous.Content;
 
-namespace Sedulous.FMOD.Audio
+namespace Sedulous.Fmod.Audio
 {
     /// <summary>
     /// Imports .mp3, .ogg, and .wav files.
@@ -19,17 +19,17 @@ namespace Sedulous.FMOD.Audio
     //[ContentImporter(".ogg")]
     //[ContentImporter(".s3m")]
     //[ContentImporter(".wav")]
-    public sealed class FMODMediaImporter : ContentImporter<FMODMediaDescription>
+    public sealed class FmodMediaImporter : ContentImporter<FmodMediaDescription>
     {
         /// <inheritdoc/>
-        public override FMODMediaDescription Import(IContentImporterMetadata metadata, Stream stream)
+        public override FmodMediaDescription Import(IContentImporterMetadata metadata, Stream stream)
         {
             if (metadata.IsFile)
-                return new FMODMediaDescription(metadata.AssetFilePath);
+                return new FmodMediaDescription(metadata.AssetFilePath);
 
             var buffer = new Byte[stream.Length];
             stream.Read(buffer, 0, buffer.Length);
-            return new FMODMediaDescription(buffer);
+            return new FmodMediaDescription(buffer);
         }
     }
 }

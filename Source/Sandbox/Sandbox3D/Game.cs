@@ -1,6 +1,6 @@
 ﻿using Sandbox3D.Input;
 using Sedulous;
-using Sedulous.BASS;
+using Sedulous.Bass;
 using Sedulous.Content;
 using Sedulous.Core;
 using Sedulous.FreeType2;
@@ -9,7 +9,7 @@ using Sedulous.Graphics.Graphics3D;
 using Sedulous.OpenGL;
 using Sedulous.Presentation;
 using Sedulous.Presentation.Styles;
-using Sedulous.SDL2;
+using Sedulous.Sdl2;
 using System;
 using System.IO;
 
@@ -43,12 +43,12 @@ namespace Sandbox3D
             graphicsConfig.SrgbBuffersEnabled = false;
             graphicsConfig.SrgbDefaultForTexture2D = false;
 
-            var contextConfig = new SDL2FrameworkConfiguration();
+            var contextConfig = new Sdl2FrameworkConfiguration();
             contextConfig.SupportsHighDensityDisplayModes = true;
             contextConfig.EnableServiceMode = false;
             contextConfig.WatchViewFilesForChanges = ShouldDynamicallyReloadContent();
             contextConfig.Plugins.Add(new OpenGLGraphicsPlugin(graphicsConfig));
-            contextConfig.Plugins.Add(new BASSAudioPlugin());
+            contextConfig.Plugins.Add(new BassAudioPlugin());
             contextConfig.Plugins.Add(new FreeTypeFontPlugin());
             PopulateConfiguration(contextConfig);
 
@@ -61,7 +61,7 @@ namespace Sandbox3D
             };
 #endif
 
-            return new SDL2FrameworkContext(this, contextConfig);
+            return new Sdl2FrameworkContext(this, contextConfig);
         }
 
         /// <summary>

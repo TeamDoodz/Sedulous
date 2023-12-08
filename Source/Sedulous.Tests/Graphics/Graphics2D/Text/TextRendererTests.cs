@@ -34,7 +34,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                     var width = window.Compositor.Width / 2;
                     var height = window.Compositor.Height / 2;
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, width, height, TextFlags.AlignLeft, TextLayoutOptions.None));
+                        new TextLayoutSettings(content.Font, width, height, TextOptions.AlignLeft, TextLayoutOptions.None));
 
                     content.SpriteBatch.Begin();
                     content.SpriteBatch.Draw(content.BlankTexture,
@@ -64,7 +64,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                     uv.GetGraphics().Clear(Color.CornflowerBlue);
 
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, null, null, TextFlags.Standard));
+                        new TextLayoutSettings(content.Font, null, null, TextOptions.Standard));
 
                     content.SpriteBatch.Begin();
 
@@ -124,7 +124,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                     var width = window.Compositor.Width / 2;
                     var height = window.Compositor.Height;
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, width, height, TextFlags.AlignLeft, TextLayoutOptions.None));
+                        new TextLayoutSettings(content.Font, width, height, TextOptions.AlignLeft, TextLayoutOptions.None));
 
                     content.SpriteBatch.Begin();
                     content.SpriteBatch.Draw(content.BlankTexture,
@@ -156,7 +156,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                     var width = window.Compositor.Width / 2;
                     var height = window.Compositor.Height;
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, width, height, TextFlags.AlignLeft, TextLayoutOptions.None));
+                        new TextLayoutSettings(content.Font, width, height, TextOptions.AlignLeft, TextLayoutOptions.None));
 
                     content.SpriteBatch.Begin();
                     content.SpriteBatch.Draw(content.BlankTexture,
@@ -191,7 +191,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                     var width = window.Compositor.Width / 2;
                     var height = window.Compositor.Height;
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, width, height, TextFlags.Standard));
+                        new TextLayoutSettings(content.Font, width, height, TextOptions.Standard));
 
                     content.SpriteBatch.Begin();
 
@@ -227,7 +227,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                     var width = window.Compositor.Width / 2;
                     var height = window.Compositor.Height;
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, width, height, TextFlags.Standard, TextLayoutOptions.Hyphenate));
+                        new TextLayoutSettings(content.Font, width, height, TextOptions.Standard, TextLayoutOptions.Hyphenate));
 
                     content.SpriteBatch.Begin();
 
@@ -264,7 +264,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                     var width = window.Compositor.Width / 2;
                     var height = window.Compositor.Height;
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, width, height, TextFlags.AlignLeft, TextLayoutOptions.None));
+                        new TextLayoutSettings(content.Font, width, height, TextOptions.AlignLeft, TextLayoutOptions.None));
 
                     content.SpriteBatch.Begin();
                     content.SpriteBatch.Draw(content.BlankTexture,
@@ -318,7 +318,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                     var width = window.Compositor.Width / 2;
                     var height = window.Compositor.Height;
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, width, height, TextFlags.AlignRight, TextLayoutOptions.None));
+                        new TextLayoutSettings(content.Font, width, height, TextOptions.AlignRight, TextLayoutOptions.None));
 
                     content.SpriteBatch.Begin();
                     content.SpriteBatch.Draw(content.BlankTexture,
@@ -372,7 +372,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                     var width = window.Compositor.Width / 2;
                     var height = window.Compositor.Height;
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, width, height, TextFlags.AlignCenter, TextLayoutOptions.None));
+                        new TextLayoutSettings(content.Font, width, height, TextOptions.AlignCenter, TextLayoutOptions.None));
 
                     content.SpriteBatch.Begin();
                     content.SpriteBatch.Draw(content.BlankTexture,
@@ -424,7 +424,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
 
                     var window = uv.GetPlatform().Windows.GetPrimary();
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, window.Compositor.Width, window.Compositor.Height, TextFlags.AlignLeft | TextFlags.AlignTop));
+                        new TextLayoutSettings(content.Font, window.Compositor.Width, window.Compositor.Height, TextOptions.AlignLeft | TextOptions.AlignTop));
 
                     content.TextLayoutResult.AcquirePointers();
                     var lines = new[]
@@ -476,7 +476,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
 
                     var window = uv.GetPlatform().Windows.GetPrimary();
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, window.Compositor.Width, window.Compositor.Height, TextFlags.AlignLeft | TextFlags.AlignTop));
+                        new TextLayoutSettings(content.Font, window.Compositor.Width, window.Compositor.Height, TextOptions.AlignLeft | TextOptions.AlignTop));
 
                     content.TextLayoutResult.AcquirePointers();
                     var lines = new[]
@@ -529,7 +529,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
 
                     var window = uv.GetPlatform().Windows.GetPrimary();
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, window.Compositor.Width, window.Compositor.Height, TextFlags.AlignLeft | TextFlags.AlignTop));
+                        new TextLayoutSettings(content.Font, window.Compositor.Width, window.Compositor.Height, TextOptions.AlignLeft | TextOptions.AlignTop));
 
                     content.TextLayoutResult.AcquirePointers();
                     var lines = new[]
@@ -602,7 +602,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                     var window = uv.GetPlatform().Windows.GetPrimary();
                     var options = shaped ? TextLayoutOptions.Shape : TextLayoutOptions.None;
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, window.Compositor.Width, window.Compositor.Height, TextFlags.AlignLeft | TextFlags.AlignTop, options));
+                        new TextLayoutSettings(content.Font, window.Compositor.Width, window.Compositor.Height, TextOptions.AlignLeft | TextOptions.AlignTop, options));
 
                     content.TextLayoutResult.AcquirePointers();
 
@@ -680,7 +680,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                     var window = uv.GetPlatform().Windows.GetPrimary();
                     var options = shaped ? TextLayoutOptions.Shape : TextLayoutOptions.None;
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, window.Compositor.Width, window.Compositor.Height, TextFlags.AlignLeft | TextFlags.AlignTop, options));
+                        new TextLayoutSettings(content.Font, window.Compositor.Width, window.Compositor.Height, TextOptions.AlignLeft | TextOptions.AlignTop, options));
 
                     content.TextLayoutResult.AcquirePointers();
 
@@ -742,7 +742,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
 
                     var window = uv.GetPlatform().Windows.GetPrimary();
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, window.Compositor.Width, window.Compositor.Height, TextFlags.AlignCenter | TextFlags.AlignMiddle));
+                        new TextLayoutSettings(content.Font, window.Compositor.Width, window.Compositor.Height, TextOptions.AlignCenter | TextOptions.AlignMiddle));
 
                     content.TextLayoutResult.AcquirePointers();
                     var line0Bounds = content.TextRenderer.GetLineBounds(content.TextLayoutResult, 0);
@@ -795,7 +795,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
 
                     var window = uv.GetPlatform().Windows.GetPrimary();
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, window.Compositor.Width, window.Compositor.Height, TextFlags.AlignCenter | TextFlags.AlignMiddle));
+                        new TextLayoutSettings(content.Font, window.Compositor.Width, window.Compositor.Height, TextOptions.AlignCenter | TextOptions.AlignMiddle));
 
                     content.TextLayoutResult.AcquirePointers();
                     var line0Bounds = content.TextRenderer.GetLineBounds(content.TextLayoutResult, 0);
@@ -850,7 +850,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                     var window = uv.GetPlatform().Windows.GetPrimary();
                     var options = shaped ? TextLayoutOptions.Shape : TextLayoutOptions.None;
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, window.Compositor.Width, window.Compositor.Height, TextFlags.AlignCenter | TextFlags.AlignMiddle, options));
+                        new TextLayoutSettings(content.Font, window.Compositor.Width, window.Compositor.Height, TextOptions.AlignCenter | TextOptions.AlignMiddle, options));
 
                     content.TextLayoutResult.AcquirePointers();
                     var glyph0Bounds = content.TextRenderer.GetGlyphBounds(content.TextLayoutResult, 0);
@@ -937,7 +937,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                     var window = uv.GetPlatform().Windows.GetPrimary();
                     var options = shaped ? TextLayoutOptions.Shape : TextLayoutOptions.None;
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, window.Compositor.Width, window.Compositor.Height, TextFlags.AlignCenter | TextFlags.AlignMiddle, options));
+                        new TextLayoutSettings(content.Font, window.Compositor.Width, window.Compositor.Height, TextOptions.AlignCenter | TextOptions.AlignMiddle, options));
 
                     content.TextLayoutResult.AcquirePointers();
                     var glyph0Bounds = content.TextRenderer.GetGlyphBounds(content.TextLayoutResult, 0);
@@ -1004,7 +1004,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                 {
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
-                    var settings = new TextLayoutSettings(spriteFont, null, null, TextFlags.Standard);
+                    var settings = new TextLayoutSettings(spriteFont, null, null, TextOptions.Standard);
                     textRenderer.Draw(spriteBatch, "Hello, |c:FFFF0000|world|c|! This is a |c:FF00FF00|colored|c| |c:FF0000FF|string|c|!", Vector2.Zero, Color.White, settings);
 
                     spriteBatch.End();
@@ -1034,7 +1034,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                 {
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
-                    var settings = new TextLayoutSettings(spriteFont, null, null, TextFlags.Standard);
+                    var settings = new TextLayoutSettings(spriteFont, null, null, TextOptions.Standard);
                     textRenderer.Draw(spriteBatch,
                         "This string is regular\n" +
                         "|b|This string is bold|b|\n" +
@@ -1072,31 +1072,31 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
 
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
-                    var settingsTopLeft = new TextLayoutSettings(spriteFont, width, height, TextFlags.AlignTop | TextFlags.AlignLeft);
+                    var settingsTopLeft = new TextLayoutSettings(spriteFont, width, height, TextOptions.AlignTop | TextOptions.AlignLeft);
                     textRenderer.Draw(spriteBatch, "Aligned top left", Vector2.Zero, Color.White, settingsTopLeft);
 
-                    var settingsTopCenter = new TextLayoutSettings(spriteFont, width, height, TextFlags.AlignTop | TextFlags.AlignCenter);
+                    var settingsTopCenter = new TextLayoutSettings(spriteFont, width, height, TextOptions.AlignTop | TextOptions.AlignCenter);
                     textRenderer.Draw(spriteBatch, "Aligned top center", Vector2.Zero, Color.White, settingsTopCenter);
 
-                    var settingsTopRight = new TextLayoutSettings(spriteFont, width, height, TextFlags.AlignTop | TextFlags.AlignRight);
+                    var settingsTopRight = new TextLayoutSettings(spriteFont, width, height, TextOptions.AlignTop | TextOptions.AlignRight);
                     textRenderer.Draw(spriteBatch, "Aligned top right", Vector2.Zero, Color.White, settingsTopRight);
 
-                    var settingsMiddleLeft = new TextLayoutSettings(spriteFont, width, height, TextFlags.AlignMiddle | TextFlags.AlignLeft);
+                    var settingsMiddleLeft = new TextLayoutSettings(spriteFont, width, height, TextOptions.AlignMiddle | TextOptions.AlignLeft);
                     textRenderer.Draw(spriteBatch, "Aligned middle left", Vector2.Zero, Color.White, settingsMiddleLeft);
 
-                    var settingsMiddleCenter = new TextLayoutSettings(spriteFont, width, height, TextFlags.AlignMiddle | TextFlags.AlignCenter);
+                    var settingsMiddleCenter = new TextLayoutSettings(spriteFont, width, height, TextOptions.AlignMiddle | TextOptions.AlignCenter);
                     textRenderer.Draw(spriteBatch, "Aligned middle center", Vector2.Zero, Color.White, settingsMiddleCenter);
 
-                    var settingsMiddleRight = new TextLayoutSettings(spriteFont, width, height, TextFlags.AlignMiddle | TextFlags.AlignRight);
+                    var settingsMiddleRight = new TextLayoutSettings(spriteFont, width, height, TextOptions.AlignMiddle | TextOptions.AlignRight);
                     textRenderer.Draw(spriteBatch, "Aligned middle right", Vector2.Zero, Color.White, settingsMiddleRight);
 
-                    var settingsBottomLeft = new TextLayoutSettings(spriteFont, width, height, TextFlags.AlignBottom | TextFlags.AlignLeft);
+                    var settingsBottomLeft = new TextLayoutSettings(spriteFont, width, height, TextOptions.AlignBottom | TextOptions.AlignLeft);
                     textRenderer.Draw(spriteBatch, "Aligned bottom left", Vector2.Zero, Color.White, settingsBottomLeft);
 
-                    var settingsBottomCenter = new TextLayoutSettings(spriteFont, width, height, TextFlags.AlignBottom | TextFlags.AlignCenter);
+                    var settingsBottomCenter = new TextLayoutSettings(spriteFont, width, height, TextOptions.AlignBottom | TextOptions.AlignCenter);
                     textRenderer.Draw(spriteBatch, "Aligned bottom center", Vector2.Zero, Color.White, settingsBottomCenter);
 
-                    var settingsBottomRight = new TextLayoutSettings(spriteFont, width, height, TextFlags.AlignBottom | TextFlags.AlignRight);
+                    var settingsBottomRight = new TextLayoutSettings(spriteFont, width, height, TextOptions.AlignBottom | TextOptions.AlignRight);
                     textRenderer.Draw(spriteBatch, "Aligned bottom right", Vector2.Zero, Color.White, settingsBottomRight);
 
                     spriteBatch.End();
@@ -1134,7 +1134,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
 
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
-                    var settings = new TextLayoutSettings(spriteFont, width, height, TextFlags.AlignMiddle | TextFlags.AlignCenter);
+                    var settings = new TextLayoutSettings(spriteFont, width, height, TextOptions.AlignMiddle | TextOptions.AlignCenter);
                     textRenderer.Draw(spriteBatch, text, Vector2.Zero, Color.White, settings);
 
                     spriteBatch.End();
@@ -1181,7 +1181,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
 
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
-                    var settings = new TextLayoutSettings(spriteFont, width, height, TextFlags.AlignMiddle | TextFlags.AlignCenter);
+                    var settings = new TextLayoutSettings(spriteFont, width, height, TextOptions.AlignMiddle | TextOptions.AlignCenter);
                     var bounds = textRenderer.Draw(spriteBatch, text, Vector2.Zero, Color.White, settings);
 
                     spriteBatch.Draw(blankTexture, bounds, Color.Red * 0.5f);
@@ -1223,7 +1223,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
 
                     textRenderer.LinkStateEvaluator = (target) => String.Equals(target, "visited", StringComparison.InvariantCulture);
 
-                    var settings = new TextLayoutSettings(spriteFont, width, height, TextFlags.AlignCenter | TextFlags.AlignMiddle);
+                    var settings = new TextLayoutSettings(spriteFont, width, height, TextOptions.AlignCenter | TextOptions.AlignMiddle);
                     textRenderer.CalculateLayout(
                         "Links can |link:unvisited|unvisited|link| if you've never clicked them.\n" +
                         "Links can be |link:visited|visisted|link| if you've already clicked them.\n" +
@@ -1289,7 +1289,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                     };
                     textRenderer.LinkStateEvaluator = (target) => String.Equals(target, "visited", StringComparison.InvariantCulture);
 
-                    var settings = new TextLayoutSettings(spriteFont, width, height, TextFlags.AlignCenter | TextFlags.AlignMiddle);
+                    var settings = new TextLayoutSettings(spriteFont, width, height, TextOptions.AlignCenter | TextOptions.AlignMiddle);
                     textRenderer.CalculateLayout(
                         "Links can |link:unvisited|unvisited|link| if you've never clicked them.\n" +
                         "Links can be |link:visited|visisted|link| if you've already clicked them.\n" +
@@ -1330,7 +1330,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                     uv.GetGraphics().Clear(Color.CornflowerBlue);
 
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, 256, 256, TextFlags.AlignCenter | TextFlags.AlignMiddle));
+                        new TextLayoutSettings(content.Font, 256, 256, TextOptions.AlignCenter | TextOptions.AlignMiddle));
 
                     content.SpriteBatch.Begin();
 
@@ -1376,7 +1376,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                     uv.GetGraphics().Clear(Color.CornflowerBlue);
 
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, 256, 256, TextFlags.AlignCenter | TextFlags.AlignMiddle));
+                        new TextLayoutSettings(content.Font, 256, 256, TextOptions.AlignCenter | TextOptions.AlignMiddle));
 
                     content.SpriteBatch.Begin();
 
@@ -1437,7 +1437,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
 
                     var window = uv.GetPlatform().Windows.GetPrimary();
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
-                        new TextLayoutSettings(content.Font, window.Compositor.Width, window.Compositor.Height, TextFlags.AlignCenter | TextFlags.AlignMiddle, TextLayoutOptions.None));
+                        new TextLayoutSettings(content.Font, window.Compositor.Width, window.Compositor.Height, TextOptions.AlignCenter | TextOptions.AlignMiddle, TextLayoutOptions.None));
 
                     content.SpriteBatch.Begin();
                     content.TextRenderer.Draw(content.SpriteBatch, content.TextLayoutResult, Vector2.Zero, Color.White);                
@@ -1502,7 +1502,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                     var options = TextLayoutOptions.Hyphenate | (shaped ? TextLayoutOptions.Shape : TextLayoutOptions.None);
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
                         new TextLayoutSettings(content.Font, window.Compositor.Width / 4, window.Compositor.Height, 
-                            TextFlags.AlignTop | TextFlags.AlignRight, options, TextDirection.RightToLeft, TextScript.Latin));
+                            TextOptions.AlignTop | TextOptions.AlignRight, options, TextDirection.RightToLeft, TextScript.Latin));
 
                     content.SpriteBatch.Begin();
                     content.TextRenderer.Draw(content.SpriteBatch, content.TextLayoutResult, Vector2.Zero, Color.White);
@@ -1583,7 +1583,7 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                     var window = uv.GetPlatform().Windows.GetPrimary();
                     content.TextLayoutEngine.CalculateLayout(content.TextParserResult, content.TextLayoutResult,
                         new TextLayoutSettings(content.Font, window.Compositor.Width / 4, window.Compositor.Height, 
-                            TextFlags.AlignCenter | TextFlags.AlignMiddle, TextLayoutOptions.Shape));
+                            TextOptions.AlignCenter | TextOptions.AlignMiddle, TextLayoutOptions.Shape));
 
                     var sourceIndices = new List<Int32>();
                     unsafe
@@ -1640,11 +1640,11 @@ namespace Sedulous.Tests.Graphics.Graphics2D.Text
                 {
                     uv.GetGraphics().Clear(Color.CornflowerBlue);
 
-                    var settings1 = new TextLayoutSettings(content.Font, null, null, TextFlags.Standard, TextLayoutOptions.None, null);
-                    var settings2 = new TextLayoutSettings(content.Font, null, null, TextFlags.Standard, TextLayoutOptions.IgnoreColorChanges, null);
-                    var settings3 = new TextLayoutSettings(content.Font, null, null, TextFlags.Standard, TextLayoutOptions.IgnoreFontFaceChanges, null);
-                    var settings4 = new TextLayoutSettings(content.Font, null, null, TextFlags.Standard, TextLayoutOptions.IgnoreFontStyleChanges, null);
-                    var settings5 = new TextLayoutSettings(content.Font, null, null, TextFlags.Standard, TextLayoutOptions.IgnoreStyleChanges, null);
+                    var settings1 = new TextLayoutSettings(content.Font, null, null, TextOptions.Standard, TextLayoutOptions.None, null);
+                    var settings2 = new TextLayoutSettings(content.Font, null, null, TextOptions.Standard, TextLayoutOptions.IgnoreColorChanges, null);
+                    var settings3 = new TextLayoutSettings(content.Font, null, null, TextOptions.Standard, TextLayoutOptions.IgnoreFontFaceChanges, null);
+                    var settings4 = new TextLayoutSettings(content.Font, null, null, TextOptions.Standard, TextLayoutOptions.IgnoreFontStyleChanges, null);
+                    var settings5 = new TextLayoutSettings(content.Font, null, null, TextOptions.Standard, TextLayoutOptions.IgnoreStyleChanges, null);
 
                     var cy = 0;
 

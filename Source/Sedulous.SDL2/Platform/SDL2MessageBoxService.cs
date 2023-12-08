@@ -1,13 +1,13 @@
 ﻿using System;
 using Sedulous.Platform;
-using static Sedulous.SDL2.Native.SDLNative;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2.Platform
+namespace Sedulous.Sdl2.Platform
 {
     /// <summary>
     /// Represents the SDL2 implementation of the <see cref="MessageBoxService"/> class.
     /// </summary>
-    public sealed class SDL2MessageBoxService : MessageBoxService
+    public sealed class Sdl2MessageBoxService : MessageBoxService
     {
         /// <inhertidoc/>
         public override void ShowMessageBox(MessageBoxType type, String title, String message, IntPtr window)
@@ -15,7 +15,7 @@ namespace Sedulous.SDL2.Platform
             var flags = GetSDLMessageBoxFlag(type);
 
             if (SDL_ShowSimpleMessageBox(flags, title, message, window) < 0)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
         }
         
         /// <summary>

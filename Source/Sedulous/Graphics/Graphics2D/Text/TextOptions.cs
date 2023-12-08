@@ -6,12 +6,12 @@ namespace Sedulous.Graphics.Graphics2D.Text
     /// The set of flags used to specify how formatted text is rendered.
     /// </summary>
     [Flags]
-    public enum TextFlags
+    public enum TextOptions
     {
         /// <summary>
         /// Standard alignment.
         /// </summary>
-        Standard = TextFlags.AlignLeft | TextFlags.AlignTop,
+        Standard = TextOptions.AlignLeft | TextOptions.AlignTop,
 
         /// <summary>
         /// Horizontally aligns the text against the left edge of the layout area.

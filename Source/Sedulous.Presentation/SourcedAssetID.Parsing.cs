@@ -114,16 +114,16 @@ namespace Sedulous.Presentation
                 throw new FormatException();
 
             // Parse the asset identifier
-            var assetID = default(AssetID);
+            var assetID = default(AssetId);
             var assetIDParsed = false;
 
             if (manifests == null)
             {
-                assetIDParsed = AssetID.TryParse(parts[0], out assetID);
+                assetIDParsed = AssetId.TryParse(parts[0], out assetID);
             }
             else
             {
-                assetIDParsed = AssetID.TryParse(manifests, parts[0], out assetID);
+                assetIDParsed = AssetId.TryParse(manifests, parts[0], out assetID);
             }
 
             if (!assetIDParsed)

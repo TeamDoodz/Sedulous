@@ -24,14 +24,14 @@ namespace Sedulous.Core.Tests.Data
                 var dobj1 = DataObjectRegistries.Get<TestDataObject>().GetObjectByKey("TEST_OBJECT_1");
                 TheResultingObject(dobj1)
                     .ShouldSatisfyTheCondition(x => x.Key == "TEST_OBJECT_1")
-                    .ShouldSatisfyTheCondition(x => x.GlobalID == new Guid("3bd956ab-24cc-49e7-a178-99111c69d24f"))
+                    .ShouldSatisfyTheCondition(x => x.GlobalId == new Guid("3bd956ab-24cc-49e7-a178-99111c69d24f"))
                     .ShouldSatisfyTheCondition(x => x.Foo == "Hello")
                     .ShouldSatisfyTheCondition(x => x.Bar == "World");
 
                 var dobj2 = DataObjectRegistries.Get<TestDataObject>().GetObjectByKey("TEST_OBJECT_2");
                 TheResultingObject(dobj2)
                     .ShouldSatisfyTheCondition(x => x.Key == "TEST_OBJECT_2")
-                    .ShouldSatisfyTheCondition(x => x.GlobalID == new Guid("285c472e-a184-49a6-9639-d5b127ebc74a"))
+                    .ShouldSatisfyTheCondition(x => x.GlobalId == new Guid("285c472e-a184-49a6-9639-d5b127ebc74a"))
                     .ShouldSatisfyTheCondition(x => x.Foo == "Goodbye")
                     .ShouldSatisfyTheCondition(x => x.Bar == "Universe");
             }
@@ -55,14 +55,14 @@ namespace Sedulous.Core.Tests.Data
                 var dobj1 = DataObjectRegistries.Get<TestDataObject>().GetObjectByKey("TEST_OBJECT_1");
                 TheResultingObject(dobj1)
                     .ShouldSatisfyTheCondition(x => x.Key == "TEST_OBJECT_1")
-                    .ShouldSatisfyTheCondition(x => x.GlobalID == new Guid("3bd956ab-24cc-49e7-a178-99111c69d24f"))
+                    .ShouldSatisfyTheCondition(x => x.GlobalId == new Guid("3bd956ab-24cc-49e7-a178-99111c69d24f"))
                     .ShouldSatisfyTheCondition(x => x.Foo == "Hello")
                     .ShouldSatisfyTheCondition(x => x.Bar == "World");
 
                 var dobj2 = DataObjectRegistries.Get<TestDataObject>().GetObjectByKey("TEST_OBJECT_2");
                 TheResultingObject(dobj2)
                     .ShouldSatisfyTheCondition(x => x.Key == "TEST_OBJECT_2")
-                    .ShouldSatisfyTheCondition(x => x.GlobalID == new Guid("285c472e-a184-49a6-9639-d5b127ebc74a"))
+                    .ShouldSatisfyTheCondition(x => x.GlobalId == new Guid("285c472e-a184-49a6-9639-d5b127ebc74a"))
                     .ShouldSatisfyTheCondition(x => x.Foo == "Goodbye")
                     .ShouldSatisfyTheCondition(x => x.Bar == "Universe");
             }

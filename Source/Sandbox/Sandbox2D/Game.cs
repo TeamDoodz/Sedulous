@@ -1,6 +1,6 @@
 ﻿using Sandbox2D.Input;
 using Sedulous;
-using Sedulous.BASS;
+using Sedulous.Bass;
 using Sedulous.Content;
 using Sedulous.Core;
 using Sedulous.Core.Text;
@@ -11,7 +11,7 @@ using Sedulous.Graphics.Graphics2D.Text;
 using Sedulous.OpenGL;
 using Sedulous.Platform;
 using Sedulous.Presentation;
-using Sedulous.SDL2;
+using Sedulous.Sdl2;
 using System;
 using System.IO;
 using System.Reflection;
@@ -52,12 +52,12 @@ namespace Sandbox2D
             graphicsConfig.SrgbBuffersEnabled = false;
             graphicsConfig.SrgbDefaultForTexture2D = false;
 
-            var contextConfig = new SDL2FrameworkConfiguration();
+            var contextConfig = new Sdl2FrameworkConfiguration();
             contextConfig.SupportsHighDensityDisplayModes = true;
             contextConfig.EnableServiceMode = false;
             contextConfig.WatchViewFilesForChanges = false;
             contextConfig.Plugins.Add(new OpenGLGraphicsPlugin(graphicsConfig));
-            contextConfig.Plugins.Add(new BASSAudioPlugin());
+            contextConfig.Plugins.Add(new BassAudioPlugin());
             contextConfig.Plugins.Add(new FreeTypeFontPlugin());
             PopulateConfiguration(contextConfig);
 
@@ -69,7 +69,7 @@ namespace Sandbox2D
                 System.Diagnostics.Debug.WriteLine(message);
             };
 #endif
-            return new SDL2FrameworkContext(this, contextConfig);
+            return new Sdl2FrameworkContext(this, contextConfig);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Sandbox2D
             }
 
             double fps = 1.0 / time.ElapsedTime.TotalSeconds;
-            var settingsTopLeft = new TextLayoutSettings(font, 200, 100, TextFlags.AlignTop | TextFlags.AlignLeft);
+            var settingsTopLeft = new TextLayoutSettings(font, 200, 100, TextOptions.AlignTop | TextOptions.AlignLeft);
             textRenderer.Draw(spriteBatch, fps.ToString(), Vector2.Zero, Color.Red, settingsTopLeft);
 
             spriteBatch.End();

@@ -31,7 +31,7 @@ namespace Sedulous.ImGuiViewProvider
         {
             Contract.Require(texture, nameof(texture));
 
-            var id = GetNextTextureID();
+            var id = GetNextTextureId();
             registry.Add(id, texture);
             return id;
         }
@@ -47,7 +47,7 @@ namespace Sedulous.ImGuiViewProvider
             Contract.Require(content, nameof(content));
             Contract.RequireNotEmpty(asset, nameof(asset));
 
-            var id = GetNextTextureID();
+            var id = GetNextTextureId();
             var texture = content.Load<Texture2D>(asset);
             registry.Add(id, texture);
             return id;
@@ -59,11 +59,11 @@ namespace Sedulous.ImGuiViewProvider
         /// <param name="content">The content manager with which to load the texture.</param>
         /// <param name="asset">The asset that represents the texture.</param>
         /// <returns>The identifier which was assigned to the specified texture.</returns>
-        public Int32 Register(ContentManager content, AssetID asset)
+        public Int32 Register(ContentManager content, AssetId asset)
         {
             Contract.Require(content, nameof(content));
 
-            var id = GetNextTextureID();
+            var id = GetNextTextureId();
             var texture = content.Load<Texture2D>(asset);
             registry.Add(id, texture);
             return id;
@@ -83,7 +83,7 @@ namespace Sedulous.ImGuiViewProvider
         /// Gets the next available texture identifier.
         /// </summary>
         /// <returns>The texture identifier which was found.</returns>
-        private Int32 GetNextTextureID()
+        private Int32 GetNextTextureId()
         {
             void Advance(ref Int32 value) => value = (value == Int32.MaxValue) ? 1 : value + 1;
 

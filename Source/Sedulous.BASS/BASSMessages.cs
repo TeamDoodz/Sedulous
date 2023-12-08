@@ -1,13 +1,13 @@
-﻿namespace Sedulous.BASS
+﻿namespace Sedulous.Bass
 {
     /// <summary>
     /// Contains the implementation's Sedulous engine events.
     /// </summary>
-    public static class BASSMessages
+    public static class BassMessages
     {
         /// <summary>
         /// An event indicating that the current BASS device has changed.
         /// </summary>
-        public static readonly FrameworkMessageID BASSDeviceChanged = FrameworkMessageID.Acquire(nameof(BASSDeviceChanged));
+        public static readonly FrameworkMessageId BassDeviceChanged = FrameworkMessageId.Acquire(nameof(BassDeviceChanged));
     }
 }

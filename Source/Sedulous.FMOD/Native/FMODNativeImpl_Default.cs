@@ -6,7 +6,7 @@ using Sedulous.Core;
 using Sedulous.Core.Native;
 using System.Text;
 
-namespace Sedulous.FMOD.Native
+namespace Sedulous.Fmod.Native
 {
 #pragma warning disable 1591
     [SuppressUnmanagedCodeSecurity]

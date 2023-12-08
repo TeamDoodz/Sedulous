@@ -2,20 +2,20 @@
 using Sedulous.Audio;
 using Sedulous.Content;
 
-namespace Sedulous.BASS.Audio
+namespace Sedulous.Bass.Audio
 {
     /// <summary>
     /// Loads sound effect assets.
     /// </summary>
     //[ContentProcessor]
-    public sealed class BASSSoundEffectProcessor : ContentProcessor<BASSMediaDescription, SoundEffect>
+    public sealed class BassSoundEffectProcessor : ContentProcessor<BassMediaDescription, SoundEffect>
     {
         /// <inheritdoc/>
-        public override SoundEffect Process(ContentManager manager, IContentProcessorMetadata metadata, BASSMediaDescription input)
+        public override SoundEffect Process(ContentManager manager, IContentProcessorMetadata metadata, BassMediaDescription input)
         {
             return input.IsFilename ?
-                new BASSSoundEffect(manager.FrameworkContext, (String)input.Data) :
-                new BASSSoundEffect(manager.FrameworkContext, (Byte[])input.Data);
+                new BassSoundEffect(manager.FrameworkContext, (String)input.Data) :
+                new BassSoundEffect(manager.FrameworkContext, (Byte[])input.Data);
         }
     }
 }

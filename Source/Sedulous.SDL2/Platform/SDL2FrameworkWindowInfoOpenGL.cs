@@ -1,24 +1,24 @@
 ﻿using System;
 using Sedulous.Core;
 using Sedulous.Platform;
-using static Sedulous.SDL2.Native.SDL_GLattr;
-using static Sedulous.SDL2.Native.SDLNative;
+using static Sedulous.Sdl2.Native.SDL_GLattr;
+using static Sedulous.Sdl2.Native.SDLNative;
 using Sedulous.OpenGL;
 
-namespace Sedulous.SDL2.Platform
+namespace Sedulous.Sdl2.Platform
 {
     /// <summary>
     /// Represents the SDL2 implementation of the <see cref="IFrameworkWindowInfo"/> interface when
     /// using the OpenGL rendering API.
     /// </summary>
-    public sealed class SDL2FrameworkWindowInfoOpenGL : SDL2FrameworkWindowInfo
+    public sealed class Sdl2FrameworkWindowInfoOpenGL : Sdl2FrameworkWindowInfo
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SDL2FrameworkWindowInfoOpenGL"/> class.
+        /// Initializes a new instance of the <see cref="Sdl2FrameworkWindowInfoOpenGL"/> class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
         /// <param name="configuration">The Sedulous configuration settings for the current context.</param>
-        public SDL2FrameworkWindowInfoOpenGL(FrameworkContext context, FrameworkConfiguration configuration)
+        public Sdl2FrameworkWindowInfoOpenGL(FrameworkContext context, FrameworkConfiguration configuration)
             : base(context, configuration)
         {
 
@@ -57,13 +57,13 @@ namespace Sedulous.SDL2.Platform
                 throw new InvalidOperationException(FrameworkStrings.MissingGraphicsConfiguration);
 
             if (SDL_GL_SetAttribute(SDL_GL_FRAMEBUFFER_SRGB_CAPABLE, glGraphicsConfig.SrgbBuffersEnabled ? 1 : 0) < 0)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
 
             if (SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, glGraphicsConfig.MultiSampleBuffers) < 0)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
 
             if (SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, glGraphicsConfig.MultiSampleSamples) < 0)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
 
             switch (attempt)
             {
@@ -76,7 +76,7 @@ namespace Sedulous.SDL2.Platform
                     if (glGraphicsConfig.SrgbBuffersEnabled)
                     {
                         if (SDL_GL_SetAttribute(SDL_GL_FRAMEBUFFER_SRGB_CAPABLE, 0) < 0)
-                            throw new SDL2Exception();
+                            throw new Sdl2Exception();
 
                         return true;
                     }
@@ -87,10 +87,10 @@ namespace Sedulous.SDL2.Platform
                     if (glGraphicsConfig.MultiSampleBuffers > 0 || glGraphicsConfig.MultiSampleSamples > 0)
                     {
                         if (SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 0) < 0)
-                            throw new SDL2Exception();
+                            throw new Sdl2Exception();
 
                         if (SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0) < 0)
-                            throw new SDL2Exception();
+                            throw new Sdl2Exception();
 
                         return true;
                     }
@@ -101,13 +101,13 @@ namespace Sedulous.SDL2.Platform
                     if (glGraphicsConfig.SrgbBuffersEnabled)
                     {
                         if (SDL_GL_SetAttribute(SDL_GL_FRAMEBUFFER_SRGB_CAPABLE, 0) < 0)
-                            throw new SDL2Exception();
+                            throw new Sdl2Exception();
 
                         if (SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 0) < 0)
-                            throw new SDL2Exception();
+                            throw new Sdl2Exception();
 
                         if (SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0) < 0)
-                            throw new SDL2Exception();
+                            throw new Sdl2Exception();
 
                         return true;
                     }
@@ -140,14 +140,14 @@ namespace Sedulous.SDL2.Platform
         }
 
         /// <inheritdoc/>
-        protected override SDL2PlatformRenderingAPI RenderingApi { get; } = SDL2PlatformRenderingAPI.OpenGL;
+        protected override Sdl2PlatformRenderingAPI RenderingApi { get; } = Sdl2PlatformRenderingAPI.OpenGL;
 
         /// <summary>
-        /// Updates the value of the <see cref="SDL2FrameworkWindow.IsCurrentWindow"/> property for the specified window.
+        /// Updates the value of the <see cref="Sdl2FrameworkWindow.IsCurrentWindow"/> property for the specified window.
         /// </summary>
         private void UpdateIsCurrentWindow(IFrameworkWindow window, Boolean value)
         {
-            var win = window as SDL2FrameworkWindow;
+            var win = window as Sdl2FrameworkWindow;
             if (win == null)
                 return;
 
@@ -170,15 +170,15 @@ namespace Sedulous.SDL2.Platform
                 context = glcontext;
             }
 
-            var win = (SDL2FrameworkWindow)(window ?? GetMaster());
+            var win = (Sdl2FrameworkWindow)(window ?? GetMaster());
             var winptr = (IntPtr)win;
             if (SDL_GL_MakeCurrent(winptr, context) < 0)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
 
             if (SDL_GL_SetSwapInterval(win.SynchronizeWithVerticalRetrace ? 1 : 0) < 0 && FrameworkContext.Platform != FrameworkPlatform.iOS)
             {
                 if (!shuttingDown)
-                    throw new SDL2Exception();
+                    throw new Sdl2Exception();
             }
 
             VSync = win.SynchronizeWithVerticalRetrace;
@@ -194,7 +194,7 @@ namespace Sedulous.SDL2.Platform
         }
 
         // OpenGL context state.
-        private SDL2FrameworkWindow glwin;
+        private Sdl2FrameworkWindow glwin;
         private IntPtr glcontext;
     }
 }

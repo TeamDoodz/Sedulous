@@ -1,17 +1,17 @@
 ﻿using System.Reflection;
 using Sedulous.Core.Text;
 
-namespace Sedulous.SDL2
+namespace Sedulous.Sdl2
 {
     /// <summary>
     /// Contains the implementation's string resources.
     /// </summary>
-    public static class SDL2Strings
+    public static class Sdl2Strings
     {
         /// <summary>
         /// Initializes the SDL2Strings type.
         /// </summary>
-        static SDL2Strings()
+        static Sdl2Strings()
         {
             var asm = Assembly.GetExecutingAssembly();
             using (var stream = asm.GetManifestResourceStream("Sedulous.SDL2.Resources.Strings.xml"))

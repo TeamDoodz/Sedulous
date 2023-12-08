@@ -2,21 +2,21 @@
 using Sedulous.Audio;
 using Sedulous.Content;
 
-namespace Sedulous.BASS.Audio
+namespace Sedulous.Bass.Audio
 {
     /// <summary>
     /// Loads song assets.
     /// </summary>
     //[ContentProcessor]
-    public sealed class BASSSongProcessor : ContentProcessor<BASSMediaDescription, Song>
+    public sealed class BassSongProcessor : ContentProcessor<BassMediaDescription, Song>
     {
         /// <inheritdoc/>
-        public override Song Process(ContentManager manager, IContentProcessorMetadata metadata, BASSMediaDescription input)
+        public override Song Process(ContentManager manager, IContentProcessorMetadata metadata, BassMediaDescription input)
         {
             if (!input.IsFilename)
                 throw new NotSupportedException();
 
-            return new BASSSong(manager.FrameworkContext, (String)input.Data);
+            return new BassSong(manager.FrameworkContext, (String)input.Data);
         }
     }
 }

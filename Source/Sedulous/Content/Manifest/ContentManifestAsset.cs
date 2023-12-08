@@ -60,12 +60,12 @@ namespace Sedulous.Content
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="AssetID"/> structure that represents this asset.
+        /// Creates a new instance of the <see cref="AssetId"/> structure that represents this asset.
         /// </summary>
-        /// <returns>The instance of the <see cref="AssetID"/> structure that was created.</returns>
-        public AssetID CreateAssetID()
+        /// <returns>The instance of the <see cref="AssetId"/> structure that was created.</returns>
+        public AssetId CreateAssetId()
         {
-            return new AssetID(ManifestGroup.Manifest.Name, ManifestGroup.Name, Name, AbsolutePath, ManifestGroup.IndexOf(this));
+            return new AssetId(ManifestGroup.Manifest.Name, ManifestGroup.Name, Name, AbsolutePath, ManifestGroup.IndexOf(this));
         }
 
         /// <summary>

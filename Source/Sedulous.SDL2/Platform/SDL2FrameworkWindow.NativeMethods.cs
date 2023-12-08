@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Sedulous.SDL2.Platform
+namespace Sedulous.Sdl2.Platform
 {
-    public partial class SDL2FrameworkWindow
+    public partial class Sdl2FrameworkWindow
     {
         /// <summary>
         /// Contains Win32 p/invoke functions.

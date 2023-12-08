@@ -69,7 +69,7 @@ namespace Sedulous
             foreach (var plane in planes)
             {
                 var dot = plane.Normal.X * point.X + plane.Normal.Y * point.Y + plane.Normal.Z + point.Z;
-                if (MathUtil.IsApproximatelyGreaterThan(dot + plane.D, 0.0f))
+                if (MathUtility.IsApproximatelyGreaterThan(dot + plane.D, 0.0f))
                     return ContainmentType.Disjoint;
             }
             return ContainmentType.Contains;
@@ -85,7 +85,7 @@ namespace Sedulous
             foreach (var plane in planes)
             {
                 var dot = plane.Normal.X * point.X + plane.Normal.Y * point.Y + plane.Normal.Z + point.Z;
-                if (MathUtil.IsApproximatelyGreaterThan(dot + plane.D, 0.0f))
+                if (MathUtility.IsApproximatelyGreaterThan(dot + plane.D, 0.0f))
                 {
                     result = ContainmentType.Disjoint;
                     return;
@@ -239,7 +239,7 @@ namespace Sedulous
                 Vector3.Dot(ref ray.Position, ref normal, out Single posDotNormal);
                 posDotNormal += plane.D;
 
-                if (MathUtil.IsApproximatelyNonZero(dirDotNormal))
+                if (MathUtility.IsApproximatelyNonZero(dirDotNormal))
                 {
                     var value = -posDotNormal / dirDotNormal;
 
@@ -301,7 +301,7 @@ namespace Sedulous
                 Vector3.Dot(ref ray.Position, ref normal, out Single posDotNormal);
                 posDotNormal += plane.D;
 
-                if (MathUtil.IsApproximatelyNonZero(dirDotNormal))
+                if (MathUtility.IsApproximatelyNonZero(dirDotNormal))
                 {
                     var value = -posDotNormal / dirDotNormal;
 

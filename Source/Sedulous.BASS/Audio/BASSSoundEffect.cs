@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using Sedulous.Audio;
-using Sedulous.BASS.Native;
+using Sedulous.Bass.Native;
 using Sedulous.Core;
 using Sedulous.Platform;
-using static Sedulous.BASS.Native.BASSNative;
+using static Sedulous.Bass.Native.BASSNative;
 
-namespace Sedulous.BASS.Audio
+namespace Sedulous.Bass.Audio
 {
     /// <summary>
     /// Represents the BASS implementation of the <see cref="SoundEffect"/> class.
     /// </summary>
-    public sealed class BASSSoundEffect : SoundEffect
+    public sealed class BassSoundEffect : SoundEffect
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BASSSoundEffect"/> class.
+        /// Initializes a new instance of the <see cref="BassSoundEffect"/> class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
         /// <param name="filename">The filename of the sample to load.</param>
-        public BASSSoundEffect(FrameworkContext context, String filename)
+        public BassSoundEffect(FrameworkContext context, String filename)
             : base(context)
         {
             Contract.Require(filename, nameof(filename));
@@ -36,11 +36,11 @@ namespace Sedulous.BASS.Audio
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BASSSoundEffect"/> class.
+        /// Initializes a new instance of the <see cref="BassSoundEffect"/> class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
         /// <param name="fileData">An array containing the sample data to load.</param>
-        public BASSSoundEffect(FrameworkContext context, Byte[] fileData)
+        public BassSoundEffect(FrameworkContext context, Byte[] fileData)
             : base(context)
         {
             Contract.Require(fileData, nameof(fileData));
@@ -67,11 +67,11 @@ namespace Sedulous.BASS.Audio
             Contract.EnsureNotDisposed(this, Disposed);
 
             var channel = BASS_SampleGetChannel(sample, false);
-            if (!BASSUtil.IsValidHandle(channel))
-                throw new BASSException();
+            if (!BassUtility.IsValidHandle(channel))
+                throw new BassException();
 
             if (!BASS_ChannelPlay(channel, true))
-                throw new BASSException();
+                throw new BassException();
         }
 
         /// <inheritdoc/>
@@ -80,18 +80,18 @@ namespace Sedulous.BASS.Audio
             Contract.EnsureNotDisposed(this, Disposed);
 
             var channel = BASS_SampleGetChannel(sample, false);
-            if (!BASSUtil.IsValidHandle(channel))
-                throw new BASSException();
+            if (!BassUtility.IsValidHandle(channel))
+                throw new BassException();
 
-            BASSUtil.SetVolume(channel, MathUtil.Clamp(volume, 0f, 1f));
-            BASSUtil.SetPan(channel, MathUtil.Clamp(pan, -1f, 1f));
+            BassUtility.SetVolume(channel, MathUtility.Clamp(volume, 0f, 1f));
+            BassUtility.SetPan(channel, MathUtility.Clamp(pan, -1f, 1f));
 
             if (!BASS_ChannelPlay(channel, false))
-                throw new BASSException();
+                throw new BassException();
         }
 
         /// <inheritdoc/>
-        public override TimeSpan Duration => BASSUtil.IsValidHandle(sample) ? BASSUtil.GetDurationAsTimeSpan(sample) : TimeSpan.Zero;
+        public override TimeSpan Duration => BassUtility.IsValidHandle(sample) ? BassUtility.GetDurationAsTimeSpan(sample) : TimeSpan.Zero;
 
         /// <inheritdoc/>
         protected override void Dispose(Boolean disposing)
@@ -100,7 +100,7 @@ namespace Sedulous.BASS.Audio
                 return;
 
             if (!BASS_SampleFree(sample))
-                throw new BASSException();
+                throw new BassException();
 
             if (this.sampleData != IntPtr.Zero)
                 Marshal.FreeHGlobal(this.sampleData);
@@ -112,20 +112,20 @@ namespace Sedulous.BASS.Audio
         }
 
         /// <summary>
-        /// Initializes a <see cref="BASSSoundEffect"/> instance from the specified data.
+        /// Initializes a <see cref="BassSoundEffect"/> instance from the specified data.
         /// </summary>
         private static void InitializeSampleData(Byte[] fileData, out UInt32 sample, out BASS_SAMPLE sampleInfo, out IntPtr sampleData)
         {
             sample = BASS_SampleLoad(fileData, 0, (UInt32)fileData.Length, UInt16.MaxValue, 0);
-            if (!BASSUtil.IsValidHandle(sample))
-                throw new BASSException();
+            if (!BassUtility.IsValidHandle(sample))
+                throw new BassException();
 
             if (!BASS_SampleGetInfo(sample, out sampleInfo))
-                throw new BASSException();
+                throw new BassException();
 
             sampleData = Marshal.AllocHGlobal((Int32)sampleInfo.length);
             if (!BASS_SampleGetData(sample, sampleData))
-                throw new BASSException();
+                throw new BassException();
         }
 
         // The sound effect's sample data.

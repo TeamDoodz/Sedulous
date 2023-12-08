@@ -89,11 +89,11 @@ namespace Sedulous.Content
         /// being low on memory. If this value is <see langword="true"/>, then assets which have the 
         /// <see cref="AssetFlags.PreserveThroughLowMemory"/> flag will be ignored by this method. Otherwise,
         /// all of the cache's assets will be purged.</param>
-        public void PurgeAsset(AssetID asset, Boolean lowMemory)
+        public void PurgeAsset(AssetId asset, Boolean lowMemory)
         {
             Contract.Ensure<ArgumentException>(asset.IsValid, nameof(asset));
 
-            PurgeAsset(AssetID.GetAssetPath(asset), lowMemory);
+            PurgeAsset(AssetId.GetAssetPath(asset), lowMemory);
         }
 
         /// <summary>
@@ -167,12 +167,12 @@ namespace Sedulous.Content
         /// </summary>
         /// <param name="asset">The asset identifier of the asset for which to set flags.</param>
         /// <param name="flags">A collection of <see cref="AssetFlags"/> values to associate with the specified asset.</param>
-        internal void SetAssetFlags(AssetID asset, AssetFlags flags)
+        internal void SetAssetFlags(AssetId asset, AssetFlags flags)
         {
             Contract.EnsureNotDisposed(this, Disposed);
 
             lock (SyncObject)
-                assetFlags[AssetID.GetAssetPath(asset)] = flags;
+                assetFlags[AssetId.GetAssetPath(asset)] = flags;
         }
 
         /// <summary>
@@ -201,12 +201,12 @@ namespace Sedulous.Content
         /// <param name="flags">A collection of <see cref="AssetFlags"/> value associated with the specified asset.</param>
         /// <returns><see langword="true"/> if the specified asset has flags defined within this 
         /// content manager; otherwise, <see langword="false"/>.</returns>
-        internal Boolean GetAssetFlags(AssetID asset, out AssetFlags flags)
+        internal Boolean GetAssetFlags(AssetId asset, out AssetFlags flags)
         {
             Contract.EnsureNotDisposed(this, Disposed);
 
             lock (SyncObject)
-                return assetFlags.TryGetValue(AssetID.GetAssetPath(asset), out flags);
+                return assetFlags.TryGetValue(AssetId.GetAssetPath(asset), out flags);
         }
 
         /// <summary>

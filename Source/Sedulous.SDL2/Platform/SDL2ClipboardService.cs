@@ -2,14 +2,14 @@
 using System.Runtime.InteropServices;
 using System.Text;
 using Sedulous.Platform;
-using static Sedulous.SDL2.Native.SDLNative;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2.Platform
+namespace Sedulous.Sdl2.Platform
 {
     /// <summary>
     /// Represents the SDL2 implementation of the <see cref="ClipboardService"/> class.
     /// </summary>
-    public sealed class SDL2ClipboardService : ClipboardService
+    public sealed class Sdl2ClipboardService : ClipboardService
     {
         /// <inheritdoc/>
         public override String Text
@@ -20,7 +20,7 @@ namespace Sedulous.SDL2.Platform
                 {
                     var ptr = SDL_GetClipboardText();
                     if (ptr == IntPtr.Zero)
-                        throw new SDL2Exception();
+                        throw new Sdl2Exception();
 
                     try
                     {

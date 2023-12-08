@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using SDL_FingerID = System.Int64;
 using SDL_TouchID = System.Int64;
 
-namespace Sedulous.SDL2.Native
+namespace Sedulous.Sdl2.Native
 {
 #pragma warning disable 1591
     [StructLayout(LayoutKind.Sequential)]

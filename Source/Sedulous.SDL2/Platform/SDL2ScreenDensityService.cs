@@ -1,21 +1,21 @@
 ﻿using System;
 using Sedulous.Core;
 using Sedulous.Platform;
-using static Sedulous.SDL2.Native.SDLNative;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2.Platform
+namespace Sedulous.Sdl2.Platform
 {
     /// <summary>
     /// Represents an implentation of <see cref="ScreenDensityService"/> using the SDL2 library.
     /// </summary>
-    public sealed class SDL2ScreenDensityService : ScreenDensityService
+    public sealed class Sdl2ScreenDensityService : ScreenDensityService
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SDL2ScreenDensityService"/> class.
+        /// Initializes a new instance of the <see cref="Sdl2ScreenDensityService"/> class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
         /// <param name="display">The <see cref="IFrameworkDisplay"/> for which to retrieve density information.</param>
-        public SDL2ScreenDensityService(FrameworkContext context, IFrameworkDisplay display)
+        public Sdl2ScreenDensityService(FrameworkContext context, IFrameworkDisplay display)
             : base(display)
         {
             Contract.Require(context, nameof(context));
@@ -38,7 +38,7 @@ namespace Sedulous.SDL2.Platform
             unsafe
             {
                 if (SDL_GetDisplayDPI(display.Index, null, &hdpi, &vdpi) < 0)
-                    throw new SDL2Exception();                
+                    throw new Sdl2Exception();                
             }
 
             this.densityX = hdpi;

@@ -87,7 +87,7 @@ namespace Sedulous.Content
         /// </summary>
         /// <param name="type">The type to populate with asset identifiers.</param>
         /// <remarks>This method will populate the values of any publicly-accessible static fields
-        /// and properties of type <see cref="AssetID"/> which match the names of assets within this manifest group.</remarks>
+        /// and properties of type <see cref="AssetId"/> which match the names of assets within this manifest group.</remarks>
         public void PopulateAssetLibrary(Type type)
         {
             Contract.Require(type, nameof(type));
@@ -96,12 +96,12 @@ namespace Sedulous.Content
             var fields = type.GetFields(BindingFlags.Public | BindingFlags.Static);
             foreach (var field in fields)
             {
-                if (field.FieldType == typeof(AssetID))
+                if (field.FieldType == typeof(AssetId))
                 {
                     var asset = this[field.Name];
                     if (asset != null)
                     {
-                        field.SetValue(null, asset.CreateAssetID());
+                        field.SetValue(null, asset.CreateAssetId());
                     }
                 }
             }
@@ -110,12 +110,12 @@ namespace Sedulous.Content
             var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Static);
             foreach (var property in properties)
             {
-                if (property.PropertyType == typeof(AssetID))
+                if (property.PropertyType == typeof(AssetId))
                 {
                     var asset = this[property.Name];
                     if (asset != null)
                     {
-                        property.SetValue(null, asset.CreateAssetID(), null);
+                        property.SetValue(null, asset.CreateAssetId(), null);
                     }
                 }
             }

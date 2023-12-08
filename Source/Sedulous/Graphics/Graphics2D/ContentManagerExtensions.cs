@@ -19,7 +19,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="id">The identifier that represents the sprite animation to load.</param>
         /// <param name="cache">A value indicating whether to add the sprite asset to the manager's cache.</param>
         /// <returns>The sprite animation that was loaded.</returns>
-        public static SpriteAnimation Load(this ContentManager contentManager, SpriteAnimationID id, Boolean cache = true)
+        public static SpriteAnimation Load(this ContentManager contentManager, SpriteAnimationId id, Boolean cache = true)
         {
             Contract.Require(contentManager, nameof(contentManager));
             Contract.Ensure<ArgumentException>(id.IsValid, nameof(id));
@@ -41,7 +41,7 @@ namespace Sedulous.Graphics.Graphics2D
         /// <param name="density">The screen density for which to load the sprite.</param>
         /// <param name="cache">A value indicating whether to add the sprite asset to the manager's cache.</param>
         /// <returns>The sprite animation that was loaded.</returns>
-        public static SpriteAnimation Load(this ContentManager contentManager, SpriteAnimationID id, ScreenDensityBucket density, Boolean cache = true)
+        public static SpriteAnimation Load(this ContentManager contentManager, SpriteAnimationId id, ScreenDensityBucket density, Boolean cache = true)
         {
             Contract.Require(contentManager, nameof(contentManager));
             Contract.Ensure<ArgumentException>(id.IsValid, nameof(id));
@@ -53,11 +53,11 @@ namespace Sedulous.Graphics.Graphics2D
         /// <summary>
         /// Loads the specified sprite animation.
         /// </summary>
-        private static SpriteAnimation LoadInternal(this ContentManager contentManager, SpriteAnimationID id, ScreenDensityBucket density, Boolean cache)
+        private static SpriteAnimation LoadInternal(this ContentManager contentManager, SpriteAnimationId id, ScreenDensityBucket density, Boolean cache)
         {
-            var sprite = contentManager.Load<Sprite>(SpriteAnimationID.GetSpriteAssetIDRef(ref id), density, cache);
+            var sprite = contentManager.Load<Sprite>(SpriteAnimationId.GetSpriteAssetIdRef(ref id), density, cache);
 
-            var name = SpriteAnimationID.GetAnimationNameRef(ref id);
+            var name = SpriteAnimationId.GetAnimationNameRef(ref id);
             if (!String.IsNullOrEmpty(name))
             {
                 var value = sprite[name];
@@ -67,7 +67,7 @@ namespace Sedulous.Graphics.Graphics2D
                 return value;
             }
 
-            var index = SpriteAnimationID.GetAnimationIndexRef(ref id);
+            var index = SpriteAnimationId.GetAnimationIndexRef(ref id);
             if (index < 0 || index >= sprite.AnimationCount)
                 throw new ArgumentException(FrameworkStrings.InvalidSpriteAnimationReference.Format(id));
 

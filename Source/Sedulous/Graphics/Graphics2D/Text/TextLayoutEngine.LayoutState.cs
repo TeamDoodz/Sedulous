@@ -23,9 +23,9 @@ namespace Sedulous.Graphics.Graphics2D.Text
 
                 if (settings.Height.HasValue)
                 {
-                    if ((settings.Flags & TextFlags.AlignBottom) == TextFlags.AlignBottom)
+                    if ((settings.Flags & TextOptions.AlignBottom) == TextOptions.AlignBottom)
                         offset = (settings.Height.Value - blockHeight);
-                    else if ((settings.Flags & TextFlags.AlignMiddle) == TextFlags.AlignMiddle)
+                    else if ((settings.Flags & TextOptions.AlignMiddle) == TextOptions.AlignMiddle)
                         offset = (settings.Height.Value - blockHeight) / 2;
                 }
 
@@ -60,9 +60,9 @@ namespace Sedulous.Graphics.Graphics2D.Text
 
                 if (settings.Width.HasValue)
                 {
-                    if ((settings.Flags & TextFlags.AlignRight) == TextFlags.AlignRight)
+                    if ((settings.Flags & TextOptions.AlignRight) == TextOptions.AlignRight)
                         offset = (settings.Width.Value - lineWidth);
-                    else if ((settings.Flags & TextFlags.AlignCenter) == TextFlags.AlignCenter)
+                    else if ((settings.Flags & TextOptions.AlignCenter) == TextOptions.AlignCenter)
                         offset = (settings.Width.Value - lineWidth) / 2;
                 }
 
@@ -218,8 +218,8 @@ namespace Sedulous.Graphics.Graphics2D.Text
 
                 if (!settings.Width.HasValue)
                 {
-                    if ((settings.Flags & TextFlags.AlignCenter) == TextFlags.AlignCenter ||
-                        (settings.Flags & TextFlags.AlignRight) == TextFlags.AlignRight)
+                    if ((settings.Flags & TextOptions.AlignCenter) == TextOptions.AlignCenter ||
+                        (settings.Flags & TextOptions.AlignRight) == TextOptions.AlignRight)
                     {
                         FixHorizontalAlignmentForUnconstrainedLayout(output, ref settings);
                     }
@@ -588,9 +588,9 @@ namespace Sedulous.Graphics.Graphics2D.Text
                 {
                     var lineInfo = (TextLayoutLineInfoCommand*)output.InternalObjectStream.Data;
 
-                    if ((settings.Flags & TextFlags.AlignRight) == TextFlags.AlignRight)
+                    if ((settings.Flags & TextOptions.AlignRight) == TextOptions.AlignRight)
                         lineInfo->Offset = (output.ActualWidth - lineInfo->LineWidth);
-                    else if ((settings.Flags & TextFlags.AlignCenter) == TextFlags.AlignCenter)
+                    else if ((settings.Flags & TextOptions.AlignCenter) == TextOptions.AlignCenter)
                         lineInfo->Offset = (output.ActualWidth - lineInfo->LineWidth) / 2;
                 }
             }

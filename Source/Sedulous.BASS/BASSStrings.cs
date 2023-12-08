@@ -1,17 +1,17 @@
 ﻿using System.Reflection;
 using Sedulous.Core.Text;
 
-namespace Sedulous.BASS
+namespace Sedulous.Bass
 {
     /// <summary>
     /// Contains the implementation's string resources.
     /// </summary>
-    public static class BASSStrings
+    public static class BassStrings
     {
         /// <summary>
         /// Initializes the BASSStrings type.
         /// </summary>
-        static BASSStrings()
+        static BassStrings()
         {
             var asm = Assembly.GetExecutingAssembly();
             using (var stream = asm.GetManifestResourceStream("Sedulous.BASS.Resources.Strings.xml"))

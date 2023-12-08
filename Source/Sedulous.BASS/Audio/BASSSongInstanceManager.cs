@@ -2,24 +2,24 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
-using Sedulous.BASS.Native;
+using Sedulous.Bass.Native;
 using Sedulous.Platform;
-using static Sedulous.BASS.Native.BASSNative;
+using static Sedulous.Bass.Native.BASSNative;
 
-namespace Sedulous.BASS.Audio
+namespace Sedulous.Bass.Audio
 {
-    partial class BASSSong
+    partial class BassSong
     {
         /// <summary>
-        /// Manages stream instances for the <see cref="BASSSong"/> class.
+        /// Manages stream instances for the <see cref="BassSong"/> class.
         /// </summary>
-        private class BASSSongInstanceManager : IDisposable
+        private class BassSongInstanceManager : IDisposable
         {
             /// <summary>
-            /// Initializes a new instance of the <see cref="BASSSongInstanceManager"/> class.
+            /// Initializes a new instance of the <see cref="BassSongInstanceManager"/> class.
             /// </summary>
             /// <param name="file">The name of the file that contains the song data.</param>
-            public BASSSongInstanceManager(String file)
+            public BassSongInstanceManager(String file)
             {
                 this.file = file;
                 this.fnClose = StreamClose;
@@ -58,8 +58,8 @@ namespace Sedulous.BASS.Audio
                     unsafe
                     {
                         stream = BASS_StreamCreateFileUser(1, flags, &procs, new IntPtr((int)instanceID));
-                        if (!BASSUtil.IsValidHandle(stream))
-                            throw new BASSException();
+                        if (!BassUtility.IsValidHandle(stream))
+                            throw new BassException();
                     }
                 }
                 catch

@@ -3,24 +3,24 @@ using Sedulous.Core;
 using Sedulous.Core.Messages;
 using Sedulous.Input;
 using Sedulous.Platform;
-using Sedulous.SDL2.Messages;
-using Sedulous.SDL2.Native;
-using static Sedulous.SDL2.Native.SDL_Button;
-using static Sedulous.SDL2.Native.SDL_EventType;
-using static Sedulous.SDL2.Native.SDLNative;
+using Sedulous.Sdl2.Messages;
+using Sedulous.Sdl2.Native;
+using static Sedulous.Sdl2.Native.SDL_Button;
+using static Sedulous.Sdl2.Native.SDL_EventType;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2.Input
+namespace Sedulous.Sdl2.Input
 {
     /// <summary>
     /// Represents the SDL2 implementation of the MouseDevice class.
     /// </summary>
-    public sealed class SDL2MouseDevice : MouseDevice, IMessageSubscriber<FrameworkMessageID>
+    public sealed class Sdl2MouseDevice : MouseDevice, IMessageSubscriber<FrameworkMessageId>
     {
         /// <summary>
         /// Initializes a new instance of the SDL2MouseDevice class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
-        public SDL2MouseDevice(FrameworkContext context)
+        public Sdl2MouseDevice(FrameworkContext context)
             : base(context)
         {
             this.window = FrameworkContext.GetPlatform().Windows.GetPrimary();
@@ -29,15 +29,15 @@ namespace Sedulous.SDL2.Input
             this.states = new InternalButtonState[buttonCount];
 
             context.Messages.Subscribe(this,
-                SDL2FrameworkMessages.SDLEvent);
+                Sdl2FrameworkMessages.SdlEvent);
         }
 
         /// <inheritdoc/>
-        void IMessageSubscriber<FrameworkMessageID>.ReceiveMessage(FrameworkMessageID type, MessageData data)
+        void IMessageSubscriber<FrameworkMessageId>.ReceiveMessage(FrameworkMessageId type, MessageData data)
         {
-            if (type == SDL2FrameworkMessages.SDLEvent)
+            if (type == Sdl2FrameworkMessages.SdlEvent)
             {
-                var evt = ((SDL2EventMessageData)data).Event;
+                var evt = ((Sdl2EventMessageData)data).Event;
                 switch (evt.type)
                 {
                     case SDL_MOUSEMOTION:
@@ -234,7 +234,7 @@ namespace Sedulous.SDL2.Input
                 return false;
 
             if (result < 0)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
 
             relativeMode = enabled;
             return true;
@@ -367,7 +367,7 @@ namespace Sedulous.SDL2.Input
             if (!FrameworkContext.GetInput().EmulateMouseWithTouchInput && evt.which == SDL_TOUCH_MOUSEID)
                 return;
 
-            var window = FrameworkContext.GetPlatform().Windows.GetByID((int)evt.windowID);
+            var window = FrameworkContext.GetPlatform().Windows.GetById((int)evt.windowID);
             var button = GetSedulousButton(evt.button);
 
             this.states[(int)button].OnDown(false);
@@ -383,7 +383,7 @@ namespace Sedulous.SDL2.Input
             if (!FrameworkContext.GetInput().EmulateMouseWithTouchInput && evt.which == SDL_TOUCH_MOUSEID)
                 return;
 
-            var window = FrameworkContext.GetPlatform().Windows.GetByID((int)evt.windowID);
+            var window = FrameworkContext.GetPlatform().Windows.GetById((int)evt.windowID);
             var button = GetSedulousButton(evt.button);
 
             this.states[(int)button].OnUp();
@@ -411,7 +411,7 @@ namespace Sedulous.SDL2.Input
             if (!FrameworkContext.GetInput().EmulateMouseWithTouchInput && evt.which == SDL_TOUCH_MOUSEID)
                 return;
 
-            var window = FrameworkContext.GetPlatform().Windows.GetByID((int)evt.windowID);
+            var window = FrameworkContext.GetPlatform().Windows.GetById((int)evt.windowID);
             wheelDeltaX = evt.x;
             wheelDeltaY = evt.y;
             OnWheelScrolled(window, evt.x, evt.y);
@@ -422,7 +422,7 @@ namespace Sedulous.SDL2.Input
         /// </summary>
         private void Register(UInt32 windowID)
         {
-            var input = (SDL2FrameworkInput)FrameworkContext.GetInput();
+            var input = (Sdl2FrameworkInput)FrameworkContext.GetInput();
             if (input.RegisterMouseDevice(this))
             {
                 isRegistered = true;
@@ -434,7 +434,7 @@ namespace Sedulous.SDL2.Input
         /// </summary>
         private void SetMousePosition(UInt32 windowID, Int32 x, Int32 y)
         {
-            this.window = FrameworkContext.GetPlatform().Windows.GetByID((int)windowID);
+            this.window = FrameworkContext.GetPlatform().Windows.GetById((int)windowID);
 
             if (FrameworkContext.Properties.SupportsHighDensityDisplayModes)
             {

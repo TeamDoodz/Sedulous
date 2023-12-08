@@ -2,28 +2,28 @@
 using Sedulous.Core;
 using Sedulous.Core.Messages;
 using Sedulous.Input;
-using Sedulous.SDL2.Input;
-using Sedulous.SDL2.Native;
-using static Sedulous.SDL2.Native.SDLNative;
+using Sedulous.Sdl2.Input;
+using Sedulous.Sdl2.Native;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2
+namespace Sedulous.Sdl2
 {
     /// <summary>
     /// Represents the SDL2 implementation of the Sedulous Input subsystem.
     /// </summary>
-    public sealed class SDL2FrameworkInput : FrameworkResource, IInputSubsystem, IMessageSubscriber<FrameworkMessageID>
+    public sealed class Sdl2FrameworkInput : FrameworkResource, IInputSubsystem, IMessageSubscriber<FrameworkMessageId>
     {
         /// <summary>
         /// Initializes a new instance of the SDL2SedulousInput class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
-        public SDL2FrameworkInput(FrameworkContext context)
+        public Sdl2FrameworkInput(FrameworkContext context)
             : base(context)
         {
             this.softwareKeyboardService = context.GetFactoryMethod<SoftwareKeyboardServiceFactory>()();
 
-            this.keyboard = new SDL2KeyboardDevice(context);
-            this.mouse = new SDL2MouseDevice(context);
+            this.keyboard = new Sdl2KeyboardDevice(context);
+            this.mouse = new Sdl2MouseDevice(context);
             this.gamePadInfo = new GamePadDeviceInfo(context);
             this.gamePadInfo.GamePadConnected += OnGamePadConnected;
             this.gamePadInfo.GamePadDisconnected += OnGamePadDisconnected;
@@ -36,7 +36,7 @@ namespace Sedulous.SDL2
         }
 
         /// <inheritdoc/>
-        void IMessageSubscriber<FrameworkMessageID>.ReceiveMessage(FrameworkMessageID type, MessageData data)
+        void IMessageSubscriber<FrameworkMessageId>.ReceiveMessage(FrameworkMessageId type, MessageData data)
         {
             if (type == FrameworkMessages.TextInputRegionChanged)
             {
@@ -368,7 +368,7 @@ namespace Sedulous.SDL2
         /// </summary>
         /// <param name="device">The device to register.</param>
         /// <returns><see langword="true"/> if the device was registered; otherwise, <see langword="false"/>.</returns>
-        internal Boolean RegisterKeyboardDevice(SDL2KeyboardDevice device)
+        internal Boolean RegisterKeyboardDevice(Sdl2KeyboardDevice device)
         {
             if (device.IsRegistered)
                 return false;
@@ -382,7 +382,7 @@ namespace Sedulous.SDL2
         /// </summary>
         /// <param name="device">The device to register.</param>
         /// <returns><see langword="true"/> if the device was registered; otherwise, <see langword="false"/>.</returns>
-        internal Boolean RegisterMouseDevice(SDL2MouseDevice device)
+        internal Boolean RegisterMouseDevice(Sdl2MouseDevice device)
         {
             if (device.IsRegistered)
                 return false;
@@ -396,7 +396,7 @@ namespace Sedulous.SDL2
         /// </summary>
         /// <param name="device">The device to register.</param>
         /// <returns><see langword="true"/> if the device was registered; otherwise, <see langword="false"/>.</returns>
-        internal Boolean RegisterGamePadDevice(SDL2GamePadDevice device)
+        internal Boolean RegisterGamePadDevice(Sdl2GamePadDevice device)
         {
             if (primaryGamePad == null)
                 primaryGamePad = device;
@@ -413,7 +413,7 @@ namespace Sedulous.SDL2
         /// </summary>
         /// <param name="device">The device to register.</param>
         /// <returns><see langword="true"/> if the device was registered; otherwise, <see langword="false"/>.</returns>
-        internal Boolean RegisterTouchDevice(SDL2TouchDevice device)
+        internal Boolean RegisterTouchDevice(Sdl2TouchDevice device)
         {
             if (primaryTouchDevice == null)
                 primaryTouchDevice = device;
@@ -456,10 +456,10 @@ namespace Sedulous.SDL2
             if (fss.FileExists(DatabasePath))
             {
                 using (var stream = fss.OpenRead(DatabasePath))
-                using (var wrapper = new SDL2StreamWrapper(stream))
+                using (var wrapper = new Sdl2StreamWrapper(stream))
                 {
                     if (SDL_GameControllerAddMappingsFromRW(wrapper.ToIntPtr(), 0) < 0)
-                        throw new SDL2Exception();
+                        throw new Sdl2Exception();
                 }
             }
         }
@@ -491,11 +491,11 @@ namespace Sedulous.SDL2
         private readonly SoftwareKeyboardService softwareKeyboardService;
 
         // Input devices.
-        private SDL2KeyboardDevice keyboard;
-        private SDL2MouseDevice mouse;
+        private Sdl2KeyboardDevice keyboard;
+        private Sdl2MouseDevice mouse;
         private GamePadDeviceInfo gamePadInfo;
-        private SDL2GamePadDevice primaryGamePad;
+        private Sdl2GamePadDevice primaryGamePad;
         private TouchDeviceInfo touchInfo;
-        private SDL2TouchDevice primaryTouchDevice;        
+        private Sdl2TouchDevice primaryTouchDevice;        
     }
 }

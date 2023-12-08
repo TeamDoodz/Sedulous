@@ -5,7 +5,7 @@ namespace Sedulous.Core
     /// <summary>
     /// Contains useful mathematical functions.
     /// </summary>
-    public static class MathUtil
+    public static class MathUtility
     {
         /// <summary>
         /// Gets a value indicating whether the specified <see cref="Single"/> value is zero to within a reasonable approximation.

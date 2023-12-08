@@ -11,15 +11,15 @@ namespace Sedulous.Content
         /// Writes an asset identifier to the stream.
         /// </summary>
         /// <param name="writer">The binary writer with which to write the asset identifier.</param>
-        /// <param name="id">The <see cref="AssetID"/> structure to write to the stream.</param>
-        public static void Write(this BinaryWriter writer, AssetID id)
+        /// <param name="id">The <see cref="AssetId"/> structure to write to the stream.</param>
+        public static void Write(this BinaryWriter writer, AssetId id)
         {
             writer.Write(id.IsValid);
             if (id.IsValid)
             {
-                writer.Write(AssetID.GetManifestNameRef(ref id));
-                writer.Write(AssetID.GetManifestGroupRef(ref id));
-                writer.Write(AssetID.GetAssetNameRef(ref id));
+                writer.Write(AssetId.GetManifestNameRef(ref id));
+                writer.Write(AssetId.GetManifestGroupRef(ref id));
+                writer.Write(AssetId.GetAssetNameRef(ref id));
             }
         }
 
@@ -28,7 +28,7 @@ namespace Sedulous.Content
         /// </summary>
         /// <param name="writer">The binary writer with which to write the asset identifier.</param>
         /// <param name="id">The <see cref="System.Nullable{AssetID}"/> structure to write to the stream.</param>
-        public static void Write(this BinaryWriter writer, AssetID? id)
+        public static void Write(this BinaryWriter writer, AssetId? id)
         {
             writer.Write(id.HasValue);
             if (id.HasValue)

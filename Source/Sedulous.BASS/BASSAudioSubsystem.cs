@@ -1,28 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using Sedulous.Audio;
-using Sedulous.BASS.Audio;
-using Sedulous.BASS.Messages;
-using Sedulous.BASS.Native;
+using Sedulous.Bass.Audio;
+using Sedulous.Bass.Messages;
+using Sedulous.Bass.Native;
 using Sedulous.Core;
 using Sedulous.Core.Messages;
-using static Sedulous.BASS.Native.BASSNative;
+using static Sedulous.Bass.Native.BASSNative;
 
-namespace Sedulous.BASS
+namespace Sedulous.Bass
 {
     /// <summary>
     /// Represents the BASS implementation of the Sedulous audio subsystem.
     /// </summary>
-    public sealed unsafe class BASSAudioSubsystem : FrameworkResource, IAudioSubsystem, IMessageSubscriber<FrameworkMessageID>
+    public sealed unsafe class BassAudioSubsystem : FrameworkResource, IAudioSubsystem, IMessageSubscriber<FrameworkMessageId>
     {
         /// <summary>
         /// Initializes a new instance of the BASSSedulousAudio class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
-        public BASSAudioSubsystem(FrameworkContext context)
+        public BassAudioSubsystem(FrameworkContext context)
             : base(context)
         {
-            this.Capabilities = new BASSAudioCapabilities();
+            this.Capabilities = new BassAudioCapabilities();
 
             if (context.Platform == FrameworkPlatform.Windows || context.Platform == FrameworkPlatform.macOS)
             {
@@ -30,14 +30,14 @@ namespace Sedulous.BASS
                 {
                     var setConfigError = BASS_ErrorGetCode();
                     if (setConfigError != BASS_ERROR_NOTAVAIL && setConfigError != BASS_ERROR_ILLPARAM)
-                        throw new BASSException(setConfigError);
+                        throw new BassException(setConfigError);
                 }
             }
 
             var device = -1;
             var freq = 44100u;
             if (!BASS_Init(device, freq, 0, IntPtr.Zero, IntPtr.Zero))
-                throw new BASSException();
+                throw new BassException();
 
             UpdateAudioDevices();
             PlaybackDevice = GetDefaultDevice();
@@ -47,7 +47,7 @@ namespace Sedulous.BASS
         }
 
         /// <inheritdoc/>
-        void IMessageSubscriber<FrameworkMessageID>.ReceiveMessage(FrameworkMessageID type, MessageData data)
+        void IMessageSubscriber<FrameworkMessageId>.ReceiveMessage(FrameworkMessageId type, MessageData data)
         {
             if (type == FrameworkMessages.ApplicationSuspending)
             {
@@ -109,7 +109,7 @@ namespace Sedulous.BASS
             Contract.EnsureNotDisposed(this, Disposed);
 
             if (!BASS_Pause())
-                throw new BASSException();
+                throw new BassException();
 
             suspended = true;
         }
@@ -120,7 +120,7 @@ namespace Sedulous.BASS
             Contract.EnsureNotDisposed(this, Disposed);
 
             if (!BASS_Start())
-                throw new BASSException();
+                throw new BassException();
 
             suspended = false;
         }
@@ -139,45 +139,45 @@ namespace Sedulous.BASS
                     if (val == null)
                     {
                         if (!BASS_Free())
-                            throw new BASSException();
+                            throw new BassException();
 
                         if (!BASS_SetDevice(0))
-                            throw new BASSException();
+                            throw new BassException();
 
                         playbackDevice = null;
                     }
                     else
                     {
-                        if (val is BASSAudioDevice device)
+                        if (val is BassAudioDevice device)
                         {
                             FrameworkContext.ValidateResource(device);
 
                             var oldDevice = (playbackDevice == null) ? 0u : BASS_GetDevice();
 
-                            if (!BASS_Init((int)device.ID, 44100u, 0, IntPtr.Zero, IntPtr.Zero))
+                            if (!BASS_Init((int)device.Id, 44100u, 0, IntPtr.Zero, IntPtr.Zero))
                             {
                                 var error = BASS_ErrorGetCode();
                                 if (error != BASS_ERROR_ALREADY)
-                                    throw new BASSException(error);
+                                    throw new BassException(error);
                             }
 
                             if (FrameworkContext != null && !FrameworkContext.Disposed)
                             {
-                                var data = FrameworkContext.Messages.CreateMessageData<BASSDeviceChangedMessageData>();
-                                data.DeviceID = device.ID;
-                                FrameworkContext.Messages.PublishImmediate(BASSMessages.BASSDeviceChanged, data);
+                                var data = FrameworkContext.Messages.CreateMessageData<BassDeviceChangedMessageData>();
+                                data.DeviceId = device.Id;
+                                FrameworkContext.Messages.PublishImmediate(BassMessages.BassDeviceChanged, data);
                             }
 
                             if (oldDevice > 0)
                             {
                                 if (!BASS_SetDevice(oldDevice))
-                                    throw new BASSException();
+                                    throw new BassException();
 
                                 if (!BASS_Free())
-                                    throw new BASSException();
+                                    throw new BassException();
 
-                                if (!BASS_SetDevice(device.ID))
-                                    throw new BASSException();
+                                if (!BASS_SetDevice(device.Id))
+                                    throw new BassException();
                             }
 
                             playbackDevice = device;
@@ -199,7 +199,7 @@ namespace Sedulous.BASS
             {
                 Contract.EnsureNotDisposed(this, Disposed);
 
-                var audioMasterVolumeClamped = MathUtil.Clamp(value, 0f, 1f);
+                var audioMasterVolumeClamped = MathUtility.Clamp(value, 0f, 1f);
                 if (audioMasterVolumeClamped != audioMasterVolume)
                 {
                     audioMasterVolume = audioMasterVolumeClamped;
@@ -218,7 +218,7 @@ namespace Sedulous.BASS
             {
                 Contract.EnsureNotDisposed(this, Disposed);
 
-                var songsMasterVolumeClamped = MathUtil.Clamp(value, 0f, 1f);
+                var songsMasterVolumeClamped = MathUtility.Clamp(value, 0f, 1f);
                 if (songsMasterVolumeClamped != songsMasterVolume)
                 {
                     songsMasterVolume = songsMasterVolumeClamped;
@@ -236,7 +236,7 @@ namespace Sedulous.BASS
             {
                 Contract.EnsureNotDisposed(this, Disposed);
 
-                var soundEffectsMasterVolumeClamped = MathUtil.Clamp(value, 0f, 1f);
+                var soundEffectsMasterVolumeClamped = MathUtility.Clamp(value, 0f, 1f);
                 if (soundEffectsMasterVolumeClamped != soundEffectsMasterVolume)
                 {
                     soundEffectsMasterVolume = soundEffectsMasterVolumeClamped;
@@ -305,7 +305,7 @@ namespace Sedulous.BASS
         protected override void Dispose(Boolean disposing)
         {
             if (!BASS_Free())
-                throw new BASSException();
+                throw new BassException();
 
             if (disposing && !FrameworkContext.Disposed)
             {
@@ -329,7 +329,7 @@ namespace Sedulous.BASS
         {
             var volumeStream = (audioMuted || songsMuted) ? 0 : (uint)(10000 * audioMasterVolume * songsMasterVolume);
             if (!BASS_SetConfig(BASS_CONFIG_GVOL_STREAM, volumeStream))
-                throw new BASSException();
+                throw new BassException();
         }
 
         /// <summary>
@@ -339,7 +339,7 @@ namespace Sedulous.BASS
         {
             var volumeSample = (audioMuted || soundEffectsMuted) ? 0 : (uint)(10000 * audioMasterVolume * soundEffectsMasterVolume);
             if (!BASS_SetConfig(BASS_CONFIG_GVOL_SAMPLE, volumeSample))
-                throw new BASSException();
+                throw new BassException();
         }
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace Sedulous.BASS
                 if (ix >= knownAudioDevices.Count)
                 {
                     var marshalledInfo = info.ToMarshalledStruct();
-                    knownAudioDevices.Add(new BASSAudioDevice(FrameworkContext, (uint)i, marshalledInfo.name));
+                    knownAudioDevices.Add(new BassAudioDevice(FrameworkContext, (uint)i, marshalledInfo.name));
                 }
 
                 var device = knownAudioDevices[ix];
@@ -372,7 +372,7 @@ namespace Sedulous.BASS
         /// <summary>
         /// Gets the default audio device.
         /// </summary>
-        private BASSAudioDevice GetDefaultDevice()
+        private BassAudioDevice GetDefaultDevice()
         {
             foreach (var device in knownAudioDevices)
             {
@@ -396,7 +396,7 @@ namespace Sedulous.BASS
 
         // Audio device cache.
         private IAudioDevice playbackDevice;
-        private List<BASSAudioDevice> knownAudioDevices = 
-            new List<BASSAudioDevice>();
+        private List<BassAudioDevice> knownAudioDevices = 
+            new List<BassAudioDevice>();
     }
 }

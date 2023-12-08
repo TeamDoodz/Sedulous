@@ -108,7 +108,7 @@ namespace Sedulous.OpenGL.Graphics
             {
                 var caps = (OpenGLGraphicsCapabilities)FrameworkContext.GetGraphics().Capabilities;
                 if (caps.MinMapBufferAlignment > 0)
-                    bufferSize = Math.Min(Math.Max(caps.MinMapBufferAlignment, MathUtil.FindNextPowerOfTwo(bufferSize)), SizeInBytes - bufferOffset);
+                    bufferSize = Math.Min(Math.Max(caps.MinMapBufferAlignment, MathUtility.FindNextPowerOfTwo(bufferSize)), SizeInBytes - bufferOffset);
 
                 using (OpenGLState.ScopedBindArrayBuffer(buffer))
                 {
@@ -179,7 +179,7 @@ namespace Sedulous.OpenGL.Graphics
             {
                 return count * vdecl.VertexStride;
             }
-            return Math.Max(caps.MinMapBufferAlignment, MathUtil.FindNextPowerOfTwo(count * vdecl.VertexStride));
+            return Math.Max(caps.MinMapBufferAlignment, MathUtility.FindNextPowerOfTwo(count * vdecl.VertexStride));
         }
 
         /// <summary>

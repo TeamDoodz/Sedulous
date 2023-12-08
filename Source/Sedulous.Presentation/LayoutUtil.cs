@@ -155,28 +155,28 @@ namespace Sedulous.Presentation
 
         /// <summary>
         /// Converts a <see cref="HorizontalAlignment"/> value and a <see cref="VerticalAlignment"/> value 
-        /// to the corresponding <see cref="TextFlags"/> value.
+        /// to the corresponding <see cref="TextOptions"/> value.
         /// </summary>
         /// <param name="horizontal">The <see cref="HorizontalAlignment"/> value to convert.</param>
         /// <param name="vertical">The <see cref="VerticalAlignment"/> value to convert.</param>
-        /// <returns>The <see cref="TextFlags"/> value that corresponds to the specified set of alignments.</returns>
-        public static TextFlags ConvertAlignmentsToTextFlags(HorizontalAlignment horizontal, VerticalAlignment vertical)
+        /// <returns>The <see cref="TextOptions"/> value that corresponds to the specified set of alignments.</returns>
+        public static TextOptions ConvertAlignmentsToTextFlags(HorizontalAlignment horizontal, VerticalAlignment vertical)
         {
-            var flags = (TextFlags)0;
+            var flags = (TextOptions)0;
 
             switch (horizontal)
             {
                 case HorizontalAlignment.Left:
                 case HorizontalAlignment.Stretch:
-                    flags |= TextFlags.AlignLeft;
+                    flags |= TextOptions.AlignLeft;
                     break;
 
                 case HorizontalAlignment.Right:
-                    flags |= TextFlags.AlignRight;
+                    flags |= TextOptions.AlignRight;
                     break;
 
                 case HorizontalAlignment.Center:
-                    flags |= TextFlags.AlignCenter;
+                    flags |= TextOptions.AlignCenter;
                     break;
             }
 
@@ -184,15 +184,15 @@ namespace Sedulous.Presentation
             {
                 case VerticalAlignment.Top:
                 case VerticalAlignment.Stretch:
-                    flags |= TextFlags.AlignTop;
+                    flags |= TextOptions.AlignTop;
                     break;
 
                 case VerticalAlignment.Bottom:
-                    flags |= TextFlags.AlignBottom;
+                    flags |= TextOptions.AlignBottom;
                     break;
 
                 case VerticalAlignment.Center:
-                    flags |= TextFlags.AlignMiddle;
+                    flags |= TextOptions.AlignMiddle;
                     break;
             }
 

@@ -1,24 +1,24 @@
 ﻿using System;
 using Sedulous.Audio;
 using Sedulous.Core;
-using Sedulous.FMOD.Native;
-using static Sedulous.FMOD.Native.FMOD_MODE;
-using static Sedulous.FMOD.Native.FMOD_RESULT;
-using static Sedulous.FMOD.Native.FMOD_TIMEUNIT;
-using static Sedulous.FMOD.Native.FMODNative;
+using Sedulous.Fmod.Native;
+using static Sedulous.Fmod.Native.FMOD_MODE;
+using static Sedulous.Fmod.Native.FMOD_RESULT;
+using static Sedulous.Fmod.Native.FMOD_TIMEUNIT;
+using static Sedulous.Fmod.Native.FMODNative;
 
-namespace Sedulous.FMOD.Audio
+namespace Sedulous.Fmod.Audio
 {
     /// <summary>
     /// Contains methods for playing and manipulating FMOD channels.
     /// </summary>
-    internal sealed unsafe class FMODChannelPlayer : FrameworkResource
+    internal sealed unsafe class FmodChannelPlayer : FrameworkResource
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FMODChannelPlayer"/> class.
+        /// Initializes a new instance of the <see cref="FmodChannelPlayer"/> class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
-        public FMODChannelPlayer(FrameworkContext context)
+        public FmodChannelPlayer(FrameworkContext context)
             : base(context)
         {
 
@@ -74,7 +74,7 @@ namespace Sedulous.FMOD.Audio
                 return false;
 
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
             StopInternal();
 
@@ -91,7 +91,7 @@ namespace Sedulous.FMOD.Audio
                     return false;
 
                 if (result != FMOD_OK)
-                    throw new FMODException(result);
+                    throw new FmodException(result);
 
                 return true;
             }
@@ -108,7 +108,7 @@ namespace Sedulous.FMOD.Audio
                     return false;
 
                 if (result != FMOD_OK)
-                    throw new FMODException(result);
+                    throw new FmodException(result);
 
                 return true;
             }
@@ -119,7 +119,7 @@ namespace Sedulous.FMOD.Audio
         public void SlideVolume(Single volume, TimeSpan time)
         {
             if (State == PlaybackState.Stopped)
-                throw new InvalidOperationException(FMODStrings.NotCurrentlyValid);
+                throw new InvalidOperationException(FmodStrings.NotCurrentlyValid);
 
             this.isSlidingVolume = true;
             this.slideStartVolume = this.Volume;
@@ -132,7 +132,7 @@ namespace Sedulous.FMOD.Audio
         public void SlidePitch(Single pitch, TimeSpan time)
         {
             if (State == PlaybackState.Stopped)
-                throw new InvalidOperationException(FMODStrings.NotCurrentlyValid);
+                throw new InvalidOperationException(FmodStrings.NotCurrentlyValid);
 
             this.isSlidingPitch = true;
             this.slideStartPitch = this.Pitch;
@@ -145,7 +145,7 @@ namespace Sedulous.FMOD.Audio
         public void SlidePan(Single pan, TimeSpan time)
         {
             if (State == PlaybackState.Stopped)
-                throw new InvalidOperationException(FMODStrings.NotCurrentlyValid);
+                throw new InvalidOperationException(FmodStrings.NotCurrentlyValid);
 
             this.isSlidingPan = true;
             this.slideStartPan = this.Pan;
@@ -170,7 +170,7 @@ namespace Sedulous.FMOD.Audio
                         return PlaybackState.Stopped;
 
                     if (result != FMOD_OK)
-                        throw new FMODException(result);
+                        throw new FmodException(result);
 
                     if (ispaused)
                         return PlaybackState.Paused;
@@ -180,7 +180,7 @@ namespace Sedulous.FMOD.Audio
                         return PlaybackState.Stopped;
 
                     if (result != FMOD_OK)
-                        throw new FMODException(result);
+                        throw new FmodException(result);
 
                     return isplaying ? PlaybackState.Playing : PlaybackState.Stopped;
                 }
@@ -205,7 +205,7 @@ namespace Sedulous.FMOD.Audio
                     return false;
 
                 if (result != FMOD_OK)
-                    throw new FMODException(result);
+                    throw new FmodException(result);
 
                 return 
                     (mode & FMOD_LOOP_NORMAL) != 0 ||
@@ -214,14 +214,14 @@ namespace Sedulous.FMOD.Audio
             set
             {
                 if (State == PlaybackState.Stopped)
-                    throw new InvalidOperationException(FMODStrings.NotCurrentlyValid);
+                    throw new InvalidOperationException(FmodStrings.NotCurrentlyValid);
 
                 var result = FMOD_Channel_SetMode(channel, value ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF);
                 if (!ValidateHandle(result))
-                    throw new InvalidOperationException(FMODStrings.NotCurrentlyValid);
+                    throw new InvalidOperationException(FmodStrings.NotCurrentlyValid);
 
                 if (result != FMOD_OK)
-                    throw new FMODException(result);
+                    throw new FmodException(result);
             }
         }
 
@@ -239,24 +239,24 @@ namespace Sedulous.FMOD.Audio
                     return TimeSpan.Zero;
 
                 if (result != FMOD_OK)
-                    throw new FMODException(result);
+                    throw new FmodException(result);
 
                 return TimeSpan.FromMilliseconds(position);
             }
             set
             {
                 if (State == PlaybackState.Stopped)
-                    throw new InvalidOperationException(FMODStrings.NotCurrentlyValid);
+                    throw new InvalidOperationException(FmodStrings.NotCurrentlyValid);
 
                 if (value.TotalSeconds < 0 || value > Duration)
                     throw new ArgumentOutOfRangeException(nameof(value));
 
                 var result = FMOD_Channel_SetPosition(channel, (UInt32)value.TotalMilliseconds, FMOD_TIMEUNIT_MS);
                 if (!ValidateHandle(result))
-                    throw new InvalidOperationException(FMODStrings.NotCurrentlyValid);
+                    throw new InvalidOperationException(FmodStrings.NotCurrentlyValid);
 
                 if (result != FMOD_OK)
-                    throw new FMODException(result);
+                    throw new FmodException(result);
             }
         }
 
@@ -279,15 +279,15 @@ namespace Sedulous.FMOD.Audio
             set
             {
                 if (State == PlaybackState.Stopped)
-                    throw new InvalidOperationException(FMODStrings.NotCurrentlyValid);
+                    throw new InvalidOperationException(FmodStrings.NotCurrentlyValid);
 
-                var clamped = MathUtil.Clamp(value, 0f, 1f);
+                var clamped = MathUtility.Clamp(value, 0f, 1f);
                 var result = FMOD_Channel_SetVolume(channel, clamped);
                 if (!ValidateHandle(result))
-                    throw new InvalidOperationException(FMODStrings.NotCurrentlyValid);
+                    throw new InvalidOperationException(FmodStrings.NotCurrentlyValid);
 
                 if (result != FMOD_OK)
-                    throw new FMODException(result);
+                    throw new FmodException(result);
 
                 this.volume = clamped;
                 this.isSlidingVolume = false;
@@ -301,15 +301,15 @@ namespace Sedulous.FMOD.Audio
             set
             {
                 if (State == PlaybackState.Stopped)
-                    throw new InvalidOperationException(FMODStrings.NotCurrentlyValid);
+                    throw new InvalidOperationException(FmodStrings.NotCurrentlyValid);
 
-                var clamped = MathUtil.Clamp(value, -1f, 1f);
+                var clamped = MathUtility.Clamp(value, -1f, 1f);
                 var result = FMOD_Channel_SetPitch(channel, 1f + clamped);
                 if (!ValidateHandle(result))
-                    throw new InvalidOperationException(FMODStrings.NotCurrentlyValid);
+                    throw new InvalidOperationException(FmodStrings.NotCurrentlyValid);
 
                 if (result != FMOD_OK)
-                    throw new FMODException(result);
+                    throw new FmodException(result);
 
                 this.pitch = clamped;
                 this.isSlidingPitch = false;
@@ -323,15 +323,15 @@ namespace Sedulous.FMOD.Audio
             set
             {
                 if (State == PlaybackState.Stopped)
-                    throw new InvalidOperationException(FMODStrings.NotCurrentlyValid);
+                    throw new InvalidOperationException(FmodStrings.NotCurrentlyValid);
 
-                var clamped = MathUtil.Clamp(pan, -1f, 1f);
+                var clamped = MathUtility.Clamp(pan, -1f, 1f);
                 var result = FMOD_Channel_SetPan(channel, clamped);
                 if (!ValidateHandle(result))
-                    throw new InvalidOperationException(FMODStrings.NotCurrentlyValid);
+                    throw new InvalidOperationException(FmodStrings.NotCurrentlyValid);
 
                 if (result != FMOD_OK)
-                    throw new FMODException(result);
+                    throw new FmodException(result);
 
                 this.pan = clamped;
                 this.isSlidingPan = false;
@@ -374,7 +374,7 @@ namespace Sedulous.FMOD.Audio
 
             var result = default(FMOD_RESULT);
 
-            var system = ((FMODAudioSubsystem)FrameworkContext.GetAudio()).System;
+            var system = ((FmodAudioSubsystem)FrameworkContext.GetAudio()).System;
             var channel = default(FMOD_CHANNEL*);
             
             if (loopStart > TimeSpan.Zero && loopLength <= TimeSpan.Zero)
@@ -387,31 +387,31 @@ namespace Sedulous.FMOD.Audio
 
             result = FMOD_System_PlaySound(system, sound, channelgroup, true, &channel);
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
-            result = FMOD_Channel_SetVolume(channel, MathUtil.Clamp(volume, 0f, 1f));
+            result = FMOD_Channel_SetVolume(channel, MathUtility.Clamp(volume, 0f, 1f));
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
-            result = FMOD_Channel_SetPitch(channel, 1f + MathUtil.Clamp(pitch, -1f, 1f));
+            result = FMOD_Channel_SetPitch(channel, 1f + MathUtility.Clamp(pitch, -1f, 1f));
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
-            result = FMOD_Channel_SetPan(channel, MathUtil.Clamp(pan, -1f, 1f));
+            result = FMOD_Channel_SetPan(channel, MathUtility.Clamp(pan, -1f, 1f));
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
             result = FMOD_Channel_SetMode(channel, looping ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF);
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
             result = FMOD_Channel_SetLoopPoints(channel, loopStartMs, FMOD_TIMEUNIT_MS, loopEndMs, FMOD_TIMEUNIT_MS);
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
             result = FMOD_Channel_SetPaused(channel, false);
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
             this.channel = channel;
             this.duration = duration;
@@ -446,15 +446,15 @@ namespace Sedulous.FMOD.Audio
 
             slideClockVolume += time.ElapsedTime.TotalMilliseconds;
 
-            var factor = (Single)MathUtil.Clamp(slideClockVolume / slideDurationVolume, 0.0, 1.0);
-            var volume = MathUtil.Clamp(Tweening.Lerp(slideStartVolume, slideEndVolume, factor), 0f, 1f);
+            var factor = (Single)MathUtility.Clamp(slideClockVolume / slideDurationVolume, 0.0, 1.0);
+            var volume = MathUtility.Clamp(Tweening.Lerp(slideStartVolume, slideEndVolume, factor), 0f, 1f);
 
             var result = FMOD_Channel_SetVolume(channel, volume);
             if (!ValidateHandle(result))
                 return;
 
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
             this.volume = volume;
 
@@ -472,15 +472,15 @@ namespace Sedulous.FMOD.Audio
 
             slideClockPitch += time.ElapsedTime.TotalMilliseconds;
 
-            var factor = (Single)MathUtil.Clamp(slideClockPitch / slideDurationPitch, 0.0, 1.0);
-            var pitch = MathUtil.Clamp(Tweening.Lerp(slideStartPitch, slideEndPitch, factor), -1f, 1f);
+            var factor = (Single)MathUtility.Clamp(slideClockPitch / slideDurationPitch, 0.0, 1.0);
+            var pitch = MathUtility.Clamp(Tweening.Lerp(slideStartPitch, slideEndPitch, factor), -1f, 1f);
 
             var result = FMOD_Channel_SetPitch(channel, 1f + pitch);
             if (!ValidateHandle(result))
                 return;
 
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
             this.pitch = pitch;
 
@@ -498,15 +498,15 @@ namespace Sedulous.FMOD.Audio
 
             slideClockPan += time.ElapsedTime.TotalMilliseconds;
 
-            var factor = (Single)MathUtil.Clamp(slideClockPan / slideDurationPitch, 0.0, 1.0);
-            var pan = MathUtil.Clamp(Tweening.Lerp(slideStartPan, slideEndPan, factor), -1f, 1f);
+            var factor = (Single)MathUtility.Clamp(slideClockPan / slideDurationPitch, 0.0, 1.0);
+            var pan = MathUtility.Clamp(Tweening.Lerp(slideStartPan, slideEndPan, factor), -1f, 1f);
 
             var result = FMOD_Channel_SetPan(channel, pan);
             if (!ValidateHandle(result))
                 return;
 
             if (result != FMOD_OK)
-                throw new FMODException(result);
+                throw new FmodException(result);
 
             this.pan = pan;
 

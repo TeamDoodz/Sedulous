@@ -2,20 +2,20 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using Sedulous.Core;
-using static Sedulous.SDL2.Native.SDLNative;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2
+namespace Sedulous.Sdl2
 {
     /// <summary>
     /// Represents a wrapper around a <see cref="System.IO.Stream"/> which is compatible with SDL2's RWops API.
     /// </summary>
-    public sealed unsafe partial class SDL2StreamWrapper : IDisposable
+    public sealed unsafe partial class Sdl2StreamWrapper : IDisposable
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SDL2StreamWrapper"/> class.
+        /// Initializes a new instance of the <see cref="Sdl2StreamWrapper"/> class.
         /// </summary>
         /// <param name="stream">The stream which will be wrapped by this object.</param>
-        public SDL2StreamWrapper(Stream stream)
+        public Sdl2StreamWrapper(Stream stream)
         {
             Contract.Require(stream, nameof(stream));
 
@@ -54,7 +54,7 @@ namespace Sedulous.SDL2
         private static Int64 RWops_size_callback(SDL_RWops* rwops)
         {
             var handle = GCHandle.FromIntPtr(rwops->data1);
-            var target = (SDL2StreamWrapper)handle.Target;
+            var target = (Sdl2StreamWrapper)handle.Target;
             if (target == null || target.disposed)
                 return -1;
 
@@ -68,7 +68,7 @@ namespace Sedulous.SDL2
         private static Int64 RWops_seek_callback(SDL_RWops* rwops, Int64 pos, Int32 flags)
         {
             var handle = GCHandle.FromIntPtr(rwops->data1);
-            var target = (SDL2StreamWrapper)handle.Target;
+            var target = (Sdl2StreamWrapper)handle.Target;
             if (target == null || target.disposed || !target.stream.CanSeek)
                 return -1;
 
@@ -97,7 +97,7 @@ namespace Sedulous.SDL2
         private static UInt32 RWops_read_callback(SDL_RWops* rwops, IntPtr ptr, UInt32 size, UInt32 maxnum)
         {
             var handle = GCHandle.FromIntPtr(rwops->data1);
-            var target = (SDL2StreamWrapper)handle.Target;
+            var target = (Sdl2StreamWrapper)handle.Target;
             if (target == null || target.disposed || !target.stream.CanRead)
                 return 0;
 
@@ -127,7 +127,7 @@ namespace Sedulous.SDL2
         private static UInt32 RWops_write_callback(SDL_RWops* rwops, IntPtr ptr, UInt32 size, UInt32 num)
         {
             var handle = GCHandle.FromIntPtr(rwops->data1);
-            var target = (SDL2StreamWrapper)handle.Target;
+            var target = (Sdl2StreamWrapper)handle.Target;
             if (target == null || target.disposed || !target.stream.CanWrite)
                 return 0;
 
@@ -156,7 +156,7 @@ namespace Sedulous.SDL2
         private static Int32 RWops_close_callback(SDL_RWops* rwops)
         {
             var handle = GCHandle.FromIntPtr(rwops->data1);
-            var target = (SDL2StreamWrapper)handle.Target;
+            var target = (Sdl2StreamWrapper)handle.Target;
             if (target == null || target.disposed)
                 return -1;
 

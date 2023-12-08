@@ -47,14 +47,14 @@ namespace Sedulous.Content
         /// <param name="asset">The asset identifier of the asset for which to add a watcher.</param>
         /// <param name="watcher">The watcher to add for the specified asset.</param>
         /// <returns><see langword="true"/> if the watcher was added; otherwise, <see langword="false"/>.</returns>
-        public Boolean AddWatcher<TOutput>(AssetID asset, AssetWatcher<TOutput> watcher)
+        public Boolean AddWatcher<TOutput>(AssetId asset, AssetWatcher<TOutput> watcher)
         {
             Contract.Require(watcher, nameof(watcher));
 
             var primaryDisplay = ContentManager.FrameworkContext.GetPlatform().Displays.PrimaryDisplay;
             var primaryDisplayDensityBucket = primaryDisplay?.DensityBucket ?? ScreenDensityBucket.Desktop;
 
-            return AddWatcherInternal(AssetID.GetAssetPath(asset), primaryDisplayDensityBucket, watcher);
+            return AddWatcherInternal(AssetId.GetAssetPath(asset), primaryDisplayDensityBucket, watcher);
         }
 
         /// <summary>
@@ -79,11 +79,11 @@ namespace Sedulous.Content
         /// <param name="density">The density bucket corresponding to the version of the asset to watch.</param>
         /// <param name="watcher">The watcher to add for the specified asset.</param>
         /// <returns><see langword="true"/> if the watcher was added; otherwise, <see langword="false"/>.</returns>
-        public Boolean AddWatcher<TOutput>(AssetID asset, ScreenDensityBucket density, AssetWatcher<TOutput> watcher)
+        public Boolean AddWatcher<TOutput>(AssetId asset, ScreenDensityBucket density, AssetWatcher<TOutput> watcher)
         {
             Contract.Require(watcher, nameof(watcher));
 
-            return AddWatcherInternal(AssetID.GetAssetPath(asset), density, watcher);
+            return AddWatcherInternal(AssetId.GetAssetPath(asset), density, watcher);
         }
 
         /// <summary>
@@ -109,14 +109,14 @@ namespace Sedulous.Content
         /// <param name="asset">The asset identifier of the asset for which to remove a watcher.</param>
         /// <param name="watcher">The watcher to remove from the specified asset.</param>
         /// <returns><see langword="true"/> if the specified watcher was removed; otherwise, <see langword="false"/>.</returns>
-        public Boolean RemoveWatcher<TOutput>(AssetID asset, AssetWatcher<TOutput> watcher)
+        public Boolean RemoveWatcher<TOutput>(AssetId asset, AssetWatcher<TOutput> watcher)
         {
             Contract.Require(watcher, nameof(watcher));
 
             var primaryDisplay = ContentManager.FrameworkContext.GetPlatform().Displays.PrimaryDisplay;
             var primaryDisplayDensityBucket = primaryDisplay?.DensityBucket ?? ScreenDensityBucket.Desktop;
 
-            return RemoveWatcherInternal(AssetID.GetAssetPath(asset), primaryDisplayDensityBucket, watcher);
+            return RemoveWatcherInternal(AssetId.GetAssetPath(asset), primaryDisplayDensityBucket, watcher);
         }
 
         /// <summary>
@@ -141,11 +141,11 @@ namespace Sedulous.Content
         /// <param name="density">The density bucket corresponding to the version of the asset to watch.</param>
         /// <param name="watcher">The watcher to remove from the specified asset.</param>
         /// <returns><see langword="true"/> if the specified watcher was removed; otherwise, <see langword="false"/>.</returns>
-        public Boolean RemoveWatcher<TOutput>(AssetID asset, ScreenDensityBucket density, AssetWatcher<TOutput> watcher)
+        public Boolean RemoveWatcher<TOutput>(AssetId asset, ScreenDensityBucket density, AssetWatcher<TOutput> watcher)
         {
             Contract.Require(watcher, nameof(watcher));
 
-            return RemoveWatcherInternal(AssetID.GetAssetPath(asset), density, watcher);
+            return RemoveWatcherInternal(AssetId.GetAssetPath(asset), density, watcher);
         }
 
         /// <summary>
@@ -175,14 +175,14 @@ namespace Sedulous.Content
         /// <typeparam name="TOutput">The type of object being loaded.</typeparam>
         /// <param name="asset">The identifier of the asset to load.</param>
         /// <returns>The <see cref="WatchedAsset{T}"/> instance which this content manager uses to watch the specified asset.</returns>
-        public WatchedAsset<TOutput> GetSharedWatchedAsset<TOutput>(AssetID asset)
+        public WatchedAsset<TOutput> GetSharedWatchedAsset<TOutput>(AssetId asset)
         {
             Contract.EnsureNotDisposed(this, Disposed);
 
             var primaryDisplay = FrameworkContext.GetPlatform().Displays.PrimaryDisplay;
             var primaryDisplayDensity = primaryDisplay.DensityBucket;
 
-            return GetSharedWatchedAssetInternal<TOutput>(AssetID.GetAssetPath(asset), primaryDisplayDensity);
+            return GetSharedWatchedAssetInternal<TOutput>(AssetId.GetAssetPath(asset), primaryDisplayDensity);
         }
 
         /// <summary>
@@ -211,11 +211,11 @@ namespace Sedulous.Content
         /// <param name="asset">The identifier of the asset to load.</param>
         /// <param name="density">The screen density for which to retrieve an asset watcher.</param>
         /// <returns>The <see cref="WatchedAsset{T}"/> instance which this content manager uses to watch the specified asset.</returns>
-        public WatchedAsset<TOutput> GetSharedWatchedAsset<TOutput>(AssetID asset, ScreenDensityBucket density)
+        public WatchedAsset<TOutput> GetSharedWatchedAsset<TOutput>(AssetId asset, ScreenDensityBucket density)
         {
             Contract.EnsureNotDisposed(this, Disposed);
 
-            return GetSharedWatchedAssetInternal<TOutput>(AssetID.GetAssetPath(asset), density);
+            return GetSharedWatchedAssetInternal<TOutput>(AssetId.GetAssetPath(asset), density);
         }
 
         /// <summary>

@@ -1,40 +1,40 @@
 ﻿using System;
 using Sedulous.Audio;
-using Sedulous.BASS.Messages;
+using Sedulous.Bass.Messages;
 using Sedulous.Core;
 using Sedulous.Core.Messages;
-using static Sedulous.BASS.Native.BASSNative;
+using static Sedulous.Bass.Native.BASSNative;
 
-namespace Sedulous.BASS.Audio
+namespace Sedulous.Bass.Audio
 {
     /// <summary>
     /// Represents the BASS implementation of the <see cref="SoundEffectPlayer"/> class.
     /// </summary>
-    public sealed class BASSSoundEffectPlayer : SoundEffectPlayer,
-        IMessageSubscriber<FrameworkMessageID>
+    public sealed class BassSoundEffectPlayer : SoundEffectPlayer,
+        IMessageSubscriber<FrameworkMessageId>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BASSSoundEffectPlayer"/> class.
+        /// Initializes a new instance of the <see cref="BassSoundEffectPlayer"/> class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
-        public BASSSoundEffectPlayer(FrameworkContext context)
+        public BassSoundEffectPlayer(FrameworkContext context)
             : base(context)
         {
-            context.Messages.Subscribe(this, BASSMessages.BASSDeviceChanged);
+            context.Messages.Subscribe(this, BassMessages.BassDeviceChanged);
         }
 
         /// <inheritdoc/>
-        void IMessageSubscriber<FrameworkMessageID>.ReceiveMessage(FrameworkMessageID type, MessageData data)
+        void IMessageSubscriber<FrameworkMessageId>.ReceiveMessage(FrameworkMessageId type, MessageData data)
         {
-            if (type == BASSMessages.BASSDeviceChanged)
+            if (type == BassMessages.BassDeviceChanged)
             {
                 StopInternal();
 
-                if (BASSUtil.IsValidHandle(sample))
+                if (BassUtility.IsValidHandle(sample))
                 {
-                    var deviceID = ((BASSDeviceChangedMessageData)data).DeviceID;
+                    var deviceID = ((BassDeviceChangedMessageData)data).DeviceId;
                     if (!BASS_ChannelSetDevice(sample, deviceID))
-                        throw new BASSException();
+                        throw new BassException();
                 }
                 return;
             }
@@ -67,8 +67,8 @@ namespace Sedulous.BASS.Audio
         {
             Contract.EnsureNotDisposed(this, Disposed);
 
-            if (BASSUtil.IsValidHandle(channel) && !BASS_ChannelStop(channel))
-                throw new BASSException();
+            if (BassUtility.IsValidHandle(channel) && !BASS_ChannelStop(channel))
+                throw new BassException();
 
             StopInternal();
         }
@@ -81,7 +81,7 @@ namespace Sedulous.BASS.Audio
             if (State == PlaybackState.Playing)
             {
                 if (!BASS_ChannelPause(channel))
-                    throw new BASSException();
+                    throw new BassException();
             }
         }
 
@@ -93,7 +93,7 @@ namespace Sedulous.BASS.Audio
             if (State == PlaybackState.Paused)
             {
                 if (!BASS_ChannelPlay(channel, false))
-                    throw new BASSException();
+                    throw new BassException();
             }
         }
 
@@ -103,9 +103,9 @@ namespace Sedulous.BASS.Audio
             Contract.EnsureNotDisposed(this, Disposed);
 
             if (State == PlaybackState.Stopped)
-                throw new InvalidOperationException(BASSStrings.NotCurrentlyValid);
+                throw new InvalidOperationException(BassStrings.NotCurrentlyValid);
 
-            BASSUtil.SlideVolume(channel, volume, time);
+            BassUtility.SlideVolume(channel, volume, time);
         }
 
         /// <inheritdoc/>
@@ -114,7 +114,7 @@ namespace Sedulous.BASS.Audio
             Contract.EnsureNotDisposed(this, Disposed);
 
             if (State == PlaybackState.Stopped)
-                throw new InvalidOperationException(BASSStrings.NotCurrentlyValid);
+                throw new InvalidOperationException(BassStrings.NotCurrentlyValid);
 
             /* No-op */
         }
@@ -125,9 +125,9 @@ namespace Sedulous.BASS.Audio
             Contract.EnsureNotDisposed(this, Disposed);
 
             if (State == PlaybackState.Stopped)
-                throw new InvalidOperationException(BASSStrings.NotCurrentlyValid);
+                throw new InvalidOperationException(BassStrings.NotCurrentlyValid);
 
-            BASSUtil.SlidePan(channel, pan, time);
+            BassUtility.SlidePan(channel, pan, time);
         }
 
         /// <inheritdoc/>
@@ -135,7 +135,7 @@ namespace Sedulous.BASS.Audio
         {
             get
             {
-                if (BASSUtil.IsValidHandle(channel))
+                if (BassUtility.IsValidHandle(channel))
                 {
                     switch (BASS_ChannelIsActive(channel))
                     {
@@ -165,13 +165,13 @@ namespace Sedulous.BASS.Audio
         /// <inheritdoc/>
         public override Boolean IsLooping
         {
-            get => IsHandleValid() ? BASSUtil.GetIsLooping(channel) : false;
+            get => IsHandleValid() ? BassUtility.GetIsLooping(channel) : false;
             set
             {
                 if (State == PlaybackState.Stopped)
-                    throw new InvalidOperationException(BASSStrings.NotCurrentlyValid);
+                    throw new InvalidOperationException(BassStrings.NotCurrentlyValid);
 
-                BASSUtil.SetIsLooping(channel, value);
+                BassUtility.SetIsLooping(channel, value);
             }
         }
 
@@ -183,16 +183,16 @@ namespace Sedulous.BASS.Audio
                 if (!IsHandleValid())
                     return TimeSpan.Zero;
 
-                if (!BASSUtil.IsValidHandle(stream))
+                if (!BassUtility.IsValidHandle(stream))
                 {
-                    var position = BASSUtil.GetPositionInSeconds(channel);
+                    var position = BassUtility.GetPositionInSeconds(channel);
                     return TimeSpan.FromSeconds(position);
                 }
                 else
                 {
                     var position = BASS_ChannelBytes2Seconds(channel, (ulong)sampleDataPosition);
                     if (position < 0)
-                        throw new BASSException();
+                        throw new BassException();
 
                     return TimeSpan.FromSeconds(position);
                 }
@@ -200,22 +200,22 @@ namespace Sedulous.BASS.Audio
             set
             {
                 if (State == PlaybackState.Stopped)
-                    throw new InvalidOperationException(BASSStrings.NotCurrentlyValid);
+                    throw new InvalidOperationException(BassStrings.NotCurrentlyValid);
 
                 if (value.TotalSeconds < 0 || value > Duration)
                     throw new ArgumentOutOfRangeException(nameof(value));
 
-                if (BASSUtil.IsValidHandle(stream))
+                if (BassUtility.IsValidHandle(stream))
                 {
                     var position = BASS_ChannelSeconds2Bytes(channel, value.TotalSeconds);
-                    if (!BASSUtil.IsValidValue(position))
-                        throw new BASSException();
+                    if (!BassUtility.IsValidValue(position))
+                        throw new BassException();
 
                     sampleDataPosition = (int)position;
                 }
                 else
                 {
-                    BASSUtil.SetPositionInSeconds(channel, value.TotalSeconds);
+                    BassUtility.SetPositionInSeconds(channel, value.TotalSeconds);
                 }
             }
         }
@@ -223,19 +223,19 @@ namespace Sedulous.BASS.Audio
         /// <inheritdoc/>
         public override TimeSpan Duration
         {
-            get => IsHandleValid() ? BASSUtil.GetDurationAsTimeSpan(channel) : TimeSpan.Zero;
+            get => IsHandleValid() ? BassUtility.GetDurationAsTimeSpan(channel) : TimeSpan.Zero;
         }
 
         /// <inheritdoc/>
         public override Single Volume
         {
-            get => IsHandleValid() ? BASSUtil.GetVolume(channel) : 1f;
+            get => IsHandleValid() ? BassUtility.GetVolume(channel) : 1f;
             set
             {
                 if (State == PlaybackState.Stopped)
-                    throw new InvalidOperationException(BASSStrings.NotCurrentlyValid);
+                    throw new InvalidOperationException(BassStrings.NotCurrentlyValid);
 
-                BASSUtil.SetVolume(channel, MathUtil.Clamp(value, 0f, 1f));
+                BassUtility.SetVolume(channel, MathUtility.Clamp(value, 0f, 1f));
             }
         }
 
@@ -246,20 +246,20 @@ namespace Sedulous.BASS.Audio
             set
             {
                 if (State == PlaybackState.Stopped)
-                    throw new InvalidOperationException(BASSStrings.NotCurrentlyValid);
+                    throw new InvalidOperationException(BassStrings.NotCurrentlyValid);
             }
         }
 
         /// <inheritdoc/>
         public override Single Pan
         {
-            get => IsHandleValid() ? BASSUtil.GetPan(channel) : 0f;
+            get => IsHandleValid() ? BassUtility.GetPan(channel) : 0f;
             set
             {
                 if (State == PlaybackState.Stopped)
-                    throw new InvalidOperationException(BASSStrings.NotCurrentlyValid);
+                    throw new InvalidOperationException(BassStrings.NotCurrentlyValid);
 
-                BASSUtil.SetPan(channel, MathUtil.Clamp(value, -1f, 1f));
+                BassUtility.SetPan(channel, MathUtility.Clamp(value, -1f, 1f));
             }
         }
 
@@ -297,28 +297,28 @@ namespace Sedulous.BASS.Audio
 
             // Retrieve the sample data from the sound effect.
             FrameworkContext.ValidateResource(soundEffect);
-            var bassfx = (BASSSoundEffect)soundEffect;
+            var bassfx = (BassSoundEffect)soundEffect;
             var sample = bassfx.GetSampleInfo(out _, out _);
 
             // Get a channel on which to play the sample.
             channel = BASS_SampleGetChannel(sample, true);
-            if (!BASSUtil.IsValidHandle(channel))
+            if (!BassUtility.IsValidHandle(channel))
             {
                 var error = BASS_ErrorGetCode();
                 if (error == BASS_ERROR_NOCHAN)
                     return false;
 
-                throw new BASSException(error);
+                throw new BassException(error);
             }
 
             // Set the channel's attributes.
-            BASSUtil.SetIsLooping(channel, loop);
-            BASSUtil.SetVolume(channel, MathUtil.Clamp(volume, 0f, 1f));
-            BASSUtil.SetPan(channel, MathUtil.Clamp(pan, -1f, 1f));
+            BassUtility.SetIsLooping(channel, loop);
+            BassUtility.SetVolume(channel, MathUtility.Clamp(volume, 0f, 1f));
+            BassUtility.SetPan(channel, MathUtility.Clamp(pan, -1f, 1f));
 
             // Play the channel.
             if (!BASS_ChannelPlay(channel, true))
-                throw new BASSException();
+                throw new BassException();
 
             this.playing = soundEffect;
 
@@ -333,7 +333,7 @@ namespace Sedulous.BASS.Audio
             if (stream != 0)
             {
                 if (!BASS_StreamFree(stream))
-                    throw new BASSException();
+                    throw new BassException();
 
                 stream = 0;
             }
@@ -341,7 +341,7 @@ namespace Sedulous.BASS.Audio
             if (sample != 0)
             {
                 if (!BASS_SampleFree(sample))
-                    throw new BASSException();
+                    throw new BassException();
 
                 sample = 0;
             }

@@ -327,10 +327,10 @@ namespace Sedulous.Presentation.Documents
                     var invalidateAdorner = false;
 
                     if (checkForLayoutChanges && (
-                        !MathUtil.AreApproximatelyEqual(state.LastAbsoluteX, adornedElement.UntransformedAbsolutePosition.X) ||
-                        !MathUtil.AreApproximatelyEqual(state.LastAbsoluteY, adornedElement.UntransformedAbsolutePosition.Y) ||
-                        !MathUtil.AreApproximatelyEqual(state.LastRenderWidth, adornedElement.RenderSize.Width) ||
-                        !MathUtil.AreApproximatelyEqual(state.LastRenderHeight, adornedElement.RenderSize.Height)))
+                        !MathUtility.AreApproximatelyEqual(state.LastAbsoluteX, adornedElement.UntransformedAbsolutePosition.X) ||
+                        !MathUtility.AreApproximatelyEqual(state.LastAbsoluteY, adornedElement.UntransformedAbsolutePosition.Y) ||
+                        !MathUtility.AreApproximatelyEqual(state.LastRenderWidth, adornedElement.RenderSize.Width) ||
+                        !MathUtility.AreApproximatelyEqual(state.LastRenderHeight, adornedElement.RenderSize.Height)))
                     {
                         invalidateAdorner = true;
                     }

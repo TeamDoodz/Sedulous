@@ -8,7 +8,7 @@ namespace Sedulous.Presentation.Media
     /// Defines attached properties which modify how elements draw text.
     /// </summary>
     [UvmlKnownType]
-    public static class TextOptions
+    public static class TextSettings
     {
         /// <summary>
         /// Gets the rendering mode used to render the element's text.
@@ -102,7 +102,7 @@ namespace Sedulous.Presentation.Media
         /// </dprop>
         /// </remarks>
         /// </AttachedPropertyComments>
-        public static readonly DependencyProperty TextRenderingModeProperty = DependencyProperty.RegisterAttached("TextRenderingMode", typeof(TextRenderingMode), typeof(TextOptions),
+        public static readonly DependencyProperty TextRenderingModeProperty = DependencyProperty.RegisterAttached("TextRenderingMode", typeof(TextRenderingMode), typeof(TextSettings),
             new PropertyMetadata<TextRenderingMode>(TextRenderingMode.Auto, PropertyMetadataOptions.AffectsMeasure | PropertyMetadataOptions.AffectsArrange | PropertyMetadataOptions.Inherits));
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Sedulous.Presentation.Media
         /// </dprop>
         /// </remarks>
         /// </AttachedPropertyComments>
-        public static readonly DependencyProperty TextScriptProperty = DependencyProperty.RegisterAttached("TextScript", typeof(TextScript), typeof(TextOptions),
+        public static readonly DependencyProperty TextScriptProperty = DependencyProperty.RegisterAttached("TextScript", typeof(TextScript), typeof(TextSettings),
             new PropertyMetadata<String>(TextScript.Latin, PropertyMetadataOptions.AffectsMeasure | PropertyMetadataOptions.AffectsArrange | PropertyMetadataOptions.Inherits));
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Sedulous.Presentation.Media
         /// </dprop>
         /// </remarks>
         /// </AttachedPropertyComments>
-        public static readonly DependencyProperty TextLanguageProperty = DependencyProperty.RegisterAttached("TextLanguage", typeof(String), typeof(TextOptions),
+        public static readonly DependencyProperty TextLanguageProperty = DependencyProperty.RegisterAttached("TextLanguage", typeof(String), typeof(TextSettings),
             new PropertyMetadata<String>("en", PropertyMetadataOptions.AffectsMeasure | PropertyMetadataOptions.AffectsArrange | PropertyMetadataOptions.Inherits));
     }
 }

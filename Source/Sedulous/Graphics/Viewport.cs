@@ -73,7 +73,7 @@ namespace Sedulous.Graphics
             Vector3.Transform(ref source, ref matrix, out result);
 
             var a = (((source.X * matrix.M14) + (source.Y * matrix.M24)) + (source.Z * matrix.M34)) + matrix.M44;
-            if (!MathUtil.AreApproximatelyEqual(a, 1.0f))
+            if (!MathUtility.AreApproximatelyEqual(a, 1.0f))
             {
                 result.X /= a;
                 result.Y /= a;
@@ -120,7 +120,7 @@ namespace Sedulous.Graphics
             Vector3.Transform(ref source, ref matrix, out var vector);
 
             var a = (((source.X * matrix.M14) + (source.Y * matrix.M24)) + (source.Z * matrix.M34)) + matrix.M44;
-            if (!MathUtil.AreApproximatelyEqual(a, 1.0f))
+            if (!MathUtility.AreApproximatelyEqual(a, 1.0f))
             {
                 vector.X /= a;
                 vector.Y /= a;

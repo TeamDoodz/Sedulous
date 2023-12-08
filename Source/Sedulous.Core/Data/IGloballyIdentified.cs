@@ -10,7 +10,7 @@ namespace Sedulous.Core.Data
         /// <summary>
         /// Gets the object's globally-unique identifier.
         /// </summary>
-        Guid GlobalID
+        Guid GlobalId
         {
             get;
         }

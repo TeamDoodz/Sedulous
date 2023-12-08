@@ -32,11 +32,11 @@ namespace Sedulous.Presentation
         /// <summary>
         /// Gets a value indicating whether the size's width has changed.
         /// </summary>
-        public Boolean WidthChanged => !MathUtil.AreApproximatelyEqual(NewSize.Width, PreviousSize.Width);
+        public Boolean WidthChanged => !MathUtility.AreApproximatelyEqual(NewSize.Width, PreviousSize.Width);
 
         /// <summary>
         /// Gets a value indicating whether the size's height has changed.
         /// </summary>
-        public Boolean HeightChanged => !MathUtil.AreApproximatelyEqual(NewSize.Height, PreviousSize.Height);
+        public Boolean HeightChanged => !MathUtility.AreApproximatelyEqual(NewSize.Height, PreviousSize.Height);
     }
 }

@@ -15,7 +15,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
         public TextLayoutCustomCommand(Byte id, Int32 value)
         {
             this.CommandType = TextLayoutCommandType.Custom;
-            this.ID = id;
+            this.Id = id;
             this.Value = value;
         }
 
@@ -27,7 +27,7 @@ namespace Sedulous.Graphics.Graphics2D.Text
         /// <summary>
         /// Gets the command identifier.
         /// </summary>
-        public Byte ID { get; private set; }
+        public Byte Id { get; private set; }
 
         /// <summary>
         /// Gets the command value.

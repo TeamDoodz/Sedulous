@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sedulous.BASS.Native
+namespace Sedulous.Bass.Native
 {
 #pragma warning disable 1591
     static partial class BASSNative

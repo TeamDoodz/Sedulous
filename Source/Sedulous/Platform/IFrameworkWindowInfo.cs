@@ -25,7 +25,7 @@ namespace Sedulous.Platform
         /// </summary>
         /// <param name="id">The identifier of the window to retrieve.</param>
         /// <returns>The window with the specified identifier, or <see langword="null"/> if no such window exists.</returns>
-        IFrameworkWindow GetByID(Int32 id);
+        IFrameworkWindow GetById(Int32 id);
 
         /// <summary>
         /// Gets the context's primary window.
@@ -72,7 +72,7 @@ namespace Sedulous.Platform
         /// </summary>
         /// <param name="id">The identifier of the window to destroy.</param>
         /// <returns><see langword="true"/> if the window was destroyed; <see langword="false"/> if the window was closed.</returns>
-        Boolean DestroyByID(Int32 id);
+        Boolean DestroyById(Int32 id);
 
         /// <summary>
         /// Gets the collection's enumerator.

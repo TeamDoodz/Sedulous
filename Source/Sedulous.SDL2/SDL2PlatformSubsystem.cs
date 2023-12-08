@@ -2,28 +2,28 @@
 using System.Linq;
 using Sedulous.Core;
 using Sedulous.Platform;
-using Sedulous.SDL2.Platform;
-using static Sedulous.SDL2.Native.SDLNative;
+using Sedulous.Sdl2.Platform;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2
+namespace Sedulous.Sdl2
 {
     /// <summary>
     /// Represents the SDL2 implementation of the <see cref="IPlatformSubsystem"/> interface.
     /// </summary>
-    public sealed class SDL2PlatformSubsystem : FrameworkResource, IPlatformSubsystem
+    public sealed class Sdl2PlatformSubsystem : FrameworkResource, IPlatformSubsystem
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SDL2PlatformSubsystem"/> class.
+        /// Initializes a new instance of the <see cref="Sdl2PlatformSubsystem"/> class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
         /// <param name="configuration">The Sedulous Framework's configuration settings.</param>
-        public SDL2PlatformSubsystem(FrameworkContext context, FrameworkConfiguration configuration)
+        public Sdl2PlatformSubsystem(FrameworkContext context, FrameworkConfiguration configuration)
             : base(context)
         {
             this.clipboard = ClipboardService.Create();
             this.messageBoxService = MessageBoxService.Create();
-            this.windows = new SDL2FrameworkWindowInfoOpenGL(context, configuration);
-            this.displays = new SDL2FrameworkDisplayInfo(context);
+            this.windows = new Sdl2FrameworkWindowInfoOpenGL(context, configuration);
+            this.displays = new Sdl2FrameworkDisplayInfo(context);
             this.isCursorVisible = SDL_ShowCursor(SDL_QUERY) != 0;
         }
 
@@ -59,7 +59,7 @@ namespace Sedulous.SDL2
             if (parent == null)
                 parent = Windows.GetPrimary();
 
-            var window = (parent == null) ? IntPtr.Zero : (IntPtr)((SDL2FrameworkWindow)parent);
+            var window = (parent == null) ? IntPtr.Zero : (IntPtr)((Sdl2FrameworkWindow)parent);
             messageBoxService.ShowMessageBox(type, title, message, window);
         }
 
@@ -80,7 +80,7 @@ namespace Sedulous.SDL2
                 {
                     var result = SDL_ShowCursor(value ? SDL_ENABLE : SDL_DISABLE);
                     if (result < 0)
-                        throw new SDL2Exception();
+                        throw new Sdl2Exception();
 
                     isCursorVisible = SDL_ShowCursor(SDL_QUERY) != 0;
                 }
@@ -99,7 +99,7 @@ namespace Sedulous.SDL2
 
                 unsafe
                 {
-                    var sdlCursor = (value is SDL2Cursor sdl2cursor) ? sdl2cursor.Native : null;
+                    var sdlCursor = (value is Sdl2Cursor sdl2cursor) ? sdl2cursor.Native : null;
                     if (sdlCursor == null)
                         sdlCursor = SDL_GetDefaultCursor();
 
@@ -126,7 +126,7 @@ namespace Sedulous.SDL2
             if (disposing && !Disposed)
             {
                 windows.DesignateCurrent(null, IntPtr.Zero);
-                foreach (SDL2FrameworkWindow window in windows.ToList())
+                foreach (Sdl2FrameworkWindow window in windows.ToList())
                 {
                     windows.Destroy(window);
                 }
@@ -146,7 +146,7 @@ namespace Sedulous.SDL2
         private Cursor cursor;
         private readonly ClipboardService clipboard;
         private readonly MessageBoxService messageBoxService;
-        private readonly SDL2FrameworkWindowInfoOpenGL windows;
-        private readonly SDL2FrameworkDisplayInfo displays;
+        private readonly Sdl2FrameworkWindowInfoOpenGL windows;
+        private readonly Sdl2FrameworkDisplayInfo displays;
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sedulous.BASS.Native
+namespace Sedulous.Bass.Native
 {
 #pragma warning disable 1591
     public delegate void SyncProc(UInt32 handle, UInt32 channel, UInt32 data, IntPtr user);

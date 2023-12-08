@@ -49,7 +49,7 @@ namespace Sedulous.Content
         /// </summary>
         /// <param name="asset">The asset identifier of the asset for which to add a dependency.</param>
         /// <param name="dependency">The asset identifier of the dependency to add to the specified asset.</param>
-        public void AddAssetDependency(AssetID asset, AssetID dependency)
+        public void AddAssetDependency(AssetId asset, AssetId dependency)
         {
             Contract.Ensure<ArgumentException>(asset.IsValid, nameof(asset));
             Contract.Ensure<ArgumentException>(dependency.IsValid, nameof(dependency));
@@ -58,7 +58,7 @@ namespace Sedulous.Content
             var primaryDisplay = FrameworkContext.GetPlatform().Displays.PrimaryDisplay;
             var primaryDisplayDensity = primaryDisplay?.DensityBucket ?? ScreenDensityBucket.Desktop;
 
-            AddAssetDependencyInternal(AssetID.GetAssetPath(asset), AssetID.GetAssetPath(dependency), primaryDisplayDensity);
+            AddAssetDependencyInternal(AssetId.GetAssetPath(asset), AssetId.GetAssetPath(dependency), primaryDisplayDensity);
         }
 
         /// <summary>
@@ -84,13 +84,13 @@ namespace Sedulous.Content
         /// <param name="asset">The asset identifier of the asset for which to add a dependency.</param>
         /// <param name="dependency">The asset identifier of the dependency to add to the specified asset.</param>
         /// <param name="density">The screen density of the assets for which to add a dependency.</param>
-        public void AddAssetDependency(AssetID asset, AssetID dependency, ScreenDensityBucket density)
+        public void AddAssetDependency(AssetId asset, AssetId dependency, ScreenDensityBucket density)
         {
             Contract.Ensure<ArgumentException>(asset.IsValid, nameof(asset));
             Contract.Ensure<ArgumentException>(dependency.IsValid, nameof(dependency));
             Contract.EnsureNotDisposed(this, Disposed);
 
-            AddAssetDependencyInternal(AssetID.GetAssetPath(asset), AssetID.GetAssetPath(dependency), density);
+            AddAssetDependencyInternal(AssetId.GetAssetPath(asset), AssetId.GetAssetPath(dependency), density);
         }
 
         /// <summary>
@@ -116,12 +116,12 @@ namespace Sedulous.Content
         /// Clears all of the registered dependencies for the specified asset.
         /// </summary>
         /// <param name="asset">The asset identifier of the asset for which to clear dependencies.</param>
-        public void ClearAssetDependencies(AssetID asset)
+        public void ClearAssetDependencies(AssetId asset)
         {
             Contract.Ensure<ArgumentException>(asset.IsValid, nameof(asset));
             Contract.EnsureNotDisposed(this, Disposed);
 
-            ClearAssetDependencies(AssetID.GetAssetPath(asset));
+            ClearAssetDependencies(AssetId.GetAssetPath(asset));
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Sedulous.Content
         /// </summary>
         /// <param name="asset">The asset identifier of the asset for which to remove a dependency.</param>
         /// <param name="dependency">The asset identifier of the dependency to remove from the specified asset.</param>
-        public Boolean RemoveAssetDependency(AssetID asset, AssetID dependency)
+        public Boolean RemoveAssetDependency(AssetId asset, AssetId dependency)
         {
             Contract.Ensure<ArgumentException>(asset.IsValid, nameof(asset));
             Contract.Ensure<ArgumentException>(dependency.IsValid, nameof(dependency));
@@ -167,7 +167,7 @@ namespace Sedulous.Content
             var primaryDisplay = FrameworkContext.GetPlatform().Displays.PrimaryDisplay;
             var primaryDisplayDensity = primaryDisplay?.DensityBucket ?? ScreenDensityBucket.Desktop;
 
-            return RemoveAssetDependencyInternal(AssetID.GetAssetPath(asset), AssetID.GetAssetPath(dependency), primaryDisplayDensity);
+            return RemoveAssetDependencyInternal(AssetId.GetAssetPath(asset), AssetId.GetAssetPath(dependency), primaryDisplayDensity);
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace Sedulous.Content
         /// <param name="asset">The asset identifier of the main asset to evaluate.</param>
         /// <param name="dependency">The asset identifier of the dependency asset to evaluate.</param>
         /// <returns><see langword="true"/> if <paramref name="dependency"/> is a dependency of <paramref name="asset"/>; otherwise, <see langword="false"/>.</returns>
-        public Boolean IsAssetDependency(AssetID asset, AssetID dependency)
+        public Boolean IsAssetDependency(AssetId asset, AssetId dependency)
         {
             Contract.Ensure<ArgumentException>(asset.IsValid, nameof(asset));
             Contract.Ensure<ArgumentException>(dependency.IsValid, nameof(dependency));
@@ -203,7 +203,7 @@ namespace Sedulous.Content
             var primaryDisplay = FrameworkContext.GetPlatform().Displays.PrimaryDisplay;
             var primaryDisplayDensity = primaryDisplay?.DensityBucket ?? ScreenDensityBucket.Desktop;
 
-            return IsAssetDependencyInternal(AssetID.GetAssetPath(asset), AssetID.GetAssetPath(dependency), primaryDisplayDensity);
+            return IsAssetDependencyInternal(AssetId.GetAssetPath(asset), AssetId.GetAssetPath(dependency), primaryDisplayDensity);
         }
 
         /// <summary>
@@ -229,13 +229,13 @@ namespace Sedulous.Content
         /// <param name="dependency">The asset identifier of the dependency asset to evaluate.</param>
         /// <param name="density">The screen density for which to query dependency relationships.</param>
         /// <returns><see langword="true"/> if <paramref name="dependency"/> is a dependency of <paramref name="asset"/>; otherwise, <see langword="false"/>.</returns>
-        public Boolean IsAssetDependency(AssetID asset, AssetID dependency, ScreenDensityBucket density)
+        public Boolean IsAssetDependency(AssetId asset, AssetId dependency, ScreenDensityBucket density)
         {
             Contract.Ensure<ArgumentException>(asset.IsValid, nameof(asset));
             Contract.Ensure<ArgumentException>(dependency.IsValid, nameof(dependency));
             Contract.EnsureNotDisposed(this, Disposed);
 
-            return IsAssetDependencyInternal(AssetID.GetAssetPath(asset), AssetID.GetAssetPath(dependency), density);
+            return IsAssetDependencyInternal(AssetId.GetAssetPath(asset), AssetId.GetAssetPath(dependency), density);
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace Sedulous.Content
         /// <param name="asset">The asset identifier of the main asset to evaluate.</param>
         /// <param name="dependency">The file path of the dependency asset to evaluate.</param>
         /// <returns><see langword="true"/> if <paramref name="dependency"/> is a dependency of <paramref name="asset"/>; otherwise, <see langword="false"/>.</returns>
-        public Boolean IsAssetDependencyPath(AssetID asset, String dependency)
+        public Boolean IsAssetDependencyPath(AssetId asset, String dependency)
         {
             Contract.Ensure<ArgumentException>(asset.IsValid, nameof(asset));
             Contract.Require(dependency, nameof(dependency));
@@ -271,7 +271,7 @@ namespace Sedulous.Content
             var primaryDisplay = FrameworkContext.GetPlatform().Displays.PrimaryDisplay;
             var primaryDisplayDensity = primaryDisplay?.DensityBucket ?? ScreenDensityBucket.Desktop;
 
-            return IsAssetDependencyPathInternal(AssetID.GetAssetPath(asset), dependency, primaryDisplayDensity);
+            return IsAssetDependencyPathInternal(AssetId.GetAssetPath(asset), dependency, primaryDisplayDensity);
         }
 
         /// <summary>
@@ -297,13 +297,13 @@ namespace Sedulous.Content
         /// <param name="dependency">The file path of the dependency asset to evaluate.</param>
         /// <param name="density">The screen density for which to query dependency relationships.</param>
         /// <returns><see langword="true"/> if <paramref name="dependency"/> is a dependency of <paramref name="asset"/>; otherwise, <see langword="false"/>.</returns>
-        public Boolean IsAssetDependencyPath(AssetID asset, String dependency, ScreenDensityBucket density)
+        public Boolean IsAssetDependencyPath(AssetId asset, String dependency, ScreenDensityBucket density)
         {
             Contract.Ensure<ArgumentException>(asset.IsValid, nameof(asset));
             Contract.Require(dependency, nameof(dependency));
             Contract.EnsureNotDisposed(this, Disposed);
 
-            return IsAssetDependencyPathInternal(AssetID.GetAssetPath(asset), dependency, density);
+            return IsAssetDependencyPathInternal(AssetId.GetAssetPath(asset), dependency, density);
         }
 
         /// <summary>

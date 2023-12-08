@@ -6,25 +6,25 @@ using Sedulous.Core;
 using Sedulous.Core.Messages;
 using Sedulous.Input;
 using Sedulous.Platform;
-using Sedulous.SDL2.Messages;
-using Sedulous.SDL2.Native;
-using static Sedulous.SDL2.Native.SDL_EventType;
-using static Sedulous.SDL2.Native.SDLNative;
+using Sedulous.Sdl2.Messages;
+using Sedulous.Sdl2.Native;
+using static Sedulous.Sdl2.Native.SDL_EventType;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2.Input
+namespace Sedulous.Sdl2.Input
 {
     /// <summary>
     /// Represents the SDL2 implementation of the <see cref="TouchDevice"/> class.
     /// </summary>
-    public sealed class SDL2TouchDevice : TouchDevice,
-        IMessageSubscriber<FrameworkMessageID>
+    public sealed class Sdl2TouchDevice : TouchDevice,
+        IMessageSubscriber<FrameworkMessageId>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SDL2TouchDevice"/> class.
+        /// Initializes a new instance of the <see cref="Sdl2TouchDevice"/> class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
         /// <param name="index">The index of the SDL2 touch device represented by this object.</param>
-        public SDL2TouchDevice(FrameworkContext context, Int32 index)
+        public Sdl2TouchDevice(FrameworkContext context, Int32 index)
             : base(context)
         {
             // HACK: Working around an Android emulator glitch here -- it will
@@ -32,18 +32,18 @@ namespace Sedulous.SDL2.Input
             // and yet not produce any kind of SDL error... I hate emulators.            
             var id = SDL_GetTouchDevice(index);
             if (id == 0 && !String.IsNullOrEmpty(SDL_GetError()))
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
 
             this.sdlTouchID = id;
 
             context.Messages.Subscribe(this,
-                SDL2FrameworkMessages.SDLEvent);
+                Sdl2FrameworkMessages.SdlEvent);
         }
 
         /// <inheritdoc/>
-        void IMessageSubscriber<FrameworkMessageID>.ReceiveMessage(FrameworkMessageID type, MessageData data)
+        void IMessageSubscriber<FrameworkMessageId>.ReceiveMessage(FrameworkMessageId type, MessageData data)
         {
-            var evt = ((SDL2EventMessageData)data).Event;
+            var evt = ((Sdl2EventMessageData)data).Event;
             switch (evt.type)
             {
                 case SDL_FINGERDOWN:
@@ -159,7 +159,7 @@ namespace Sedulous.SDL2.Input
 
                     touches[i] = touchInfo;
 
-                    OnLongPress(touchInfo.TouchID, touchInfo.FingerID,
+                    OnLongPress(touchInfo.TouchID, touchInfo.FingerId,
                         touchInfo.CurrentX, touchInfo.CurrentY, touchInfo.Pressure);
                 }
             }
@@ -369,7 +369,7 @@ namespace Sedulous.SDL2.Input
             if (!IsRecordingDollarGesture)
             {
                 if (SDL_RecordGesture(sdlTouchID) == 0)
-                    throw new SDL2Exception();
+                    throw new Sdl2Exception();
 
                 isRecordingDollarGesture = true;
             }
@@ -386,7 +386,7 @@ namespace Sedulous.SDL2.Input
                 return false;
 
             if (SDL_RecordGesture(sdlTouchID) == 0)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
 
             isRecordingDollarGesture = true;
             return true;
@@ -398,10 +398,10 @@ namespace Sedulous.SDL2.Input
             Contract.EnsureNotDisposed(this, Disposed);
             Contract.Require(stream, nameof(stream));
 
-            using (var streamWrapper = new SDL2StreamWrapper(stream))
+            using (var streamWrapper = new Sdl2StreamWrapper(stream))
             {
                 if (SDL_LoadDollarTemplates(sdlTouchID, streamWrapper.ToIntPtr()) == 0)
-                    throw new SDL2Exception();
+                    throw new Sdl2Exception();
             }
         }
 
@@ -411,10 +411,10 @@ namespace Sedulous.SDL2.Input
             Contract.EnsureNotDisposed(this, Disposed);
             Contract.Require(stream, nameof(stream));
 
-            using (var streamWrapper = new SDL2StreamWrapper(stream))
+            using (var streamWrapper = new Sdl2StreamWrapper(stream))
             {
                 if (SDL_SaveAllDollarTemplates(streamWrapper.ToIntPtr()) == 0)
-                    throw new SDL2Exception();
+                    throw new Sdl2Exception();
             }
         }
 
@@ -462,7 +462,7 @@ namespace Sedulous.SDL2.Input
 
             touches.Add(touchInfo);
 
-            OnTouchDown(touchID, touchInfo.FingerID, touchInfo.CurrentX, touchInfo.CurrentY, touchInfo.Pressure);        
+            OnTouchDown(touchID, touchInfo.FingerId, touchInfo.CurrentX, touchInfo.CurrentY, touchInfo.Pressure);        
         }
 
         /// <summary>
@@ -473,7 +473,7 @@ namespace Sedulous.SDL2.Input
             for (int i = 0; i < touches.Count; i++)
             {
                 var touch = touches[i];
-                if (touch.FingerID == evt.tfinger.fingerId)
+                if (touch.FingerId == evt.tfinger.fingerId)
                 {
                     if (timestamp - touch.Timestamp <= TimeSpan.FromMilliseconds(TapDelay).Ticks)
                     {
@@ -484,12 +484,12 @@ namespace Sedulous.SDL2.Input
                             var tapDistancePixs = window.Display.DipsToPixels(tapDistanceDips);
                             if (tapDistancePixs >= touch.Distance)
                             {
-                                EndTap(touch.TouchID, touch.FingerID, touch.OriginX, touch.OriginY);
+                                EndTap(touch.TouchID, touch.FingerId, touch.OriginX, touch.OriginY);
                             }
                         }
                     }
 
-                    OnTouchUp(touch.TouchID, touch.FingerID);
+                    OnTouchUp(touch.TouchID, touch.FingerId);
 
                     touches.RemoveAt(i);
 
@@ -517,14 +517,14 @@ namespace Sedulous.SDL2.Input
             for (int i = 0; i < touches.Count; i++)
             {
                 var touch = touches[i];
-                if (touch.FingerID == evt.tfinger.fingerId)
+                if (touch.FingerId == evt.tfinger.fingerId)
                 {
                     Single dx, dy;
                     SetTouchPosition(ref touch, evt.tfinger.x, evt.tfinger.y, out dx, out dy, evt.tfinger.pressure);
 
                     touches[i] = touch;
 
-                    OnTouchMotion(touch.TouchID, touch.FingerID, 
+                    OnTouchMotion(touch.TouchID, touch.FingerId, 
                         evt.tfinger.x, evt.tfinger.y, dx, dy, evt.tfinger.pressure);
 
                     break;
@@ -537,7 +537,7 @@ namespace Sedulous.SDL2.Input
         /// </summary>
         private void Register()
         {
-            var input = (SDL2FrameworkInput)FrameworkContext.GetInput();
+            var input = (Sdl2FrameworkInput)FrameworkContext.GetInput();
             if (input.RegisterTouchDevice(this))
                 isRegistered = true;
         }

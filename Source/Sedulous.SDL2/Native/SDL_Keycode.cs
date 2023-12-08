@@ -1,6 +1,6 @@
-﻿using static Sedulous.SDL2.Native.SDL_Scancode;
+﻿using static Sedulous.Sdl2.Native.SDL_Scancode;
 
-namespace Sedulous.SDL2.Native
+namespace Sedulous.Sdl2.Native
 {
 #pragma warning disable 1591
     public enum SDL_Keycode

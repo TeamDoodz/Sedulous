@@ -30,12 +30,12 @@ namespace Sedulous
         public Single? Intersects(Plane plane)
         {
             var normalDotDirection = plane.Normal.X * Direction.X + plane.Normal.Y * Direction.Y + plane.Normal.Z * Direction.Z;
-            if (MathUtil.IsApproximatelyZero(normalDotDirection))
+            if (MathUtility.IsApproximatelyZero(normalDotDirection))
                 return null;
 
             var normalDotPosition = plane.Normal.X * Position.X + plane.Normal.Y * Position.Y + plane.Normal.Z * Position.Z;
             var distance = -(normalDotPosition + plane.D) / normalDotDirection;
-            if (MathUtil.IsApproximatelyZero(distance))
+            if (MathUtility.IsApproximatelyZero(distance))
                 return 0f;
 
             if (distance < 0)
@@ -52,7 +52,7 @@ namespace Sedulous
         public void Intersects(ref Plane plane, out Single? result)
         {
             var normalDotDirection = plane.Normal.X * Direction.X + plane.Normal.Y * Direction.Y + plane.Normal.Z * Direction.Z;
-            if (MathUtil.IsApproximatelyZero(normalDotDirection))
+            if (MathUtility.IsApproximatelyZero(normalDotDirection))
             {
                 result = null;
             }
@@ -60,7 +60,7 @@ namespace Sedulous
             {
                 var normalDotPosition = plane.Normal.X * Position.X + plane.Normal.Y * Position.Y + plane.Normal.Z * Position.Z;
                 var distance = -(normalDotPosition + plane.D) / normalDotDirection;
-                if (MathUtil.IsApproximatelyZero(distance))
+                if (MathUtility.IsApproximatelyZero(distance))
                 {
                     result = 0f;
                 }
@@ -165,7 +165,7 @@ namespace Sedulous
             var min = default(Single?);
             var max = default(Single?);
 
-            if (MathUtil.IsApproximatelyZero(Direction.X))
+            if (MathUtility.IsApproximatelyZero(Direction.X))
             {
                 if (Position.X < box.Min.X || Position.X > box.Max.X)
                 {
@@ -186,7 +186,7 @@ namespace Sedulous
                 }
             }
 
-            if (MathUtil.IsApproximatelyZero(Direction.Y))
+            if (MathUtility.IsApproximatelyZero(Direction.Y))
             {
                 if (Position.Y < box.Min.Y || Position.Y > box.Max.Y)
                 {
@@ -213,7 +213,7 @@ namespace Sedulous
                     max = maxY;
             }
 
-            if (MathUtil.IsApproximatelyZero(Direction.Z))
+            if (MathUtility.IsApproximatelyZero(Direction.Z))
             {
                 if (Position.Z < box.Min.Z || Position.Z > box.Max.Z)
                 {

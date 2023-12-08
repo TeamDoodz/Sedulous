@@ -1,14 +1,14 @@
 ﻿using Sedulous.Content;
 using Sedulous.Platform;
-using Sedulous.SDL2.Platform.Surface;
+using Sedulous.Sdl2.Platform.Surface;
 
-namespace Sedulous.SDL2
+namespace Sedulous.Sdl2
 {
     /// <summary>
     /// Loads a cursor from an image.
     /// </summary>
     //[ContentProcessor]
-    public sealed class SDL2CursorProcessor : ContentProcessor<PlatformNativeSurface, Cursor>
+    public sealed class Sdl2CursorProcessor : ContentProcessor<PlatformNativeSurface, Cursor>
     {
         /// <summary>
         /// Processes the specified data structure into a game asset.
@@ -21,7 +21,7 @@ namespace Sedulous.SDL2
         {
             using (var surface = new SDL2Surface2D(manager.FrameworkContext, input.CreateCopy(), SurfaceOptions.SrgbColor))
             {
-                return new SDL2Cursor(manager.FrameworkContext, surface, 0, 0);
+                return new Sdl2Cursor(manager.FrameworkContext, surface, 0, 0);
             }
         }
     }

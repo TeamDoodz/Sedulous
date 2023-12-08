@@ -788,7 +788,7 @@ namespace Sedulous
             var s1 = default(Single);
             var s2 = default(Single);
 
-            if (MathUtil.IsApproximatelyGreaterThan(cosOmega, 1.0f))
+            if (MathUtility.IsApproximatelyGreaterThan(cosOmega, 1.0f))
             {
                 s1 = 1.0f - amount;
                 s2 = flip ? -amount : amount;
@@ -838,7 +838,7 @@ namespace Sedulous
             var s1 = default(Single);
             var s2 = default(Single);
 
-            if (MathUtil.IsApproximatelyGreaterThan(cosOmega, 1.0f))
+            if (MathUtility.IsApproximatelyGreaterThan(cosOmega, 1.0f))
             {
                 s1 = 1.0f - amount;
                 s2 = flip ? -amount : amount;

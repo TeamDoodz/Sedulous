@@ -1,16 +1,16 @@
 ﻿using System;
 using Sedulous.Core;
 using Sedulous.Platform;
-using Sedulous.SDL2.Native;
-using static Sedulous.SDL2.Native.SDL_PowerState;
-using static Sedulous.SDL2.Native.SDLNative;
+using Sedulous.Sdl2.Native;
+using static Sedulous.Sdl2.Native.SDL_PowerState;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2.Platform
+namespace Sedulous.Sdl2.Platform
 {
     /// <summary>
     /// Represents the SDL2 implementation of the <see cref="PowerManagementService"/> class.
     /// </summary>
-    public sealed class SDL2PowerManagementService : PowerManagementService
+    public sealed class Sdl2PowerManagementService : PowerManagementService
     {
         /// <inheritdoc/>
         public override Single PercentBatteryRemaining
@@ -18,7 +18,7 @@ namespace Sedulous.SDL2.Platform
             get
             {
                 UpdateCache();
-                return MathUtil.Clamp(pct / 100.0f, 0f, 1f);
+                return MathUtility.Clamp(pct / 100.0f, 0f, 1f);
             }
         }
 

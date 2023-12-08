@@ -539,8 +539,8 @@ namespace Sedulous.Presentation
             comparerRegistry[typeof(PlaybackState?)] = new DataBindingComparer<PlaybackState?>((v1, v2) => v1 == v2);
 
             // Sedulous.Content
-            comparerRegistry[typeof(AssetID)] = new DataBindingComparer<AssetID>((v1, v2) => v1 == v2);
-            comparerRegistry[typeof(AssetID?)] = new DataBindingComparer<AssetID?>((v1, v2) => v1 == v2);
+            comparerRegistry[typeof(AssetId)] = new DataBindingComparer<AssetId>((v1, v2) => v1 == v2);
+            comparerRegistry[typeof(AssetId?)] = new DataBindingComparer<AssetId?>((v1, v2) => v1 == v2);
             comparerRegistry[typeof(AssetFlags)] = new DataBindingComparer<AssetFlags>((v1, v2) => v1 == v2);
             comparerRegistry[typeof(AssetFlags?)] = new DataBindingComparer<AssetFlags?>((v1, v2) => v1 == v2);
 
@@ -609,14 +609,14 @@ namespace Sedulous.Presentation
             // Sedulous.Graphics.Graphics2D
             comparerRegistry[typeof(FrameworkFontStyle)] = new DataBindingComparer<FrameworkFontStyle>((v1, v2) => v1 == v2);
             comparerRegistry[typeof(FrameworkFontStyle?)] = new DataBindingComparer<FrameworkFontStyle?>((v1, v2) => v1 == v2);
-            comparerRegistry[typeof(SpriteAnimationID)] = new DataBindingComparer<SpriteAnimationID>((v1, v2) => v1 == v2);
-            comparerRegistry[typeof(SpriteAnimationID?)] = new DataBindingComparer<SpriteAnimationID?>((v1, v2) => v1 == v2);
+            comparerRegistry[typeof(SpriteAnimationId)] = new DataBindingComparer<SpriteAnimationId>((v1, v2) => v1 == v2);
+            comparerRegistry[typeof(SpriteAnimationId?)] = new DataBindingComparer<SpriteAnimationId?>((v1, v2) => v1 == v2);
             comparerRegistry[typeof(SpriteAnimationName)] = new DataBindingComparer<SpriteAnimationName>((v1, v2) => v1 == v2);
             comparerRegistry[typeof(SpriteAnimationName?)] = new DataBindingComparer<SpriteAnimationName?>((v1, v2) => v1 == v2);
 
             // Sedulous.Graphics.Graphics2D.Text
-            comparerRegistry[typeof(TextFlags)] = new DataBindingComparer<TextFlags>((v1, v2) => v1 == v2);
-            comparerRegistry[typeof(TextFlags?)] = new DataBindingComparer<TextFlags?>((v1, v2) => v1 == v2);
+            comparerRegistry[typeof(TextOptions)] = new DataBindingComparer<TextOptions>((v1, v2) => v1 == v2);
+            comparerRegistry[typeof(TextOptions?)] = new DataBindingComparer<TextOptions?>((v1, v2) => v1 == v2);
             comparerRegistry[typeof(TextLayoutCommandType)] = new DataBindingComparer<TextLayoutCommandType>((v1, v2) => v1 == v2);
             comparerRegistry[typeof(TextLayoutCommandType?)] = new DataBindingComparer<TextLayoutCommandType?>((v1, v2) => v1 == v2);
             comparerRegistry[typeof(TextLayoutOptions)] = new DataBindingComparer<TextLayoutOptions>((v1, v2) => v1 == v2);

@@ -3,24 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using Sedulous.Core;
 using Sedulous.Platform;
-using Sedulous.SDL2.Native;
-using static Sedulous.SDL2.Native.SDL_Hint;
-using static Sedulous.SDL2.Native.SDL_WindowFlags;
-using static Sedulous.SDL2.Native.SDLNative;
+using Sedulous.Sdl2.Native;
+using static Sedulous.Sdl2.Native.SDL_Hint;
+using static Sedulous.Sdl2.Native.SDL_WindowFlags;
+using static Sedulous.Sdl2.Native.SDLNative;
 
-namespace Sedulous.SDL2.Platform
+namespace Sedulous.Sdl2.Platform
 {
     /// <summary>
     /// Represents the SDL2 implementation of the <see cref="IFrameworkWindowInfo"/> interface.
     /// </summary>
-    public abstract class SDL2FrameworkWindowInfo : IFrameworkWindowInfo, IFrameworkComponent
+    public abstract class Sdl2FrameworkWindowInfo : IFrameworkWindowInfo, IFrameworkComponent
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SDL2FrameworkWindowInfo"/> class.
+        /// Initializes a new instance of the <see cref="Sdl2FrameworkWindowInfo"/> class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
         /// <param name="configuration">The Sedulous configuration settings for the current context.</param>
-        internal SDL2FrameworkWindowInfo(FrameworkContext context, FrameworkConfiguration configuration)
+        internal Sdl2FrameworkWindowInfo(FrameworkContext context, FrameworkConfiguration configuration)
         {
             Contract.Require(context, nameof(context));
             Contract.Require(configuration, nameof(configuration));
@@ -35,7 +35,7 @@ namespace Sedulous.SDL2.Platform
         public void Update(FrameworkTime time)
         {
             foreach (var window in windows)
-                ((SDL2FrameworkWindow)window).Update(time);
+                ((Sdl2FrameworkWindow)window).Update(time);
         }
 
         /// <summary>
@@ -61,10 +61,10 @@ namespace Sedulous.SDL2.Platform
         /// Gets the window with the specified identifier.
         /// </summary>
         /// <returns>The window with the specified identifier, or null if no such window exists.</returns>
-        public IFrameworkWindow GetByID(Int32 id)
+        public IFrameworkWindow GetById(Int32 id)
         {
-            var match = default(SDL2FrameworkWindow);
-            foreach (SDL2FrameworkWindow window in windows)
+            var match = default(Sdl2FrameworkWindow);
+            foreach (Sdl2FrameworkWindow window in windows)
             {
                 if (SDL_GetWindowID((IntPtr)window) == (UInt32)id)
                 {
@@ -81,10 +81,10 @@ namespace Sedulous.SDL2.Platform
         /// <returns>A pointer to the SDL2 window object encapsulated by the window with the specified identifier.</returns>
         public IntPtr GetPtrByID(Int32 id)
         {
-            var window = GetByID(id);
+            var window = GetById(id);
             if (window != null)
             {
-                return (IntPtr)(SDL2FrameworkWindow)window;
+                return (IntPtr)(Sdl2FrameworkWindow)window;
             }
             return IntPtr.Zero;
         }
@@ -104,7 +104,7 @@ namespace Sedulous.SDL2.Platform
         /// <returns>A pointer to the SDL2 window object encapsulated by the master window.</returns>
         public IntPtr GetMasterPointer()
         {
-            return (IntPtr)(SDL2FrameworkWindow)Master;
+            return (IntPtr)(Sdl2FrameworkWindow)Master;
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Sedulous.SDL2.Platform
         /// <returns>A pointer to the SDL2 window object encapsulated by the primary window.</returns>
         public IntPtr GetPrimaryPointer()
         {
-            return (IntPtr)(SDL2FrameworkWindow)Primary;
+            return (IntPtr)(Sdl2FrameworkWindow)Primary;
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Sedulous.SDL2.Platform
         /// <returns>A pointer to the SDL2 window object encapsulated by the current window.</returns>
         public IntPtr GetCurrentPointer()
         {
-            return (IntPtr)(SDL2FrameworkWindow)Current;
+            return (IntPtr)(Sdl2FrameworkWindow)Current;
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Sedulous.SDL2.Platform
         /// <returns>The Sedulous window that was created.</returns>
         public IFrameworkWindow Create(String caption, Int32 x, Int32 y, Int32 width, Int32 height, WindowFlags flags = WindowFlags.None)
         {
-            var sdlflags = (RenderingApi == SDL2PlatformRenderingAPI.OpenGL) ? SDL_WINDOW_OPENGL : 0;
+            var sdlflags = (RenderingApi == Sdl2PlatformRenderingAPI.OpenGL) ? SDL_WINDOW_OPENGL : 0;
 
             if (FrameworkContext.Properties.SupportsHighDensityDisplayModes)
                 sdlflags |= SDL_WINDOW_ALLOW_HIGHDPI;
@@ -175,13 +175,13 @@ namespace Sedulous.SDL2.Platform
                 width, height, sdlflags);
             
             if (sdlptr == IntPtr.Zero)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
 
             var visible = (flags & WindowFlags.Hidden) != WindowFlags.Hidden;
-            var win = new SDL2FrameworkWindow(FrameworkContext, sdlptr, visible);
+            var win = new Sdl2FrameworkWindow(FrameworkContext, sdlptr, visible);
             windows.Add(win);
 
-            FrameworkContext.Messages.Subscribe(win, SDL2FrameworkMessages.SDLEvent);
+            FrameworkContext.Messages.Subscribe(win, Sdl2FrameworkMessages.SdlEvent);
 
             OnWindowCreated(win);
 
@@ -197,12 +197,12 @@ namespace Sedulous.SDL2.Platform
         {
             var sdlptr = SDL_CreateWindowFrom(ptr);
             if (sdlptr == IntPtr.Zero)
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
 
-            var win = new SDL2FrameworkWindow(FrameworkContext, sdlptr, true);
+            var win = new Sdl2FrameworkWindow(FrameworkContext, sdlptr, true);
             windows.Add(win);
 
-            FrameworkContext.Messages.Subscribe(win, SDL2FrameworkMessages.SDLEvent);
+            FrameworkContext.Messages.Subscribe(win, Sdl2FrameworkMessages.SdlEvent);
 
             OnWindowCreated(win);
 
@@ -233,8 +233,8 @@ namespace Sedulous.SDL2.Platform
 
             OnWindowCleanup(window);
 
-            var sdlwin = (SDL2FrameworkWindow)window;
-            FrameworkContext.Messages.Unsubscribe(sdlwin, SDL2FrameworkMessages.SDLEvent);
+            var sdlwin = (Sdl2FrameworkWindow)window;
+            FrameworkContext.Messages.Unsubscribe(sdlwin, Sdl2FrameworkMessages.SdlEvent);
 
             var native = sdlwin.Native;
             sdlwin.Dispose();
@@ -247,9 +247,9 @@ namespace Sedulous.SDL2.Platform
         /// </summary>
         /// <param name="windowID">The identifier of the window to destroy.</param>
         /// <returns>true if the window was destroyed; false if the window was closed.</returns>
-        public Boolean DestroyByID(Int32 windowID)
+        public Boolean DestroyById(Int32 windowID)
         {
-            var window = GetByID(windowID);
+            var window = GetById(windowID);
             if (window != null)
             {
                 Destroy(window);
@@ -333,12 +333,12 @@ namespace Sedulous.SDL2.Platform
             // If we're running on Android or iOS, we can't create a headless context.
             var isRunningOnMobile = (FrameworkContext.Platform == FrameworkPlatform.Android || FrameworkContext.Platform == FrameworkPlatform.iOS);
             if (isRunningOnMobile && configuration.Headless)
-                throw new InvalidOperationException(SDL2Strings.CannotCreateHeadlessContextOnMobile);
+                throw new InvalidOperationException(Sdl2Strings.CannotCreateHeadlessContextOnMobile);
 
             // Initialize the hidden master window used to create the OpenGL context.
             var masterWidth = 0;
             var masterHeight = 0;
-            var masterFlags = (RenderingApi == SDL2PlatformRenderingAPI.OpenGL) ? SDL_WINDOW_OPENGL : 0;
+            var masterFlags = (RenderingApi == Sdl2PlatformRenderingAPI.OpenGL) ? SDL_WINDOW_OPENGL : 0;
 
             if (FrameworkContext.Properties.SupportsHighDensityDisplayModes)
                 masterFlags |= SDL_WINDOW_ALLOW_HIGHDPI;
@@ -366,24 +366,24 @@ namespace Sedulous.SDL2.Platform
                 }
 
                 if (masterptr == IntPtr.Zero)
-                    throw new SDL2Exception();
+                    throw new Sdl2Exception();
 
                 // Fallback might have disabled sRGB, so update our configuration to reflect our current state.
                 var srgbFramebufferEnabled = 0;
                 unsafe
                 {
                     if (SDL_GL_GetAttribute(SDL_GLattr.SDL_GL_FRAMEBUFFER_SRGB_CAPABLE, &srgbFramebufferEnabled) < 0)
-                        throw new SDL2Exception();
+                        throw new Sdl2Exception();
                 }
                 configuration.GraphicsConfiguration.SrgbBuffersEnabled = (srgbFramebufferEnabled > 0);
             }
 
-            this.Master = new SDL2FrameworkWindow(FrameworkContext, masterptr, isRunningOnMobile);
+            this.Master = new Sdl2FrameworkWindow(FrameworkContext, masterptr, isRunningOnMobile);
 
             // Set SDL_HINT_VIDEO_WINDOW_SHARE_PIXEL_FORMAT so that enlisted windows
             // will be OpenGL-enabled and set to the correct pixel format.
             if (!SDL_SetHint(SDL_HINT_VIDEO_WINDOW_SHARE_PIXEL_FORMAT, masterptr.ToStringHex()))
-                throw new SDL2Exception();
+                throw new Sdl2Exception();
 
             // If this is not a headless context, create the primary application window.
             if (!configuration.Headless)
@@ -476,7 +476,7 @@ namespace Sedulous.SDL2.Platform
         /// <summary>
         /// Gets the rendering API which this window manager implements.
         /// </summary>
-        protected abstract SDL2PlatformRenderingAPI RenderingApi { get; }
+        protected abstract Sdl2PlatformRenderingAPI RenderingApi { get; }
 
         /// <summary>
         /// Gets the window manager's list of windows.

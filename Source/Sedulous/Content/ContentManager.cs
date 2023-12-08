@@ -17,7 +17,7 @@ namespace Sedulous.Content
     /// <summary>
     /// Represents a collection of related content assets.
     /// </summary>
-    public sealed partial class ContentManager : FrameworkResource, IMessageSubscriber<FrameworkMessageID>
+    public sealed partial class ContentManager : FrameworkResource, IMessageSubscriber<FrameworkMessageId>
     {
         /// <summary>
         /// Initializes the <see cref="ContentManager"/> type.
@@ -112,7 +112,7 @@ namespace Sedulous.Content
         }
 
         /// <inheritdoc/>
-        void IMessageSubscriber<FrameworkMessageID>.ReceiveMessage(FrameworkMessageID type, MessageData data)
+        void IMessageSubscriber<FrameworkMessageId>.ReceiveMessage(FrameworkMessageId type, MessageData data)
         {
             if (type == FrameworkMessages.LowMemory)
             {
@@ -142,7 +142,7 @@ namespace Sedulous.Content
         /// </summary>
         /// <param name="asset">The asset identifier of the asset for which to set flags.</param>
         /// <param name="flags">A collection of <see cref="AssetFlags"/> values to associate with the specified asset.</param>
-        public void SetAssetFlags(AssetID asset, AssetFlags flags) => AssetCache.SetAssetFlags(asset, flags);
+        public void SetAssetFlags(AssetId asset, AssetFlags flags) => AssetCache.SetAssetFlags(asset, flags);
 
         /// <summary>
         /// Sets the flags associated with the specified asset.
@@ -163,7 +163,7 @@ namespace Sedulous.Content
         /// <param name="flags">A collection of <see cref="AssetFlags"/> value associated with the specified asset.</param>
         /// <returns><see langword="true"/> if the specified asset has flags defined within this 
         /// content manager; otherwise, <see langword="false"/>.</returns>
-        public Boolean GetAssetFlags(AssetID asset, out AssetFlags flags) => AssetCache.GetAssetFlags(asset, out flags);
+        public Boolean GetAssetFlags(AssetId asset, out AssetFlags flags) => AssetCache.GetAssetFlags(asset, out flags);
 
         /// <summary>
         /// Loads all of the assets in the specified <see cref="ContentManifest"/> into the content manager's asset cache.
@@ -217,12 +217,12 @@ namespace Sedulous.Content
         /// directory, rather than the directory containing the application binaries. This is useful primarily for reloading
         /// assets while the application is being debugged, and should mostly be avoided unless you know what you're doing.</param>
         /// <returns>The asset that was loaded from the specified file.</returns>
-        public TOutput Load<TOutput>(AssetID asset, Boolean cache = true, Boolean fromsln = false)
+        public TOutput Load<TOutput>(AssetId asset, Boolean cache = true, Boolean fromsln = false)
         {
             Contract.Ensure<ArgumentException>(asset.IsValid, nameof(asset));
             Contract.EnsureNotDisposed(this, Disposed);
 
-            return (TOutput)LoadImpl(AssetID.GetAssetPath(asset), typeof(TOutput), GetPrimaryDisplayDensity(), cache, fromsln);
+            return (TOutput)LoadImpl(AssetId.GetAssetPath(asset), typeof(TOutput), GetPrimaryDisplayDensity(), cache, fromsln);
         }
 
         /// <summary>
@@ -258,12 +258,12 @@ namespace Sedulous.Content
         /// directory, rather than the directory containing the application binaries. This is useful primarily for reloading
         /// assets while the application is being debugged, and should mostly be avoided unless you know what you're doing.</param>
         /// <returns>The asset that was loaded from the specified file.</returns>
-        public TOutput Load<TOutput>(AssetID asset, ScreenDensityBucket density, Boolean cache = true, Boolean fromsln = false)
+        public TOutput Load<TOutput>(AssetId asset, ScreenDensityBucket density, Boolean cache = true, Boolean fromsln = false)
         {
             Contract.Ensure<ArgumentException>(asset.IsValid, nameof(asset));
             Contract.EnsureNotDisposed(this, Disposed);
             
-            return (TOutput)LoadImpl(AssetID.GetAssetPath(asset), typeof(TOutput), density, cache, fromsln);
+            return (TOutput)LoadImpl(AssetId.GetAssetPath(asset), typeof(TOutput), density, cache, fromsln);
         }
 
         /// <summary>
@@ -432,7 +432,7 @@ namespace Sedulous.Content
         /// directory, rather than the directory containing the application binaries. This is useful primarily for reloading
         /// assets while the application is being debugged, and should mostly be avoided unless you know what you're doing.</param>
         /// <returns>The imported asset in its intermediate form.</returns>
-        public TOutput Import<TOutput>(AssetID asset, Boolean fromsln = false)
+        public TOutput Import<TOutput>(AssetId asset, Boolean fromsln = false)
         {
             return Import<TOutput>(asset, fromsln, out var outputType);
         }
@@ -444,11 +444,11 @@ namespace Sedulous.Content
         /// <param name="asset">The path to the asset to import.</param>
         /// <param name="outputType">The output type of the content importer which was used.</param>
         /// <returns>The imported asset in its intermediate form.</returns>
-        public TOutput Import<TOutput>(AssetID asset, out Type outputType)
+        public TOutput Import<TOutput>(AssetId asset, out Type outputType)
         {
             Contract.Ensure<ArgumentException>(asset.IsValid, nameof(asset));
 
-            return Import<TOutput>(AssetID.GetAssetPath(asset), false, out outputType);
+            return Import<TOutput>(AssetId.GetAssetPath(asset), false, out outputType);
         }
 
         /// <summary>
@@ -461,11 +461,11 @@ namespace Sedulous.Content
         /// assets while the application is being debugged, and should mostly be avoided unless you know what you're doing.</param>
         /// <param name="outputType">The output type of the content importer which was used.</param>
         /// <returns>The imported asset in its intermediate form.</returns>
-        public TOutput Import<TOutput>(AssetID asset, Boolean fromsln, out Type outputType)
+        public TOutput Import<TOutput>(AssetId asset, Boolean fromsln, out Type outputType)
         {
             Contract.Ensure<ArgumentException>(asset.IsValid, nameof(asset));
 
-            return Import<TOutput>(AssetID.GetAssetPath(asset), fromsln, out outputType);
+            return Import<TOutput>(AssetId.GetAssetPath(asset), fromsln, out outputType);
         }
 
         /// <summary>
@@ -647,11 +647,11 @@ namespace Sedulous.Content
         /// <param name="asset">The asset to preprocess.</param>
         /// <param name="delete">A value indicating whether to delete the original file after preprocessing it.</param>
         /// <returns><see langword="true"/> if the asset was preprocessed; otherwise, <see langword="false"/>.</returns>
-        public Boolean Preprocess<TOutput>(AssetID asset, Boolean delete = false)
+        public Boolean Preprocess<TOutput>(AssetId asset, Boolean delete = false)
         {
             Contract.Ensure<ArgumentException>(asset.IsValid, nameof(asset));
 
-            return PreprocessInternal(AssetID.GetAssetPath(asset), typeof(TOutput), delete);
+            return PreprocessInternal(AssetId.GetAssetPath(asset), typeof(TOutput), delete);
         }
 
         /// <summary>
@@ -696,12 +696,12 @@ namespace Sedulous.Content
         /// directory, rather than the directory containing the application binaries. This is useful primarily for reloading
         /// assets while the application is being debugged, and should mostly be avoided unless you know what you're doing.</param>
         /// <returns>The full path to the file that represents the specified asset.</returns>
-        public String ResolveAssetFilePath(AssetID asset, Boolean fromsln = false)
+        public String ResolveAssetFilePath(AssetId asset, Boolean fromsln = false)
         {
             Contract.Ensure<ArgumentException>(asset.IsValid, nameof(asset));
             Contract.EnsureNotDisposed(this, Disposed);
 
-            var assetPath = AssetID.GetAssetPath(asset);
+            var assetPath = AssetId.GetAssetPath(asset);
 
             var metadata = GetAssetMetadata(NormalizeAssetPath(assetPath), true, false, fromsln);
             if (metadata == null)
@@ -740,12 +740,12 @@ namespace Sedulous.Content
         /// directory, rather than the directory containing the application binaries. This is useful primarily for reloading
         /// assets while the application is being debugged, and should mostly be avoided unless you know what you're doing.</param>
         /// <returns>The full path to the file that represents the specified asset.</returns>
-        public String ResolveAssetFilePath(AssetID asset, ScreenDensityBucket density, Boolean fromsln = false)
+        public String ResolveAssetFilePath(AssetId asset, ScreenDensityBucket density, Boolean fromsln = false)
         {
             Contract.Ensure<ArgumentException>(asset.IsValid, nameof(asset));
             Contract.EnsureNotDisposed(this, Disposed);
 
-            var assetPath = AssetID.GetAssetPath(asset);
+            var assetPath = AssetId.GetAssetPath(asset);
 
             var metadata = GetAssetMetadata(NormalizeAssetPath(assetPath), density, true, false, fromsln);
             if (metadata == null)
