@@ -937,7 +937,7 @@ namespace Sedulous.Sdl2.Platform
         /// <param name="surface">The surface that contains the icon to set.</param>
         private void SetIcon(Surface2D surface)
         {
-            var surfptr = (surface == null) ? null : ((SDL2Surface2D)surface).NativePtr;
+            var surfptr = (surface == null) ? null : ((Sdl2Surface2D)surface).NativePtr;
             SDL_SetWindowIcon(ptr, (IntPtr)surfptr);
         }
 

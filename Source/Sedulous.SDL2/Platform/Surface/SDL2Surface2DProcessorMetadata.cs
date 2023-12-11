@@ -3,9 +3,9 @@
 namespace Sedulous.Sdl2.Platform.Surface
 {
     /// <summary>
-    /// Contains metadata for <see cref="SDL2Surface2DProcessor"/>.
+    /// Contains metadata for <see cref="Sdl2Surface2DProcessor"/>.
     /// </summary>
-    internal sealed class SDL2Surface2DProcessorMetadata
+    internal sealed class Sdl2Surface2DProcessorMetadata
     {
         /// <summary>
         /// Gets or sets a value indicating whether the surface is SRGB encoded. If <see langword="null"/>, the

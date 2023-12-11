@@ -12,27 +12,27 @@ namespace Sedulous.Sdl2.Platform.Surface
     /// <summary>
     /// Represents the SDL2 implementation of the <see cref="Surface2D"/> class.
     /// </summary>
-    public unsafe sealed class SDL2Surface2D : Surface2D
+    public unsafe sealed class Sdl2Surface2D : Surface2D
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SDL2Surface2D"/> class.
+        /// Initializes a new instance of the <see cref="Sdl2Surface2D"/> class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
         /// <param name="source">The surface source from which to create the surface.</param>
         /// <param name="options">The surface's configuration options.</param>
-        public SDL2Surface2D(FrameworkContext context, SurfaceSource source, SurfaceOptions options)
-            : this(context, new SDL2PlatformNativeSurface(source), options)
+        public Sdl2Surface2D(FrameworkContext context, SurfaceSource source, SurfaceOptions options)
+            : this(context, new Sdl2PlatformNativeSurface(source), options)
         {
 
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SDL2Surface2D"/> class.
+        /// Initializes a new instance of the <see cref="Sdl2Surface2D"/> class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
         /// <param name="nativesurf">The native SDL surface that this object represents.</param>
         /// <param name="options">The surface's configuration options.</param>
-        public SDL2Surface2D(FrameworkContext context, PlatformNativeSurface nativesurf, SurfaceOptions options)
+        public Sdl2Surface2D(FrameworkContext context, PlatformNativeSurface nativesurf, SurfaceOptions options)
             : base(context)
         {
             if (nativesurf == null)
@@ -43,18 +43,18 @@ namespace Sedulous.Sdl2.Platform.Surface
             if (isSrgb && isLinear)
                 throw new ArgumentException(FrameworkStrings.SurfaceCannotHaveMultipleEncodings);
 
-            this.nativesurf = (SDL2PlatformNativeSurface)nativesurf;
+            this.nativesurf = (Sdl2PlatformNativeSurface)nativesurf;
             this.SrgbEncoded = isLinear ? false : (isSrgb ? true : context.Properties.SrgbDefaultForSurface2D);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SDL2Surface2D"/> class.
+        /// Initializes a new instance of the <see cref="Sdl2Surface2D"/> class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
         /// <param name="width">The width of the surface in pixels.</param>
         /// <param name="height">The height of the surface in pixels.</param>
         /// <param name="options">The surface's configuration options.</param>
-        public SDL2Surface2D(FrameworkContext context, Int32 width, Int32 height, SurfaceOptions options)
+        public Sdl2Surface2D(FrameworkContext context, Int32 width, Int32 height, SurfaceOptions options)
             : base(context)
         {
             Contract.EnsureRange(width > 0, nameof(width));
@@ -65,7 +65,7 @@ namespace Sedulous.Sdl2.Platform.Surface
             if (isSrgb && isLinear)
                 throw new ArgumentException(FrameworkStrings.SurfaceCannotHaveMultipleEncodings);
 
-            this.nativesurf = new SDL2PlatformNativeSurface(width, height);
+            this.nativesurf = new Sdl2PlatformNativeSurface(width, height);
             this.SrgbEncoded = isLinear ? false : (isSrgb ? true : context.Properties.SrgbDefaultForSurface2D);
         }
 
@@ -160,7 +160,7 @@ namespace Sedulous.Sdl2.Platform.Surface
 
             FrameworkContext.ValidateResource(dst);
 
-            BlitInternal(this, new Rectangle(0, 0, Width, Height), (SDL2Surface2D)dst, new Rectangle(0, 0, dst.Width, dst.Height));
+            BlitInternal(this, new Rectangle(0, 0, Width, Height), (Sdl2Surface2D)dst, new Rectangle(0, 0, dst.Width, dst.Height));
         }
 
         /// <inheritdoc/>
@@ -171,7 +171,7 @@ namespace Sedulous.Sdl2.Platform.Surface
 
             FrameworkContext.ValidateResource(dst);
 
-            BlitInternal(this, new Rectangle(0, 0, Width, Height), (SDL2Surface2D)dst, dstRect);
+            BlitInternal(this, new Rectangle(0, 0, Width, Height), (Sdl2Surface2D)dst, dstRect);
         }
 
         /// <inheritdoc/>
@@ -182,7 +182,7 @@ namespace Sedulous.Sdl2.Platform.Surface
 
             FrameworkContext.ValidateResource(dst);
 
-            BlitInternal(this, srcRect, (SDL2Surface2D)dst, dstRect);
+            BlitInternal(this, srcRect, (Sdl2Surface2D)dst, dstRect);
         }
 
         /// <inheritdoc/>
@@ -193,7 +193,7 @@ namespace Sedulous.Sdl2.Platform.Surface
 
             FrameworkContext.ValidateResource(dst);
 
-            BlitInternal(this, (SDL2Surface2D)dst, position, SurfaceFlipDirection.None);
+            BlitInternal(this, (Sdl2Surface2D)dst, position, SurfaceFlipDirection.None);
         }
 
         /// <inheritdoc/>
@@ -204,7 +204,7 @@ namespace Sedulous.Sdl2.Platform.Surface
 
             FrameworkContext.ValidateResource(dst);
 
-            BlitInternal(this, (SDL2Surface2D)dst, position, direction);
+            BlitInternal(this, (Sdl2Surface2D)dst, position, direction);
         }
 
         /// <inheritdoc/>
@@ -215,7 +215,7 @@ namespace Sedulous.Sdl2.Platform.Surface
             var options = SrgbEncoded ? SurfaceOptions.SrgbColor : SurfaceOptions.LinearColor;
             var copysurf = nativesurf.CreateCopy();
 
-            return new SDL2Surface2D(FrameworkContext, copysurf, options);
+            return new Sdl2Surface2D(FrameworkContext, copysurf, options);
         }
 
         /// <inheritdoc/>
@@ -226,7 +226,7 @@ namespace Sedulous.Sdl2.Platform.Surface
             if (region.Left < 0 || region.Top < 0 || region.Right > Width || region.Bottom > Height || region.Width <= 0 || region.Height <= 0)
                 throw new ArgumentOutOfRangeException("region");
 
-            var copysurf = new SDL2PlatformNativeSurface(region.Width, region.Height);
+            var copysurf = new Sdl2PlatformNativeSurface(region.Width, region.Height);
 
             var srcrect = new SDL_Rect() { x = region.X, y = region.Y, w = region.Width, h = region.Height };
             var dstrect = new SDL_Rect() { x = 0, y = 0, w = region.Width, h = region.Height };
@@ -235,7 +235,7 @@ namespace Sedulous.Sdl2.Platform.Surface
                 throw new Sdl2Exception();
 
             var options = SrgbEncoded ? SurfaceOptions.SrgbColor : SurfaceOptions.LinearColor;
-            var result = new SDL2Surface2D(FrameworkContext, copysurf, options);
+            var result = new Sdl2Surface2D(FrameworkContext, copysurf, options);
 
             return result;
         }
@@ -336,7 +336,7 @@ namespace Sedulous.Sdl2.Platform.Surface
         /// <summary>
         /// Blits the surface onto the specified destination surface.
         /// </summary>
-        private static void BlitInternal(SDL2Surface2D src, Rectangle srcRect, SDL2Surface2D dst, Rectangle dstRect)
+        private static void BlitInternal(Sdl2Surface2D src, Rectangle srcRect, Sdl2Surface2D dst, Rectangle dstRect)
         {
             var sdlSrcRect = new SDL_Rect() { x = srcRect.X, y = srcRect.Y, w = srcRect.Width, h = srcRect.Height };
             var sdlDstRect = new SDL_Rect() { x = dstRect.X, y = dstRect.Y, w = dstRect.Width, h = dstRect.Height };
@@ -359,7 +359,7 @@ namespace Sedulous.Sdl2.Platform.Surface
         /// <summary>
         /// Blits the surface onto the specified destination surface.
         /// </summary>
-        private static void BlitInternal(SDL2Surface2D src, SDL2Surface2D dst, Point position, SurfaceFlipDirection direction)
+        private static void BlitInternal(Sdl2Surface2D src, Sdl2Surface2D dst, Point position, SurfaceFlipDirection direction)
         {
             switch (direction)
             {
@@ -380,7 +380,7 @@ namespace Sedulous.Sdl2.Platform.Surface
         /// <summary>
         /// Blits the surface onto the specified destination surface, flipping it horizontally.
         /// </summary>
-        private static void BlitInternalFlipH(SDL2Surface2D src, SDL2Surface2D dst, Point position)
+        private static void BlitInternalFlipH(Sdl2Surface2D src, Sdl2Surface2D dst, Point position)
         {
             var srcNative = src.NativePtr;
             var dstNative = dst.NativePtr;
@@ -424,7 +424,7 @@ namespace Sedulous.Sdl2.Platform.Surface
         /// <summary>
         /// Blits the surface onto the specified destination surface, flipping it vertically.
         /// </summary>
-        private static void BlitInternalFlipV(SDL2Surface2D src, SDL2Surface2D dst, Point position)
+        private static void BlitInternalFlipV(Sdl2Surface2D src, Sdl2Surface2D dst, Point position)
         {
             var srcNative = src.NativePtr;
             var dstNative = dst.NativePtr;
@@ -458,6 +458,6 @@ namespace Sedulous.Sdl2.Platform.Surface
         }
 
         // State values.
-        private readonly SDL2PlatformNativeSurface nativesurf;
+        private readonly Sdl2PlatformNativeSurface nativesurf;
     }
 }

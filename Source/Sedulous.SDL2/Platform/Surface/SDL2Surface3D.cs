@@ -11,10 +11,10 @@ namespace Sedulous.Sdl2.Platform.Surface
     /// <summary>
     /// Represents the SDL2 implementation of the <see cref="Surface3D"/> class.
     /// </summary>
-    public unsafe sealed class SDL2Surface3D : Surface3D
+    public unsafe sealed class Sdl2Surface3D : Surface3D
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SDL2Surface3D"/> class.
+        /// Initializes a new instance of the <see cref="Sdl2Surface3D"/> class.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
         /// <param name="width">The surface's width in pixels.</param>
@@ -22,7 +22,7 @@ namespace Sedulous.Sdl2.Platform.Surface
         /// <param name="depth">The surface's depth in pixels.</param>
         /// <param name="bytesPerPixel">The number of bytes used to represent a pixel on the surface.</param>
         /// <param name="options">The surface's configuration options.</param>
-        public SDL2Surface3D(FrameworkContext context, Int32 width, Int32 height, Int32 depth, Int32 bytesPerPixel, SurfaceOptions options)
+        public Sdl2Surface3D(FrameworkContext context, Int32 width, Int32 height, Int32 depth, Int32 bytesPerPixel, SurfaceOptions options)
             : base(context)
         {
             Contract.EnsureRange(width > 0, nameof(width));
@@ -104,7 +104,7 @@ namespace Sedulous.Sdl2.Platform.Surface
             Contract.EnsureNotDisposed(this, Disposed);
 
             var resultOpts = SrgbEncoded ? SurfaceOptions.SrgbColor : SurfaceOptions.LinearColor;
-            var result = new SDL2Surface3D(FrameworkContext, Width, Height, Depth, BytesPerPixel, resultOpts);
+            var result = new Sdl2Surface3D(FrameworkContext, Width, Height, Depth, BytesPerPixel, resultOpts);
             for (int i = 0; i < Depth; i++)
             {
                 var layerCopy = this.GetLayer(i).CreateSurface();

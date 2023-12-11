@@ -28,7 +28,7 @@ namespace Sedulous.Sdl2
 
             if (context.Platform != FrameworkPlatform.Android && context.Platform != FrameworkPlatform.iOS)
             {
-                this.cursor = SDL_CreateColorCursor(((SDL2Surface2D)surface).NativePtr, hx, hy);
+                this.cursor = SDL_CreateColorCursor(((Sdl2Surface2D)surface).NativePtr, hx, hy);
                 this.Width = surface.Width;
                 this.Height = surface.Height;
                 this.HotspotX = hx;

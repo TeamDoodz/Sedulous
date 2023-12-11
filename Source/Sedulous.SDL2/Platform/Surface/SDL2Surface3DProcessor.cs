@@ -12,7 +12,7 @@ namespace Sedulous.Sdl2.Platform.Surface
     /// Loads 3D surface assets.
     /// </summary>
     //[ContentProcessor]
-    public sealed class SDL2Surface3DProcessor : ContentProcessor<PlatformNativeSurface, Surface3D>
+    public sealed class Sdl2Surface3DProcessor : ContentProcessor<PlatformNativeSurface, Surface3D>
     {
         /// <summary>
         /// Processes the specified data structure into a game asset.
@@ -41,7 +41,7 @@ namespace Sedulous.Sdl2.Platform.Surface
         /// </summary>
         private Surface3D ProcessSingleFile(ContentManager manager, IContentProcessorMetadata metadata, PlatformNativeSurface input)
         {
-            var mdat = metadata.As<SDL2Surface3DProcessorMetadata>();
+            var mdat = metadata.As<Sdl2Surface3DProcessorMetadata>();
             var srgbEncoded = mdat.SrgbEncoded ?? manager.FrameworkContext.Properties.SrgbDefaultForSurface3D;
 
             // Layers must be square. Validate our dimensions.
@@ -57,7 +57,7 @@ namespace Sedulous.Sdl2.Platform.Surface
                 mainSurface.SrgbEncoded = srgbEncoded;
 
                 var resultOpts = srgbEncoded ? SurfaceOptions.SrgbColor : SurfaceOptions.LinearColor;
-                var result = new SDL2Surface3D(manager.FrameworkContext, layerWidth, layerHeight, layerCount, mainSurface.BytesPerPixel, resultOpts);
+                var result = new Sdl2Surface3D(manager.FrameworkContext, layerWidth, layerHeight, layerCount, mainSurface.BytesPerPixel, resultOpts);
                 for (int i = 0; i < layerCount; i++)
                 {
                     var layerSurface = mainSurface.CreateSurface(new Rectangle(i * layerWidth, 0, layerWidth, layerHeight));
@@ -72,7 +72,7 @@ namespace Sedulous.Sdl2.Platform.Surface
         /// </summary>
         private Surface3D ProcessMultipleFiles(ContentManager manager, IContentProcessorMetadata metadata, PlatformNativeSurface input, String filename)
         {
-            var mdat = metadata.As<SDL2Surface3DProcessorMetadata>();
+            var mdat = metadata.As<Sdl2Surface3DProcessorMetadata>();
             var srgbEncoded = mdat.SrgbEncoded ?? manager.FrameworkContext.Properties.SrgbDefaultForSurface3D;
 
             var layer0 = input.CreateCopy();
@@ -99,7 +99,7 @@ namespace Sedulous.Sdl2.Platform.Surface
             }
 
             var surfaceOpts = srgbEncoded ? SurfaceOptions.SrgbColor : SurfaceOptions.LinearColor;
-            var surface = new SDL2Surface3D(manager.FrameworkContext, layer0.Width, layer0.Height, 1 + layers.Count, layer0.BytesPerPixel, surfaceOpts);
+            var surface = new Sdl2Surface3D(manager.FrameworkContext, layer0.Width, layer0.Height, 1 + layers.Count, layer0.BytesPerPixel, surfaceOpts);
 
             var surfaceLayer0 = Surface2D.Create(layer0);
             surfaceLayer0.SrgbEncoded = srgbEncoded;

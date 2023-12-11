@@ -12,12 +12,12 @@ namespace Sedulous.Sdl2.Platform.Surface
     //[ContentImporter(".png")]
     //[ContentImporter(".jpg")]
     //[ContentImporter(".jpeg")]
-    public unsafe sealed class SDL2PlatformNativeSurfaceImporter : ContentImporter<PlatformNativeSurface>
+    public unsafe sealed class Sdl2PlatformNativeSurfaceImporter : ContentImporter<PlatformNativeSurface>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SDL2PlatformNativeSurfaceImporter"/> class.
+        /// Initializes a new instance of the <see cref="Sdl2PlatformNativeSurfaceImporter"/> class.
         /// </summary>
-        public SDL2PlatformNativeSurfaceImporter() { }
+        public Sdl2PlatformNativeSurfaceImporter() { }
 
         /// <summary>
         /// Imports the data from the specified file.
@@ -33,7 +33,7 @@ namespace Sedulous.Sdl2.Platform.Surface
             using (var mstream = new MemoryStream(data))
             using (var source = SurfaceSource.Create(mstream))
             {
-                return new SDL2PlatformNativeSurface(source);
+                return new Sdl2PlatformNativeSurface(source);
             }
         }
     }

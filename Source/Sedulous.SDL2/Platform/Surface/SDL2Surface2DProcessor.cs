@@ -7,7 +7,7 @@ namespace Sedulous.Sdl2.Platform.Surface
     /// Loads 2D surface assets.
     /// </summary>
     //[ContentProcessor]
-    public sealed class SDL2Surface2DProcessor : ContentProcessor<PlatformNativeSurface, Surface2D>
+    public sealed class Sdl2Surface2DProcessor : ContentProcessor<PlatformNativeSurface, Surface2D>
     {
         /// <summary>
         /// Processes the specified data structure into a game asset.
@@ -18,12 +18,12 @@ namespace Sedulous.Sdl2.Platform.Surface
         /// <returns>The game asset that was created.</returns>
         public override Surface2D Process(ContentManager manager, IContentProcessorMetadata metadata, PlatformNativeSurface input)
         {
-            var mdat = metadata.As<SDL2Surface2DProcessorMetadata>();
+            var mdat = metadata.As<Sdl2Surface2DProcessorMetadata>();
             var srgbEncoded = mdat.SrgbEncoded ?? manager.FrameworkContext.Properties.SrgbDefaultForSurface2D;
             var surfOptions = srgbEncoded ? SurfaceOptions.SrgbColor : SurfaceOptions.LinearColor;
 
             var copy = input.CreateCopy();
-            var result = new SDL2Surface2D(manager.FrameworkContext, copy, surfOptions);
+            var result = new Sdl2Surface2D(manager.FrameworkContext, copy, surfOptions);
 
             return result;
         }

@@ -85,11 +85,11 @@ namespace Sedulous.Sdl2
 
 
             // Core classes.
-            Factory.SetFactoryMethod<PlatformNativeSurfaceFactory>((source) => new SDL2PlatformNativeSurface(source));
-            Factory.SetFactoryMethod<Surface2DFactory>((uv, width, height, options) => new SDL2Surface2D(uv, width, height, options));
-            Factory.SetFactoryMethod<Surface2DFromSourceFactory>((uv, source, options) => new SDL2Surface2D(uv, source, options));
-            Factory.SetFactoryMethod<Surface2DFromNativeSurfaceFactory>((uv, surface, options) => new SDL2Surface2D(uv, surface, options));
-            Factory.SetFactoryMethod<Surface3DFactory>((uv, width, height, depth, bytesPerPixel, options) => new SDL2Surface3D(uv, width, height, depth, bytesPerPixel, options));
+            Factory.SetFactoryMethod<PlatformNativeSurfaceFactory>((source) => new Sdl2PlatformNativeSurface(source));
+            Factory.SetFactoryMethod<Surface2DFactory>((uv, width, height, options) => new Sdl2Surface2D(uv, width, height, options));
+            Factory.SetFactoryMethod<Surface2DFromSourceFactory>((uv, source, options) => new Sdl2Surface2D(uv, source, options));
+            Factory.SetFactoryMethod<Surface2DFromNativeSurfaceFactory>((uv, surface, options) => new Sdl2Surface2D(uv, surface, options));
+            Factory.SetFactoryMethod<Surface3DFactory>((uv, width, height, depth, bytesPerPixel, options) => new Sdl2Surface3D(uv, width, height, depth, bytesPerPixel, options));
             Factory.SetFactoryMethod<CursorFactory>((uv, surface, hx, hv) => new Sdl2Cursor(uv, surface, hx, hv));
 
             // Platform services
@@ -216,13 +216,13 @@ namespace Sedulous.Sdl2
             var content = new ContentSubsystem(this);
             content.Importers.RegisterImporter<XmlContentImporter>("prog");
 
-            content.Importers.RegisterImporter<SDL2PlatformNativeSurfaceImporter>(".bmp");
-            content.Importers.RegisterImporter<SDL2PlatformNativeSurfaceImporter>(".png");
-            content.Importers.RegisterImporter<SDL2PlatformNativeSurfaceImporter>(".jpg");
-            content.Importers.RegisterImporter<SDL2PlatformNativeSurfaceImporter>(".jpeg");
+            content.Importers.RegisterImporter<Sdl2PlatformNativeSurfaceImporter>(".bmp");
+            content.Importers.RegisterImporter<Sdl2PlatformNativeSurfaceImporter>(".png");
+            content.Importers.RegisterImporter<Sdl2PlatformNativeSurfaceImporter>(".jpg");
+            content.Importers.RegisterImporter<Sdl2PlatformNativeSurfaceImporter>(".jpeg");
 
-            content.Processors.RegisterProcessor<SDL2Surface2DProcessor>();
-            content.Processors.RegisterProcessor<SDL2Surface3DProcessor>();
+            content.Processors.RegisterProcessor<Sdl2Surface2DProcessor>();
+            content.Processors.RegisterProcessor<Sdl2Surface3DProcessor>();
             content.Processors.RegisterProcessor<Sdl2CursorProcessor>();
 
             return content;

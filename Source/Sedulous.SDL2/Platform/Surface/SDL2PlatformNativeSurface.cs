@@ -12,14 +12,14 @@ namespace Sedulous.Sdl2.Platform.Surface
     /// <summary>
     /// Represents an SDL native surface.
     /// </summary>
-    public unsafe sealed class SDL2PlatformNativeSurface : PlatformNativeSurface
+    public unsafe sealed class Sdl2PlatformNativeSurface : PlatformNativeSurface
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SDL2PlatformNativeSurface"/> class.
+        /// Initializes a new instance of the <see cref="Sdl2PlatformNativeSurface"/> class.
         /// </summary>
         /// <param name="width">The surface's width.</param>
         /// <param name="height">The surface's height.</param>
-        public SDL2PlatformNativeSurface(Int32 width, Int32 height)
+        public Sdl2PlatformNativeSurface(Int32 width, Int32 height)
         {
             if ((this.ptr = SDL_CreateRGBSurface(0, width, height, 32, rmask, gmask, bmask, amask)) == null)
                 throw new Sdl2Exception();
@@ -29,10 +29,10 @@ namespace Sedulous.Sdl2.Platform.Surface
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SDL2PlatformNativeSurface"/> class.
+        /// Initializes a new instance of the <see cref="Sdl2PlatformNativeSurface"/> class.
         /// </summary>
         /// <param name="src">A pointer to the native SDL surface.</param>
-        public SDL2PlatformNativeSurface(SDL_Surface* src)
+        public Sdl2PlatformNativeSurface(SDL_Surface* src)
         {
             if (src == null)
                 throw new ArgumentNullException("src");
@@ -51,10 +51,10 @@ namespace Sedulous.Sdl2.Platform.Surface
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SDL2PlatformNativeSurface"/> class.
+        /// Initializes a new instance of the <see cref="Sdl2PlatformNativeSurface"/> class.
         /// </summary>
         /// <param name="source">The <see cref="SurfaceSource"/> from which to create the surface.</param>
-        public SDL2PlatformNativeSurface(SurfaceSource source)
+        public Sdl2PlatformNativeSurface(SurfaceSource source)
         {
             Contract.Require(source, nameof(source));
 
@@ -108,11 +108,11 @@ namespace Sedulous.Sdl2.Platform.Surface
             switch (direction)
             {
                 case SurfaceFlipDirection.Horizontal:
-                    FlipHAndProcessAlpha(premultiply: false, keycolor: null);
+                    FlipHorizontalAndProcessAlpha(premultiply: false, keycolor: null);
                     break;
 
                 case SurfaceFlipDirection.Vertical:
-                    FlipVAndProcessAlpha(premultiply: false, keycolor: null);
+                    FlipVerticalAndProcessAlpha(premultiply: false, keycolor: null);
                     break;
 
                 case SurfaceFlipDirection.None:
@@ -126,11 +126,11 @@ namespace Sedulous.Sdl2.Platform.Surface
             switch (direction)
             {
                 case SurfaceFlipDirection.Horizontal:
-                    FlipHAndProcessAlpha(premultiply: premultiply, keycolor: keycolor);
+                    FlipHorizontalAndProcessAlpha(premultiply: premultiply, keycolor: keycolor);
                     break;
 
                 case SurfaceFlipDirection.Vertical:
-                    FlipVAndProcessAlpha(premultiply: premultiply, keycolor: keycolor);
+                    FlipVerticalAndProcessAlpha(premultiply: premultiply, keycolor: keycolor);
                     break;
 
                 case SurfaceFlipDirection.None:
@@ -272,7 +272,7 @@ namespace Sedulous.Sdl2.Platform.Surface
         {
             Contract.EnsureNotDisposed(this, Disposed);
 
-            var copy = new SDL2PlatformNativeSurface(Width, Height);
+            var copy = new Sdl2PlatformNativeSurface(Width, Height);
 
             if (SDL_BlitSurface(ptr, null, copy.ptr, null) < 0)
                 throw new Sdl2Exception();
@@ -365,7 +365,7 @@ namespace Sedulous.Sdl2.Platform.Surface
         /// <summary>
         /// Horizontally flips the surface and optionally premultiplies its alpha.
         /// </summary>
-        private void FlipHAndProcessAlpha(Boolean premultiply, Color? keycolor)
+        private void FlipHorizontalAndProcessAlpha(Boolean premultiply, Color? keycolor)
         {
             var pitch = Pitch;
 
@@ -423,7 +423,7 @@ namespace Sedulous.Sdl2.Platform.Surface
         /// <summary>
         /// Vertically flips the surface and optionally premultiplies its alpha.
         /// </summary>
-        private void FlipVAndProcessAlpha(Boolean premultiply, Color? keycolor)
+        private void FlipVerticalAndProcessAlpha(Boolean premultiply, Color? keycolor)
         {
             var pitch = Pitch;
 
