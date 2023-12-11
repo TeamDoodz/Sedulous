@@ -114,7 +114,7 @@ namespace Sedulous
         public Single AudioMasterVolume
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Sedulous
         public Boolean AudioMuted
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Sedulous
         public Single SongsMasterVolume
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Sedulous
         public Boolean SongsMuted
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Sedulous
         public Single SoundEffectsMasterVolume
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Sedulous
         public Boolean SoundEffectsMuted
         {
             get;
-            private set;
+            set;
         }
     }
 }

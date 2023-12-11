@@ -12,17 +12,24 @@ namespace Sedulous
         /// <summary>
         /// Initializes a new instance of the <see cref="FrameworkApplicationSettings"/> class.
         /// </summary>
-        public FrameworkApplicationSettings()
+        public FrameworkApplicationSettings(FrameworkApplicationWindowSettings windowSettings, FrameworkApplicationAudioSettings audioSettings)
         {
-            Window = new FrameworkApplicationWindowSettings();
+            Window = windowSettings;
+            Audio = audioSettings;
         }
 
-        /// <summary>
-        /// Saves the specified application settings to the specified file.
-        /// </summary>
-        /// <param name="path">The path to the file in which to save the application settings.</param>
-        /// <param name="settings">The <see cref="FrameworkApplicationSettings"/> to serialize to the specified file.</param>
-        public static void Save(String path, FrameworkApplicationSettings settings)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FrameworkApplicationSettings"/> class.
+		/// </summary>
+		public FrameworkApplicationSettings() : this(new FrameworkApplicationWindowSettings(), new FrameworkApplicationAudioSettings()) {
+		}
+
+		/// <summary>
+		/// Saves the specified application settings to the specified file.
+		/// </summary>
+		/// <param name="path">The path to the file in which to save the application settings.</param>
+		/// <param name="settings">The <see cref="FrameworkApplicationSettings"/> to serialize to the specified file.</param>
+		public static void Save(String path, FrameworkApplicationSettings settings)
         {
             var xml = new XDocument(new XDeclaration("1.0", "utf-8", "yes"),
                 new XElement("Settings",

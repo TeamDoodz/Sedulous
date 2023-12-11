@@ -153,7 +153,7 @@ namespace Sedulous
         public Boolean GrabsMouseWhenWindowed
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Sedulous
         public Boolean GrabsMouseWhenFullscreenWindowed
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Sedulous
         public Boolean GrabsMouseWhenFullscreen
         {
             get;
-            private set;
+           set;
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace Sedulous
         public Boolean SynchronizeWithVerticalRetrace
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Sedulous
         public WindowState WindowState
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Sedulous
         public WindowMode WindowMode
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Sedulous
         public Single WindowScale
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace Sedulous
         public Rectangle WindowedPosition
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace Sedulous
         public DisplayMode FullscreenDisplayMode
         {
             get;
-            private set;
+            set;
         }
     }
 }
