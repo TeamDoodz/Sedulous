@@ -127,7 +127,7 @@ namespace Sedulous
         /// Applies the specified settings.
         /// </summary>
         /// <param name="context">The Sedulous context.</param>
-        public void Apply(FrameworkContext context)
+        internal void Apply(FrameworkContext context)
         {
             var primary = context.GetPlatform().Windows.GetPrimary();
             if (primary == null)
