@@ -21,6 +21,11 @@ namespace Sedulous
             this.Matrix = value;
         }
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="BoundingFrustum"/> class.
+		/// </summary>
+		public BoundingFrustum() : this(Matrix4x4.Identity) { }
+
         /// <inheritdoc/>
         public override String ToString() => 
             $"{{Near:{Near} Far:{Far} Left:{Left} Right:{Right} Top:{Top} Bottom:{Bottom}}}";
