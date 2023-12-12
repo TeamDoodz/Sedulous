@@ -577,7 +577,7 @@ namespace Sedulous
         /// <summary>
         /// Gets a value indicating whether the rectangle is empty.
         /// </summary>
-        [JsonIgnore, IgnoreDataMember]
+        [JsonIgnore, IgnoreDataMember, System.Text.Json.Serialization.JsonIgnore]
         public Boolean IsEmpty
         {
             get { return Width == 0 || Height == 0; }
@@ -586,7 +586,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the y-coordinate of the top edge of the rectangle.
         /// </summary>
-        [JsonIgnore, IgnoreDataMember]
+        [JsonIgnore, IgnoreDataMember, System.Text.Json.Serialization.JsonIgnore]
         public Double Top
         {
             get { return Y; }
@@ -595,7 +595,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the x-coordinate of the left edge of the rectangle.
         /// </summary>
-        [JsonIgnore, IgnoreDataMember]
+        [JsonIgnore, IgnoreDataMember, System.Text.Json.Serialization.JsonIgnore]
         public Double Left
         {
             get { return X; }
@@ -604,7 +604,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the y-coordinate of the bottom edge of the rectangle.
         /// </summary>
-        [JsonIgnore, IgnoreDataMember]
+        [JsonIgnore, IgnoreDataMember, System.Text.Json.Serialization.JsonIgnore]
         public Double Bottom
         {
             get { return Y + Height; }
@@ -613,7 +613,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the x-coordinate of the right edge of the rectangle.
         /// </summary>
-        [JsonIgnore, IgnoreDataMember]
+        [JsonIgnore, IgnoreDataMember, System.Text.Json.Serialization.JsonIgnore]
         public Double Right
         {
             get { return X + Width; }
@@ -622,7 +622,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the position of the rectangle's top-left corner.
         /// </summary>
-        [JsonIgnore, IgnoreDataMember]
+        [JsonIgnore, IgnoreDataMember, System.Text.Json.Serialization.JsonIgnore]
         public Point2D Location
         {
             get { return new Point2D(X, Y); }
@@ -636,7 +636,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the position of the rectangle's center.
         /// </summary>
-        [JsonIgnore, IgnoreDataMember]
+        [JsonIgnore, IgnoreDataMember, System.Text.Json.Serialization.JsonIgnore]
         public Point2D Center
         {
             get { return new Point2D(X + (Width / 2.0), Y + (Height / 2.0)); }
@@ -645,7 +645,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the rectangle's size.
         /// </summary>
-        [JsonIgnore, IgnoreDataMember]
+        [JsonIgnore, IgnoreDataMember, System.Text.Json.Serialization.JsonIgnore]
         public Size2D Size
         {
             get { return new Size2D(Width, Height); }

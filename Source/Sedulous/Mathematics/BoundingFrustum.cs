@@ -481,37 +481,37 @@ namespace Sedulous
         /// <summary>
         /// The frustum's near plane.
         /// </summary>
-        [JsonIgnore, IgnoreDataMember]
+        [JsonIgnore, IgnoreDataMember, System.Text.Json.Serialization.JsonIgnore]
         public Plane Near => planes[0];
 
         /// <summary>
         /// The frustum's far plane.
         /// </summary>
-        [JsonIgnore, IgnoreDataMember]
+        [JsonIgnore, IgnoreDataMember, System.Text.Json.Serialization.JsonIgnore]
         public Plane Far => planes[1];
 
         /// <summary>
         /// The frustum's left plane.
         /// </summary>
-        [JsonIgnore, IgnoreDataMember]
+        [JsonIgnore, IgnoreDataMember, System.Text.Json.Serialization.JsonIgnore]
         public Plane Left => planes[2];
 
         /// <summary>
         /// The frustum's right plane.
         /// </summary>
-        [JsonIgnore, IgnoreDataMember]
+        [JsonIgnore, IgnoreDataMember, System.Text.Json.Serialization.JsonIgnore]
         public Plane Right => planes[3];
 
         /// <summary>
         /// The frustum's top plane.
         /// </summary>
-        [JsonIgnore, IgnoreDataMember]
+        [JsonIgnore, IgnoreDataMember, System.Text.Json.Serialization.JsonIgnore]
         public Plane Top => planes[4];
 
         /// <summary>
         /// The frustum's bottom plane.
         /// </summary>
-        [JsonIgnore, IgnoreDataMember]
+        [JsonIgnore, IgnoreDataMember, System.Text.Json.Serialization.JsonIgnore]
         public Plane Bottom => planes[5];
 
         /// <summary>

@@ -201,7 +201,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the circle's position.
         /// </summary>
-        [JsonIgnore, IgnoreDataMember]
+        [JsonIgnore, IgnoreDataMember, System.Text.Json.Serialization.JsonIgnore]
         public Point2D Position
         {
             get { return new Point2D(X, Y); }

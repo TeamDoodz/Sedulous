@@ -201,7 +201,7 @@ namespace Sedulous
         /// <summary>
         /// The circle's position.
         /// </summary>
-        [JsonIgnore, IgnoreDataMember]
+        [JsonIgnore, IgnoreDataMember, System.Text.Json.Serialization.JsonIgnore]
         public Point Position
         {
             get { return new Point(X, Y); }

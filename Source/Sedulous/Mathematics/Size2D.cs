@@ -272,7 +272,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the size's total area (width times height).
         /// </summary>
-        [JsonIgnore, IgnoreDataMember]
+        [JsonIgnore, IgnoreDataMember, System.Text.Json.Serialization.JsonIgnore]
         public Double Area
         {
             get { return Width * Height; }

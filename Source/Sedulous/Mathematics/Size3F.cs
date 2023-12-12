@@ -240,7 +240,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the size's total volume (width times height times depth).
         /// </summary>
-        [JsonIgnore, IgnoreDataMember]
+        [JsonIgnore, IgnoreDataMember, System.Text.Json.Serialization.JsonIgnore]
         public Single Volume
         {
             get { return Width * Height * Depth; }
