@@ -9,7 +9,7 @@ namespace Sedulous
     /// <summary>
     /// Represents a rectangle with double-precision floating point components.
     /// </summary>
-    [Serializable, DataMember]
+    [Serializable, DataContract]
     public partial struct RectangleD : IEquatable<RectangleD>, IInterpolatable<RectangleD>
     {
         /// <summary>
