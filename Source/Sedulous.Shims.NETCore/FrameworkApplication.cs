@@ -25,15 +25,6 @@ namespace Sedulous
         IFrameworkHost,
         IDisposable
     {
-        /// <summary>
-        /// Initializes the <see cref="FrameworkApplication"/> type.
-        /// </summary>
-        static FrameworkApplication()
-        {
-            var baseDir = AppContext.BaseDirectory;
-            if (baseDir != null)
-                Directory.SetCurrentDirectory(baseDir);
-        }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FrameworkApplication"/> class.
