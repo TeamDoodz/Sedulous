@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Sedulous.Core;
 
@@ -9,7 +10,7 @@ namespace Sedulous
     /// <summary>
     /// Represents a bounding sphere.
     /// </summary>
-    [Serializable]
+    [Serializable, DataContract]
     public partial struct BoundingSphere : IEquatable<BoundingSphere>
     {
         /// <summary>
@@ -620,13 +621,13 @@ namespace Sedulous
         /// <summary>
         /// The sphere's center position.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        [JsonProperty(Required = Required.Always), DataMember]
         public Vector3 Center;
 
         /// <summary>
         /// The sphere's radius.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        [JsonProperty(Required = Required.Always), DataMember]
         public Single Radius;        
     }
 }

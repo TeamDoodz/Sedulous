@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Sedulous.Core;
 using Sedulous.Mathematics;
@@ -9,7 +10,7 @@ namespace Sedulous
     /// <summary>
     /// Represents a line proceeding from a point in space.
     /// </summary>
-    [Serializable]
+    [Serializable, DataContract]
     public partial struct Ray : IEquatable<Ray>, IInterpolatable<Ray>
     {
         /// <summary>
@@ -274,11 +275,13 @@ namespace Sedulous
         /// <summary>
         /// The ray's position in space.
         /// </summary>
+        [DataMember]
         public Vector3 Position;
 
         /// <summary>
         /// The ray's direction vector.
         /// </summary>
+        [DataMember]
         public Vector3 Direction;
     }
 }

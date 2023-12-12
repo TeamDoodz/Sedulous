@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Numerics;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace Sedulous
@@ -8,7 +9,7 @@ namespace Sedulous
     /// <summary>
     /// Represents a rectangle with double-precision floating point components.
     /// </summary>
-    [Serializable]
+    [Serializable, DataMember]
     public partial struct RectangleD : IEquatable<RectangleD>, IInterpolatable<RectangleD>
     {
         /// <summary>
@@ -576,7 +577,7 @@ namespace Sedulous
         /// <summary>
         /// Gets a value indicating whether the rectangle is empty.
         /// </summary>
-        [JsonIgnore]
+        [JsonIgnore, IgnoreDataMember]
         public Boolean IsEmpty
         {
             get { return Width == 0 || Height == 0; }
@@ -585,7 +586,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the y-coordinate of the top edge of the rectangle.
         /// </summary>
-        [JsonIgnore]
+        [JsonIgnore, IgnoreDataMember]
         public Double Top
         {
             get { return Y; }
@@ -594,7 +595,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the x-coordinate of the left edge of the rectangle.
         /// </summary>
-        [JsonIgnore]
+        [JsonIgnore, IgnoreDataMember]
         public Double Left
         {
             get { return X; }
@@ -603,7 +604,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the y-coordinate of the bottom edge of the rectangle.
         /// </summary>
-        [JsonIgnore]
+        [JsonIgnore, IgnoreDataMember]
         public Double Bottom
         {
             get { return Y + Height; }
@@ -612,7 +613,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the x-coordinate of the right edge of the rectangle.
         /// </summary>
-        [JsonIgnore]
+        [JsonIgnore, IgnoreDataMember]
         public Double Right
         {
             get { return X + Width; }
@@ -621,7 +622,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the position of the rectangle's top-left corner.
         /// </summary>
-        [JsonIgnore]
+        [JsonIgnore, IgnoreDataMember]
         public Point2D Location
         {
             get { return new Point2D(X, Y); }
@@ -635,7 +636,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the position of the rectangle's center.
         /// </summary>
-        [JsonIgnore]
+        [JsonIgnore, IgnoreDataMember]
         public Point2D Center
         {
             get { return new Point2D(X + (Width / 2.0), Y + (Height / 2.0)); }
@@ -644,7 +645,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the rectangle's size.
         /// </summary>
-        [JsonIgnore]
+        [JsonIgnore, IgnoreDataMember]
         public Size2D Size
         {
             get { return new Size2D(Width, Height); }
@@ -658,25 +659,25 @@ namespace Sedulous
         /// <summary>
         /// The x-coordinate of the rectangle's top-left corner.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        [JsonProperty(Required = Required.Always), DataMember]
         public Double X;
 
         /// <summary>
         /// The y-coordinate of the rectangle's top-left corner.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        [JsonProperty(Required = Required.Always), DataMember]
         public Double Y;
 
         /// <summary>
         /// The rectangle's width.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        [JsonProperty(Required = Required.Always), DataMember]
         public Double Width;
 
         /// <summary>
         /// The rectangle's height.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        [JsonProperty(Required = Required.Always), DataMember]
         public Double Height;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Numerics;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace Sedulous
@@ -8,7 +9,7 @@ namespace Sedulous
     /// <summary>
     /// Represents a point in two-dimensional space with double-precision floating point components.
     /// </summary>
-    [Serializable]
+    [Serializable, DataContract]
     public partial struct Point2D : IEquatable<Point2D>, IInterpolatable<Point2D>
     {
         /// <summary>
@@ -451,13 +452,13 @@ namespace Sedulous
         /// <summary>
         /// The point's x-coordinate.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        [JsonProperty(Required = Required.Always), DataMember]
         public Double X;
 
         /// <summary>
         /// The point's y-coordinate.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        [JsonProperty(Required = Required.Always), DataMember]
         public Double Y;
     }
 }

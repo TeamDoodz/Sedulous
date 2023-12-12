@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace Sedulous
@@ -7,7 +8,7 @@ namespace Sedulous
     /// <summary>
     /// Represents a three-dimensional size with integer components.
     /// </summary>
-    [Serializable]
+    [Serializable, DataContract]
     public partial struct Size3 : IEquatable<Size3>, IInterpolatable<Size3>
     {
         /// <summary>
@@ -239,7 +240,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the size's total volume (width times height times depth).
         /// </summary>
-        [JsonIgnore]
+        [JsonIgnore, IgnoreDataMember]
         public Int32 Volume
         {
             get { return Width * Height * Depth; }
@@ -248,19 +249,19 @@ namespace Sedulous
         /// <summary>
         /// The size's width.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        [JsonProperty(Required = Required.Always), DataMember]
         public Int32 Width;
 
         /// <summary>
         /// The size's height.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        [JsonProperty(Required = Required.Always), DataMember]
         public Int32 Height;
 
         /// <summary>
         /// The size's depth.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        [JsonProperty(Required = Required.Always), DataMember]
         public Int32 Depth;
     }
 }

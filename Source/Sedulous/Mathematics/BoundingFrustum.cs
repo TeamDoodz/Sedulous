@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Sedulous.Core;
 
@@ -8,7 +9,7 @@ namespace Sedulous
     /// <summary>
     /// Represents a frustum and provides methods for determining whether other bounding volumes intersect with it.
     /// </summary>    
-    [Serializable]
+    [Serializable, DataContract]
     public partial class BoundingFrustum : IEquatable<BoundingFrustum>
     {
         /// <summary>
@@ -480,43 +481,43 @@ namespace Sedulous
         /// <summary>
         /// The frustum's near plane.
         /// </summary>
-        [JsonIgnore]
+        [JsonIgnore, IgnoreDataMember]
         public Plane Near => planes[0];
 
         /// <summary>
         /// The frustum's far plane.
         /// </summary>
-        [JsonIgnore]
+        [JsonIgnore, IgnoreDataMember]
         public Plane Far => planes[1];
 
         /// <summary>
         /// The frustum's left plane.
         /// </summary>
-        [JsonIgnore]
+        [JsonIgnore, IgnoreDataMember]
         public Plane Left => planes[2];
 
         /// <summary>
         /// The frustum's right plane.
         /// </summary>
-        [JsonIgnore]
+        [JsonIgnore, IgnoreDataMember]
         public Plane Right => planes[3];
 
         /// <summary>
         /// The frustum's top plane.
         /// </summary>
-        [JsonIgnore]
+        [JsonIgnore, IgnoreDataMember]
         public Plane Top => planes[4];
 
         /// <summary>
         /// The frustum's bottom plane.
         /// </summary>
-        [JsonIgnore]
+        [JsonIgnore, IgnoreDataMember]
         public Plane Bottom => planes[5];
 
         /// <summary>
         /// The matrix which describes the frustum.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        [JsonProperty(Required = Required.Always), DataMember]
         public Matrix4x4 Matrix
         {
             get { return matrix; }

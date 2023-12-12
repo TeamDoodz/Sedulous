@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Numerics;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace Sedulous
@@ -8,7 +9,7 @@ namespace Sedulous
     /// <summary>
     /// Represents a two-dimensional area with double-precision floating point components.
     /// </summary>
-    [Serializable]
+    [Serializable, DataContract]
     public partial struct Size2D : IEquatable<Size2D>, IInterpolatable<Size2D>
     {
         /// <summary>
@@ -271,7 +272,7 @@ namespace Sedulous
         /// <summary>
         /// Gets the size's total area (width times height).
         /// </summary>
-        [JsonIgnore]
+        [JsonIgnore, IgnoreDataMember]
         public Double Area
         {
             get { return Width * Height; }
@@ -280,13 +281,13 @@ namespace Sedulous
         /// <summary>
         /// The area's width.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        [JsonProperty(Required = Required.Always), DataMember]
         public Double Width;
 
         /// <summary>
         /// The area's height.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        [JsonProperty(Required = Required.Always), DataMember]
         public Double Height;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace Sedulous
@@ -7,7 +8,7 @@ namespace Sedulous
     /// <summary>
     /// Represents a circle with integer radius and position.
     /// </summary>
-    [Serializable]
+    [Serializable, DataContract]
     public partial struct Circle : IEquatable<Circle>, IInterpolatable<Circle>
     {
         /// <summary>
@@ -200,7 +201,7 @@ namespace Sedulous
         /// <summary>
         /// The circle's position.
         /// </summary>
-        [JsonIgnore]
+        [JsonIgnore, IgnoreDataMember]
         public Point Position
         {
             get { return new Point(X, Y); }
@@ -209,19 +210,19 @@ namespace Sedulous
         /// <summary>
         /// The x-coordinate of the circle's center.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        [JsonProperty(Required = Required.Always), DataMember]
         public Int32 X;
 
         /// <summary>
         /// The y-coordinate of the circle's center.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        [JsonProperty(Required = Required.Always), DataMember]
         public Int32 Y;
 
         /// <summary>
         /// Gets the circle's radius.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        [JsonProperty(Required = Required.Always), DataMember]
         public Int32 Radius;
     }
 }

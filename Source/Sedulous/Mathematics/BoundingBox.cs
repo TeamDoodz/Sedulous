@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Sedulous.Core;
 
@@ -9,7 +10,7 @@ namespace Sedulous
     /// <summary>
     /// Represents an axis-aligned 3D bounding box.
     /// </summary>
-    [Serializable]
+    [Serializable, DataContract]
     public partial struct BoundingBox : IEquatable<BoundingBox>
     {
         /// <summary>
@@ -612,13 +613,13 @@ namespace Sedulous
         /// <summary>
         /// The minimum point included within the bounding box.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        [JsonProperty(Required = Required.Always), DataMember]
         public Vector3 Min;
 
         /// <summary>
         /// The maximum point included within the bounding box.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        [JsonProperty(Required = Required.Always), DataMember]
         public Vector3 Max;
     }
 }
