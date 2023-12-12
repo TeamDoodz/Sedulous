@@ -7,7 +7,7 @@ namespace Sedulous
     /// <summary>
     /// Represents an Sedulous application's internal settings.
     /// </summary>
-    public class FrameworkApplicationSettings
+    public partial class FrameworkApplicationSettings
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FrameworkApplicationSettings"/> class.
@@ -96,7 +96,7 @@ namespace Sedulous
         public FrameworkApplicationWindowSettings Window
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Sedulous
         public FrameworkApplicationAudioSettings Audio
         {
             get;
-            private set;
+            set;
         }
     }
 }
