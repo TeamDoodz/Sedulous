@@ -36,11 +36,6 @@ namespace Sedulous
         }
 
 		/// <summary>
-		/// The settings for the application.
-		/// </summary>
-		public FrameworkApplicationSettings Settings => settings;
-
-		/// <summary>
 		/// Initializes a new instance of the <see cref="FrameworkApplication"/> class.
 		/// </summary>
 		/// <param name="developerName">The name of the company or developer that built this application.</param>
@@ -388,7 +383,8 @@ namespace Sedulous
         /// from a thread other than the main Sedulous thread.</remarks>
         protected internal virtual void OnSuspended()
         {
-            SaveSettings();
+			this.settings = FrameworkApplicationSettings.FromCurrentSettings(FrameworkContext);
+			SaveSettings();
         }
 
         /// <summary>
@@ -737,7 +733,7 @@ namespace Sedulous
         /// <summary>
         /// Applies the application's settings.
         /// </summary>
-        public virtual void ApplySettings()
+        protected virtual void ApplySettings()
         {
             lock (stateSyncObject)
             {
@@ -765,7 +761,8 @@ namespace Sedulous
         /// <param name="window">The primary window.</param>
         private void uv_PrimaryWindowChanging(IFrameworkWindow window)
         {
-            SaveSettings();
+			this.settings = FrameworkApplicationSettings.FromCurrentSettings(FrameworkContext);
+			SaveSettings();
         }
 
         /// <summary>
