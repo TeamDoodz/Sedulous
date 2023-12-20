@@ -56,6 +56,9 @@ namespace Sedulous
         /// </summary>
         public void Dispose()
         {
+            if(IsActive) {
+				Exit();
+			}
             Dispose(true);
             GC.SuppressFinalize(this);
         }
